@@ -1,3 +1,8 @@
+/* space空白区域 */
+.space{
+  background-color: #fff;
+  height: 40rpx;
+}
 .shops-container {
   display: flex;
   justify-content: space-between;
@@ -425,20 +430,25 @@
 white-space: nowrap;
 display:flex;
 padding: 5rpx,0;
-
 }
 .remai{
-
-  margin-left: 5rpx;
+  width: 120rpx;
+  margin-left: 20rpx;
+  padding-right: 10rpx;
+  font-size: 28rpx;
+  font-style: simson;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .chose-item{
   padding: 20rpx 45rpx;
-  font-size: 30rpx;
+  font-size: 25rpx;
   display: inline-block;
 }
 .chose-item.active{
   border-bottom: 5rpx solid gray;
+}
+.selling-goods-chose{
+  width: 600rpx;
 }

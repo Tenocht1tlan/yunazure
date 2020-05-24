@@ -110,21 +110,26 @@
   <!-- 秒杀结束 -->
   <!-- <van-divider wx:if="{{goodsRecommend.length > 0 && activeCategoryId == 0}}" contentPosition="center"></van-divider>  -->
 </view>
+<!-- 选择操作 -->
+<view class='space'></view>  
 
 <view class="selling-goods">
     <view class="remai">热卖商品</view>
     <scroll-view class="selling-goods-chose" scroll-x="true">
-    <view bindtap="activeItem"  data-index="{{index}}" class="chose-item {{index===currentChoseItem?'active':''}}" wx:for="{{array}}" wx:key="index" hover-class="none">{{item.text}}</view>
+      <view bindtap="activeItem"  data-index="{{index}}" class="chose-item {{index===currentChoseItem?'active':''}}" wx:for="{{array}}" wx:key="index" hover-class="none">{{item.text}}</view>
     </scroll-view>
 </view>
+<view class='space'></view>
 <view class="page-selection">
   <scroll-view class="scroll-view_h" scroll-x="true" bandscroll="scrpll" style="width:100%" scroll-left="{{scrollToLeft}}" >
-      <image class="scroll-view-imag" src="/images/my/ask.png"></image>
+
+      <!-- <image class="scroll-view-imag" src="/images/my/ask.png"></image>
       <image class="scroll-view-imag" src="/images/my/cancel.png"></image>
-      <image class="scroll-view-imag" src="/images/my/dsm.png"></image>
+      <image class="scroll-view-imag" src="/images/my/dsm.png"></image> -->
   </scroll-view>
 </view>
-<view>
+<!--  -->
+<!-- <view>
   <view class="goods-container" wx:if="{{goodsRecommend.length > 0 && activeCategoryId == 0}}">
     <view class="goods-box" wx:for="{{goodsRecommend}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.id}}">
       <view class="img-box">
@@ -185,8 +190,8 @@
         </view>
       </view>
     </view>
-  </block>
-
+  </block> -->
+<view>
   <view class='space'></view>
   <view class="weui-loadmore weui-loadmore_line">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
