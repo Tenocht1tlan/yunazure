@@ -54,6 +54,7 @@ Page({
       'text':'男婴',
       'id':5
     },
+
   ],
   // 被点击的热卖商品的索引
   currentChoseItem :0
