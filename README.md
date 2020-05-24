@@ -1,3 +1,0 @@
-# yunazure
-mall
-new
