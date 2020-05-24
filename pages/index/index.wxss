@@ -193,7 +193,7 @@
   flex-wrap:wrap;
   box-sizing: content-box;
   padding: 24rpx;
-  background-color: #F2f2f2;
+  background-color: #fff;
 }
 .goods-box{
   width: 339rpx;
@@ -201,7 +201,7 @@
   background-color: #fff;
   overflow: hidden;
   margin-bottom: 24rpx;
-  border-radius:5px;
+  /* border-radius:5px; */
 }
 .goods-box .img-box{
   width: 339rpx;
@@ -451,4 +451,15 @@ padding: 5rpx,0;
 }
 .selling-goods-chose{
   width: 600rpx;
+}
+/*  */
+.page-selection{
+  white-space: nowrap;
+  display:flex;
+  padding: 5rpx,0;
+  }
+.remai-goods{
+    padding: 20rpx 45rpx;
+    font-size: 25rpx;
+    display: inline-block;
 }
