@@ -114,7 +114,7 @@
 <view class="selling-goods">
     <view class="remai">热卖商品</view>
     <scroll-view class="selling-goods-chose" scroll-x="true">
-    <view bindtap="activeItem"  data-index="{{index}}" class="chose-item {{index===currentChoseItem?'active':''}}" wx:for="{{array}}" wx:key="{{index}}" hover-class="none">{{item.text}}</view>
+    <view bindtap="activeItem"  data-index="{{index}}" class="chose-item {{index===currentChoseItem?'active':''}}" wx:for="{{array}}" wx:key="index" hover-class="none">{{item.text}}</view>
     </scroll-view>
 </view>
 <view class="page-selection">
