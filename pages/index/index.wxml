@@ -122,6 +122,11 @@
 <view class='space'></view>
 <view class="page-selection">
   <scroll-view class="scroll-view_h" scroll-x="true" bandscroll="scrpll" style="width:100%" scroll-left="{{scrollToLeft}}" >
+    <view class="remai-goods" wx:for="{{imageChose}}" wx:key="index">
+        <text>111</text>
+       <image class="scroll-view-imag" src="{{item.src}}">123</image>
+    </view>
+  
 
       <!-- <image class="scroll-view-imag" src="/images/my/ask.png"></image>
       <image class="scroll-view-imag" src="/images/my/cancel.png"></image>

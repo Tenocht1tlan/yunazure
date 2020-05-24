@@ -1,5 +1,3 @@
 {
-  "enablePullDownRefresh": true,
-  "backgroundColor":"white"
-
+  "enablePullDownRefresh": true
 }

@@ -56,6 +56,21 @@ Page({
     },
 
   ],
+
+  imageChose:[
+    {
+      'src':'/images/my/ask.png',
+      'id':'0'
+    },
+    {
+      'src':'/images/my/cancel.png',
+      'id':'1'
+    },
+    {
+      'src':'/images/my/dsm.png',
+      'id':'2'
+    },
+  ],
   // 被点击的热卖商品的索引
   currentChoseItem :0
   },
