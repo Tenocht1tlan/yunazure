@@ -1,0 +1,117 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"enhance": true,
+		"postcss": false,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.10.4",
+	"appid": "wx92d27f3a4d972403",
+	"projectname": "%E5%92%8C%E9%A3%8E%E6%9A%96%E9%98%B3",
+	"scripts": {},
+	"simulatorType": "wechat",
+	"cloudfunctionRoot": "functions/",
+	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "home",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品详情页面",
+					"pathName": "pages/goods-details/index",
+					"query": "id=134&inviter_id=456",
+					"scene": 1011
+				},
+				{
+					"id": -1,
+					"name": "商品详情页面",
+					"pathName": "pages/goods-details/index",
+					"query": "id= 6761",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "砍价详情页面",
+					"pathName": "pages/goods-details/index",
+					"query": "id=6765",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "预约",
+					"pathName": "pages/reservation/reservation",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/index/index",
+					"query": "goodsid=6761",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/my/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "register",
+					"pathName": "pages/register/index",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}

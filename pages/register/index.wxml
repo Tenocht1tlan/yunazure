@@ -1,0 +1,32 @@
+<!--pages/register/index.wxml-->
+<view>
+  <view class="weui-cells__title" >邮箱</view>
+  
+  <view class="page-section">
+    <view class="weui-cells__title">邮箱</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+      <input class="weui-input" placeholder="请输入邮箱" maxlength="15" title="邮箱" autofocus bindinput="bindphInputmail" />
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">密码</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input" password type="text" maxlength="15" placeholder="请输入密码" bindinput="bindphInputpwd"/>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">确认密码</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input" password type="text" maxlength="15" placeholder="请再次输入密码" bindinput="bindphInputpwd2"/>
+      </view>
+    </view>
+  </view>
+  
+  <button class="register" plain="true" bindtap="userRegister">创建用户名</button>
+</view>
+  

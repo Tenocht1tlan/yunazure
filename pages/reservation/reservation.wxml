@@ -1,0 +1,78 @@
+<!--pages/reservation/reservation.wxml-->
+<view class="background">
+  <image class="background" src="{{image}}" lazy-load="true" webp="true" bindtap="uploadFile"></image>
+</view>
+<view class="textfirst" bindtap="showImage"> 预约完成后，客服将在24小时内联系您</view>
+<view class="reservationInput">
+  <view class="reservationInputtext" >姓名</view>
+  <input class="reinput" placeholder="请输入姓名" value="{{name}}" bindinput="bindnaInput"/>
+  <button class="reservationInputClick"  open-type="getUserInfo" bindgetuserinfo="testInfo">一键获取预约信息</button>
+</view>
+<view class="space"></view>
+<view class="reservationInput">
+  <view class="reservationInputtext" >电话</view>
+  <input class="reinput" placeholder="请输入电话" type="number" value="{{phone}}" bindinput="bindphInput" />
+</view>
+<view class="space"></view>
+<view class="reservationInput">
+  <view class="reservationInputtext" >地区</view>
+  <view class="section" style="margin-top: 8rpx;">
+    <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+      <view class="picker">
+        {{region[0]}}，{{region[1]}}，{{region[2]}}
+      </view>
+    </picker>
+  </view>
+</view>
+
+<view class="space"></view>
+<view class="reservationInput">
+  <view class="reservationInputtext" >地址</view>
+  <input class="reinput" placeholder="请输入详细地址" value="{{address}}" bindinput="bindadInput"/>
+
+</view>
+<view class="space"></view>
+
+<view class="protocol">
+  <image class="icon" src="/images/my/check.png"></image>
+  <view class="protext">预约即默认同意</view>
+  <button class="probutton" bindtap="probook">协议</button>
+</view>
+<view class="space"></view>
+<view class="Confirm">
+  <button class="Confirmbutton" bindtap="onClick">我要预约</button>
+</view>
+
+<view class="space"></view>
+<view class="space"></view>
+<view class="container">
+  <view class="dotted"></view>
+</view>
+<view class="space"></view>
+<view class="space"></view>
+<view class="hotline">
+  <image class="icon" src="/images/my/hotline.png">  </image>
+  <view class="hotext">热线电话：</view>
+  <button class="hotbutton" bindtap="probook">17805805661</button>
+</view>
+
+<view class="space"></view>
+<view class="space"></view>
+<view class="container">
+  <view class="dotted"></view>
+</view>
+
+<!--门店地址，点击后cover view界面的隐藏属性改为false  -->
+<view class="store">
+  <view class="storeAddress" bindtap="storeShowClick" data-index="1" >浙江</view>
+  <view class="storeAddress" bindtap="storeShowClick" data-index="2" >江苏</view>
+  <view class="storeAddress" bindtap="storeShowClick" data-index="3" >福建</view>
+</view>
+<cover-view class="storeCoverView"  hidden="{{hiddenName}}">
+  <cover-image  class="CoverIcon" src="/images/my/cancel.png" bindtap="storeHiddenClick" >
+  </cover-image>    
+  <cover-view class="storeCoverText" >{{content}}</cover-view>
+</cover-view>
+<cover-view class="kefu" >
+  <button class="kefubutton" open-type="contact" bindcontact="handleContact">联系客服</button>
+</cover-view>
