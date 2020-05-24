@@ -40,14 +40,14 @@ Page({
     this.onShow();
   },
   onShow: function() {
-    AUTH.checkHasLogined().then(isLogined => {
+    if(app.globalData.isLogined){
       this.setData({
-        wxlogin: isLogined
+        wxlogin: app.globalData.isLogined
       })
-      if (isLogined) {
+      if (app.globalData.isLogined) {
         this.shippingCarInfo()
       }
-    })    
+    }
   },
   async shippingCarInfo(){
     const token = wx.getStorageSync('token')

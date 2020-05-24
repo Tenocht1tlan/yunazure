@@ -58,14 +58,13 @@ Page({
     }
   },
   onShow (){
-    AUTH.checkHasLogined().then(isLogined => {
-      if (isLogined) {
-        this.setData({
-          wxlogin: isLogined
-        })
-        this.goodsFavCheck()
-      }
-    })
+    if(app.globalData.isLogined){
+      this.setData({
+        wxlogin: app.globalData.isLogined
+      })
+      this.goodsFavCheck()
+    }
+    
     this.getGoodsDetailAndKanjieInfo(this.data.goodsId)
   },
   async goodsFavCheck() {

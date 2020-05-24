@@ -168,57 +168,58 @@ Page({
     })
   },
   onShow: function() {
-    AUTH.checkHasLogined().then(isLogined => {
-      if (isLogined) {
-        this.doneShow();
-      } else {
-        wx.showModal({
-          title: '提示',
-          content: '本次操作需要您的登录授权',
-          cancelText: '暂不登录',
-          confirmText: '前往登录',
-          success(res) {
-            if (res.confirm) {
-              wx.switchTab({
-                url: "/pages/my/index"
-              })
-            } else {
-              wx.navigateBack()
-            }
+    if (app.globalData.isloged) {
+      this.doneShow();
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '本次操作需要您的登录授权',
+        cancelText: '暂不登录',
+        confirmText: '前往登录',
+        success(res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: "/pages/my/index"
+            })
+          } else {
+            wx.navigateBack()
           }
-        })
-      }
-    })
+        }
+      })
+    }
+    // AUTH.checkHasLogined().then(isLogined => {
+      
+    // })
   },
   doneShow() {
     // 获取订单列表
     var that = this;
-    var postData = {
-      token: wx.getStorageSync('token')
-    };
-    postData.hasRefund = that.data.hasRefund;
-    if (!postData.hasRefund) {
-      postData.status = that.data.status;
-    }
-    if (postData.status == 9999) {
-      postData.status = ''
-    }
-    this.getOrderStatistics();
-    WXAPI.orderList(postData).then(function(res) {
-      if (res.code == 0) {
-        that.setData({
-          orderList: res.data.orderList,
-          logisticsMap: res.data.logisticsMap,
-          goodsMap: res.data.goodsMap
-        });
-      } else {
-        that.setData({
-          orderList: null,
-          logisticsMap: {},
-          goodsMap: {}
-        });
-      }
-    })
+    // var postData = {
+    //   token: wx.getStorageSync('token')
+    // };
+    // postData.hasRefund = that.data.hasRefund;
+    // if (!postData.hasRefund) {
+    //   postData.status = that.data.status;
+    // }
+    // if (postData.status == 9999) {
+    //   postData.status = ''
+    // }
+    // this.getOrderStatistics();
+    // WXAPI.orderList(postData).then(function(res) {
+    //   if (res.code == 0) {
+    //     that.setData({
+    //       orderList: res.data.orderList,
+    //       logisticsMap: res.data.logisticsMap,
+    //       goodsMap: res.data.goodsMap
+    //     });
+    //   } else {
+    //     that.setData({
+    //       orderList: null,
+    //       logisticsMap: {},
+    //       goodsMap: {}
+    //     });
+    //   }
+    // })
   },
   onHide: function() {
     // 生命周期函数--监听页面隐藏

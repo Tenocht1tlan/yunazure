@@ -19,6 +19,7 @@ Page({
 	},	
   onShow() {
     const _this = this
+    var avatarUrl = wx.getStorageSync('avatarUrl')
     var mail = wx.getStorageSync('mail')
     var isRegister = wx.getStorageSync('register')
     this.setData({
@@ -29,7 +30,7 @@ Page({
         name: mail,
         wxlogin:true,
         isloged:true,
-        avatarUrl:'/images/my/login.png'
+        avatarUrl:avatarUrl
       })
     }
     // AUTH.checkHasLogined().then(isLogined => {
@@ -194,6 +195,11 @@ Page({
       })
       return;
     }else{
+      try {
+        wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
+        wx.setStorageSync('mail', e.detail.userInfo.nickName)
+      } catch (e) { }
+      app.globalData.isloged = true
       this.setData({
         name: e.detail.userInfo.nickName,
         wxlogin:true,

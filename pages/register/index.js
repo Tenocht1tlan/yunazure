@@ -84,6 +84,7 @@ Page({
       try {
         wx.setStorageSync('register', true)
         wx.setStorageSync('mail', this.data.mail)
+        wx.setStorageSync('avatarUrl', '/images/my/login.png')
       } catch (e) { }
       wx.showModal({
         title: '提示',
