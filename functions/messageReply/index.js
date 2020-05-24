@@ -7,7 +7,7 @@ cloud.init()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   console.log("content = " + event)
-  if(event.text == '1'){
+  if(event.Content == '1'){
     await cloud.openapi.customerServiceMessage.send({
       touser: wxContext.OPENID,
       msgtype: 'text',
@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
         content: '您好，我是专属小客服1',
       },
     })
-  }else if (event.text == '2') {
+  }else if (event.Content == '2') {
     await cloud.openapi.customerServiceMessage.send({
       touser: wxContext.OPENID,
       msgtype: 'text',
@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
         content: '您好，我是专属小客服2',
       },
     })
-  }else if (event.text == '3') {
+  }else if (event.Content == '3') {
     await cloud.openapi.customerServiceMessage.send({
       touser: wxContext.OPENID,
       msgtype: 'text',
