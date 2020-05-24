@@ -158,6 +158,7 @@ height: 28rpx;
 
 .kefu{
   position: fixed;
+  height: 80rpx;
   bottom:80rpx;
   right: -20rpx;
 }
