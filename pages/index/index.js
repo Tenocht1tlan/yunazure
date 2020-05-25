@@ -30,6 +30,7 @@ Page({
     curPage: 1,
     pageSize: 20,
     cateScrollTop: 0,
+    starsetnum:false,
     array:[{
           'text':'女士',
           'id':0
@@ -80,7 +81,11 @@ Page({
       currentChoseItem:e.target.dataset.index
     })
   },
-
+starset:function(e){
+  this.setData({
+    starsetnum:!this.data.starsetnum
+  })
+},
   tabClick: function(e) {
     wx.setStorageSync("_categoryId", e.currentTarget.id)
     wx.switchTab({
