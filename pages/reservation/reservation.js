@@ -11,6 +11,8 @@ Page({
     region: ['浙江省', '杭州市', '西湖区'],
     customItem: '全部',
     address:'',
+    number:0,
+    orderNumber:'202005-1',
     hiddenName:true,
     zhejiang:'浙江省杭州市桐庐县',
     jiangshu:'江苏省南京市',
@@ -81,30 +83,56 @@ Page({
         title:"预约",
         content:'您确定要预约吗',
         success(res){
+          var date = new Date()
           if(res.confirm){
-            db.collection('yxh').add({
-              data:{
-                name:_this.data.name,
-                phone:_this.data.phone,
-                region:_this.data.region[0] + _this.data.region[1] + _this.data.region[2],
-                address:_this.data.address
-              }
-            }).then(res=>{
-              wx.showToast({
-                title: '已预约',
-                icon: 'success',
-              })
+            wx.showLoading({
+              title: '加载中',
+            }),
+            db.collection('reservation').where({
+              tag: 'reservation' 
+            }).count().then(res => {
               _this.setData({
-                name:'',
-                phone:'',
-                address:''
-              })
-            }).catch(err=>{
-              wx.showModal({
-                title:'Tips',
-                content:'预约失败,稍后再试',
+                number:res.total + 1,
+                orderNumber: date.getFullYear().toString() + date.getMonth().toString() + '-' + (res.total + 1).toString() 
               })
             })
+            setTimeout(function () {
+              wx.hideLoading({
+                complete: (res) => {
+                  db.collection('reservation').add({
+                    data:{
+                      orderNumber: _this.data.orderNumber,
+                      name:_this.data.name,
+                      phone:_this.data.phone,
+                      region:_this.data.region[0] + _this.data.region[1] + _this.data.region[2],
+                      address:_this.data.address,
+                      tag:'reservation'
+                    }
+                  }).then(res=>{
+                    wx.showToast({
+                      title: '',
+                      icon: 'success',
+                    })
+                    wx.showModal({
+                      title:'已预约!',
+                      content:'恭喜您成为我们的第 '+ _this.data.number.toString() +' 位预约用户！',
+                      showCancel:false
+                    })
+                    _this.setData({
+                      name:'',
+                      phone:'',
+                      address:''
+                    })
+                  }).catch(err=>{
+                    wx.showModal({
+                      title:'Tips',
+                      content:'预约失败,稍后再试',
+                    })
+                  })
+                },
+              })
+            }, 2000)
+            
           }
         }
       })
