@@ -123,14 +123,15 @@
 <view class="page-selection">
   <scroll-view class="scroll-view_h" scroll-x="true" bandscroll="scrpll" style="width:100%" scroll-left="{{scrollToLeft}}" >
     <view class="remai-goods" wx:for="{{imageChose}}" wx:key="index">
-        <text>111</text>
-       <image class="scroll-view-imag" src="{{item.src}}">123</image>
+      <view class="imag-box">
+       <image class="scroll-view-imag" src="{{item.src}}"  ></image>
+      </view>
+      <view style="margin:20rpx 45rpx;width:250rpx">新品
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "></image>
+      </view>
+      <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
+      <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
     </view>
-  
-
-      <!-- <image class="scroll-view-imag" src="/images/my/ask.png"></image>
-      <image class="scroll-view-imag" src="/images/my/cancel.png"></image>
-      <image class="scroll-view-imag" src="/images/my/dsm.png"></image> -->
   </scroll-view>
 </view>
 <!--  -->
