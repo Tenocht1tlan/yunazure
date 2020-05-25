@@ -452,14 +452,21 @@ padding: 5rpx,0;
 .selling-goods-chose{
   width: 600rpx;
 }
+
 /*  */
 .page-selection{
   white-space: nowrap;
   display:flex;
   padding: 5rpx,0;
+  
   }
+.imag-box{
+  padding: 15rpx 10rpx;
+}
 .remai-goods{
-    padding: 20rpx 45rpx;
-    font-size: 25rpx;
-    display: inline-block;
+  margin-left: 20rpx;
+  border: #f0f0f0 1rpx solid;
+  /* padding: 20rpx 45rpx; */
+  font-size: 25rpx;
+  display: inline-block;
 }
