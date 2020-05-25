@@ -124,7 +124,8 @@
   <scroll-view class="scroll-view_h" scroll-x="true" bandscroll="scrpll" style="width:100%" scroll-left="{{scrollToLeft}}" >
     <view class="remai-goods" wx:for="{{imageChose}}" wx:key="index">
       <view class="imag-box">
-       <image class="scroll-view-imag" src="{{item.src}}"  ></image>
+       <image class="scroll-view-imag" src="{{item.src}}" ></image>
+         <image class="star" bindtap="starset" src="{{starsetnum?'/images/staryes.png':'/images/starno.png'}}" ></image>
       </view>
       <view style="margin:20rpx 45rpx;width:250rpx">新品
         <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "></image>
