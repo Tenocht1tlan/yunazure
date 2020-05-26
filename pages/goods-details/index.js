@@ -7,7 +7,7 @@ import Poster from 'wxa-plugin-canvas/poster/poster'
 
 Page({
   data: {
-    wxlogin: true,
+    wxlogin: false,
 
     goodsDetail: {},
     hasMoreSelect: false,
@@ -37,7 +37,7 @@ Page({
     }
     this.data.goodsId = e.id
     const that = this
-    this.data.kjJoinUid = e.kjJoinUid    
+    this.data.kjJoinUid = e.kjJoinUid
     this.setData({
       goodsDetailSkuShowType: CONFIG.goodsDetailSkuShowType,
       curuid: wx.getStorageSync('uid')
@@ -57,10 +57,11 @@ Page({
       })
     }
   },
-  onShow (){
-    if(app.globalData.isLogined){
+  async onShow (){
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
       this.setData({
-        wxlogin: app.globalData.isLogined
+        wxlogin: isLogined
       })
       this.goodsFavCheck()
     }
@@ -83,7 +84,8 @@ Page({
     }
   },
   async addFav(){
-    AUTH.checkHasLogined().then(isLogined => {
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
       this.setData({
         wxlogin: isLogined
       })
@@ -100,7 +102,7 @@ Page({
           })
         }
       }
-    })
+    }
   },
   async getGoodsDetailAndKanjieInfo(goodsId) {
     const that = this;
@@ -630,8 +632,17 @@ Page({
         icon: 'none',
       })
       return;
+    }else{
+      try {
+        wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
+        wx.setStorageSync('mail', e.detail.userInfo.nickName)
+        wx.setStorageSync('isloged', true)
+      } catch (e) { }
+      this.setData({
+        wxlogin:true,
+      })
     }
-    AUTH.register(this);
+    // AUTH.register(this);
   },
   closePop(){
     this.setData({

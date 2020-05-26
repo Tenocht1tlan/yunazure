@@ -109,10 +109,6 @@ Page({
                       tag:'reservation'
                     }
                   }).then(res=>{
-                    wx.showToast({
-                      title: '',
-                      icon: 'success',
-                    })
                     wx.showModal({
                       title:'已预约!',
                       content:'恭喜您成为我们的第 '+ _this.data.number.toString() +' 位预约用户！',

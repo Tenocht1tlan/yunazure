@@ -10,10 +10,5 @@
   "license": "ISC",
   "dependencies": {
     "wx-server-sdk": "~2.0.3"
-  },
-  "permissions": {
-    "openapi": [
-      "customerServiceMessage.send"
-    ]
   }
 }

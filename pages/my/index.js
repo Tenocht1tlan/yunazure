@@ -17,7 +17,7 @@ Page({
 	onLoad() {
     
 	},	
-  onShow() {
+  async onShow() {
     const _this = this
     var avatarUrl = wx.getStorageSync('avatarUrl')
     var mail = wx.getStorageSync('mail')
@@ -25,7 +25,8 @@ Page({
     this.setData({
       isRegister: isRegister,
     })
-    if(app.globalData.isloged){
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
       this.setData({
         name: mail,
         wxlogin:true,
@@ -172,7 +173,11 @@ Page({
             wxlogin: true,
             isloged: false
           })
-          app.globalData.isloged = false
+          try {
+            wx.setStorageSync('isloged', false)
+          } catch (e) {
+            // Do something when catch error
+          }
         }else if (res.cancel){
           wx.showToast({
             title: '已取消',
@@ -198,8 +203,8 @@ Page({
       try {
         wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
         wx.setStorageSync('mail', e.detail.userInfo.nickName)
+        wx.setStorageSync('isloged', true)
       } catch (e) { }
-      app.globalData.isloged = true
       this.setData({
         name: e.detail.userInfo.nickName,
         wxlogin:true,

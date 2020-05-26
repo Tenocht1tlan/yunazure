@@ -14,20 +14,20 @@ async function checkSession(){
 }
 // 检测登录状态，返回 true / false
 async function checkHasLogined() {
-  const token = wx.getStorageSync('token')
+  const token = wx.getStorageSync('isloged')
   if (!token) {
     return false
   }
-  const loggined = await checkSession()
-  if (!loggined) {
-    wx.removeStorageSync('token')
-    return false
-  }
-  const checkTokenRes = await WXAPI.checkToken(token)
-  if (checkTokenRes.code != 0) {
-    wx.removeStorageSync('token')
-    return false
-  }
+  // const loggined = await checkSession()
+  // if (!loggined) {
+  //   wx.removeStorageSync('isloged')
+  //   return false
+  // }
+  // const checkTokenRes = await WXAPI.checkToken(token)
+  // if (checkTokenRes.code != 0) {
+  //   wx.removeStorageSync('token')
+  //   return false
+  // }
   return true
 }
 

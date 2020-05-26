@@ -39,12 +39,13 @@ Page({
     this.initEleWidth();
     this.onShow();
   },
-  onShow: function() {
-    if(app.globalData.isLogined){
+  async onShow() {
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
       this.setData({
-        wxlogin: app.globalData.isLogined
+        wxlogin: isLogined
       })
-      if (app.globalData.isLogined) {
+      if (isLogined) {
         this.shippingCarInfo()
       }
     }

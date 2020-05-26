@@ -80,7 +80,6 @@ Page({
       }
     }).then(res => {
       app.globalData.mail = this.data.mail
-      app.globalData.isloged = true
       try {
         wx.setStorageSync('register', true)
         wx.setStorageSync('mail', this.data.mail)

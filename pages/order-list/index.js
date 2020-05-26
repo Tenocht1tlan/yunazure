@@ -167,8 +167,9 @@ Page({
       }
     })
   },
-  onShow: function() {
-    if (app.globalData.isloged) {
+  async onShow() {
+    const isLogined = await AUTH.checkHasLogined()
+    if (isLogined) {
       this.doneShow();
     } else {
       wx.showModal({

@@ -6,7 +6,7 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  console.log("content = " + event)
+
   if(event.Content == '1'){
     await cloud.openapi.customerServiceMessage.send({
       touser: wxContext.OPENID,
@@ -32,13 +32,13 @@ exports.main = async (event, context) => {
       },
     })
   }else{
-    await cloud.openapi.customerServiceMessage.send({
-      touser: wxContext.OPENID,
-      msgtype: 'text',
-      text: {
-        content: '您需要咨询的问题类型是？(回复序号即可)客服热线：xxx \n1: 售前咨询\n2: 交期咨询 \n3: 售后服务',
-      },
-    })
+    // await cloud.openapi.customerServiceMessage.send({
+    //   touser: wxContext.OPENID,
+    //   msgtype: 'text',
+    //   text: {
+    //     content: '您需要咨询的问题类型是？(回复序号即可)客服热线：xxx \n1: 售前咨询\n2: 交期咨询 \n3: 售后服务',
+    //   },
+    // })
   }
   
   return 'success'
