@@ -55,6 +55,7 @@
   </view>
 </view> -->
 
+
 <view class="container">
   <block wx:for="{{categories}}" wx:key="id" wx:if="{{item.goods}}">
     <view class="category-goods-title">
@@ -121,19 +122,34 @@
 <view class='space'></view>
 <view class="page-selection">
   <scroll-view class="scroll-view_h" scroll-x="true" bandscroll="scrpll" style="width:100%" scroll-left="{{scrollToLeft}}" >
-    <view class="remai-goods" wx:for="{{imageChose}}" wx:key="index">
+    <view class="remai-goods" wx:for="{{imageChose}}" wx:key="index"  >
       <view class="imag-box">
-       <image class="scroll-view-imag" src="{{item.src}}" ></image>
-         <image class="star" catchtap="starset" src="{{item.starsetnum?'/images/staryes.png':'/images/starno.png'}}"  data-index="{{index}}"></image>
+        <image class="scroll-view-imag" src="{{item.src}}" ></image>
+         <image class="star" bindtap="starset" src="{{item.starsetnum?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" ></image>
       </view>
       <view style="margin:20rpx 45rpx;width:250rpx">新品
-        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "></image>
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  bindtap="showUp" data-index="{{index}}"></image>
       </view>
       <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
       <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
+     <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
+        <view class="modal-cancel" bindtap="hideModal"></view>
+        <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+           <!--  -->
+          <view class='Mselect'>
+            <image class="scroll-view-imag" src="{{upImage}}" ></image>
+            <view>------选择尺码------</view>
+            <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption'>
+              {{item}}
+            </view>
+          </view>
+         </view>
+       </view>
     </view>
   </scroll-view>
 </view>
+
+
 <!--  -->
 <!-- <view>
   <view class="goods-container" wx:if="{{goodsRecommend.length > 0 && activeCategoryId == 0}}">
