@@ -66,7 +66,7 @@
     </view>
     <view class='item' bindtap='goOrder' data-type="0">
       <image class="icon" src="/images/my/kefu.png" background-size="cover"></image>
-      <view class='text'>400热线</view>
+      <view class='text'>心愿单</view>
     </view>
     <view class='item' bindtap='goOrder' data-type="0">
       <image class="icon" src="/images/my/guanyu.png" background-size="cover"></image>
