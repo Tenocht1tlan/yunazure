@@ -30,7 +30,6 @@ Page({
     curPage: 1,
     pageSize: 20,
     cateScrollTop: 0,
-    starsetnum:false,
     array:[{
           'text':'女士',
           'id':0
@@ -61,20 +60,32 @@ Page({
   imageChose:[
     {
       'src':'/images/my/ask.png',
-      'id':'0'
+      'id':'0',
+      'starsetnum':false    
     },
     {
       'src':'/images/my/cancel.png',
-      'id':'1'
+      'id':'1',
+      'starsetnum':false    
     },
     {
       'src':'/images/my/dsm.png',
-      'id':'2'
+      'id':'2',
+      'starsetnum':false    
     },
   ],
   // 被点击的热卖商品的索引
-  currentChoseItem :0
-  },
+    currentChoseItem :0,
+  //   goodList: [{
+  //     collected: 0,
+  //     id: 1
+  //   },
+  //   {
+  //     collected: 1,
+  //     id: 2
+  //   },
+  // ],
+},
 
   activeItem:function(e){
     this.setData({
@@ -82,10 +93,29 @@ Page({
     })
   },
 starset:function(e){
+  let index = e.currentTarget.dataset.index;
+  let temp = 'imageChose[' + index +'].starsetnum';
+  // 获取当前点击的下标
   this.setData({
-    starsetnum:!this.data.starsetnum
+    [temp]:!(this.data.imageChose[index].starsetnum)
   })
 },
+// starset:function(e) {
+//   // 获取当前点击下标
+//   var index = e.currentTarget.dataset.index;
+//   // data中获取列表
+//   var message = this.data.goodList;
+//   for (let i in message) { //遍历列表数据
+//     if (i == index) { //根据下标找到目标
+//       if (message[i].collected == 0) { //如果是没点赞+1
+//         message[i].collected = parseInt(message[i].collected) + 1
+//       } else {
+//         message[i].collected = parseInt(message[i].collected) - 1
+//       }
+//     }
+//   }
+// },
+
   tabClick: function(e) {
     wx.setStorageSync("_categoryId", e.currentTarget.id)
     wx.switchTab({
