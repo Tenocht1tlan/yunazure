@@ -1,7 +1,7 @@
 const WXAPI = require('apifm-wxapi')
 const TOOLS = require('../../utils/tools.js')
 const AUTH = require('../../utils/auth')
-
+const db = wx.cloud.database()
 const app = getApp()
 
 Page({
@@ -51,20 +51,30 @@ Page({
     }
   },
   async shippingCarInfo(){
-    const token = wx.getStorageSync('token')
+    
+    const token = wx.getStorageSync('isloged')
     if (!token) {
       return
     }
-    const res = await WXAPI.shippingCarInfo(token)
-    if (res.code == 0) {
-      this.setData({
-        shippingCarInfo: res.data
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).get().then(res2=>{
+        console.log('res2 ='+res2.data)
+        this.setData({
+          shippingCarInfo: res2.data
+        })
+      }).catch(err=>{
+        console.log('err ='+err)
+        this.setData({
+          shippingCarInfo: null
+        })
       })
-    } else {
-      this.setData({
-        shippingCarInfo: null
-      })
-    }
+    }).catch(err1=>{
+      console.log(err1)
+    })
   },
   toIndexPage: function() {
     wx.switchTab({
@@ -172,8 +182,16 @@ Page({
         icon: 'none',
       })
       return;
+    }else{
+      try {
+        wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
+        wx.setStorageSync('mail', e.detail.userInfo.nickName)
+        wx.setStorageSync('isloged', true)
+      } catch (e) { }
+      this.setData({
+        wxlogin:true,
+      })
     }
-    AUTH.register(this);
   },
   changeCarNumber(e){
     const key = e.currentTarget.dataset.key

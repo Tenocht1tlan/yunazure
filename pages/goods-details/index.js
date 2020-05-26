@@ -1,8 +1,9 @@
 const WXAPI = require('apifm-wxapi')
-const app = getApp();
+const app = getApp()
 const CONFIG = require('../../config.js')
 const AUTH = require('../../utils/auth')
 const SelectSizePrefix = "选择："
+const db = wx.cloud.database()
 import Poster from 'wxa-plugin-canvas/poster/poster'
 
 Page({
@@ -46,7 +47,7 @@ Page({
     this.shippingCartInfo()
   },  
   async shippingCartInfo(){
-    const token = wx.getStorageSync('token')
+    const token = wx.getStorageSync('isloged')
     if (!token) {
       return
     }
@@ -343,7 +344,6 @@ Page({
       })
       return
     }
-    const token = wx.getStorageSync('token')
     const goodsId = this.data.goodsDetail.basicInfo.id
     const sku = []
     if (this.data.goodsDetail.properties) {
@@ -354,20 +354,25 @@ Page({
         })
       })
     }
-    const res = await WXAPI.shippingCarInfoAddItem(token, goodsId, this.data.buyNumber, sku)
-    if (res.code != 0) {
+    await db.collection('shopping-cart').add({
+      data:{
+        goodsId: goodsId,
+        buyNumber:this.data.buyNumber,
+        sku:sku
+      }
+    }).then(res=>{
       wx.showToast({
-        title: res.msg,
+        title: '加入购物车',
+        icon: 'success'
+      })
+    }).catch(err=>{
+      wx.showToast({
+        title: err.errMsg,
         icon: 'none'
       })
       return
-    }
-
-    this.closePopupTap();
-    wx.showToast({
-      title: '加入购物车',
-      icon: 'success'
     })
+    this.closePopupTap();
     this.shippingCartInfo()
   },
   /**

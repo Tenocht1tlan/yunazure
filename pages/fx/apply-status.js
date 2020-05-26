@@ -186,7 +186,15 @@ Page({
         icon: 'none',
       })
       return;
+    }else{
+      try {
+        wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
+        wx.setStorageSync('mail', e.detail.userInfo.nickName)
+        wx.setStorageSync('isloged', true)
+      } catch (e) { }
+      this.setData({
+        wxlogin:true,
+      })
     }
-    AUTH.register(this);
   },
 })

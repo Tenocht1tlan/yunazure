@@ -1,9 +1,8 @@
 <!--index.wxml-->
-<!-- 天使童装的购物车页面，在app.json里面改成了reservation，现在用不到了 -->
 <import src="../template-cart/template-cart.wxml" />
 
 <view class="container">  
-  <template is="{{shippingCarInfo.items.length > 0 ? 'cart-goods-list' : 'no-goods'}}" data="{{...shippingCarInfo, saveHidden, allSelect, noSelect}}"></template>
+  <template is="{{shippingCarInfo.length > 0 ? 'cart-goods-list' : 'no-goods'}}" data="{{...shippingCarInfo, saveHidden, allSelect, noSelect}}"></template>
 </view>
 
 <import src="/template/login/index.wxml" />
