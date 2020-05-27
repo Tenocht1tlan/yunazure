@@ -19,9 +19,9 @@
           </view>
           <view class="text-box">
             <view class="goods-title">{{item.name}}</view>
-            <view wx:if="{{item.sku}}" class="goods-label">
-              <block wx:for="{{item.sku}}" wx:for-item="option" wx:key="index">
-                {{option.optionName}}:{{option.optionValueName}}
+            <view wx:if="{{item.property}}" class="goods-label">
+              <block wx:for="{{item.property}}" wx:for-item="option" wx:key="index">
+                {{option.color}} - 编号 {{option.itemid}}
               </block>
             </view>
             <view class="goods-price">¥ {{item.price}}</view>

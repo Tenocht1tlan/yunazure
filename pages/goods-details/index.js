@@ -345,20 +345,30 @@ Page({
       return
     }
     const goodsId = this.data.goodsDetail.basicInfo.id
-    const sku = []
+    const property = []
     if (this.data.goodsDetail.properties) {
       this.data.goodsDetail.properties.forEach(p => {
-        sku.push({
+        property.push({
           optionId: p.id,
           optionValueId: p.optionValueId
         })
       })
     }
+
     await db.collection('shopping-cart').add({
       data:{
-        goodsId: goodsId,
-        buyNumber:this.data.buyNumber,
-        sku:sku
+        items:[{
+          name:this.data.goodsDetail.basicInfo.name,
+          price:this.data.selectSizePrice,
+          number:this.data.buyNumber,
+          active:false,
+          pic:'/images/my/cancel.png',
+          property:[{
+            color:'黑色',
+            itemid:goodsId
+          }],
+          left:''
+        }],
       }
     }).then(res=>{
       wx.showToast({
