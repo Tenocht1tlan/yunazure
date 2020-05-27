@@ -32,11 +32,45 @@ Page({
     cateScrollTop: 0,
     array:[{
           'text':'女士',
-          'id':0
+          'id':0,
+          'imageChose':[
+            {
+              'src':'/images/my/ask.png',
+              'id':'0',
+              'starsetnum':false    
+            },
+            {
+              'src':'/images/my/cancel.png',
+              'id':'1',
+              'starsetnum':false    
+            },
+            {
+              'src':'/images/my/dsm.png',
+              'id':'2',
+              'starsetnum':false    
+            },
+          ]
     },
     {
       'text':'男士',
-      'id':1
+      'id':1,
+      'imageChose':[
+        {
+          'src':'/images/my/check.png',
+          'id':'0',
+          'starsetnum':false    
+        },
+        {
+          'src':'/images/my/zan.png',
+          'id':'1',
+          'starsetnum':false    
+        },
+        {
+          'src':'/images/my/address.png',
+          'id':'2',
+          'starsetnum':false    
+        },
+      ],
     },
     {
       'text':'女童',
@@ -56,23 +90,7 @@ Page({
     },
   ],
   upImage:'',
-  imageChose:[
-    {
-      'src':'/images/my/ask.png',
-      'id':'0',
-      'starsetnum':false    
-    },
-    {
-      'src':'/images/my/cancel.png',
-      'id':'1',
-      'starsetnum':false    
-    },
-    {
-      'src':'/images/my/dsm.png',
-      'id':'2',
-      'starsetnum':false    
-    },
-  ],
+
   // 被点击的热卖商品的索引
     currentChoseItem :0,
     // 弹出界面
@@ -84,6 +102,7 @@ Page({
 },
   activeItem:function(e){
     this.setData({
+      imageChose:this.data.array[e.target.dataset.index].imageChose,
       currentChoseItem:e.target.dataset.index
     })
   },
@@ -296,6 +315,9 @@ starset:function(e){
     this.setData(_data)
   },
   onShow: function(e){
+    this.setData({
+      imageChose:this.data.array[0].imageChose,
+    })
     this.setData({
       shopInfo: wx.getStorageSync('shopInfo')
     })
