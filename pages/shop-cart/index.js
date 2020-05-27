@@ -6,27 +6,26 @@ const app = getApp()
 
 Page({
   data: {
-    shippingCarInfo:[{
-      'name':"菠萝印花短裤",
-      'price':229.00,
-      'number':100,
-      'key':1,
-      'active':true,
-      'pic':'/images/walt.png',
-      'sku':[{
-        'optionName':"aal",
-        'optionValueName':"454"
-      }],
-      'left':2
-
-    }],
     wxlogin: true,
-
     saveHidden: true,
     allSelect: true,
     noSelect: false,
-
+    startX:'',
     delBtnWidth: 120, //删除按钮宽度单位（rpx）
+    shippingCarInfo:{
+      items:[{
+        name:'1',
+        price:229.00,
+        number:100,
+        active:false,
+        pic:'/images/my/cancel.png',
+        property:[{
+          color:'黑色',
+          itemid:'5004/45'}
+        ],
+        left:''
+      }]
+    }
   },
 
   //获取元素自适应后的实际宽度
@@ -78,12 +77,12 @@ Page({
       }).get().then(res2=>{
         console.log('res2 ='+res2.data)
         this.setData({
-          shippingCarInfo: res2.data
+          // shippingCarInfo: res2.data
         })
       }).catch(err=>{
         console.log('err ='+err)
         this.setData({
-          shippingCarInfo: null
+          // shippingCarInfo: null
         })
       })
     }).catch(err1=>{
