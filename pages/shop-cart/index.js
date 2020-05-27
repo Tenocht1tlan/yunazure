@@ -6,6 +6,20 @@ const app = getApp()
 
 Page({
   data: {
+    shippingCarInfo:[{
+      'name':"菠萝印花短裤",
+      'price':229.00,
+      'number':100,
+      'key':1,
+      'active':true,
+      'pic':'/images/walt.png',
+      'sku':[{
+        'optionName':"aal",
+        'optionValueName':"454"
+      }],
+      'left':2
+
+    }],
     wxlogin: true,
 
     saveHidden: true,

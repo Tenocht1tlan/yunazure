@@ -9,73 +9,42 @@
 		<image class="userinfo-avatar" src="/images/my/login.png" background-size="cover"></image>
     <button class="we" plain="true" size="mini" open-type="getUserInfo" bindgetuserinfo="goLogin">点击登录</button>
 	</view>
-  
-  <view class='order-shortcut' style="margin-top:-10rpx;">
-    <!-- https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=2767 -->
-    <view class='item' bindtap='goOrder' data-type="0">
-      <image class="icon" src="/images/my/dsm.png" background-size="cover"></image>
-      <view class='text'>待上门</view>
-    </view>
-    <view class='item' bindtap='goOrder' data-type="1">
-      <image class="icon" src="/images/my/dingdan.png" background-size="cover"></image>
-      <view class='text'>待支付</view>
-    </view>
-    <view class='item' bindtap='goOrder' data-type="2">
-      <image class="icon" src="/images/my/yiwancheng.png" background-size="cover"></image>
-      <view class='text'>已支付</view>
-    </view>
-
-    <view class='item' bindtap='goOrder' data-type="99">
-      <image class="icon" src="/images/my/kehu.png" background-size="cover"></image>
-      <view class='text'>售后</view>
-    </view>
+  <view class="space"></view>
+  <view class="list-box">
+  <image class="list-image" src="/images/my/address.png" mode="aspectFit" ></image>
+  <text class="list-text">我的地址簿</text>
+  <image class="list-in" src="/images/my/in.png" ></image>
   </view>
-  <!-- 1.自添加 -->
-  <view class="bigspace"></view>
-  <view class='order-shortcut'>
-    <view class='itemrow' bindtap='goAsset' data-type="2">
-      <view class='text'>我的钱包</view>
-      <image class="userinfo-avatar" src="/images/walt.png" background-size="cover"></image>
-    </view>
-    <view class='itemrow' bindtap='goAsset'>
-      <view class="text">优惠券</view>
-      <image class="userinfo-avatar" src="/images/discount.png" background-size="cover"></image>
-    </view>
+  <view class="list-box">
+  <image class="list-image" src="/images/my/myorder.png" mode="aspectFit"></image>
+  <text class="list-text">我的订单</text>
+  <image class="list-in" src="/images/my/in.png" ></image>
   </view>
-  <view class="bigspace"></view>
-  <!-- <view class='privtext'>个人服务</view> -->
-
-  <view class='order-shortcut'>
-   <view class='item' bindtap='goOrder' data-type="0">
-      <image class="icon" src="/images/my/ask.png" background-size="cover"></image>
-      <view class='text'>私人顾问</view>
-    </view>
-    <view class='item' bindtap='goOrder' data-type="0">
-      <image class="icon" src="/images/my/manual.png" background-size="cover"></image>
-      <view class='text'>保养手册</view>
-    </view>
-    <view class='item' bindtap='goOrder' data-type="0">
-      <image class="icon" src="/images/my/saleafter.png" background-size="cover"></image>
-      <view class='text'>售后准则</view>
-    </view>
-   </view>  
-  <view class='order-shortcut'>
-   <view class='item' bindtap='goOrder' data-type="0">
-      <image class="icon" src="/images/my/question.png" background-size="cover"></image>
-      <view class='text'>常见问题</view>
-    </view>
-    <view class='item' bindtap='goOrder' data-type="0">
-      <image class="icon" src="/images/my/kefu.png" background-size="cover"></image>
-      <view class='text'>心愿单</view>
-    </view>
-    <view class='item' bindtap='goOrder' data-type="0">
-      <image class="icon" src="/images/my/guanyu.png" background-size="cover"></image>
-      <view class='text'>关于</view>
-    </view>
-   </view>  
+  <view class="list-box">
+  <image class="list-image" src="/images/my/star.png" mode="aspectFit"></image>
+  <text class="list-text">我的心愿单</text>
+  <image class="list-in" src="/images/my/in.png" ></image>
+  </view>
+  <view class="list-box">
+  <image class="list-image" src="/images/my/history.png" mode="aspectFit"></image>
+  <text class="list-text">浏览历史</text>
+  <image class="list-in" src="/images/my/in.png" ></image>
+  </view>
+  <view class="list-box">
+  <image class="list-image" src="/images/my/kefu.png" mode="aspectFit"></image>
+  <text class="list-text">客服与售后</text>
+  <image class="list-in" src="/images/my/in.png" ></image>
+  </view>
+  <view class="list-box">
+  <image class="list-image" src="/images/my/fadeback.png" mode="aspectFit"></image>
+  <text class="list-text">意见与反馈</text>
+  <image class="list-in" src="/images/my/in.png" ></image>
+  </view>
+  <view class="space"></view>
+  <view class="space"></view>
 </view>
-  <view wx:if="{{isloged }}" class="logout" style="text-align:center; margin-top: 20rpx">
-    <button class="logout-btn" plain="true" size="mini" bindtap='logOut' >注销</button>
+  <view wx:if="{{isloged}}" class="logout" style='text-align:center;font-family:"Microsoft Yahei";'>
+    <button class="logout-btn" plain="true" bindtap='logOut' >退出</button>
   </view>
   <view wx:else="{{ isloged }}"></view>
 <template is="apifmLogin" data="{{wxlogin: wxlogin}}" />
