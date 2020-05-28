@@ -442,6 +442,8 @@
 white-space: nowrap;
 display:flex;
 padding: 5rpx,0;
+opacity:0.99;
+z-index: 0;
 }
 .remai{
   width: 120rpx;
@@ -484,7 +486,7 @@ padding: 5rpx,0;
 }
 .packge{
   height: max-content;
-  z-index: 5000;
+  z-index: 999;
 }
 /*  */
 /* ---------------------------- */
@@ -501,6 +503,7 @@ padding: 5rpx,0;
   text-align: center;
 }
 .Mselect{
+  z-index: 4000;
   margin-bottom: 20rpx;
 }
 .Mselect view{

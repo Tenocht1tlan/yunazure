@@ -157,7 +157,6 @@ starset:function(e){
   // ----------------------------------------------------------------------modal
   // 显示遮罩层
   showUp: function (e) {
-    wx.hideTabBar({})
     var that = this;
     var index = e.currentTarget.dataset.index;
     console.log(index)
@@ -188,7 +187,6 @@ starset:function(e){
     })
     this.animation = animation
     that.slideDown();//调用动画--滑出
-    wx.showTabBar({})
     var time1 = setTimeout(function () {
       that.setData({
         hideFlag: true
@@ -212,6 +210,10 @@ starset:function(e){
     this.setData({
       animationData: this.animation.export(),
     })
+  },
+  doNotMove:function(){
+    console.log('yxh')
+    return
   },
   // ----------------------------------------------------------------.....
   toDetailsTap: function(e) {
