@@ -306,9 +306,8 @@ starset:function(e){
     wx.cloud.callFunction({
       name:'login'
     }).then(res=>{
-      db.collection('image').where({
-        _openid:res.result.openid
-      }).get().then(res2=>{
+      db.collection('image').get().then(res2=>{
+        console.log(res2.data)
         if(res2.data){
           _data.banners = res2.data
           this.setData(_data)
@@ -384,35 +383,37 @@ starset:function(e){
           showCancel: false
         })
       }
+    }).catch(err=>{
+      
     })
-
     // const res = await WXAPI.goods({
     //   categoryId: categoryId,
     //   page: this.data.curPage,
     //   pageSize: this.data.pageSize
     // })
     wx.hideLoading()
-    // if (res.code == 404 || res.code == 700) {
-    //   let newData = {
-    //     loadingMoreHidden: false
-    //   }
-    //   if (!append) {
-    //     newData.goods = []
-    //   }
-    //   this.setData(newData);
-    //   return
+    if(true){
+      let newData = {
+        loadingMoreHidden: false
+      }
+      if (!append) {
+        newData.goods = []
+      }
+      this.setData(newData)
+      return
+    }
+    
+    // let goods = []
+    // if (append) {
+    //   goods = this.data.goods
     // }
-    let goods = []
-    if (append) {
-      // goods = this.data.goods
-    }
-    for (var i = 0; i < this.data.goods.length; i++) {
-      // goods.push(this.data.goods[i]);
-    }
+    // for (var i = 0; i < this.data.goods.length; i++) {
+    //   goods.push(this.data.goods[i]);
+    // }
     this.setData({
       loadingMoreHidden: true,
       // goods: goods,
-    });
+    })
   },
   getCoupons: function() {
     var that = this;
@@ -441,9 +442,9 @@ starset:function(e){
     })
   },
   onReachBottom: function() {
-    this.setData({
-      curPage: this.data.curPage + 1
-    });
+    // this.setData({
+    //   curPage: this.data.curPage + 1
+    // });
     this.getGoodsList(this.data.activeCategoryId, true)
   },
   onPullDownRefresh: function() {
