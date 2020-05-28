@@ -4,16 +4,16 @@
       <image src="/images/order-details/icon-address.png"></image>
       <text>{{shopInfo.name}}</text>
     </view>
-    <view class="r">
+    <!-- <view class="r">
       <text>切换门店</text>
       <image src="/images/icon/next.png"></image>
-    </view>
+    </view> -->
   </view>
 </navigator>
 <view class="swiper-container">
   <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular>
     <swiper-item wx:for="{{banners}}" wx:key="id">
-      <image  mode="aspectFill" bindtap="tapBanner" data-url="{{item.linkUrl}}" src="{{item.picUrl}}" />
+      <image  mode="aspectFill" bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" />
     </swiper-item>
   </swiper>
   <view class="search">
@@ -54,8 +54,6 @@
     </view>          
   </view>
 </view> -->
-
-
 <view class="container">
   <block wx:for="{{categories}}" wx:key="id" wx:if="{{item.goods}}">
     <view class="category-goods-title">

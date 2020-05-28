@@ -1,6 +1,6 @@
 const WXAPI = require('apifm-wxapi')
 const TOOLS = require('../../utils/tools.js')
-
+const db = wx.cloud.database();
 const APP = getApp()
 // fixed首次打开不显示标题的bug
 APP.configLoadOK = () => {
@@ -303,25 +303,30 @@ starset:function(e){
   async initBanners(){
     const _data = {}
     // 读取头部轮播图
-    const res1 = await WXAPI.banners({
-      type: 'index'
-    })
-    if (res1.code == 700) {
-      wx.showModal({
-        title: '提示',
-        content: '请在后台添加 banner 轮播图片，自定义类型填写 index',
-        showCancel: false
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('image').where({
+        _openid:res.result.openid
+      }).get().then(res2=>{
+        if(res2.data){
+          _data.banners = res2.data
+          this.setData(_data)
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: '请在后台添加 banner 轮播图片，自定义类型填写 index',
+            showCancel: false
+          })
+        }
       })
-    } else {
-      _data.banners = res1.data
-    }
-    this.setData(_data)
+    }).catch(err=>{
+      console.error(err)
+    })
   },
   onShow: function(e){
     this.setData({
       imageChose:this.data.array[0].imageChose,
-    })
-    this.setData({
       shopInfo: wx.getStorageSync('shopInfo')
     })
     // 获取购物车数据，显示TabBarBadge
@@ -366,32 +371,47 @@ starset:function(e){
     wx.showLoading({
       "mask": true
     })
-    const res = await WXAPI.goods({
-      categoryId: categoryId,
-      page: this.data.curPage,
-      pageSize: this.data.pageSize
+    db.collection('goods').get().then(res=>{
+      console.log(res.data)
+      if(res.data){
+        this.setData({
+          goods:res.data
+        })
+      }else{
+        wx.showModal({
+          title: '提示',
+          content: '请在后台添加 banner 轮播图片，自定义类型填写 index',
+          showCancel: false
+        })
+      }
     })
+
+    // const res = await WXAPI.goods({
+    //   categoryId: categoryId,
+    //   page: this.data.curPage,
+    //   pageSize: this.data.pageSize
+    // })
     wx.hideLoading()
-    if (res.code == 404 || res.code == 700) {
-      let newData = {
-        loadingMoreHidden: false
-      }
-      if (!append) {
-        newData.goods = []
-      }
-      this.setData(newData);
-      return
-    }
-    let goods = [];
+    // if (res.code == 404 || res.code == 700) {
+    //   let newData = {
+    //     loadingMoreHidden: false
+    //   }
+    //   if (!append) {
+    //     newData.goods = []
+    //   }
+    //   this.setData(newData);
+    //   return
+    // }
+    let goods = []
     if (append) {
-      goods = this.data.goods
+      // goods = this.data.goods
     }
-    for (var i = 0; i < res.data.length; i++) {
-      goods.push(res.data[i]);
+    for (var i = 0; i < this.data.goods.length; i++) {
+      // goods.push(this.data.goods[i]);
     }
     this.setData({
       loadingMoreHidden: true,
-      goods: goods,
+      // goods: goods,
     });
   },
   getCoupons: function() {
