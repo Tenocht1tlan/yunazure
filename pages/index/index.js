@@ -15,7 +15,6 @@ Page({
     goodsRecommend: [], // 推荐商品
     kanjiaList: [], //砍价商品列表
     pingtuanList: [], //拼团商品列表
-
     loadingHidden: false, // loading
     selectCurrent: 0,
     categories: [],
@@ -158,6 +157,7 @@ starset:function(e){
   // ----------------------------------------------------------------------modal
   // 显示遮罩层
   showUp: function (e) {
+    wx.hideTabBar({})
     var that = this;
     var index = e.currentTarget.dataset.index;
     console.log(index)
@@ -188,6 +188,7 @@ starset:function(e){
     })
     this.animation = animation
     that.slideDown();//调用动画--滑出
+    wx.showTabBar({})
     var time1 = setTimeout(function () {
       that.setData({
         hideFlag: true
@@ -195,7 +196,7 @@ starset:function(e){
       clearTimeout(time1);
       time1 = null;
     }, 220)//先执行下滑动画，再隐藏模块
-    
+
   },
   //动画 -- 滑入
   slideIn: function () {

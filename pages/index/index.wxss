@@ -482,6 +482,10 @@ padding: 5rpx,0;
   font-size: 25rpx;
   display: inline-block;
 }
+.packge{
+  height: max-content;
+  z-index: 5000;
+}
 /*  */
 /* ---------------------------- */
 /*模态框*/
