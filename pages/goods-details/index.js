@@ -26,6 +26,18 @@ Page({
     propertyChildNames: "",
     canSubmit: false, //  选中规格尺寸时候是否允许加入购物车
     shopType: "addShopCar", //购物类型，加入购物车或立即购买，默认为加入购物车
+    shippingCarInfo:{
+      items:[{
+        key:1,
+        name:'',
+        price:0,
+        number:1,
+        active:false,
+        pic:'',
+        property:[],
+        left:''
+      }]
+    }
   },
   async onLoad(e) {
     // e.id = 235853
@@ -319,7 +331,7 @@ Page({
   /**
    * 加入购物车
    */
-  async addShopCar() {
+   addShopCar() {
     if (this.data.goodsDetail.properties && !this.data.canSubmit) {
       if (!this.data.canSubmit) {
         wx.showToast({
@@ -337,13 +349,13 @@ Page({
       })
       return
     }
-    const isLogined = await AUTH.checkHasLogined()
-    if (!isLogined) {
-      this.setData({
-        wxlogin: false
-      })
-      return
-    }
+    // const isLogined = await AUTH.checkHasLogined()
+    // if (!isLogined) {
+    //   this.setData({
+    //     wxlogin: false
+    //   })
+    //   return
+    // }
     const goodsId = this.data.goodsDetail.basicInfo.id
     const property = []
     if (this.data.goodsDetail.properties) {
@@ -354,34 +366,73 @@ Page({
         })
       })
     }
-
-    await db.collection('shopping-cart').add({
-      data:{
-        items:[{
-          name:this.data.goodsDetail.basicInfo.name,
-          price:this.data.selectSizePrice,
-          number:this.data.buyNumber,
-          active:false,
-          pic:'/images/my/cancel.png',
-          property:[{
-            color:'黑色',
-            itemid:goodsId
-          }],
-          left:''
-        }],
-      }
+    
+    var key = 0
+    wx.showLoading({
+      title: '加载中...',
+    }),
+    wx.cloud.callFunction({
+      name:'login'
     }).then(res=>{
-      wx.showToast({
-        title: '加入购物车',
-        icon: 'success'
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).get().then(res2=>{
+        key = res2.data[0].items.length
+      }).catch(console.error)
+    }).catch(console.error)
+        
+    var name = this.data.goodsDetail.basicInfo.name
+    var price = this.data.selectSizePrice
+    var number = this.data.buyNumber
+    var that = this
+    setTimeout(function () {
+      wx.hideLoading({
+        complete: (res) => {
+          that.setData({
+            shippingCarInfo:{
+              items:[{
+                key: key + 1,
+                name: name,
+                price: price,
+                number: number,
+                active: false,
+                pic: '/images/my/cancel.png',
+                property: [{
+                  color:'黑色',
+                  itemid:goodsId
+                }],
+                left:''
+              }]
+            }
+          })
+          if (key == 0){
+            db.collection('shopping-cart').add({
+              data: {
+                items:that.data.shippingCarInfo.items
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入购物车',
+                icon: 'success'
+              })
+            }).catch(console.error)
+          }else{
+            wx.cloud.callFunction({
+              name:'addShippingCart',
+              data: {
+                items:that.data.shippingCarInfo.items
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入购物车',
+                icon: 'success'
+              })
+              console.log(res.result) 
+            }).catch(console.error)
+          }
+        },
       })
-    }).catch(err=>{
-      wx.showToast({
-        title: err.errMsg,
-        icon: 'none'
-      })
-      return
-    })
+    }, 1000)
     this.closePopupTap();
     this.shippingCartInfo()
   },

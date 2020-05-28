@@ -73,20 +73,6 @@
 					"scene": 1011
 				},
 				{
-					"id": -1,
-					"name": "商品详情页面",
-					"pathName": "pages/goods-details/index",
-					"query": "id= 6761",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "砍价详情页面",
-					"pathName": "pages/goods-details/index",
-					"query": "id=6765",
-					"scene": null
-				},
-				{
 					"id": 11,
 					"name": "预约",
 					"pathName": "pages/reservation/reservation",
@@ -118,6 +104,14 @@
 					"id": -1,
 					"name": "pages/up/up",
 					"pathName": "pages/up/up",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/shop-cart/index",
+					"query": "",
 					"scene": null
 				}
 			]

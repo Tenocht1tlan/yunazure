@@ -14,6 +14,7 @@ Page({
     delBtnWidth: 120, //删除按钮宽度单位（rpx）
     shippingCarInfo:{
       items:[{
+        key:1,
         name:'1',
         price:229.00,
         number:100,
@@ -64,7 +65,6 @@ Page({
     }
   },
   async shippingCarInfo(){
-    
     const token = wx.getStorageSync('isloged')
     if (!token) {
       return
@@ -75,19 +75,16 @@ Page({
       db.collection('shopping-cart').where({
         _openid:res.result.openid
       }).get().then(res2=>{
-        console.log('res2 ='+res2.data)
+        console.log('res2 ='+res2.data[0])
         this.setData({
-          // shippingCarInfo: res2.data
+          shippingCarInfo: res2.data[0]
         })
       }).catch(err=>{
-        console.log('err ='+err)
         this.setData({
-          // shippingCarInfo: null
+          shippingCarInfo: null
         })
       })
-    }).catch(err1=>{
-      console.log(err1)
-    })
+    }).catch(console.error)
   },
   toIndexPage: function() {
     wx.switchTab({
@@ -125,16 +122,18 @@ Page({
   },
 
   touchE: function(e) {
+    
     var index = e.currentTarget.dataset.index;
     if (e.changedTouches.length == 1) {
+      var that = this
       var endX = e.changedTouches[0].clientX;
-      var disX = this.data.startX - endX;
-      var delBtnWidth = this.data.delBtnWidth;
+      var disX = that.data.startX - endX;
+      var delBtnWidth = that.data.delBtnWidth;
       //如果距离小于删除按钮的1/2，不显示删除按钮
       var left = disX > delBtnWidth / 2 ? "margin-left:-" + delBtnWidth + "px" : "margin-left:0px";
-      this.data.shippingCarInfo.items[index].left = left
-      this.setData({
-        shippingCarInfo: this.data.shippingCarInfo
+      that.data.shippingCarInfo.items[index].left = left
+      that.setData({
+        shippingCarInfo: that.data.shippingCarInfo
       })
     }
   },
@@ -159,8 +158,15 @@ Page({
     const index = e.currentTarget.dataset.index;
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number + 1
-    const token = wx.getStorageSync('token')
-    const res = await WXAPI.shippingCarInfoModifyNumber(token, item.key, number)
+    wx.cloud.callFunction({
+      name:'changeSCartNum',
+      data: {
+        key: item.key,
+        number: number,
+      }
+    }).then(res=>{
+      console.log(res.result) 
+    }).catch(console.error)
     this.shippingCarInfo()
   },
   async jianBtnTap(e) {
@@ -179,8 +185,15 @@ Page({
       })
       return
     }
-    const token = wx.getStorageSync('token')
-    const res = await WXAPI.shippingCarInfoModifyNumber(token, item.key, number)
+    wx.cloud.callFunction({
+      name:'changeSCartNum',
+      data: {
+        key: item.key,
+        number: number,
+      }
+    }).then(res=>{
+      console.log(res.result) 
+    }).catch(console.error)
     this.shippingCarInfo()
   },
   cancelLogin() {
@@ -208,12 +221,17 @@ Page({
   },
   changeCarNumber(e){
     const key = e.currentTarget.dataset.key
-    const num = e.detail.value
-    const token = wx.getStorageSync('token')
-    WXAPI.shippingCarInfoModifyNumber(token, key, num).then(res => {
+    const number = e.detail.value
+    console.log('key = ' + key)
+    wx.cloud.callFunction({
+      name:'changeSCartNum',
+      data: {
+        key: key,
+        number: number,
+      }
+    }).then(res=>{
       this.shippingCarInfo()
-    })    
-  },
-
-
+      console.log(res.result) 
+    }).catch(console.error)
+  }
 })
