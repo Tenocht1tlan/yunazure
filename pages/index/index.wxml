@@ -113,6 +113,7 @@
 <!-- 选择操作 -->
 <view class='space'></view>  
 
+<!-- 热卖商品 -->
 <view class="selling-goods">
     <view class="remai">热卖商品</view>
     <scroll-view class="selling-goods-chose" scroll-x="true">
@@ -132,23 +133,25 @@
       </view>
       <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
       <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
-     <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
-        <view class="modal-cancel" bindtap="hideModal"></view>
-        <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
-           <!--  -->
-          <view class='Mselect'>
-            <image class="scroll-view-imag" src="{{upImage}}" ></image>
-            <view>------选择尺码------</view>
-            <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption'>
-              {{item}}
-            </view>
-          </view>
-         </view>
-       </view>
     </view>
   </scroll-view>
 </view>
-
+<!-- 遮盖层 -->
+<view class="modal modal-bottom-dialog" hidden="{{hideFlag}}" catchtouchmove = "doNotMove">
+  <view class="modal-cancel" bindtap="hideModal"></view>
+  <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+      <!--  -->
+    <view class='Mselect'>
+        <image src="{{upImage}}" ></image>
+        <view>------选择尺码------</view>
+        <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption'>
+        {{item}}
+        </view>
+    </view>
+    </view>
+  </view>
+<!-- 精品   四个图标-->
+<view>精品</view>
 
 <!--  -->
 <!-- <view>
