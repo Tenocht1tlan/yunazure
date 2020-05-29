@@ -239,3 +239,27 @@
   width: 50rpx;
   height: 50rpx;
 }
+checkbox .wx-checkbox-input{
+  display: flex;
+  width: 40rpx;
+  height: 40rpx;
+  align-items: center;
+  margin-top: 50rpx;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+  background: rgb(0, 0, 0);
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  border-radius: 50%;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%,-50%) scale(1);
+  -webkit-transform: translate(-50%,-50%) scale(1);
+
+}
+  

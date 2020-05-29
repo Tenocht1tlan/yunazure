@@ -233,5 +233,5 @@ Page({
       this.shippingCarInfo()
       console.log(res.result) 
     }).catch(console.error)
-  }
+  },
 })
