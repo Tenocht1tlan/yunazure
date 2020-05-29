@@ -376,8 +376,8 @@ Page({
     }).then(res=>{
       db.collection('shopping-cart').where({
         _openid:res.result.openid
-      }).get().then(res2=>{
-        key = res2.data[0].items.length
+      }).count().then(res2=>{
+        key = res2.total
       }).catch(console.error)
     }).catch(console.error)
         

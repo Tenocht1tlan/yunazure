@@ -241,10 +241,11 @@
 }
 checkbox .wx-checkbox-input{
   display: flex;
-  width: 40rpx;
-  height: 40rpx;
+  width: 30rpx;
+  height: 30rpx;
   align-items: center;
   margin-top: 50rpx;
+  padding: 5rpx;
 }
 checkbox .wx-checkbox-input.wx-checkbox-input-checked{
   background: rgb(0, 0, 0);
