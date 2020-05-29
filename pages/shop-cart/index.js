@@ -130,17 +130,18 @@ Page({
     this.delItemDone(key)
   },
   async delItemDone(key){
-    const token = wx.getStorageSync('token')
-    const res = await WXAPI.shippingCarInfoRemoveItem(token, key)
-    if (res.code != 0 && res.code != 700) {
-      wx.showToast({
-        title: res.msg,
-        icon:'none'
-      })
-    } else {
+    // const token = wx.getStorageSync('isloged')
+    // const res = await WXAPI.shippingCarInfoRemoveItem(token, key)
+    // if (res.code != 0 && res.code != 700) {
+    //   wx.showToast({
+    //     title: res.msg,
+    //     icon:'none'
+    //   })
+    // } else {
+      //TODO
       this.shippingCarInfo()
-      TOOLS.showTabBarBadge()
-    }
+    //   TOOLS.showTabBarBadge()
+    // }
   },
   async jiaBtnTap(e) {
     const index = e.currentTarget.dataset.index;

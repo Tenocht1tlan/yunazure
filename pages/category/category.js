@@ -1,7 +1,8 @@
 const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 const TOOLS = require('../../utils/tools.js') // TOOLS.showTabBarBadge();
-
+const db = wx.cloud.database();
+const goodsDetails = db.collection('goods');
 Page({
   /**
    * 页面的初始数据
@@ -15,8 +16,10 @@ Page({
     currentGoods: [],
     onLoadStatus: true,
     scrolltop: 0,
-
-    skuCurGoods: undefined
+    skuCurGoods: undefined,
+    shippingCarInfo:{
+      items:[]
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -151,21 +154,21 @@ Page({
     }
   },
   async addShopCar(e) {
-    const curGood = this.data.currentGoods.find(ele => {
-      return ele.id == e.currentTarget.dataset.id
-    })
-    if (!curGood) {
-      return
-    }
-    if (curGood.stores <= 0) {
-      wx.showToast({
-        title: '已售罄~',
-        icon: 'none'
-      })
-      return
-    }
+    // const curGood = this.data.currentGoods.find(ele => {
+    //   return ele.id == e.currentTarget.dataset.id
+    // })
+    // if (!curGood) {
+    //   return
+    // }
+    // if (curGood.stores <= 0) {
+    //   wx.showToast({
+    //     title: '已售罄~',
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
     this.addShopCarCheck({
-      goodsId: curGood.id,
+      goodsId: 'm-1',//curGood.id
       buyNumber: 1,
       sku: []
     })
@@ -182,39 +185,98 @@ Page({
     })
   },
   async addShopCarDone(options){
-    const res = await WXAPI.shippingCarInfoAddItem(wx.getStorageSync('token'), options.goodsId, options.buyNumber, options.sku)
-    if (res.code == 30002) {
+    var key = 0
+    wx.showLoading({
+      title: '加载中...',
+    }),
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).count().then(res2=>{
+        key = res2.total
+      }).catch(console.error)
+    }).catch(console.error)
+        
+    var name = ''
+    var price = ''
+    var number = 1
+    var that = this
+    setTimeout(function () {
+      wx.hideLoading({
+        complete: (res) => {
+          that.setData({
+            shippingCarInfo:{
+              items:[{
+                key: key + 1,
+                name: name,
+                price: price,
+                number: number,
+                active: false,
+                pic: '/images/my/cancel.png',
+                property: [{
+                  color:'黑色',
+                  itemid:goodsId
+                }],
+                left:''
+              }]
+            }
+          })
+          if (key == 0){
+            db.collection('shopping-cart').add({
+              data: {
+                items:that.data.shippingCarInfo.items
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入购物车',
+                icon: 'success'
+              })
+            }).catch(console.error)
+          }else{
+            wx.cloud.callFunction({
+              name:'addShippingCart',
+              data: {
+                items:that.data.shippingCarInfo.items
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入购物车',
+                icon: 'success'
+              })
+              console.log(res.result) 
+            }).catch(console.error)
+          }
+        },
+      })
+    }, 1000)
+    //判断是否需要选吃尺码
+    if (true) {
       // 需要选择规格尺寸
-      const skuCurGoodsRes = await WXAPI.goodsDetail(options.goodsId)
-      if (skuCurGoodsRes.code != 0) {
+      goodsDetails.where({
+        id:options.goodsId
+      }).get().then(res=>{
+        const skuCurGoods = res.data
+        skuCurGoods.basicInfo.storesBuy = 1
+        this.setData({
+          skuCurGoods
+        })
+        wx.showToast({
+          title: '加入成功',
+          icon: 'success'
+        })
+        this.setData({
+          skuCurGoods: null
+        })
+      }).catch(err=>{
         wx.showToast({
           title: skuCurGoodsRes.msg,
           icon: 'none'
         })
-        return
-      }
+      })
       wx.hideTabBar()
-      const skuCurGoods = skuCurGoodsRes.data
-      skuCurGoods.basicInfo.storesBuy = 1
-      this.setData({
-        skuCurGoods
-      })
-      return
     }
-    if (res.code != 0) {
-      wx.showToast({
-        title: res.msg,
-        icon: 'none'
-      })
-      return
-    }
-    wx.showToast({
-      title: '加入成功',
-      icon: 'success'
-    })
-    this.setData({
-      skuCurGoods: null
-    })
     wx.showTabBar()
     TOOLS.showTabBarBadge() // 获取购物车数据，显示TabBarBadge
   },
