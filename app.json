@@ -102,5 +102,6 @@
     "van-count-down": "@vant/weapp/count-down/index",
     "van-button": "@vant/weapp/button/index"
   },
+ 
   "sitemapLocation": "sitemap.json"
 }
