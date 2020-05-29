@@ -13,7 +13,19 @@ Page({
     startX:'',
     delBtnWidth: 120, //删除按钮宽度单位（rpx）
     shippingCarInfo:{
-      items:[]
+      items:[{
+        key:1,
+        name:'1',
+        price:229.00,
+        number:100,
+        active:false,
+        pic:'/images/my/cancel.png',
+        property:[{
+          color:'黑色',
+          itemid:'5004/45'}
+        ],
+        left:''
+      }]
     }
   },
 
@@ -159,7 +171,6 @@ Page({
   },
   async jianBtnTap(e) {
     const index = e.currentTarget.dataset.index;
-    console.log("it = " + this.data.shippingCarInfo.items)
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number-1
     if (number <= 0) {
@@ -222,5 +233,5 @@ Page({
       this.shippingCarInfo()
       console.log(res.result) 
     }).catch(console.error)
-  },
+  }
 })

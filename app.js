@@ -67,15 +67,6 @@ App({
         }
       }
     })
-    // 获取手机的高度
-    wx.getSystemInfo({
-      success: res=>{
-          this.globalData.navHeight
-      },fail(err){
-          console.log('errnavHeight')
-      }
-    })
-
   },
     
   onShow (e) {
@@ -126,7 +117,6 @@ App({
     isConnected: true,
     openid:'', //当前用户的openID
     isloged:false,
-    mail:'',
-    navHeight:0
+    mail:''
   }
 })
