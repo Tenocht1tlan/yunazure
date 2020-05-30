@@ -11,6 +11,8 @@ APP.configLoadOK = () => {
 
 Page({
   data: {
+    isIos:APP.globalData.isIos,
+    navHeight:APP.globalData.navHeight,
     inputVal: "", // 搜索框内容
     goodsRecommend: [], // 推荐商品
     kanjiaList: [], //砍价商品列表
@@ -22,7 +24,9 @@ Page({
     goods: [],
     
     scrollTop: 0,
+    hiddenNav:true,
     loadingMoreHidden: true,
+    swiperHeight:575,
 
     coupons: [],
 
@@ -324,10 +328,21 @@ starset:function(e){
     })
   },
   onShow: function(e){
+    if(APP.globalData.isIos){
     this.setData({
+      navHeight:APP.globalData.navHeight*2,
+      // hiddenNav:false,
       imageChose:this.data.array[0].imageChose,
       shopInfo: wx.getStorageSync('shopInfo')
     })
+    }else{
+      this.setData({
+        navHeight:APP.globalData.navHeight*2+16,
+        // hiddenNav:false,
+        imageChose:this.data.array[0].imageChose,
+        shopInfo: wx.getStorageSync('shopInfo')
+      })
+    }
     // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge()
     this.goodsDynamic()
@@ -360,8 +375,20 @@ starset:function(e){
   onPageScroll(e) {
     let scrollTop = this.data.scrollTop
     this.setData({
-      scrollTop: e.scrollTop
+      scrollTop: e.scrollTop, 
     })
+    console.log("e.h = "+ scrollTop)
+    console.log("h1 = "+ (this.data.swiperHeight-APP.globalData.navHeight*2)/2)
+
+    if(scrollTop>(this.data.swiperHeight-APP.globalData.navHeight*2)/2){
+      this.setData({
+      hiddenNav : false
+    })
+    }else{
+      this.setData({
+        hiddenNav : true
+      })
+    }
   },
   async getGoodsList(categoryId, append) {
     if (categoryId == 0) {

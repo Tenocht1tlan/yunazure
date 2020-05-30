@@ -35,22 +35,23 @@
 
 .search {
   position: absolute;
-  top: 32rpx;
-  left: 50rpx;
-  width: 700rpx;
+  width: 350rpx;
   height: 66rpx;
-  display: block;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  /* box-sizing: border-box; */
+  margin-left: 20rpx;
+  margin-top: 90rpx;
+  margin-bottom: 15rpx;
 }
 .search input {
   display: block;
   box-sizing: border-box;
+  position: relative;
   background: rgba(255, 255, 255, 0);
-  /* border: 1rpx solid #e3e3e3; */
-  width: 650rpx;
+  width: 200rpx;
   height: 80rpx;
-  /* border-radius: 30rpx; */
-  padding-left: 70rpx; 
+  margin-left: 72rpx; 
 }
 .search image {
   width: 35rpx;
@@ -58,7 +59,12 @@
   position: absolute;
   top: 24rpx;
   left: 32rpx;
-  z-index: 99;
+}
+.logo {
+width: 100rpx;
+height: 50rpx;
+border: solid;
+margin-left: 300rpx;
 }
 .goodsDynamic {
   position: absolute;
@@ -164,16 +170,16 @@
 
 .swiper-container{
   width: 750rpx;
-  height: 575rpx;
+  /* height: 575rpx; */
   position: relative;  
 }
 .swiper-container .swiper1 {
   width: 750rpx;
-  height: 575rpx;
+  /* height: 575rpx; */
 }
 .swiper-container .swiper1 image {
   width: 750rpx;
-  height: 575rpx;
+  /* height: 575rpx; */
 }
 ::-webkit-scrollbar {
   width: 0;
@@ -394,4 +400,16 @@ z-index: 0;
 .Mcancel{
   background: #fff;
   padding: 26rpx 0;
+}
+.home-page{
+width: 100%;
+position: fixed;
+top:0;
+z-index: 999;
+background-color: #fff;
+width:750rpx;
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: 100% 100%;
+ -moz-background-size: 100% 100%;
 }
