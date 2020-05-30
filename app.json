@@ -42,7 +42,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "和风暖阳",
+    "navigationBarTitleText": "Yunazure",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": 50
   },
@@ -90,7 +90,7 @@
     }
   },
   "navigateToMiniProgramAppIdList": [
-    "wx92d27f3a4d972403"
+    "wx755bdf146462d272"
   ],
   "usingComponents": {
     "float-menu": "/components/float-menu/index",

@@ -12,7 +12,7 @@
   <!-- <view class="trip">左滑可删除不需要的商品哦～</view> -->
   <view class="goodsList">
     <view class="a-gooods" wx:for="{{items}}" wx:key="key">
-      <view class="a-goods-conts {{item.active? 'active':''}}" data-index="{{index}}" style="{{item.left}}">
+      <view class="a-goods-conts {{item.active? 'active':''}}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.left}}">
       <!-- 购物车 -->
         <view class="goods-info">
         <checkbox-group>

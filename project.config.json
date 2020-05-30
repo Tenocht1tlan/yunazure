@@ -16,19 +16,19 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
 		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"compileHotReLoad": false
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.4",
-	"appid": "wx92d27f3a4d972403",
-	"projectname": "%E5%92%8C%E9%A3%8E%E6%9A%96%E9%98%B3",
+	"appid": "wx755bdf146462d272",
+	"projectname": "Yunazure",
 	"scripts": {},
 	"simulatorType": "wechat",
 	"cloudfunctionRoot": "functions/",

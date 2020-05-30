@@ -11,7 +11,7 @@ Page({
   onLoad:function(){
     const _this = this
     wx.setNavigationBarTitle({
-      title: "和风暖阳"
+      title: "Yunazure"
     })
     const app_show_pic_version = wx.getStorageSync('app_show_pic_version')
     if (app_show_pic_version && app_show_pic_version == CONFIG.version) {

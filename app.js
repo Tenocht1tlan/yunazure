@@ -6,7 +6,7 @@ App({
     WXAPI.init(CONFIG.subDomain)
     const that = this;
     wx.cloud.init({
-      env:'mydata-e16ki',
+      env:'yunazure-sygca',
       traceUser:true
     })
     // 检测新版本

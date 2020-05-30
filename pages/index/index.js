@@ -5,7 +5,7 @@ const APP = getApp()
 // fixed首次打开不显示标题的bug
 APP.configLoadOK = () => {
   wx.setNavigationBarTitle({
-    title: "和风暖阳"
+    title: "Yunazure"
   })
 }
 
@@ -254,7 +254,7 @@ starset:function(e){
       }
     }
     wx.setNavigationBarTitle({
-      title: "和风暖阳"
+      title: "Yunazure"
     })
     this.initBanners()
     this.categories()
@@ -306,10 +306,10 @@ starset:function(e){
     wx.cloud.callFunction({
       name:'login'
     }).then(res=>{
-      db.collection('image').get().then(res2=>{
-        console.log(res2.data)
-        if(res2.data){
-          _data.banners = res2.data
+      db.collection('image').get().then(res=>{
+        console.log(res.data.fileID)
+        if(res.data){
+          _data.banners = res.data
           this.setData(_data)
         }else{
           wx.showModal({
@@ -371,7 +371,6 @@ starset:function(e){
       "mask": true
     })
     db.collection('goods').get().then(res=>{
-      console.log(res.data)
       if(res.data){
         this.setData({
           goods:res.data
