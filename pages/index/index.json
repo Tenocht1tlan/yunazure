@@ -5,9 +5,7 @@
     "navigationBarTitleText": "小程序",
     "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
-    "enablePullDownRefresh": false,
-    "navigationStyle":"custom",
-    "component":true,
-    "usingcomponents":{}
 
+    "navigationStyle":"custom"
 }
+

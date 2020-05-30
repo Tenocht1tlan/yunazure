@@ -1,3 +1,17 @@
+<view wx:if="{{hiddenNav}}" class="home-page" >
+		<view class="search">
+    <image src='/images/search.png'  bindtap="goSearch"></image>
+    <input type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:white"></input>
+  </view>
+</view>
+
+  <view wx:else class="home-page" style="height:{{navHeight}}rpx" >
+		<view class="search">
+    <input class="input" type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:gray" ></input>
+    <image  class="image" src='/images/search2.png' bindtap="goSearch" ></image>
+    <image class="logo" src="/images/my/logo.jpg" mode="aspectFit"></image>
+   </view>
+	</view>
 <navigator url="/pages/shop/select">
   <view wx:if="{{shopInfo}}" class="shops-container">
     <view class="l">
@@ -7,16 +21,12 @@
 
   </view>
 </navigator>
-<view class="swiper-container">
-  <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular>
-    <swiper-item wx:for="{{banners}}" wx:key="id">
-      <image  mode="aspectFill" bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" />
+<view class="swiper-container" style="height:{{swiperHeight}}rpx;">
+  <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;">
+    <swiper-item wx:for="{{banners}}" wx:key="id" >
+      <image  mode="aspectFill" bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"  />
     </swiper-item>
   </swiper>
-  <view class="search">
-    <image src="/images/icon/search.svg" bindtap="goSearch"></image>
-    <input type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm"></input>
-  </view>
 
 </view>
 

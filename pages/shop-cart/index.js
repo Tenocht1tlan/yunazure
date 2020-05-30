@@ -9,9 +9,10 @@ Page({
     wxlogin: true,
     saveHidden: true,
     allSelect: true,
-    noSelect: false,
+    noSelect: true,
     startX:'',
     delBtnWidth: 120, //删除按钮宽度单位（rpx）
+    isCheck:[],
     shippingCarInfo:{
       items:[]
     }
@@ -125,6 +126,22 @@ Page({
       })
     }
   },
+  checkGoods:function(e){
+    var index = e.currentTarget.dataset.index;
+    var price = this.data.shippingCarInfo.items[index].price
+    var num = this.data.shippingCarInfo.items[index].number
+    let isChecked = !this.data.isCheck[index]
+    var up = "isCheck["+index+"]"
+    if(isChecked){
+      var sum = price*num
+      console.log('yxh'+price+num+'  '+sum)
+  }else{
+    console.log('no')
+  }
+  this.setData({
+    [up]:isChecked
+  })
+  },
   async delItem(e) {
     const key = e.currentTarget.dataset.key
     this.delItemDone(key)
@@ -224,4 +241,5 @@ Page({
       console.log(res.result) 
     }).catch(console.error)
   },
+
 })

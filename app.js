@@ -67,15 +67,19 @@ App({
         }
       }
     })
-    // 获取手机的高度
-    wx.getSystemInfo({
-      success: res=>{
-          this.globalData.navHeight
-      },fail(err){
-          console.log('errnavHeight')
+    try {
+      const res = wx.getSystemInfoSync()
+      let info = wx.getMenuButtonBoundingClientRect()
+      let CustomBar = info.bottom + info.top - res.statusBarHeight
+      this.globalData.navHeight = CustomBar
+      if(res.platform == 'ios'){
+        this.globalData.isIos = true
+      }else{
+        this.globalData.isIos = false
       }
-    })
-
+    } catch (e) {
+      // Do something when catch error
+    }
   },
     
   onShow (e) {
@@ -127,6 +131,7 @@ App({
     openid:'', //当前用户的openID
     isloged:false,
     mail:'',
-    navHeight:0
+    navHeight:0,
+    isIos:true
   }
 })
