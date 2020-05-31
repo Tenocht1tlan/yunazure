@@ -1,8 +1,8 @@
 <import src="/template/login/index.wxml" />
 <view class="container">
   <view class="swiper-container">
-    <swiper class="swiper_box" indicator-dots="true" indicator-active-color="#fff" autoplay="{{!goodsDetail.basicInfo.videoId}}" circular>
-      <swiper-item wx:if="{{goodsDetail.basicInfo.videoId}}">
+    <swiper class="swiper_box" indicator-dots="true" indicator-active-color="#fff" autoplay="{{!goodsDetail.videoId}}" circular>
+      <swiper-item wx:if="{{goodsDetail.videoId}}">
         <video src="{{videoMp4Src}}" autoplay="true" loop="true" style='width:100%;height:100%;'></video>
       </swiper-item>
       <swiper-item wx:for="{{goodsDetail.pics}}" wx:key="id">
@@ -11,13 +11,13 @@
     </swiper>
   </view>
   <view class="goods-info">
-    <view class="goods-title">{{goodsDetail.basicInfo.name}}</view>
-    <view class="goods-share" wx:if="{{goodsDetail.basicInfo.commissionType == 1}}">分享有赏，好友下单后可得 {{goodsDetail.basicInfo.commission}} 积分奖励</view>
-    <view class="goods-share" wx:if="{{goodsDetail.basicInfo.commissionType == 2}}">分享有赏，好友下单后可得 {{goodsDetail.basicInfo.commission}}元 现金奖励</view>
+    <view class="goods-title">{{goodsDetail.name}}</view>
+    <view class="goods-share" wx:if="{{goodsDetail.commissionType == 1}}">分享有赏，好友下单后可得 {{goodsDetail.commission}} 积分奖励</view>
+    <view class="goods-share" wx:if="{{goodsDetail.commissionType == 2}}">分享有赏，好友下单后可得 {{goodsDetail.commission}}元 现金奖励</view>
     <view class="goods-profile">
       <view class="p"><text>¥</text> {{selectSizePrice}}</view>
-      <view wx:if="{{goodsDetail.basicInfo.originalPrice && goodsDetail.basicInfo.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;padding: 15rpx 0rpx 0rpx 15rpx;'><text>¥</text> {{selectSizeOPrice}}</view>
-      <view class="r">{{goodsDetail.basicInfo.numberSells}}人已买</view>
+      <view wx:if="{{goodsDetail.originalPrice && goodsDetail.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;padding: 15rpx 0rpx 0rpx 15rpx;'><text>¥</text> {{selectSizeOPrice}}</view>
+      <view class="r">{{goodsDetail.numberSells}}人已买</view>
     </view>
     <view class="goods-info-fx">
       <view class='item'>
@@ -153,10 +153,10 @@
   <view class="size-label-box2" wx:if="{{goodsDetailSkuShowType==1}}">
     <view class="label-title">选择商品规格</view>
     <view class="size-label-box">
-      <block wx:for="{{goodsDetail.properties}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
-        <view class="label">{{property.name}}</view>
+      <block wx:for="{{goodsDetail.sku}}" wx:for-item="sku" wx:for-index="idx" wx:key="id">
+        <view class="label">{{sku.name}}</view>
         <view class="label-item-box">
-          <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{property.childsCurGoods}}" wx:key="id" bindtap="labelItemTap" data-propertyindex="{{idx}}" data-propertychildindex="{{index}}">
+          <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{sku.childsCurGoods}}" wx:key="id" bindtap="labelItemTap" data-propertyindex="{{idx}}" data-propertychildindex="{{index}}">
             {{item.name}}
           </view>
         </view>
@@ -183,7 +183,7 @@
   <view class="goods-des-info">
     <view class="label-title">商品介绍</view>
     <view class="goods-text">
-      <parser html="{{goodsDetail.content}}" />
+      <parser html="{{goodsDetail.description}}" />
     </view>
   </view>
   <view class="goods-des-info" style="margin-top:35rpx;" wx:if="{{!curGoodsKanjia && reputation}}">
@@ -197,7 +197,7 @@
       </view>
       <view style="width:550rpx;float:left;margin-left:35rpx;border-bottom:1px solid #eee;">
         <view>{{item.goods.goodReputationRemark}}</view>
-        <view style="color: #B0B0B0;font-size:24rpx;">{{item.goods.dateReputation}} {{item.goods.property}}</view>
+        <view style="color: #B0B0B0;font-size:24rpx;">{{item.goods.dateReputation}} {{item.goods.sku}}</view>
       </view>
     </view>
   </view>
@@ -229,10 +229,10 @@
       <image src="/images/nav/cart-off.png"></image>
     </view>
     <image bindtap="addFav" class="fav-icon" src="/images/icon/fav{{faved?'1':'0'}}.svg"></image>
-    <view wx:if="{{!goodsDetail.basicInfo.pingtuan}}" class="join-shop-cart" bindtap="{{goodsDetailSkuShowType==0?'toAddShopCar':'addShopCar'}}">加入购物车</view>
-    <view wx:if="{{!goodsDetail.basicInfo.pingtuan}}" class="now-buy"  data-shopType="{{shopType}}" bindtap="{{goodsDetailSkuShowType==0?'tobuy':'buyNow'}}">立即购买</view>
-    <view wx:if="{{goodsDetail.basicInfo.pingtuan}}" class="join-shop-cart" bindtap="tobuy">单独购买</view>
-    <view wx:if="{{goodsDetail.basicInfo.pingtuan}}" class="now-buy" bindtap="toPingtuan">发起拼团</view>
+    <view wx:if="{{!goodsDetail.pingtuan}}" class="join-shop-cart" bindtap="{{goodsDetailSkuShowType==0?'toAddShopCar':'addShopCar'}}">加入购物车</view>
+    <view wx:if="{{!goodsDetail.pingtuan}}" class="now-buy"  data-shopType="{{shopType}}" bindtap="{{goodsDetailSkuShowType==0?'tobuy':'buyNow'}}">立即购买</view>
+    <view wx:if="{{goodsDetail.pingtuan}}" class="join-shop-cart" bindtap="tobuy">单独购买</view>
+    <view wx:if="{{goodsDetail.pingtuan}}" class="now-buy" bindtap="toPingtuan">发起拼团</view>
   </view>
   <view class="show-popup" hidden="{{hideShopPopup}}" catchtouchmove="true">
     <view class="popup-mask" bindtap="closePopupTap"></view>
@@ -242,19 +242,19 @@
           <image src="{{skuGoodsPic}}" class="goods-thumbnail" bindtap="previewImage" data-url="{{skuGoodsPic}}" />
         </view>
         <view class="pop-goods-des">
-          <view class="pop-goods-title">{{goodsDetail.basicInfo.name}}</view>
+          <view class="pop-goods-title">{{goodsDetail.name}}</view>
           <view class="pop-goods-price">
             ¥ <text class="t1">{{selectSizePrice}}</text>
-            <text wx:if="{{goodsDetail.basicInfo.originalPrice && goodsDetail.basicInfo.originalPrice > 0}}" class="pop-goods-price-original"><text>¥</text> {{selectSizeOPrice}}</text>
+            <text wx:if="{{goodsDetail.originalPrice && goodsDetail.originalPrice > 0}}" class="pop-goods-price-original"><text>¥</text> {{selectSizeOPrice}}</text>
           </view>
         </view>
         <image class="pop-goods-close" src="/images/icon/close0.svg" bindtap="closePopupTap"></image>
       </view>
       <view class="size-label-box">
-        <block wx:for="{{goodsDetail.properties}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
-          <view class="label">{{property.name}}</view>
+        <block wx:for="{{goodsDetail.sku}}" wx:for-item="sku" wx:for-index="idx" wx:key="id">
+          <view class="label">{{sku.name}}</view>
           <view class="label-item-box">
-            <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{property.childsCurGoods}}" wx:key="id" bindtap="labelItemTap" data-propertyindex="{{idx}}" data-propertychildindex="{{index}}">
+            <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{sku.childsCurGoods}}" wx:key="id" bindtap="labelItemTap" data-propertyindex="{{idx}}" data-propertychildindex="{{index}}">
               {{item.name}}
             </view>
           </view>

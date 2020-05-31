@@ -2,6 +2,7 @@ const WXAPI = require('apifm-wxapi')
 const TOOLS = require('../../utils/tools.js')
 const AUTH = require('../../utils/auth')
 const db = wx.cloud.database()
+const _ = db.command
 const app = getApp()
 
 Page({
@@ -63,18 +64,20 @@ Page({
     }).then(res=>{
       db.collection('shopping-cart').where({
         _openid:res.result.openid
-      }).get().then(res2=>{
-        console.log('res2 ='+res2.data[0])
-        this.setData({
-          shippingCarInfo: res2.data[0]
+      }).get().then(res=>{
+        var list = []
+        res.data[0].items.forEach(value=>{
+          if(value != null){
+            list.push(value)
+          }
         })
-      }).catch(err=>{
         this.setData({
-          shippingCarInfo: null
+          'shippingCarInfo.items': list
         })
       })
-    }).catch(console.error)
+    })
   },
+  
   toIndexPage: function() {
     wx.switchTab({
       url: "/pages/index/index"
@@ -147,46 +150,55 @@ Page({
     this.delItemDone(key)
   },
   async delItemDone(key){
-    // const token = wx.getStorageSync('isloged')
-    // const res = await WXAPI.shippingCarInfoRemoveItem(token, key)
-    // if (res.code != 0 && res.code != 700) {
-    //   wx.showToast({
-    //     title: res.msg,
-    //     icon:'none'
-    //   })
-    // } else {
-      //TODO
-      this.shippingCarInfo()
-    //   TOOLS.showTabBarBadge()
-    // }
+    wx.showLoading({
+      title: '加载中...',
+    })
+    wx.cloud.callFunction({
+      name:'rmShoppingCart',
+      data: {
+        key: key
+      },
+      complete(){
+        wx.hideLoading()
+      }
+    })
+    this.shippingCarInfo()
+    TOOLS.showTabBarBadge()
   },
   async jiaBtnTap(e) {
-    const index = e.currentTarget.dataset.index;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    const index = e.currentTarget.dataset.index
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number + 1
     wx.cloud.callFunction({
       name:'changeSCartNum',
       data: {
-        key: item.key,
+        key: item.good_id,
         number: number,
+      },
+      complete(){
+        wx.hideLoading()
       }
-    }).then(res=>{
-      console.log(res.result) 
-    }).catch(console.error)
+    })
     this.shippingCarInfo()
   },
   async jianBtnTap(e) {
-    const index = e.currentTarget.dataset.index;
-    console.log("it = " + this.data.shippingCarInfo.items)
+    wx.showLoading({
+      title: '加载中...',
+    })
+    const index = e.currentTarget.dataset.index
     const item = this.data.shippingCarInfo.items[index]
-    const number = item.number-1
+    const number = item.number - 1
     if (number <= 0) {
       // 弹出删除确认
+      wx.hideLoading()
       wx.showModal({
         content: '确定要删除该商品吗？',
         success: (res) => {
           if (res.confirm) {
-            this.delItemDone(item.key)
+            this.delItemDone(item.good_id)
           }
         }
       })
@@ -195,12 +207,13 @@ Page({
     wx.cloud.callFunction({
       name:'changeSCartNum',
       data: {
-        key: item.key,
+        key: item.good_id,
         number: number,
+      },
+      complete(){
+        wx.hideLoading()
       }
-    }).then(res=>{
-      console.log(res.result) 
-    }).catch(console.error)
+    })
     this.shippingCarInfo()
   },
   cancelLogin() {
@@ -228,8 +241,7 @@ Page({
   },
   changeCarNumber(e){
     const key = e.currentTarget.dataset.key
-    const number = e.detail.value
-    console.log('key = ' + key)
+    const number = parseInt(e.detail.value)
     wx.cloud.callFunction({
       name:'changeSCartNum',
       data: {
@@ -238,8 +250,6 @@ Page({
       }
     }).then(res=>{
       this.shippingCarInfo()
-      console.log(res.result) 
     }).catch(console.error)
   },
-
 })

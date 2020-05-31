@@ -37,9 +37,9 @@
       <view class="more"><navigator url="/pages/goods/list?categoryId={{item.id}}">更多 ></navigator></view>
     </view>
     <view class="goods-container">
-      <view class="goods-box" wx:for="{{item.goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.id}}">
+      <view class="goods-box" wx:for="{{item.goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
         <view class="img-box">
-          <image src="{{item.pic}}" class="image" mode="aspectFill" lazy-load="true" />
+          <image src="{{item.pic}}" class="image" mode="aspectFit" lazy-load="true" />
         </view>
         <view class="goods-title">{{item.name}}</view>
         <view style='display:flex;'>
@@ -103,9 +103,9 @@
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
   </view>
   <view class="goods-container">
-    <view class="goods-box" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.id}}">
+    <view class="goods-box" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
       <view class="img-box">
-        <image src="{{item.pic}}" class="image" mode="aspectFill" lazy-load="true" />
+        <image src="{{item.pic}}" class="image" mode="aspectFit" lazy-load="true" />
       </view>
       <view class="goods-title">{{item.name}}</view>
       <view style='display:flex;'>

@@ -24,38 +24,29 @@ Page({
 
     propertyChildIds: "",
     propertyChildNames: "",
-    canSubmit: false, //  选中规格尺寸时候是否允许加入购物车
+    canSubmit: true, //  选中规格尺寸时候是否允许加入购物车
     shopType: "addShopCar", //购物类型，加入购物车或立即购买，默认为加入购物车
     shippingCarInfo:{
-      items:[{
-        key:1,
-        name:'',
-        price:0,
-        number:1,
-        active:false,
-        pic:'',
-        property:[],
-        left:''
-      }]
-    }
+      items:[]
+    },
+    goodsId:'',
   },
   async onLoad(e) {
-    // e.id = 235853
-    if (e && e.scene) {
-      const scene = decodeURIComponent(e.scene) // 处理扫码进商品详情页面的逻辑
-      if (scene && scene.split(',').length >= 2) {
-        e.id = scene.split(',')[0]
-        wx.setStorageSync('referrer', scene.split(',')[1])
-      }
-    }
-    this.data.goodsId = e.id
-    const that = this
+    // if (e && e.scene) {
+    //   const scene = decodeURIComponent(e.scene) // 处理扫码进商品详情页面的逻辑
+    //   if (scene && scene.split(',').length >= 2) {
+    //     e.id = scene.split(',')[0]
+    //     wx.setStorageSync('referrer', scene.split(',')[1])
+    //   }
+    // }
+    
     this.data.kjJoinUid = e.kjJoinUid
     this.setData({
+      goodsId : e.id,
       goodsDetailSkuShowType: CONFIG.goodsDetailSkuShowType,
       curuid: wx.getStorageSync('uid')
     })
-    this.reputation(e.id)
+    // this.reputation(e.id)
     this.shippingCartInfo()
   },  
   async shippingCartInfo(){
@@ -63,12 +54,9 @@ Page({
     if (!token) {
       return
     }
-    const res = await WXAPI.shippingCarInfo(token)
-    if (res.code == 0) {
-      this.setData({
-        shopNum: res.data.number
-      })
-    }
+    this.setData({
+      shopNum: 1
+    })
   },
   async onShow (){
     const isLogined = await AUTH.checkHasLogined()
@@ -118,67 +106,81 @@ Page({
     }
   },
   async getGoodsDetailAndKanjieInfo(goodsId) {
-    const that = this;
-    const goodsDetailRes = await WXAPI.goodsDetail(goodsId)
-    const goodsKanjiaSetRes = await WXAPI.kanjiaSet(goodsId)
-    if (goodsDetailRes.code == 0) {
-      var selectSizeTemp = SelectSizePrefix;
-      if (goodsDetailRes.data.properties) {
-        for (var i = 0; i < goodsDetailRes.data.properties.length; i++) {
-          selectSizeTemp = selectSizeTemp + " " + goodsDetailRes.data.properties[i].name;
+    const that = this
+    var goodsDetailRes = {}
+    wx.showLoading({
+      title: '加载中...',
+    }),
+    db.collection('goods').where({
+      good_id:goodsId
+    }).get({
+      success: function(res) {
+        goodsDetailRes = res.data[0]
+      },
+      fail: console.error,
+      complete:function(){
+        wx.hideLoading()
+        if (goodsDetailRes) {
+          var selectSizeTemp = SelectSizePrefix
+          if (goodsDetailRes.sku) {
+            for (var i = 0; i < goodsDetailRes.sku.length; i++) {
+              selectSizeTemp = selectSizeTemp + " " + goodsDetailRes.sku[i].size
+            }
+            that.setData({
+              hasMoreSelect: true,
+              selectSize: selectSizeTemp,
+              selectSizePrice: goodsDetailRes.minPrice,
+              selectSizeOPrice: goodsDetailRes.originalPrice,
+              // totalScoreToPay: goodsDetailRes.minScore
+            });
+          }
+          // if (goodsDetailRes.shopId) {
+          //   this.shopSubdetail(goodsDetailRes.shopId)
+          // }
+          // if (goodsDetailRes.pingtuan) {
+          //   that.pingtuanList(goodsId)
+          // }
+          that.data.goodsDetail = goodsDetailRes
+          // if (goodsDetailRes.videoId) {
+          //   that.getVideoSrc(goodsDetailRes.videoId)
+          // }
+          let _data = {
+            goodsDetail: goodsDetailRes,
+            selectSizePrice: goodsDetailRes.minPrice,
+            selectSizeOPrice: goodsDetailRes.originalPrice,
+            // totalScoreToPay: goodsDetailRes.data.basicInfo.minScore,
+            buyNumMax: goodsDetailRes.stockNum,
+            buyNumber: (goodsDetailRes.stockNum > 0) ? 1 : 0
+          }
+          // if (goodsKanjiaSetRes.code == 0) {
+          //   _data.curGoodsKanjia = goodsKanjiaSetRes.data[0]
+          //   that.data.kjId = _data.curGoodsKanjia.id
+          //   // 获取当前砍价进度
+          //   if (!that.data.kjJoinUid) {
+          //     that.data.kjJoinUid = wx.getStorageSync('uid')
+          //   }
+          //   const curKanjiaprogress = await WXAPI.kanjiaDetail(_data.curGoodsKanjia.id, that.data.kjJoinUid)
+          //   const myHelpDetail = await WXAPI.kanjiaHelpDetail(wx.getStorageSync('token'), _data.curGoodsKanjia.id, that.data.kjJoinUid)
+          //   if (curKanjiaprogress.code == 0) {
+          //     _data.curKanjiaprogress = curKanjiaprogress.data
+          //   }
+          //   if (myHelpDetail.code == 0) {
+          //     _data.myHelpDetail = myHelpDetail.data
+          //   }
+          // }
+          // if (goodsDetailRes.data.basicInfo.pingtuan) {
+          //   const pingtuanSetRes = await WXAPI.pingtuanSet(goodsId)
+          //   if (pingtuanSetRes.code == 0) {
+          //     _data.pingtuanSet = pingtuanSetRes.data
+          //     // 如果是拼团商品， 默认显示拼团价格
+          //     _data.selectSizePrice = goodsDetailRes.data.basicInfo.pingtuanPrice
+          //   }        
+          // }
+          that.setData(_data);
         }
-        that.setData({
-          hasMoreSelect: true,
-          selectSize: selectSizeTemp,
-          selectSizePrice: goodsDetailRes.data.basicInfo.minPrice,
-          selectSizeOPrice: goodsDetailRes.data.basicInfo.originalPrice,
-          totalScoreToPay: goodsDetailRes.data.basicInfo.minScore
-        });
       }
-      if (goodsDetailRes.data.basicInfo.shopId) {
-        this.shopSubdetail(goodsDetailRes.data.basicInfo.shopId)
-      }
-      if (goodsDetailRes.data.basicInfo.pingtuan) {
-        that.pingtuanList(goodsId)
-      }
-      that.data.goodsDetail = goodsDetailRes.data;
-      if (goodsDetailRes.data.basicInfo.videoId) {
-        that.getVideoSrc(goodsDetailRes.data.basicInfo.videoId);
-      }
-      let _data = {
-        goodsDetail: goodsDetailRes.data,
-        selectSizePrice: goodsDetailRes.data.basicInfo.minPrice,
-        selectSizeOPrice: goodsDetailRes.data.basicInfo.originalPrice,
-        totalScoreToPay: goodsDetailRes.data.basicInfo.minScore,
-        buyNumMax: goodsDetailRes.data.basicInfo.stores,
-        buyNumber: (goodsDetailRes.data.basicInfo.stores > 0) ? 1 : 0
-      }
-      if (goodsKanjiaSetRes.code == 0) {
-        _data.curGoodsKanjia = goodsKanjiaSetRes.data[0]
-        that.data.kjId = _data.curGoodsKanjia.id
-        // 获取当前砍价进度
-        if (!that.data.kjJoinUid) {
-          that.data.kjJoinUid = wx.getStorageSync('uid')
-        }
-        const curKanjiaprogress = await WXAPI.kanjiaDetail(_data.curGoodsKanjia.id, that.data.kjJoinUid)
-        const myHelpDetail = await WXAPI.kanjiaHelpDetail(wx.getStorageSync('token'), _data.curGoodsKanjia.id, that.data.kjJoinUid)
-        if (curKanjiaprogress.code == 0) {
-          _data.curKanjiaprogress = curKanjiaprogress.data
-        }
-        if (myHelpDetail.code == 0) {
-          _data.myHelpDetail = myHelpDetail.data
-        }
-      }
-      if (goodsDetailRes.data.basicInfo.pingtuan) {
-        const pingtuanSetRes = await WXAPI.pingtuanSet(goodsId)
-        if (pingtuanSetRes.code == 0) {
-          _data.pingtuanSet = pingtuanSetRes.data
-          // 如果是拼团商品， 默认显示拼团价格
-          _data.selectSizePrice = goodsDetailRes.data.basicInfo.pingtuanPrice
-        }        
-      }
-      that.setData(_data);
-    }
+    })
+    // const goodsKanjiaSetRes = await WXAPI.kanjiaSet(goodsId)
   },
   async shopSubdetail(shopId){
     const res = await WXAPI.shopSubdetail(shopId)
@@ -212,12 +214,12 @@ Page({
     }
     this.setData({
       shopType: "toPingtuan",
-      selectSizePrice: this.data.goodsDetail.basicInfo.pingtuanPrice,
-      selectSizeOPrice: this.data.goodsDetail.basicInfo.originalPrice,
+      selectSizePrice: this.data.goodsDetail.pingtuanPrice,
+      selectSizeOPrice: this.data.goodsDetail.originalPrice,
       pingtuanopenid: pingtuanopenid,
       
       hideShopPopup: false,
-      skuGoodsPic: this.data.goodsDetail.basicInfo.pic
+      skuGoodsPic: this.data.goodsDetail.pic
     });
     
   },
@@ -227,9 +229,9 @@ Page({
   bindGuiGeTap: function() {
     this.setData({
       hideShopPopup: false,
-      selectSizePrice: this.data.goodsDetail.basicInfo.minPrice,
-      selectSizeOPrice: this.data.goodsDetail.basicInfo.originalPrice,
-      skuGoodsPic: this.data.goodsDetail.basicInfo.pic
+      selectSizePrice: this.data.goodsDetail.minPrice,
+      selectSizeOPrice: this.data.goodsDetail.originalPrice,
+      skuGoodsPic: this.data.goodsDetail.pic
     })
   },
   /**
@@ -276,12 +278,12 @@ Page({
     property.optionValueId = child.id
     child.active = true
     // 获取所有的选中规格尺寸数据
-    const needSelectNum = this.data.goodsDetail.properties.length
+    const needSelectNum = this.data.goodsDetail.sku.length
     let curSelectNum = 0;
     let propertyChildIds = "";
     let propertyChildNames = "";
 
-    this.data.goodsDetail.properties.forEach(p => {
+    this.data.goodsDetail.sku.forEach(p => {
       p.childsCurGoods.forEach(c => {
         if (c.active) {
           curSelectNum++;
@@ -296,20 +298,20 @@ Page({
     }
     // 计算当前价格
     if (canSubmit) {
-      const res = await WXAPI.goodsPrice(this.data.goodsDetail.basicInfo.id, propertyChildIds)
+      const res = await WXAPI.goodsPrice(this.data.goodsDetail.id, propertyChildIds)
       if (res.code == 0) {
         let _price = res.data.price
-        if (this.data.shopType == 'toPingtuan') {
-          _price = res.data.pingtuanPrice
-        }
+        // if (this.data.shopType == 'toPingtuan') {
+        //   _price = res.data.pingtuanPrice
+        // }
         this.setData({
           selectSizePrice: _price,
           selectSizeOPrice: res.data.originalPrice,
           totalScoreToPay: res.data.score,
           propertyChildIds: propertyChildIds,
           propertyChildNames: propertyChildNames,
-          buyNumMax: res.data.stores,
-          buyNumber: (res.data.stores > 0) ? 1 : 0
+          buyNumMax: res.data.stockNum,
+          buyNumber: (res.data.stockNum > 0) ? 1 : 0
         });
       }
     }
@@ -332,7 +334,7 @@ Page({
    * 加入购物车
    */
    addShopCar() {
-    if (this.data.goodsDetail.properties && !this.data.canSubmit) {
+    if (this.data.goodsDetail.sku && !this.data.canSubmit) {
       if (!this.data.canSubmit) {
         wx.showToast({
           title: '请选择规格',
@@ -356,11 +358,11 @@ Page({
     //   })
     //   return
     // }
-    const goodsId = this.data.goodsDetail.basicInfo.id
-    const property = []
-    if (this.data.goodsDetail.properties) {
-      this.data.goodsDetail.properties.forEach(p => {
-        property.push({
+    const goodsId = this.data.goodsDetail.good_id
+    const sku = []
+    if (this.data.goodsDetail.sku) {
+      this.data.goodsDetail.sku.forEach(p => {
+        sku.push({
           optionId: p.id,
           optionValueId: p.optionValueId
         })
@@ -381,7 +383,7 @@ Page({
       }).catch(console.error)
     }).catch(console.error)
         
-    var name = this.data.goodsDetail.basicInfo.name
+    var name = this.data.goodsDetail.name
     var price = this.data.selectSizePrice
     var number = this.data.buyNumber
     var that = this
@@ -391,16 +393,14 @@ Page({
           that.setData({
             shippingCarInfo:{
               items:[{
-                key: key + 1,
+                good_id:goodsId,
                 name: name,
                 price: price,
                 number: number,
                 active: false,
                 pic: '/images/my/cancel.png',
-                property: [{
-                  color:'黑色',
-                  itemid:goodsId
-                }],
+                color:'黑色',
+                size:'L',
                 left:''
               }]
             }
@@ -427,7 +427,6 @@ Page({
                 title: '加入购物车',
                 icon: 'success'
               })
-              console.log(res.result) 
             }).catch(console.error)
           }
         },
@@ -442,8 +441,7 @@ Page({
   buyNow: function(e) {
     let that = this
     let shoptype = e.currentTarget.dataset.shoptype
-    console.log(shoptype)
-    if (this.data.goodsDetail.properties && !this.data.canSubmit) {
+    if (this.data.goodsDetail.sku && !this.data.canSubmit) {
       if (!this.data.canSubmit) {
         wx.showModal({
           title: '提示',

@@ -216,7 +216,6 @@ starset:function(e){
     })
   },
   doNotMove:function(){
-    console.log('yxh')
     return
   },
   // ----------------------------------------------------------------.....
@@ -438,7 +437,7 @@ starset:function(e){
     // }
     this.setData({
       loadingMoreHidden: true,
-      // goods: goods,
+      goods: goods,
     })
   },
   getCoupons: function() {

@@ -50,7 +50,6 @@
 .goodsList {
   width: 100%;
   background-color: #fff;
-  padding-bottom: 100rpx;
 }
 
 .a-gooods {
@@ -71,18 +70,21 @@
 .goods-info {
   border-bottom: 1px solid #eee;
   display: flex;
-  padding: 30rpx 0 30rpx 0;
+  align-items: center;
+  justify-content: center;
+  padding: 35rpx 0 35rpx 0;
   width: 720rpx;
   box-sizing: border-box;
 }
 
 .goods-info .img-box {
   width: 160rpx;
-  height: 160rpx;
+  height: 220rpx;
   overflow: hidden;
   margin-right: 20rpx;
   background-color: #d8d8d8;
   flex-shrink: 0;
+  align-items: center;
 }
 
 .goods-info .text-box {
@@ -101,16 +103,23 @@
 }
 
 .goods-info .text-box .goods-label {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #999;
   height: 38rpx;
   line-height: 38rpx;
   margin: 8rpx 0 25rpx 0;
 }
-
+.goods-info .text-box .goods-id {
+  font-size: 24rpx;
+  color: #999;
+  height: 38rpx;
+  line-height: 38rpx;
+  margin: 8rpx 0 25rpx 0;
+}
 .goods-info .text-box .goods-price {
   font-size: 26rpx;
   color: #e64340;
+  margin-bottom: 0;
 }
 
 .goods-info .text-box .buy-num {
@@ -121,7 +130,6 @@
   right: 30rpx;
   bottom: 0;
   display: flex;
-  /*justify-content: space-between;*/
   font-size: 24rpx;
   text-align: center;
 }
@@ -154,7 +162,7 @@
   border-top-right-radius: 6rpx;
 }
 
-.goods-info .text-box .buy-num .jia-btn.disabled {
+.goods-info .text-box .buy-num .jia-btn .disabled {
   background-color: #f5f5f9;
   border-right: 1rpx solid #eee;
   border-bottom: 1rpx solid #eee;
@@ -170,16 +178,15 @@
   font-size: 24rpx;
   border: 1rpx solid #ccc;
 }
-
 .goods-info .img-box .img {
   width: 160rpx;
-  height: 160rpx;
+  height: 220rpx;
 }
-
 .a-goods-conts .delete-btn {
+  display: flex;
   width: 120rpx;
-  line-height: 220rpx;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
   background: #e64340;
   font-size: 24rpx;
   color: #fff;
@@ -232,20 +239,9 @@
   font-size: 24rpx;
 }
 
-.del-icon {
-  position: absolute;
-  right: 32rpx;
-  top: 32rpx;
-  width: 50rpx;
-  height: 50rpx;
-}
 checkbox .wx-checkbox-input{
-  display: flex;
   width: 30rpx;
   height: 30rpx;
-  align-items: center;
-  margin-top: 50rpx;
-  padding: 5rpx;
 }
 checkbox .wx-checkbox-input.wx-checkbox-input-checked{
   background: rgb(0, 0, 0);
@@ -261,6 +257,5 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   background: transparent;
   transform: translate(-50%,-50%) scale(1);
   -webkit-transform: translate(-50%,-50%) scale(1);
-
 }
   
