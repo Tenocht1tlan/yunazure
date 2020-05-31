@@ -209,16 +209,15 @@ Page({
           that.setData({
             shippingCarInfo:{
               items:[{
-                key: key + 1,
+                good_id:goodsId,
                 name: name,
                 price: price,
+                originalPrice:'199.00',
                 number: number,
                 active: false,
+                color:'黑色',
                 pic: '/images/my/cancel.png',
-                property: [{
-                  color:'黑色',
-                  itemid:goodsId
-                }],
+                sku: [],
                 left:''
               }]
             }

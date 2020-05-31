@@ -125,9 +125,9 @@ swiper-item image {
   padding: 30rpx;
 }
 .goods-text{
-  padding: 0 10rpx;
-  font-size:28rpx;
-  color:#666666;
+  padding: 0 30rpx;
+  font-size:26rpx;
+  color:#000000;
   line-height: 56rpx;
   margin-bottom: 30rpx;
 }

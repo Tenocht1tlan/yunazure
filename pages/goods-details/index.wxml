@@ -17,7 +17,7 @@
     <view class="goods-profile">
       <view class="p"><text>¥</text> {{selectSizePrice}}</view>
       <view wx:if="{{goodsDetail.originalPrice && goodsDetail.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;padding: 15rpx 0rpx 0rpx 15rpx;'><text>¥</text> {{selectSizeOPrice}}</view>
-      <view class="r">{{goodsDetail.numberSells}}人已买</view>
+      <!-- <view class="r">{{goodsDetail.numberSells}}人已买</view> -->
     </view>
     <view class="goods-info-fx">
       <view class='item'>
@@ -293,7 +293,6 @@
 </block>
 
 <template is="apifmLogin" data="{{wxlogin: wxlogin}}" />
-<!-- <float-menu />  -->
 
 
 <poster id="poster" config="{{posterConfig}}" bind:success="onPosterSuccess" bind:fail="onPosterFail"></poster>

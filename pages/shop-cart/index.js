@@ -4,16 +4,18 @@ const AUTH = require('../../utils/auth')
 const db = wx.cloud.database()
 const _ = db.command
 const app = getApp()
-
+import NumberAnimate from 'index_model.js'
 Page({
   data: {
     wxlogin: true,
     saveHidden: true,
-    allSelect: true,
+    allSelect: false,
     noSelect: true,
+    totalPrice:0,
+    isCheck:[false],
+
     startX:'',
     delBtnWidth: 120, //删除按钮宽度单位（rpx）
-    isCheck:[],
     shippingCarInfo:{
       items:[]
     }
@@ -54,7 +56,7 @@ Page({
       }
     }
   },
-  async shippingCarInfo(){
+  shippingCarInfo: function() {
     const token = wx.getStorageSync('isloged')
     if (!token) {
       return
@@ -65,19 +67,13 @@ Page({
       db.collection('shopping-cart').where({
         _openid:res.result.openid
       }).get().then(res=>{
-        var list = []
-        res.data[0].items.forEach(value=>{
-          if(value != null){
-            list.push(value)
-          }
-        })
         this.setData({
-          'shippingCarInfo.items': list
+          noSelect: res.data[0].items.length > 0 ? false : true,
+          'shippingCarInfo.items': res.data[0].items
         })
       })
     })
   },
-  
   toIndexPage: function() {
     wx.switchTab({
       url: "/pages/index/index"
@@ -114,7 +110,6 @@ Page({
   },
 
   touchE: function(e) {
-    
     var index = e.currentTarget.dataset.index;
     if (e.changedTouches.length == 1) {
       var that = this
@@ -130,48 +125,135 @@ Page({
     }
   },
   checkGoods:function(e){
-    var index = e.currentTarget.dataset.index;
-    var price = this.data.shippingCarInfo.items[index].price
-    var num = this.data.shippingCarInfo.items[index].number
-    let isChecked = !this.data.isCheck[index]
+    const index = e.currentTarget.dataset.index
+    const price = parseInt(this.data.shippingCarInfo.items[index].price)
+    const num = this.data.shippingCarInfo.items[index].number
+    const isChecked = !this.data.isCheck[index]
     var up = "isCheck["+index+"]"
+    var tempPrice = parseInt(this.data.totalPrice)
     if(isChecked){
-      var sum = price*num
-      console.log('yxh'+price+num+'  '+sum)
-  }else{
-    console.log('no')
-  }
-  this.setData({
-    [up]:isChecked
-  })
+      tempPrice += price*num
+    }else{
+      tempPrice -= price*num
+    }
+    this.setData({
+      [up]:isChecked
+    })
+    let newNumer = new NumberAnimate({
+        from: tempPrice,
+        speed: 1000,
+        refreshTime: 100,
+        decimals: 2,
+        onUpdate:()=>{
+          this.setData({
+            totalPrice: newNumer.tempValue
+          })
+        }
+    })
   },
   async delItem(e) {
     const key = e.currentTarget.dataset.key
     this.delItemDone(key)
+
+    const index = e.currentTarget.dataset.index
+    const price = parseInt(this.data.shippingCarInfo.items[index].price)
+    const num = this.data.shippingCarInfo.items[index].number
+    var tempPrice = parseInt(this.data.totalPrice)
+    const isChecked = this.data.isCheck[index]
+    if(isChecked){
+      tempPrice -= price*num
+      var tempChecks = this.data.isCheck
+      tempChecks.slice(index,1)
+      this.setData({
+        isCheck: tempChecks
+      })
+      let newNumer = new NumberAnimate({
+        from: tempPrice,
+        speed: 1000,
+        refreshTime: 100,
+        decimals: 2,
+        onUpdate:()=>{
+          this.setData({
+            totalPrice: newNumer.tempValue
+          })
+        }
+      })
+    }
   },
   async delItemDone(key){
     wx.showLoading({
       title: '加载中...',
     })
+    var openid = ''
+    var list = []
+    const that = this
     wx.cloud.callFunction({
-      name:'rmShoppingCart',
-      data: {
-        key: key
-      },
-      complete(){
-        wx.hideLoading()
-      }
+      name:'login'
+    }).then(res=>{
+      openid = res.result.openid
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).get().then(res=>{
+        res.data[0].items.forEach(value=>{
+          if(value != null && value.good_id != key){
+            list.push(value)
+          }
+        })
+        db.collection('shopping-cart').where({
+          _openid:openid
+        }).update({
+          data:{
+            items: list
+          },
+          success(){
+            //
+          },
+          complete(){
+            that.setData({
+              noSelect: list.length > 0 ? false : true,
+              'shippingCarInfo.items':list
+            })
+            wx.hideLoading()
+          }
+        })
+      })
     })
-    this.shippingCarInfo()
-    TOOLS.showTabBarBadge()
+    // wx.cloud.callFunction({
+    //   name:'rmShoppingCart',
+    //   data: {
+    //     key: key
+    //   },
+    //   complete(){
+    //     wx.hideLoading()
+    //   }
+    // })
+    // TOOLS.showTabBarBadge()
   },
   async jiaBtnTap(e) {
     wx.showLoading({
       title: '加载中...',
     })
     const index = e.currentTarget.dataset.index
+    const price = parseInt(this.data.shippingCarInfo.items[index].price)
+    const isChecked = this.data.isCheck[index]
+    var tempPrice = parseInt(this.data.totalPrice)
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number + 1
+    if(isChecked){
+      tempPrice += price
+      let newNumer = new NumberAnimate({
+        from: tempPrice,
+        speed: 1500,
+        refreshTime: 100,
+        decimals: 2,
+        onUpdate:()=>{
+          this.setData({
+            totalPrice: newNumer.tempValue
+          })
+        }
+      });
+    }
+    const that = this
     wx.cloud.callFunction({
       name:'changeSCartNum',
       data: {
@@ -179,16 +261,19 @@ Page({
         number: number,
       },
       complete(){
+        that.shippingCarInfo()
         wx.hideLoading()
       }
     })
-    this.shippingCarInfo()
   },
   async jianBtnTap(e) {
     wx.showLoading({
       title: '加载中...',
     })
     const index = e.currentTarget.dataset.index
+    const price = parseInt(this.data.shippingCarInfo.items[index].price)
+    const isChecked = this.data.isCheck[index]
+    var tempPrice = parseInt(this.data.totalPrice)
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number - 1
     if (number <= 0) {
@@ -203,7 +288,23 @@ Page({
         }
       })
       return
+    }else{
+      if(isChecked){
+        tempPrice -= price
+        let newNumer = new NumberAnimate({
+          from: tempPrice,
+          speed: 1500,
+          refreshTime: 100,
+          decimals: 2,
+          onUpdate:()=>{
+            this.setData({
+              totalPrice: newNumer.tempValue
+            })
+          }
+        })
+      }
     }
+    const that = this
     wx.cloud.callFunction({
       name:'changeSCartNum',
       data: {
@@ -211,10 +312,10 @@ Page({
         number: number,
       },
       complete(){
+        that.shippingCarInfo()
         wx.hideLoading()
       }
     })
-    this.shippingCarInfo()
   },
   cancelLogin() {
     this.setData({

@@ -29,7 +29,7 @@ Page({
     shippingCarInfo:{
       items:[]
     },
-    goodsId:'',
+    goodsId:''
   },
   async onLoad(e) {
     // if (e && e.scene) {
@@ -358,7 +358,7 @@ Page({
     //   })
     //   return
     // }
-    const goodsId = this.data.goodsDetail.good_id
+    
     const sku = []
     if (this.data.goodsDetail.sku) {
       this.data.goodsDetail.sku.forEach(p => {
@@ -369,43 +369,62 @@ Page({
       })
     }
     
-    var key = 0
+    var canAdd = false
     wx.showLoading({
-      title: '加载中...',
-    }),
+      title: '加载中...'
+    })
+    var goodsId = this.data.goodsDetail.good_id
+    var number = this.data.buyNumber
+    var exist = false
     wx.cloud.callFunction({
       name:'login'
     }).then(res=>{
       db.collection('shopping-cart').where({
         _openid:res.result.openid
-      }).count().then(res2=>{
-        key = res2.total
-      }).catch(console.error)
-    }).catch(console.error)
-        
+      }).get().then(res=>{
+        if(res.data[0] == undefined){
+          canAdd = true
+        }else{
+          var list = []
+          res.data[0].items.forEach(value=>{
+            if(value != null){
+              list.push(value)
+            }
+          })
+          list.forEach(e=>{
+            if(e.good_id == goodsId){
+              exist = true
+              number += e.number
+              return
+            }
+          })
+        }
+      })
+    })
     var name = this.data.goodsDetail.name
-    var price = this.data.selectSizePrice
-    var number = this.data.buyNumber
+    var price = this.data.selectSizePrice.toFixed(2)
+    var originalPrice = this.data.selectSizeOPrice.toFixed(2)
     var that = this
+    that.setData({
+      shippingCarInfo:{
+        items:[{
+          good_id:goodsId,
+          name: name,
+          price: price,
+          originalPrice:originalPrice,
+          number: number,
+          active: false,
+          pic: '/images/my/cancel.png',
+          color:'黑色',
+          size:'L',
+          left:''
+        }]
+      }
+    })
     setTimeout(function () {
       wx.hideLoading({
         complete: (res) => {
-          that.setData({
-            shippingCarInfo:{
-              items:[{
-                good_id:goodsId,
-                name: name,
-                price: price,
-                number: number,
-                active: false,
-                pic: '/images/my/cancel.png',
-                color:'黑色',
-                size:'L',
-                left:''
-              }]
-            }
-          })
-          if (key == 0){
+          if (canAdd){
             db.collection('shopping-cart').add({
               data: {
                 items:that.data.shippingCarInfo.items
@@ -417,17 +436,32 @@ Page({
               })
             }).catch(console.error)
           }else{
-            wx.cloud.callFunction({
-              name:'addShippingCart',
-              data: {
-                items:that.data.shippingCarInfo.items
-              }
-            }).then(res=>{
-              wx.showToast({
-                title: '加入购物车',
-                icon: 'success'
-              })
-            }).catch(console.error)
+            if(exist){
+              wx.cloud.callFunction({
+                name:'changeSCartNum',
+                data: {
+                  key: goodsId,
+                  number: number,
+                }
+              }).then(res=>{
+                wx.showToast({
+                  title: '加入购物车',
+                  icon: 'success'
+                })
+              }).catch(console.error)
+            }else{
+              wx.cloud.callFunction({
+                name:'addShippingCart',
+                data: {
+                  items:that.data.shippingCarInfo.items
+                }
+              }).then(res=>{
+                wx.showToast({
+                  title: '加入购物车',
+                  icon: 'success'
+                })
+              }).catch(console.error)
+            }
           }
         },
       })

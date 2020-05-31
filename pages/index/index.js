@@ -376,9 +376,8 @@ starset:function(e){
     this.setData({
       scrollTop: e.scrollTop, 
     })
-    console.log("e.h = "+ scrollTop)
-    console.log("h1 = "+ (this.data.swiperHeight-APP.globalData.navHeight*2)/2)
-
+    // console.log("e.h = "+ scrollTop)
+    // console.log("h1 = "+ (this.data.swiperHeight-APP.globalData.navHeight*2)/2)
     if(scrollTop>(this.data.swiperHeight-APP.globalData.navHeight*2)/2){
       this.setData({
       hiddenNav : false
