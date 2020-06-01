@@ -6,12 +6,13 @@
 <view class="reservationInput">
   <view class="reservationInputtext" >姓名</view>
   <input class="reinput" placeholder="请输入姓名" value="{{name}}" bindinput="bindnaInput"/>
-  <button class="reservationInputClick"  open-type="getUserInfo" bindgetuserinfo="testInfo">一键获取预约信息</button>
+  <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getUserInfo" bindgetuserinfo="reservationInfo">一键获取预约信息</button>
 </view>
 <view class="space"></view>
 <view class="reservationInput">
   <view class="reservationInputtext" >电话</view>
   <input class="reinput" placeholder="请输入电话" type="number" value="{{phone}}" bindinput="bindphInput" />
+  <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
 </view>
 <view class="space"></view>
 <view class="reservationInput">

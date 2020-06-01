@@ -109,11 +109,15 @@ Page({
                       tag:'reservation'
                     }
                   }).then(res=>{
-                    wx.showModal({
-                      title:'已预约!',
-                      content:'恭喜您成为我们的第 '+ _this.data.number.toString() +' 位预约用户！',
-                      showCancel:false
+                    wx.showToast({
+                      title: '预约成功！',
+                      icon: 'success',
                     })
+                    // wx.showModal({
+                    //   title:'已预约!',
+                    //   content:'恭喜您成为我们的第 '+ _this.data.number.toString() +' 位预约用户！',
+                    //   showCancel:false
+                    // })
                     _this.setData({
                       name:'',
                       phone:'',
@@ -127,8 +131,7 @@ Page({
                   })
                 },
               })
-            }, 2000)
-            
+            }, 1000)
           }
         }
       })
@@ -177,7 +180,7 @@ Page({
       console.error(err)
     })
   },
-  testInfo:function(e){
+  reservationInfo:function(e){
     if (!e.detail.userInfo) {
       wx.showToast({
         title: '已取消',
@@ -191,10 +194,25 @@ Page({
       })
       this.setData({
         name: e.detail.userInfo.nickName,
-        phone:'111',
         address:e.detail.userInfo.city
       })
     }
+  },
+  getPhoneNumber:function(e){
+    wx.cloud.callFunction({
+      name:"getPhone",
+      data:{
+        cloudID:e.detail.cloudID
+      }
+    }).then(res=>{
+      wx.showToast({
+        title: '',
+        icon: 'success',
+      })
+      this.setData({
+        phone: res.result.list[0].data.phoneNumber
+      })
+    }).catch(console.error)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -214,7 +232,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
 
   },
 
@@ -251,57 +268,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  getInfo:function(){
-    var _this = this
-    wx.getSetting({
-      success(res) {
-        app.globalData.auth['scope.userInfo'] = res.authSetting['scope.userInfo']
-        if (!res.authSetting['scope.userInfo']) {
-          wx.authorize({
-            scope: 'scope.userInfo',
-            success () {
-              _this.ifSucc(_this)
-            },
-            fail(err) {
-              wx.showModal({
-                title:'Tips',
-                content:err
-              })
-            }
-          })
-        }else{
-          _this.ifSucc(_this)
-        }
-      },
-      fail(err){
-        wx.showModal({
-          title:'Tips',
-          content:err
-        })
-      }
-    })
-  },
-  ifSucc:function(_this){
-    wx.getUserInfo({
-      success: function(res) {
-        var userInfo = res.userInfo
-        app.globalData.userInfo = userInfo
-      },
-      complete(res){
-        _this.setData({
-          name:app.globalData.userInfo.nickName,
-          phone:'',
-          region:['浙江省', '杭州市', '西湖区'],
-          address:app.globalData.userInfo.city
-        })
-      },
-      fail(err) {
-        wx.showModal({
-          title:'Tips',
-          content:err
-        })
-      }
-    })
   },
 })

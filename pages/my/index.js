@@ -8,6 +8,7 @@ const member = db.collection('member');
 Page({
 	data: {
     wxlogin: false,
+    openid:'',
     isloged: false,
     name:'',
     phone:'',
@@ -200,10 +201,18 @@ Page({
       })
       return;
     }else{
+      wx.cloud.callFunction({
+        name:'login'
+      }).then(res=>{
+        this.setData({
+          openid:res.result.openid
+        })
+      })
       try {
         wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
         wx.setStorageSync('mail', e.detail.userInfo.nickName)
         wx.setStorageSync('isloged', true)
+        wx.setStorageSync('openid', this.data.openid)
       } catch (e) { }
       this.setData({
         name: e.detail.userInfo.nickName,

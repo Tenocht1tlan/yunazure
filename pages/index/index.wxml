@@ -139,7 +139,7 @@
 
 
   <view hidden="{{loadingMoreHidden ? true : false}}" class="weui-loadmore weui-loadmore_line" style='margin-top:60rpx;margin-bottom:30rpx;'>
-    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦</view>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">我是有底线的</view>
   </view>
 </view>
 <view class='coupons-float' bindtap="goCoupons">

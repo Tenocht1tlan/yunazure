@@ -13,7 +13,7 @@ Page({
     noSelect: true,
     totalPrice:0,
     isCheck:[false],
-
+    loading:true,
     startX:'',
     delBtnWidth: 120, //删除按钮宽度单位（rpx）
     shippingCarInfo:{
@@ -40,6 +40,28 @@ Page({
     this.setData({
       delBtnWidth: delBtnWidth
     });
+  },
+  onPullDownRefresh(){
+    wx.showLoading({
+      title: '加载中...',
+    })
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).get().then(res=>{
+        this.setData({
+          noSelect: res.data[0].items.length > 0 ? false : true,
+          'shippingCarInfo.items': res.data[0].items
+        })
+        wx.stopPullDownRefresh({
+          complete: (res) => {
+            wx.hideLoading()
+          },
+        })
+      })
+    })
   },
   onLoad: function() {
     this.initEleWidth();
