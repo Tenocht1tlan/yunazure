@@ -95,10 +95,10 @@
 <!-- 6.1 -->
 <view style="margin-left:50rpx;margin-top:25rpx;">精品</view>
 <view class="upBoutiques">
-    <view class="Boutiques" wx:for="{{Boutique}}" wx:key="*this" bindtap="bt-" >
+    <view class="Boutiques" wx:for="{{Boutique}}" data-index="{{index}}" bindtap="Boutiques" wx:key="index">
         <image class="Boutiques-imag" src="{{item.src}}" > </image>
-        <view class="Boutiques-text">
-          <view style="line-height:1em;margin-top:20rpx;font-size:25rpx;">本周新品</view>
+        <view class="Boutiques-text" hidden="{{textHidden[index]}}">
+          <view style="line-height:1em;margin-top:20rpx;font-size:22rpx;padding-top:20rpx;"  >本周新品</view>
         </view>
     </view>
 </view> 
@@ -124,18 +124,20 @@
   <view class="weui-loadmore weui-loadmore_line">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
   </view>
-  <view class="goods-container">
-    <view class="goods-box" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
-      <view class="img-box">
-        <image src="{{item.pic}}" class="image" mode="aspectFit" lazy-load="true" />
+
+ <view class="remai-goods" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
+      <view class="imag-box">
+        <image class="scroll-view-imag" src="{{item.pic}}" mode="aspectFit" lazy-load="true" ></image>
       </view>
-      <view class="goods-title">{{item.name}}</view>
-      <view style='display:flex;'>
-        <view class="goods-price">¥ {{item.minPrice}}</view>
-        <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+      <view style="margin:20rpx 45rpx;width:250rpx">新品
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  catchtap="showUp" data-index="{{index}}"></image>
       </view>
+      <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">{{item.name}}</view>
+      <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥{{item.minPrice}} </view>
+       <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;margin:0rpx 45rpx 20rpx 45rpx'>¥ {{item.originalPrice}}</view>
     </view>
-  </view>
+
+
   <view hidden="{{loadingMoreHidden ? true : false}}" class="weui-loadmore weui-loadmore_line" style='margin-top:60rpx;margin-bottom:30rpx;'>
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦</view>
   </view>

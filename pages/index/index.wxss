@@ -428,15 +428,15 @@ width:750rpx;
   border-radius: 50%;
 }
 .Boutiques-imag{
-  width: 120rpx;
-  height: 120rpx;
+  width: 100rpx;
+  height: 100rpx;
 }
 .Boutiques-text{
-width: 120rpx;
-height: 120rpx;
+width: 100rpx;
+height: 100rpx;
 text-align: center;
 border-radius: 50%;
 position: absolute;
 color: white;
-background-color: rgba(121, 118, 118, 0.1);
+background-color: rgba(121, 118, 118, 0.5);
 }

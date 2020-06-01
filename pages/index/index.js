@@ -22,7 +22,7 @@ Page({
     categories: [],
     activeCategoryId: 0,
     goods: [],
-    
+  
     scrollTop: 0,
     hiddenNav:true,
     loadingMoreHidden: true,
@@ -105,7 +105,7 @@ Page({
     // 精品Boutique
     // 6.1
     Boutique:[{
-      'src':'/images/my/check.png',
+      'src':'/images/my/star.png',
     //   picture:[{
     //     'pic':'/images/share/check.png',
     //   },{
@@ -113,14 +113,19 @@ Page({
     //   },
     // ]
     },{
-      'src':'/images/my/check.png',
+      'src':'/images/my/star.png',
+ 
     },{
-      'src':'/images/my/check.png',
+      'src':'/images/my/star.png',
+   
+    },{
+      'src':'/images/my/star.png',
 
-    },{
-      'src':'/images/my/check.png'
     },
   ],
+  textHidden:[true,false,false,false],
+  currTxthide:0,
+  tempIdx:0
 // 6.1
 
 },
@@ -129,10 +134,26 @@ activeItem:function(e){
     imageChose:this.data.array[e.target.dataset.index].imageChose,
     currentChoseItem:e.target.dataset.index
   })
+  console.log(this.data.currentChoseItem)
 },
 // 6.1
 Boutiques:function(e){
-
+  // let temp = 'textHidden[' + e.currentTarget.dataset.index +']';
+  var temp = []
+  if(e.currentTarget.dataset.index == 0){
+    temp = [true,false,false,false]
+  }else if(e.currentTarget.dataset.index == 1){
+    temp = [false,true,false,false]
+  }else if(e.currentTarget.dataset.index == 2){
+    temp = [false,false,true,false]
+  }else{
+    temp = [false,false,false,true]
+  }
+  this.setData({
+    imageChose:this.data.array[e.currentTarget.dataset.index].imageChose,
+    textHidden:temp,
+    // currTxthide:e.target.dataset.index,
+})
 },
 // 6.1
 starset:function(e){
