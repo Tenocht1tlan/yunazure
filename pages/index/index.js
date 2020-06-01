@@ -102,13 +102,39 @@ Page({
  
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},//
+    // 精品Boutique
+    // 6.1
+    Boutique:[{
+      'src':'/images/my/check.png',
+    //   picture:[{
+    //     'pic':'/images/share/check.png',
+    //   },{
+    //     'pic':'/images/share/check.png',
+    //   },
+    // ]
+    },{
+      'src':'/images/my/check.png',
+    },{
+      'src':'/images/my/check.png',
+
+    },{
+      'src':'/images/my/check.png'
+    },
+  ],
+// 6.1
+
 },
-  activeItem:function(e){
-    this.setData({
-      imageChose:this.data.array[e.target.dataset.index].imageChose,
-      currentChoseItem:e.target.dataset.index
-    })
-  },
+activeItem:function(e){
+  this.setData({
+    imageChose:this.data.array[e.target.dataset.index].imageChose,
+    currentChoseItem:e.target.dataset.index
+  })
+},
+// 6.1
+Boutiques:function(e){
+
+},
+// 6.1
 starset:function(e){
   let index = e.currentTarget.dataset.index;
   let temp = 'imageChose[' + index +'].starsetnum';

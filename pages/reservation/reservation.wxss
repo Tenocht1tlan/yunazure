@@ -43,8 +43,8 @@
   font-size: 22rpx;
   border-radius:25rpx 25rpx;
   font-family: SimSun;
-  color: aliceblue;
-  background-color: #000080;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
   justify-content: center;
   align-items: center;
 }
@@ -107,8 +107,8 @@ height: 28rpx;
 }
 
 .Confirm .Confirmbutton{
-  background-color: navy;
-  width: 400rpx;
+  background-color: rgb(0, 0, 0);
+  width: 600rpx;
   height: fit-content;
   border-radius: 0px;
   color: aliceblue;

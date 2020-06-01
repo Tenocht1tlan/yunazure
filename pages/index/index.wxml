@@ -92,10 +92,32 @@
     </view>
   </view>
 <!-- 精品   四个图标-->
-<!--  -->
-<view >精品</view>
+<!-- 6.1 -->
+<view style="margin-left:50rpx;margin-top:25rpx;">精品</view>
+<view class="upBoutiques">
+    <view class="Boutiques" wx:for="{{Boutique}}" wx:key="*this" bindtap="bt-" >
+        <image class="Boutiques-imag" src="{{item.src}}" > </image>
+        <view class="Boutiques-text">
+          <view style="line-height:1em;margin-top:20rpx;font-size:25rpx;">本周新品</view>
+        </view>
+    </view>
+</view> 
 
-<!--  -->
+<view class='space'></view>
+<view class="remai-goods" wx:for="{{imageChose}}" wx:key="index"  >
+    <view class="imag-box">
+      <image class="scroll-view-imag" src="{{item.src}}" ></image>
+      <image class="star" bindtap="starset" src="{{item.starsetnum?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" ></image>
+    </view>
+    <view style="margin:20rpx 45rpx;width:250rpx">新品
+      <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  bindtap="showUp" data-index="{{index}}"></image>
+    </view>
+    <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
+    <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
+</view>
+
+
+<!-- 6.1 -->
 
 <view>
   <view class='space'></view>
