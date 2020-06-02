@@ -362,15 +362,25 @@ z-index: 0;
   padding: 15rpx 10rpx;
 }
 .remai-goods{
+  margin-top: 20rpx;
   margin-left: 20rpx;
   border: #f0f0f0 1rpx solid;
   /* padding: 20rpx 45rpx; */
   font-size: 25rpx;
   display: inline-block;
 }
+.uIntre{
+  white-space: nowrap;
+  display: inline-block;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  border: #f0f0f0 1rpx solid;
+  /* padding: 20rpx 45rpx; */
+  font-size: 25rpx;
+}
 .packge{
   height: max-content;
-  z-index: 999;
+  /* z-index: 999; */
 }
 /*  */
 /* ---------------------------- */

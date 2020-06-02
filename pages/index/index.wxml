@@ -104,18 +104,19 @@
 </view> 
 
 <view class='space'></view>
-<view class="remai-goods" wx:for="{{imageChose}}" wx:key="index"  >
-    <view class="imag-box">
-      <image class="scroll-view-imag" src="{{item.src}}" ></image>
-      <image class="star" bindtap="starset" src="{{item.starsetnum?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" ></image>
-    </view>
-    <view style="margin:20rpx 45rpx;width:250rpx">新品
-      <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  bindtap="showUp" data-index="{{index}}"></image>
-    </view>
-    <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
-    <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
+<view class="page-selection">
+  <view class="remai-goods" wx:for="{{imageChose}}" wx:key="index"  >
+      <view class="imag-box">
+        <image class="scroll-view-imag" src="{{item.src}}" ></image>
+        <image class="star" bindtap="starset" src="{{item.starsetnum?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" ></image>
+      </view>
+      <view style="margin:20rpx 45rpx;width:250rpx">新品
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  bindtap="showUp" data-index="{{index}}"></image>
+      </view>
+      <view style="color:gray ; width:250rpx ; margin:0rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
+      <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
+  </view>
 </view>
-
 
 <!-- 6.1 -->
 
@@ -125,17 +126,21 @@
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
   </view>
 
- <view class="remai-goods" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
-      <view class="imag-box">
-        <image class="scroll-view-imag" src="{{item.pic}}" mode="aspectFit" lazy-load="true" ></image>
+  <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
+        <view class="imag-box">
+          <image class="scroll-view-imag" src="{{item.pic}}" mode="aspectFit" lazy-load="true" ></image>
+        </view>
+        <view style="margin:20rpx 45rpx;width:250rpx">新品
+          <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  catchtap="showUp" data-index="{{index}}"></image>
+        </view>
+        <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">{{item.name}}</view>
+        <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx;display:flex;flex-direction:row;">
+                <!-- <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:60rpx;'>¥ {{item.originalPrice}}</view> -->
+           <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:60rpx;'>¥ {{item.originalPrice}}</view>
+           ￥{{item.minPrice}}
+        </view>
+
       </view>
-      <view style="margin:20rpx 45rpx;width:250rpx">新品
-        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  catchtap="showUp" data-index="{{index}}"></image>
-      </view>
-      <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">{{item.name}}</view>
-      <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥{{item.minPrice}} </view>
-       <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;margin:0rpx 45rpx 20rpx 45rpx'>¥ {{item.originalPrice}}</view>
-    </view>
 
 
   <view hidden="{{loadingMoreHidden ? true : false}}" class="weui-loadmore weui-loadmore_line" style='margin-top:60rpx;margin-bottom:30rpx;'>
