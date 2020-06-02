@@ -27,6 +27,7 @@ App({
      * 初次加载判断网络情况
      * 无网络状态下根据实际情况进行调整
      */
+    
     wx.getNetworkType({
       success(res) {
         const networkType = res.networkType

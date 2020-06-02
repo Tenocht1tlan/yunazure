@@ -35,7 +35,7 @@
 <view class="space"></view>
 
 <view class="protocol">
-  <image class="icon" src="/images/my/check.png"></image>
+  <image class="icon" src="/images/my/check.png" mode="aspectFit"></image>
   <view class="protext">预约即默认同意</view>
   <button class="probutton" bindtap="probook">协议</button>
 </view>
@@ -64,7 +64,7 @@
 </view>
 
 <!--门店地址，点击后cover view界面的隐藏属性改为false  -->
-<view class="store">
+<!-- <view class="store">
   <view class="storeAddress" bindtap="storeShowClick" data-index="1" >浙江</view>
   <view class="storeAddress" bindtap="storeShowClick" data-index="2" >江苏</view>
   <view class="storeAddress" bindtap="storeShowClick" data-index="3" >福建</view>
@@ -73,7 +73,10 @@
   <cover-image  class="CoverIcon" src="/images/my/cancel.png" bindtap="storeHiddenClick" >
   </cover-image>    
   <cover-view class="storeCoverText" >{{content}}</cover-view>
-</cover-view>
+</cover-view> -->
 <cover-view class="kefu" >
   <button class="kefubutton" open-type="contact" bindcontact="handleContact">联系客服</button>
 </cover-view>
+
+<image src="/images/fxad.jpeg" mode="aspectFit" style="width:750rpx"> 
+</image>
