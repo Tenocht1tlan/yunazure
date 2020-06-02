@@ -48,38 +48,38 @@
   },
   "tabBar": {
     "color": "#6e6d6b",
-    "selectedColor": "#e64340",
+    "selectedColor": "#f36838",
     "borderStyle": "white",
     "backgroundColor": "#fff",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "images/nav/home-off.png",
-        "selectedIconPath": "images/nav/home-on.png",
+        "iconPath": "images/nav/homeNo.png",
+        "selectedIconPath": "images/nav/homeYes.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/category/category",
-        "iconPath": "images/nav/ic_catefory_normal.png",
-        "selectedIconPath": "images/nav/ic_catefory_pressed.png",
+        "iconPath": "images/nav/classNo.png",
+        "selectedIconPath": "images/nav/classYes.png",
         "text": "分类"
       },
       {
         "pagePath": "pages/reservation/reservation",
-        "iconPath": "images/nav/cart-off.png",
-        "selectedIconPath": "images/nav/cart-on.png",
+        "iconPath": "images/nav/reNo.png",
+        "selectedIconPath": "images/nav/reYes.png",
         "text": "预约"
       },
       {
         "pagePath": "pages/shop-cart/index",
-        "iconPath": "images/nav/cart-off.png",
-        "selectedIconPath": "images/nav/cart-on.png",
+        "iconPath": "images/nav/goodChartNo.png",
+        "selectedIconPath": "images/nav/goodChart.png",
         "text": "购物车"
       },
       {
         "pagePath": "pages/my/index",
-        "iconPath": "images/nav/my-off.png",
-        "selectedIconPath": "images/nav/my-on.png",
+        "iconPath": "images/nav/myNo.png",
+        "selectedIconPath": "images/nav/myYes.png",
         "text": "我的"
       }
     ]
