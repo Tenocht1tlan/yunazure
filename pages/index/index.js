@@ -105,7 +105,7 @@ Page({
     // 精品Boutique
     // 6.1
     Boutique:[{
-      'src':'/images/my/star.png',
+      'src':'/images/woman.png',
     //   picture:[{
     //     'pic':'/images/share/check.png',
     //   },{
@@ -113,13 +113,13 @@ Page({
     //   },
     // ]
     },{
-      'src':'/images/my/star.png',
+      'src':'/images/man.png',
  
     },{
-      'src':'/images/my/star.png',
+      'src':'/images/scarfWoman.png',
    
     },{
-      'src':'/images/my/star.png',
+      'src':'/images/scarfMan.png',
 
     },
   ],
