@@ -69,11 +69,11 @@
         <image class="scroll-view-imag" src="{{item.src}}" ></image>
          <image class="star" bindtap="starset" src="{{item.starsetnum?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" ></image>
       </view>
-      <view style="margin:20rpx 45rpx;width:250rpx">新品
-        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  bindtap="showUp" data-index="{{index}}"></image>
+      <view style="margin:20rpx 25rpx;width:250rpx">新品
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  bindtap="showUp" data-index="{{index}}"></image>
       </view>
-      <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
-      <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
+      <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 25rpx">菠萝印花短裤 </view>
+      <view style="color:gray;margin:0rpx 45rpx 20rpx 25rpx">￥299.00  </view>
     </view>
   </scroll-view>
 </view>
@@ -104,17 +104,17 @@
 </view> 
 
 <view class='space'></view>
-<view class="page-selection">
-  <view class="remai-goods" wx:for="{{imageChose}}" wx:key="index"  >
+<view style="display: inline-block;flex-wrap:wrap;">
+  <view class="uIntre" wx:for="{{imageChose}}" wx:key="index">
       <view class="imag-box">
         <image class="scroll-view-imag" src="{{item.src}}" ></image>
         <image class="star" bindtap="starset" src="{{item.starsetnum?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" ></image>
       </view>
-      <view style="margin:20rpx 45rpx;width:250rpx">新品
-        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  bindtap="showUp" data-index="{{index}}"></image>
+      <view style="margin:20rpx 25rpx;width:250rpx">新品
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  bindtap="showUp" data-index="{{index}}"></image>
       </view>
-      <view style="color:gray ; width:250rpx ; margin:0rpx 45rpx 0rpx 45rpx">菠萝印花短裤 </view>
-      <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx">￥299.00  </view>
+      <view style="color:gray ; width:250rpx ; margin:0rpx 45rpx 0rpx 25rpx">菠萝印花短裤 </view>
+      <view style="color:gray;margin:0rpx 45rpx 20rpx 25rpx">￥299.00  </view>
   </view>
 </view>
 
@@ -125,28 +125,27 @@
   <view class="weui-loadmore weui-loadmore_line">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
   </view>
-
-  <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
-        <view class="imag-box">
-          <image class="scroll-view-imag" src="{{item.pic}}" mode="aspectFit" lazy-load="true" ></image>
-        </view>
-        <view style="margin:20rpx 45rpx;width:250rpx">新品
-          <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 180rpx "  catchtap="showUp" data-index="{{index}}"></image>
-        </view>
-        <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 45rpx">{{item.name}}</view>
-        <view style="color:gray;margin:0rpx 45rpx 20rpx 45rpx;display:flex;flex-direction:row;">
-                <!-- <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:60rpx;'>¥ {{item.originalPrice}}</view> -->
-           <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:60rpx;'>¥ {{item.originalPrice}}</view>
-           ￥{{item.minPrice}}
-        </view>
-
+  <view style='display: inline-block;flex-wrap:wrap;'>
+    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
+      <view class="imag-box">
+        <image class="scroll-view-imag" src="{{item.pic}}" mode="aspectFit" lazy-load="true" ></image>
       </view>
-
-
+      <view style="margin:20rpx 25rpx;width:250rpx">新品
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  catchtap="showUp" data-index="{{index}}"></image>
+      </view>
+      <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 25rpx">{{item.name}}</view>
+      <view style="color:gray;margin:0rpx 45rpx 5rpx 25rpx;display:flex;flex-direction:row;">
+        <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:fit-content;margin-right:20rpx;'>¥ {{item.originalPrice}}</view>
+        ￥{{item.minPrice}}
+      </view>
+    </view>
+  </view>
   <view hidden="{{loadingMoreHidden ? true : false}}" class="weui-loadmore weui-loadmore_line" style='margin-top:60rpx;margin-bottom:30rpx;'>
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">我是有底线的</view>
   </view>
 </view>
+
+
 <view class='coupons-float' bindtap="goCoupons">
   <image src="/images/gift.png"></image>
 </view>

@@ -356,26 +356,24 @@ z-index: 0;
   white-space: nowrap;
   display:flex;
   padding: 5rpx,0;
-  
-  }
+}
 .imag-box{
-  padding: 15rpx 10rpx;
+  padding: 15rpx 25rpx;
 }
 .remai-goods{
+  white-space: nowrap;
   margin-top: 20rpx;
   margin-left: 20rpx;
   border: #f0f0f0 1rpx solid;
-  /* padding: 20rpx 45rpx; */
   font-size: 25rpx;
   display: inline-block;
 }
 .uIntre{
   white-space: nowrap;
   display: inline-block;
-  margin-top: 20rpx;
-  margin-left: 20rpx;
-  border: #f0f0f0 1rpx solid;
-  /* padding: 20rpx 45rpx; */
+  width: 350rpx;
+  margin: 10rpx 0rpx 0rpx 16rpx;
+  border: #e0e0e0 1rpx solid;
   font-size: 25rpx;
 }
 .packge{
