@@ -1,8 +1,9 @@
 const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
-const TOOLS = require('../../utils/tools.js') // TOOLS.showTabBarBadge();
-const db = wx.cloud.database();
-const goodsDetails = db.collection('goods');
+const TOOLS = require('../../utils/tools.js')
+const db = wx.cloud.database()
+const goodsDetails = db.collection('goods')
+const goodsCategory = db.collection('goodsCategory')
 Page({
   /**
    * 页面的初始数据
@@ -34,56 +35,66 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    const res = await WXAPI.goodsCategory()
     wx.hideLoading()
     let categories = [];
-    let categoryName = '';
-    let categoryId = '';
-    if (res.code == 0) {
-      if (this.data.categorySelected.id) {
-        const _curCategory = res.data.find(ele => {
-          return ele.id == this.data.categorySelected.id
-        })
-        categoryName = _curCategory.name;
-        categoryId = _curCategory.id;
-      }
-      for (let i = 0; i < res.data.length; i++) {
-        let item = res.data[i];
-        categories.push(item);
-        if (i == 0 && !this.data.categorySelected.id) {
-          categoryName = item.name;
-          categoryId = item.id;
+    let categoryName = ''
+    let categoryId = ''
+    goodsCategory.get().then(res=>{
+      console.log(res.data[0].category)
+      if(res.data[0].category){
+        if (this.data.categorySelected.id) {
+          const _curCategory = res.data[0].category.find(ele => {
+            return ele.id == this.data.categorySelected.id
+          })
+          categoryName = _curCategory.name;
+          categoryId = _curCategory.id;
         }
+        for (let i = 0; i < res.data[0].category.length; i++) {
+          let item = res.data[0].category[i];
+          categories.push(item);
+          // if (i == 0 && !this.data.categorySelected.id) {
+            categoryName = item.name;
+            categoryId = item.id;
+          // }
+        }
+        this.setData({
+          categories: categories,
+          categorySelected: {
+            name: categoryName,
+            id: categoryId
+          }
+        })
+      }else{
+        this.setData({
+          categories: [],
+          categorySelected: {
+            name: '',
+            id: ''
+          }
+        })
       }
-    }
-    this.setData({
-      categories: categories,
-      categorySelected: {
-        name: categoryName,
-        id: categoryId
-      }
-    });
+    }).catch(console.error)
     this.getGoodsList();
   },
   async getGoodsList() {
     wx.showLoading({
       title: '加载中',
     })
-    const res = await WXAPI.goods({
-      categoryId: this.data.categorySelected.id,
-      page: 1,
-      pageSize: 100000
-    })
+    //   categoryId: this.data.categorySelected.id,
+    //   page: 1,
+    //   pageSize: 100000
+    goodsDetails.get().then(res=>{
+      if(res.data){
+        this.setData({
+          currentGoods:res.data
+        })
+      }else{
+        this.setData({
+          currentGoods: null
+        });
+      }
+    }).catch(console.error)
     wx.hideLoading()
-    if (res.code == 700) {
-      this.setData({
-        currentGoods: null
-      });
-      return
-    }
-    this.setData({
-      currentGoods: res.data
-    });
   },
   toDetailsTap: function(e) {
     wx.navigateTo({
@@ -91,19 +102,19 @@ Page({
     })
   },
   onCategoryClick: function(e) {
-    var that = this;
-    var id = e.target.dataset.id;
+    var that = this
+    var id = e.target.dataset.id
     if (id === that.data.categorySelected.id) {
       that.setData({
         scrolltop: 0,
       })
     } else {
-      var categoryName = '';
+      var categoryName = ''
       for (var i = 0; i < that.data.categories.length; i++) {
         let item = that.data.categories[i];
         if (item.id == id) {
-          categoryName = item.name;
-          break;
+          categoryName = item.name
+          break
         }
       }
       that.setData({

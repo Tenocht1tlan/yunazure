@@ -114,6 +114,12 @@
 					"pathName": "pages/shop-cart/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分类",
+					"pathName": "pages/category/category",
+					"scene": null
 				}
 			]
 		}
