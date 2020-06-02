@@ -44,7 +44,7 @@
   border-radius:25rpx 25rpx;
   font-family: SimSun;
   color: rgb(255, 255, 255);
-  background-color: #312520;
+  background-color: #333333;
   justify-content: center;
   align-items: center;
 }
@@ -107,11 +107,12 @@ height: 28rpx;
 }
 
 .Confirm .Confirmbutton{
-  background-color: #312520;
+  background-color: #ffffff;
   width: 600rpx;
   height: fit-content;
   border-radius: 0px;
-  color: aliceblue;
+  color: rgb(0, 0, 0);
+  border:  1px solid;
 }
 
 .dotted{

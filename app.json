@@ -72,8 +72,8 @@
       },
       {
         "pagePath": "pages/shop-cart/index",
-        "iconPath": "images/nav/goodChartNo.png",
-        "selectedIconPath": "images/nav/goodChart.png",
+        "iconPath": "images/nav/chartNo.png",
+        "selectedIconPath": "images/nav/chartYes.png",
         "text": "购物车"
       },
       {

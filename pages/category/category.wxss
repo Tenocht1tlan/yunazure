@@ -65,7 +65,7 @@ page,view,image,input {
 }
 
 .category-container .category .name.active {
-  color: #d81e06;
+  color: #FF6666;
   font-weight: bold;
 }
 
