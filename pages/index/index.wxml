@@ -85,7 +85,7 @@
     <view class='Mselect'>
         <image src="{{upImage}}" ></image>
         <view>------选择尺码------</view>
-        <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption'>
+        <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption' hover-class="hovSelect"	>
         {{item}}
         </view>
     </view>
@@ -116,6 +116,11 @@
       <view style="color:gray ; width:250rpx ; margin:0rpx 45rpx 0rpx 25rpx">菠萝印花短裤 </view>
       <view style="color:gray;margin:0rpx 45rpx 20rpx 25rpx">￥299.00  </view>
   </view>
+</view>
+<!-- <view class="forMore" hover-class="hovSelect">查看更多>></view> -->
+<view class="forMore" >
+  <navigator class="more"   url="/pages/category/category" open-type="switchTab" hover-class="hovSelect" >查看更多>>
+  </navigator>
 </view>
 
 <!-- 6.1 -->
