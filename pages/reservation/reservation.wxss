@@ -114,15 +114,11 @@ height: 28rpx;
   color: rgb(0, 0, 0);
   border:  1px solid;
 }
-
 .dotted{
-
     background: rgb(175, 182, 180);
     width: 100%;
     height: 5rpx;
    }
-   
-
  .hotline{
     display: flex;
     flex-direction: row;
@@ -130,17 +126,14 @@ height: 28rpx;
     margin-left: 150rpx;
     background-color: white;
     }
-    
-    
    .hotline .icon{
     width: 50rpx;
     height: 50rpx;
     }
-     .hotline .hotext{
-      font-size: 40rpx;
-      font-family: SimSun;
-      }
-    
+    .hotline .hotext{
+    font-size: 40rpx;
+    font-family: SimSun;
+    }
   .hotline .hotbutton{
     margin-left: 0px;
     padding-left: 0px;
@@ -149,21 +142,17 @@ height: 28rpx;
     border: transparent;
     background-color: white;
     text-decoration-line: underline;
-
   }
 
   button[class="hotbutton"]::after{
     border: 0;
   }
-
-
-.kefu{
-  position: fixed;
-  height: 80rpx;
-  bottom:80rpx;
-  right: -20rpx;
-}
-
+  .kefu{
+    position: fixed;
+    height: 80rpx;
+    bottom:80rpx;
+    right: -20rpx;
+  }
 .kefu .kefubutton{
   width: 175rpx;
   height: 55rpx;
@@ -173,17 +162,13 @@ height: 28rpx;
   border-radius: 25rpx;
   background-color:rgba(238, 197,145, 0.5);
 }
-
 .locationbt{
   display: flex;
   flex-direction: row;
 }
-
-
 .isRuleShow {
   opacity: 1;
 }
- 
 .isRuleHide {
   opacity: 0;
 }
@@ -195,10 +180,8 @@ height: 80rpx;
 justify-content:center;
 align-items: center;
 }
-
 .store .storeAddress{
   width: 200rpx;
-
 }
 .storeCoverView{
   position: absolute;
@@ -213,9 +196,7 @@ align-items: center;
   font-family: simson;
   color: #FFFFFF;
   text-align: center;
-
 }
-
 .CoverIcon{
   display: flex;
   margin-top: 3rpx;

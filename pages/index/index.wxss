@@ -405,6 +405,10 @@ z-index: 0;
 .Mselect view:not(:last-of-type){
   border-bottom: 1px solid #dfdede;
 }
+.hovSelect{
+  opacity: 0.9;
+  background-color: rgb(226, 216, 216);
+}
 .Mcancel{
   background: #fff;
   padding: 26rpx 0;
@@ -448,4 +452,33 @@ border-radius: 50%;
 position: absolute;
 color: white;
 background-color: rgba(121, 118, 118, 0.5);
+}
+/* .forMore{
+  width: 230rpx;
+  height: 45rpx;
+  border-radius: 25rpx;
+  text-align: center;
+  font-size: 25rpx;
+  color: rgb(56, 55, 55);
+  margin-top: 20rpx;
+  padding-top: 10rpx;
+  font-family: 'Times New Roman', Times, serif;
+ margin-left: 260rpx;
+} */
+.forMore{
+  width: 200rpx;
+  height: 45rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  margin-left: 280rpx;
+}
+.more{
+  text-align: center;
+  border-radius: 25rpx;
+  font-size: 25rpx;
+  color: rgb(56, 56, 56);
+  font-family: 'Times New Roman', Times, serif;
+  text-decoration: underline;
 }
