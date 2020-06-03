@@ -1,0 +1,12 @@
+/* pages/star/star.wxss */
+.star{
+  width: 750rpx;
+  border: solid;
+}
+.edit{
+  width: 80rpx;
+  height: 50rpx;
+  margin-top: 20rpx;
+  margin-left: 650rpx;
+  font-size: 24rpx;
+}

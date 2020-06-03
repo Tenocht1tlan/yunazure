@@ -1,0 +1,10 @@
+<!--pages/star/star.wxml-->
+<view class="star">
+  <view class="edit" bindtap="edit">{{Edit}} </view>
+  <view><!--心愿单的上商品的框架-->
+    <image><!--心愿商品的图片-->
+    </image>
+    <view><!--商品的名称，颜色，编号-->
+    </view>
+  </view>
+</view>
