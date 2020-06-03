@@ -37,7 +37,7 @@
     "pages/invoice/apply",
     "pages/deposit/pay",
     "pages/register/index",
-    "pages/up/up"
+    "pages/star/star"
   ],
   "window": {
     "backgroundTextStyle": "light",

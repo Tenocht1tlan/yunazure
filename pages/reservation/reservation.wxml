@@ -41,7 +41,7 @@
 </view>
 <view class="space"></view>
 <view class="Confirm">
-  <button class="Confirmbutton" bindtap="onClick">我要预约</button>
+  <button class="Confirmbutton" type="default" plain="true" bindtap="onClick"  >我要预约</button>
 </view>
 
 <view class="space"></view>

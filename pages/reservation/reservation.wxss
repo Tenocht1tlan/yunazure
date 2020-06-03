@@ -209,4 +209,7 @@ align-items: center;
   justify-content: center;
   align-items: center;
 }
-
+.hoverResr{
+  opacity: 0.9;
+  background-color: rgb(165, 27, 27);
+}

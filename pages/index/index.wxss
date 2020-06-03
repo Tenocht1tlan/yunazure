@@ -407,7 +407,7 @@ z-index: 0;
 }
 .hovSelect{
   opacity: 0.9;
-  background-color: rgb(226, 216, 216);
+  background-color: rgb(226, 222, 222);
 }
 .Mcancel{
   background: #fff;
@@ -466,19 +466,19 @@ background-color: rgba(121, 118, 118, 0.5);
  margin-left: 260rpx;
 } */
 .forMore{
-  width: 200rpx;
-  height: 45rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20rpx;
-  margin-left: 280rpx;
 }
 .more{
+  width: 200rpx;
+  height: 40rpx;
   text-align: center;
+  padding-top: 10rpx;
   border-radius: 25rpx;
   font-size: 25rpx;
-  color: rgb(56, 56, 56);
+  color: rgb(0, 0, 0);
   font-family: 'Times New Roman', Times, serif;
   text-decoration: underline;
 }
