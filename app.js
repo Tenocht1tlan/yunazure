@@ -1,6 +1,7 @@
 const WXAPI = require('apifm-wxapi')
 const CONFIG = require('config.js')
 const AUTH = require('utils/auth')
+
 App({
   onLaunch: function() {
     WXAPI.init(CONFIG.subDomain)
@@ -86,46 +87,77 @@ App({
   onShow (e) {
     this.globalData.launchOption = e
     // 保存邀请人
-    if (e && e.query && e.query.inviter_id) {
-      wx.setStorageSync('referrer', e.query.inviter_id)
-      if (e.shareTicket) {
-        wx.getShareInfo({
-          shareTicket: e.shareTicket,
-          success: res => {
-            console.log(res)
-            console.log({
-              referrer: e.query.inviter_id,
-              encryptedData: res.encryptedData,
-              iv: res.iv
-            })
-            wx.login({
-              success(loginRes) {
-                if (loginRes.code) {
-                  WXAPI.shareGroupGetScore(
-                    loginRes.code,
-                    e.query.inviter_id,
-                    res.encryptedData,
-                    res.iv
-                  ).then(_res => {
-                    console.log(_res)
-                  }).catch(err => {
-                    console.error(err)
-                  })
-                } else {
-                  console.error('登录失败！' + loginRes.errMsg)
-                }
-              }
-            })
-          }
-        })
-      }
-    }
+    // if (e && e.query && e.query.inviter_id) {
+    //   wx.setStorageSync('referrer', e.query.inviter_id)
+    //   if (e.shareTicket) {
+    //     wx.getShareInfo({
+    //       shareTicket: e.shareTicket,
+    //       success: res => {
+    //         console.log(res)
+    //         console.log({
+    //           referrer: e.query.inviter_id,
+    //           encryptedData: res.encryptedData,
+    //           iv: res.iv
+    //         })
+    //         wx.login({
+    //           success(loginRes) {
+    //             if (loginRes.code) {
+    //               WXAPI.shareGroupGetScore(
+    //                 loginRes.code,
+    //                 e.query.inviter_id,
+    //                 res.encryptedData,
+    //                 res.iv
+    //               ).then(_res => {
+    //                 console.log(_res)
+    //               }).catch(err => {
+    //                 console.error(err)
+    //               })
+    //             } else {
+    //               console.error('登录失败！' + loginRes.errMsg)
+    //             }
+    //           }
+    //         })
+    //       }
+    //     })
+    //   }
+    // }
     // 自动登录
     AUTH.checkHasLogined().then(isLogined => {
       if (!isLogined) {
         // AUTH.login()
       }
     })
+    const isloged = wx.getStorageSync('isloged')
+    if (!isloged) {
+      return
+    }
+    const db = wx.cloud.database()
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).get().then(res=>{
+        if(res.data[0] == undefined){
+          wx.setTabBarBadge({
+            index: 3,
+            text: '',
+          })
+        }else{
+          var num = 0
+          res.data[0].items.forEach(value=>{
+            if(value != null){
+              num += value.number
+            }
+          })
+          wx.setTabBarBadge({
+            index: 3,
+            text: num.toString()
+          })
+        }
+      })
+    })
+
   },
   globalData: {                
     isConnected: true,

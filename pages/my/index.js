@@ -47,22 +47,6 @@ Page({
     // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge();
   },
-  aboutUs : function () {
-    wx.showModal({
-      title: 'come on',
-      content: 'coldboys',
-      showCancel:false,
-      success (res) {
-        if (res.confirm) {
-          wx.setBackgroundColor({
-            backgroundColor: '#f8f8ff',
-          })
-        }else{
-
-        }
-      }
-    })
-  },
   loginOut(){
     AUTH.loginOut()
     wx.reLaunch({
@@ -132,9 +116,9 @@ Page({
       url: "/pages/asset/index"
     })
   },
-  goScore: function () {
+  toMyfav: function () {
     wx.navigateTo({
-      url: "/pages/score/index"
+      url: "/pages/star/star"
     })
   },
   goOrder: function (e) {

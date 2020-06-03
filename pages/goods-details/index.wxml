@@ -220,10 +220,10 @@
     <button class="weui-btn" type="warn" bindtap="tobuy">用当前价购买</button>
   </view>
   <view wx:if="{{!curGoodsKanjia}}" class="footer-box">
-    <view class="contact">
+    <!-- <view class="contact">
       <button type="primary" open-type="contact" />
       <image src="/images/icon/kf.svg"></image>
-    </view>
+    </view> -->
     <view class="shop-cart-btn" bindtap="goShopCar">
       <view class="shop-num">{{shopNum}}</view>
       <image src="/images/nav/chartYes.png"></image>

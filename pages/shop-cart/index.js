@@ -89,6 +89,16 @@ Page({
       db.collection('shopping-cart').where({
         _openid:res.result.openid
       }).get().then(res=>{
+        var num = 0
+        res.data[0].items.forEach(value=>{
+          if(value != null){
+            num += value.number
+          }
+        })
+        wx.setTabBarBadge({
+          index: 3,
+          text: num.toString(),
+        })
         this.setData({
           noSelect: res.data[0].items.length > 0 ? false : true,
           'shippingCarInfo.items': res.data[0].items
@@ -231,6 +241,7 @@ Page({
             //
           },
           complete(){
+            TOOLS.showTabBarBadge()
             that.setData({
               noSelect: list.length > 0 ? false : true,
               'shippingCarInfo.items':list
@@ -240,16 +251,6 @@ Page({
         })
       })
     })
-    // wx.cloud.callFunction({
-    //   name:'rmShoppingCart',
-    //   data: {
-    //     key: key
-    //   },
-    //   complete(){
-    //     wx.hideLoading()
-    //   }
-    // })
-    // TOOLS.showTabBarBadge()
   },
   async jiaBtnTap(e) {
     wx.showLoading({

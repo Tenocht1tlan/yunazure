@@ -20,7 +20,7 @@
   <text class="list-text">我的订单</text>
   <image class="list-in" src="/images/my/in.png" ></image>
   </view>
-  <view class="list-box">
+  <view class="list-box" bindtap="toMyfav">
   <image class="list-image" src="/images/my/star.png" mode="aspectFit"></image>
   <text class="list-text">我的心愿单</text>
   <image class="list-in" src="/images/my/in.png" ></image>

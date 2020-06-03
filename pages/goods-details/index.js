@@ -54,8 +54,28 @@ Page({
     if (!token) {
       return
     }
-    this.setData({
-      shopNum: 1
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).get().then(res=>{
+        if(res.data[0] == undefined){
+          this.setData({
+            shopNum: 0
+          })
+        }else{
+          var num = 0
+          res.data[0].items.forEach(value=>{
+            if(value != null){
+              num += value.number
+            }
+          })
+          this.setData({
+            shopNum: num
+          })
+        }
+      })
     })
   },
   async onShow (){
@@ -466,7 +486,7 @@ Page({
         },
       })
     }, 1000)
-    this.closePopupTap();
+    this.closePopupTap()
     this.shippingCartInfo()
   },
   /**

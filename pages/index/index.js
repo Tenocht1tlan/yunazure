@@ -126,60 +126,40 @@ Page({
   textHidden:[true,false,false,false],
   currTxthide:0,
   tempIdx:0
-// 6.1
-
 },
-activeItem:function(e){
-  this.setData({
-    imageChose:this.data.array[e.target.dataset.index].imageChose,
-    currentChoseItem:e.target.dataset.index
-  })
-  console.log(this.data.currentChoseItem)
-},
-// 6.1
-Boutiques:function(e){
-  // let temp = 'textHidden[' + e.currentTarget.dataset.index +']';
-  var temp = []
-  if(e.currentTarget.dataset.index == 0){
-    temp = [true,false,false,false]
-  }else if(e.currentTarget.dataset.index == 1){
-    temp = [false,true,false,false]
-  }else if(e.currentTarget.dataset.index == 2){
-    temp = [false,false,true,false]
-  }else{
-    temp = [false,false,false,true]
-  }
-  this.setData({
-    imageChose:this.data.array[e.currentTarget.dataset.index].imageChose,
-    textHidden:temp,
-    // currTxthide:e.target.dataset.index,
-})
-},
-// 6.1
-starset:function(e){
-  let index = e.currentTarget.dataset.index;
-  let temp = 'imageChose[' + index +'].starsetnum';
-  // 获取当前点击的下标
-  this.setData({
-    [temp]:!(this.data.imageChose[index].starsetnum)
-  })
-},
-// starset:function(e) {
-//   // 获取当前点击下标
-//   var index = e.currentTarget.dataset.index;
-//   // data中获取列表
-//   var message = this.data.goodList;
-//   for (let i in message) { //遍历列表数据
-//     if (i == index) { //根据下标找到目标
-//       if (message[i].collected == 0) { //如果是没点赞+1
-//         message[i].collected = parseInt(message[i].collected) + 1
-//       } else {
-//         message[i].collected = parseInt(message[i].collected) - 1
-//       }
-//     }
-//   }
-// },
-
+  activeItem:function(e){
+    this.setData({
+      imageChose:this.data.array[e.target.dataset.index].imageChose,
+      currentChoseItem:e.target.dataset.index
+    })
+  },
+  Boutiques:function(e){
+    // let temp = 'textHidden[' + e.currentTarget.dataset.index +']';
+    var temp = []
+    if(e.currentTarget.dataset.index == 0){
+      temp = [true,false,false,false]
+    }else if(e.currentTarget.dataset.index == 1){
+      temp = [false,true,false,false]
+    }else if(e.currentTarget.dataset.index == 2){
+      temp = [false,false,true,false]
+    }else{
+      temp = [false,false,false,true]
+    }
+    this.setData({
+      imageChose:this.data.array[e.currentTarget.dataset.index].imageChose,
+      textHidden:temp,
+    })
+  },
+  starset:function(e){
+    let index = e.currentTarget.dataset.index;
+    let temp = 'imageChose[' + index +'].starsetnum';
+    this.setData({
+      [temp]:!(this.data.imageChose[index].starsetnum)
+    })
+  },
+  addFav:function(e){
+    let id = e.currentTarget.dataset.id
+  },
   tabClick: function(e) {
     wx.setStorageSync("_categoryId", e.currentTarget.id)
     wx.switchTab({
@@ -190,7 +170,6 @@ starset:function(e){
     // })
   },
   // 从下部弹上来界面.............................................................
-  // 点击选项
   getOption:function(e){
     var that = this;
     that.setData({
@@ -210,7 +189,6 @@ starset:function(e){
   showUp: function (e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
-    console.log(index)
     var upImage = that.data.imageChose[index].src
     that.setData({
       upImage:upImage,
@@ -357,7 +335,6 @@ starset:function(e){
       name:'login'
     }).then(res=>{
       db.collection('image').get().then(res=>{
-        console.log(res.data.fileID)
         if(res.data){
           _data.banners = res.data
           this.setData(_data)
@@ -423,8 +400,6 @@ starset:function(e){
     this.setData({
       scrollTop: e.scrollTop, 
     })
-    // console.log("e.h = "+ scrollTop)
-    // console.log("h1 = "+ (this.data.swiperHeight-APP.globalData.navHeight*2)/2)
     if(scrollTop>(this.data.swiperHeight-APP.globalData.navHeight*2)/2){
       this.setData({
       hiddenNav : false
