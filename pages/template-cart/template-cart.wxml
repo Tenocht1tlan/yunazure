@@ -30,7 +30,8 @@
             </view>
             <view class="buy-num">
               <view class="jian-btn" catchtap="jianBtnTap" data-index="{{index}}">-</view>
-              <input type="number" value="{{item.number}}" data-key="{{item.good_id}}"/>
+              <!-- <input type="number" value="{{item.number}}" data-key="{{item.good_id}}"/> -->
+              <view class="itemNum">{{item.number}}</view>
               <view class="jia-btn {{item.number==curTouchGoodStore? 'disabled' : ''}}" catchtap="jiaBtnTap" data-index="{{index}}">+</view>
             </view>
           </view>

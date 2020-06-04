@@ -259,3 +259,9 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   transform: translate(-50%,-50%) scale(1);
   -webkit-transform: translate(-50%,-50%) scale(1);
 }
+.itemNum{
+  width: 48rpx;
+  height: 100%;
+  border-bottom: 1rpx solid #ccc;
+  border-top: 1rpx solid #ccc;
+}
