@@ -22,7 +22,6 @@ justify-content: space-between;
 .goodName{
   font-size: 24rpx;
   font-family: 'Times New Roman', Times, serif;
-  margin-top: 15rpx;
   margin-left: 25rpx;
 }
 .goodDetial{
@@ -30,4 +29,28 @@ justify-content: space-between;
   font-family: 'Times New Roman', Times, serif;
   margin-left: 25rpx;
   color: #666;
+}
+.check{
+  width: 35rpx;
+  height: 35rpx;
+  position: absolute;
+  margin-top: -240rpx;
+  margin-left: 10rpx;
+  z-index: 2;
+  border-radius: 50rpx 50rpx;
+}
+.movebutton{
+  position: fixed;
+  width: 750rpx;
+  height: 100rpx;
+  bottom:0;
+  /* border-top: 3rpx #666 solid; */
+}
+.delBtn{
+  width: 650rpx;
+  margin-left: 50rpx;
+  margin-bottom: 5rpx;
+  padding-bottom: 5rpx;
+  text-align: center;
+  border-radius: 0%;
 }
