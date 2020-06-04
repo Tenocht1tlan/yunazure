@@ -1,10 +1,29 @@
 <!--pages/star/star.wxml-->
-<view class="star">
+
   <view class="edit" bindtap="edit">{{Edit}} </view>
-  <view><!--心愿单的上商品的框架-->
-    <image><!--心愿商品的图片-->
-    </image>
-    <view><!--商品的名称，颜色，编号-->
+  <view class="all">
+    <view class="star-box"  ><!--心愿单的上商品的框架-->
+      <image class="starImag" src="/images/woman.png" mode="aspectFill"><!--心愿商品的图片-->
+      </image>
+      <view class="goodName">格子衬衫<!--商品的名称，颜色，编号-->
+      </view>
+      <view class="goodDetial">蓝色 -556600
+      </view>
+    </view>
+    <view class="star-box"  ><!--心愿单的上商品的框架-->
+      <image class="starImag" src="/images/woman.png" mode="aspectFill"><!--心愿商品的图片-->
+      </image>
+      <view class="goodName">格子衬衫<!--商品的名称，颜色，编号-->
+      </view>
+      <view class="goodDetial">蓝色 -556600
+      </view>
+    </view>
+    <view class="star-box"  ><!--心愿单的上商品的框架-->
+      <image class="starImag" src="/images/woman.png" mode="aspectFill"><!--心愿商品的图片-->
+      </image>
+      <view class="goodName">格子衬衫<!--商品的名称，颜色，编号-->
+      </view>
+      <view class="goodDetial">蓝色 -556600
+      </view>
     </view>
   </view>
-</view>

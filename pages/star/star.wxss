@@ -10,3 +10,24 @@
   margin-left: 650rpx;
   font-size: 24rpx;
 }
+.all{
+  display: flex;
+  flex-direction: row;
+justify-content: space-between;
+}
+.starImag{
+  width:220rpx;
+  height: 250rpx;
+}
+.goodName{
+  font-size: 24rpx;
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 15rpx;
+  margin-left: 25rpx;
+}
+.goodDetial{
+  font-size: 24rpx;
+  font-family: 'Times New Roman', Times, serif;
+  margin-left: 25rpx;
+  color: #666;
+}
