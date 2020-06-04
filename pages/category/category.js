@@ -146,15 +146,15 @@ Page({
       path: '/pages/index/index?inviter_id=' + wx.getStorageSync('uid')
     }
   },
-  onShow() {
-    AUTH.checkHasLogined().then(isLogined => {
-      if (isLogined) {
-        this.setData({
-          wxlogin: isLogined
-        })
-        TOOLS.showTabBarBadge() // 获取购物车数据，显示TabBarBadge
-      }
-    })
+  async onShow() {
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
+      this.setData({
+        wxlogin: isLogined
+      })
+      TOOLS.showTabBarBadge() // 获取购物车数据，显示TabBarBadge
+    }
+
     const _categoryId = wx.getStorageSync('_categoryId')
     wx.removeStorageSync('_categoryId')
     if (_categoryId) {
@@ -165,75 +165,80 @@ Page({
     }
   },
   async addShopCar(e) {
-    // const curGood = this.data.currentGoods.find(ele => {
-    //   return ele.id == e.currentTarget.dataset.id
-    // })
-    // if (!curGood) {
-    //   return
-    // }
-    // if (curGood.stores <= 0) {
-    //   wx.showToast({
-    //     title: '已售罄~',
-    //     icon: 'none'
-    //   })
-    //   return
-    // }
+    
     this.addShopCarCheck({
-      goodsId: 'm-1',//curGood.id
-      buyNumber: 1,
+      goodsId: e.currentTarget.dataset.id,
       sku: []
     })
   },
   async addShopCarCheck(options){
-    AUTH.checkHasLogined().then(isLogined => {
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
       this.setData({
         wxlogin: isLogined
       })
-      if (isLogined) {
-        // 处理加入购物车的业务逻辑
-        this.addShopCarDone(options)
-      }
-    })
+      // 处理加入购物车的业务逻辑
+      db.collection('goods').where({
+        good_id: options.goodsId
+      }).get().then(res=>{
+          this.setData({
+            shippingCarInfo:{
+              items:[{
+                good_id:options.goodsId,
+                name: res.data[0].name,
+                price: res.data[0].minPrice,
+                originalPrice:res.data[0].originalPrice,
+                number: 1,
+                active: false,
+                pic: '/images/my/cancel.png',
+                color:'黑色',
+                size:'L',
+                left:''
+              }]
+            }
+          })
+          this.addShopCarDone(options)
+      })
+    }
   },
-  async addShopCarDone(options){
-    var key = 0
+   addShopCarDone:function(options){
     wx.showLoading({
       title: '加载中...',
-    }),
+    })
+    const that = this
+    let goodsId = options.goodsId
+    var number = 1
+    var canAdd = false
+    var exist = false
     wx.cloud.callFunction({
       name:'login'
     }).then(res=>{
       db.collection('shopping-cart').where({
         _openid:res.result.openid
-      }).count().then(res2=>{
-        key = res2.total
-      }).catch(console.error)
-    }).catch(console.error)
-        
-    var name = ''
-    var price = ''
-    var number = 1
-    var that = this
+      }).get().then(res=>{
+        if(res.data[0] == undefined){
+          canAdd = true
+        }else{
+          var list = []
+          res.data[0].items.forEach(value=>{
+            if(value != null){
+              list.push(value)
+            }
+          })
+          list.forEach(e=>{
+            if(e.good_id == goodsId){
+              exist = true
+              number += e.number
+              return
+            }
+          })
+        }
+      })
+    })
     setTimeout(function () {
       wx.hideLoading({
         complete: (res) => {
-          that.setData({
-            shippingCarInfo:{
-              items:[{
-                good_id:goodsId,
-                name: name,
-                price: price,
-                originalPrice:'199.00',
-                number: number,
-                active: false,
-                color:'黑色',
-                pic: '/images/my/cancel.png',
-                sku: [],
-                left:''
-              }]
-            }
-          })
-          if (key == 0){
+          if(canAdd){
             db.collection('shopping-cart').add({
               data: {
                 items:that.data.shippingCarInfo.items
@@ -245,20 +250,34 @@ Page({
               })
             }).catch(console.error)
           }else{
-            wx.cloud.callFunction({
-              name:'addShippingCart',
-              data: {
-                items:that.data.shippingCarInfo.items
-              }
-            }).then(res=>{
-              wx.showToast({
-                title: '加入购物车',
-                icon: 'success'
-              })
-              console.log(res.result) 
-            }).catch(console.error)
+            if(exist){
+              wx.cloud.callFunction({
+                name:'changeSCartNum',
+                data: {
+                  key: goodsId,
+                  number: number,
+                }
+              }).then(res=>{
+                wx.showToast({
+                  title: '加入购物车',
+                  icon: 'success'
+                })
+              }).catch(console.error)
+            }else{
+              wx.cloud.callFunction({
+                name:'addShippingCart',
+                data: {
+                  items:that.data.shippingCarInfo.items
+                }
+              }).then(res=>{
+                wx.showToast({
+                  title: '加入购物车',
+                  icon: 'success'
+                })
+              }).catch(console.error)
+            }
           }
-        },
+        }
       })
     }, 1000)
     //判断是否需要选吃尺码
@@ -281,7 +300,7 @@ Page({
         })
       }).catch(err=>{
         wx.showToast({
-          title: skuCurGoodsRes.msg,
+          title: '',
           icon: 'none'
         })
       })
