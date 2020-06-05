@@ -32,6 +32,9 @@
   </view>
  
   <!-- 底部删除框-->
-  <view class="movebutton" animation="{{animationData}}" hidden="{{hideFlag}}" >
-    <button class="delBtn" plain="true" >删除</button>
-  </view>
+  <!-- <view class="movebutton" hidden="{{hideFlag}}" >
+    <button class="delBtn" plain="true"  animation="{{animationData}}">删除</button>
+  </view> -->
+<view class="pop" wx:if="{{showPop}}">
+    <button class="popup" animation="{{animationData}}">删除</button>
+</view>
