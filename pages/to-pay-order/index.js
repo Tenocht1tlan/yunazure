@@ -2,7 +2,7 @@ const app = getApp()
 const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 const wxpay = require('../../utils/pay.js')
-
+const db = wx.cloud.database()
 Page({
   data: {
     wxlogin: true,
@@ -25,18 +25,17 @@ Page({
     peisongType: 'kd', // 配送方式 kd,zq 分别表示快递/到店自取
     remark: ''
   },
-  onShow(){
-    AUTH.checkHasLogined().then(isLogined => {
+  async onShow(){
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
       this.setData({
         wxlogin: isLogined
       })
-      if (isLogined) {
-        this.doneShow()
-      }
-    })
+      this.doneShow()
+    }
   },
   async doneShow() {
-    let shopList = [];
+    let shopList = []
     const token = wx.getStorageSync('token')
     //立即购买下单
     if ("buyNow" == this.data.orderType) {
@@ -47,16 +46,27 @@ Page({
       }
     } else {
       //购物车下单
-      const res = await WXAPI.shippingCarInfo(token)
-      if (res.code == 0) {
-        shopList = res.data.items
-      }
+      wx.cloud.callFunction({
+        name:'login'
+      }).then(res=>{
+        db.collection('shopping-cart').where({
+          _openid:res.result.openid
+        }).get().then(res=>{
+          if(res.data[0].items.length > 0){
+            shopList = res.data[0].items
+            this.setData({
+              goodsList: shopList,
+              peisongType: this.data.peisongType
+            })
+            this.initShippingAddress()
+          }
+          // res.data[0].items.forEach(value=>{
+          //   if(value != null){
+          //   }
+          // })
+        })
+      })
     }
-    this.setData({
-      goodsList: shopList,
-      peisongType: this.data.peisongType
-    });
-    this.initShippingAddress()
   },
 
   onLoad(e) {
@@ -84,29 +94,96 @@ Page({
   remarkChange(e){
     this.data.remark = e.detail.value
   },
+  //提交订单
+  confirmOrder: function() {
+    let that = this;
+    wx.cloud.callFunction({
+      name: "payment",
+      data: {
+        command: "pay",
+        out_trade_no: "pay003",
+        body: 'yunazure-scarf-DIY',
+        total_fee: 1
+      },
+      success(res) {
+        console.log("云函数payment提交成功：", res.result)
+        that.pay(res.result)
+      },
+      fail(res) {
+        console.log("云函数payment提交失败：", res)
+      }
+    })
+  },
+  //实现小程序支付
+  pay(payData) {
+    wx.requestPayment({ //已经得到了5个参数
+      timeStamp: payData.timeStamp,
+      nonceStr: payData.nonceStr,
+      package: payData.package, //统一下单接口返回的 prepay_id 格式如：prepay_id=***
+      signType: 'MD5',
+      paySign: payData.paySign, //签名
+      success(res) {
+        console.log("支付成功：", res)
+        wx.cloud.callFunction({  //巧妙利用小程序支付成功后的回调，再次调用云函数，通知其支付成功，以便进行订单状态变更
+          name: "payment",
+          data: {
+            command: "payOK",
+            out_trade_no: "pay004"
+          }
+        })
+      },
+      fail(res) {
+        console.log("支付失败：", res)
+      },
+     complete(res) {
+        console.log("支付完成：", res)
+      }
+    })
+  },
+  //退款
+  // refund: function() {
+  //   let that = this;
+  //   wx.cloud.callFunction({
+  //     name: "payment",
+  //     data: {
+  //       command: "refund",
+  //       out_trade_no: "test0005",
+  //       body: 'a7r2相机租赁',
+  //       total_fee: 1,
+  //       refund_fee: 1,
+  //       refund_desc: '押金退款'
+  //     },
+  //     success(res) {
+  //       console.log("云函数payment提交成功：", res)
+  //     },
+  //     fail(res) {
+  //       console.log("云函数payment提交失败：", res)
+  //     }
+  //   })
+  // },
   goCreateOrder(){
-    const subscribe_ids = wx.getStorageSync('subscribe_ids')
-    if (subscribe_ids) {
-      wx.requestSubscribeMessage({
-        tmplIds: subscribe_ids.split(','),
-        success(res) {
-          
-        },
-        fail(e) {
-          console.error(e)
-        },
-        complete: (e) => {
-          this.createOrder(true)
-        },
-      })
-    } else {
-      this.createOrder(true)
-    }    
+    this.confirmOrder()
+    // const subscribe_ids = wx.getStorageSync('subscribe_ids')
+    // if (subscribe_ids) {
+    //   wx.requestSubscribeMessage({
+    //     tmplIds: subscribe_ids.split(','),
+    //     success(res) {
+    //     },
+    //     fail(e) {
+    //       console.error(e)
+    //     },
+    //     complete: (e) => {
+    //       this.createOrder(true)
+    //     },
+    //   })
+    // } else {
+    //   this.createOrder(true)
+    // }    
   },
   createOrder: function (e) {
-    var that = this;
-    var loginToken = wx.getStorageSync('token') // 用户登录 token
-    var remark = this.data.remark; // 备注信息
+    var that = this
+    var loginToken = wx.getStorageSync('openid') // 用户登录 token
+    var remark = this.data.remark // 备注信息
 
     let postData = {
       token: loginToken,
@@ -117,9 +194,9 @@ Page({
     if (that.data.kjId) {
       postData.kjid = that.data.kjId
     }
-    if (that.data.pingtuanOpenId) {
-      postData.pingtuanOpenId = that.data.pingtuanOpenId
-    }
+    // if (that.data.pingtuanOpenId) {
+    //   postData.pingtuanOpenId = that.data.pingtuanOpenId
+    // }
     if (that.data.isNeedLogistics > 0 && postData.peisongType == 'kd') {
       if (!that.data.curAddressData) {
         wx.hideLoading();
@@ -149,14 +226,14 @@ Page({
     }
 
     WXAPI.orderCreate(postData).then(function (res) {
-      if (res.code != 0) {
-        wx.showModal({
-          title: '错误',
-          content: res.msg,
-          showCancel: false
-        })
-        return;
-      }
+      // if (res.code != 0) {
+      //   wx.showModal({
+      //     title: '错误',
+      //     content: res.msg,
+      //     showCancel: false
+      //   })
+      //   return;
+      // }
 
       if (e && "buyNow" != that.data.orderType) {
         // 清空购物车数据
@@ -164,13 +241,13 @@ Page({
       }
       if (!e) {
         that.setData({
-          totalScoreToPay: res.data.score,
-          isNeedLogistics: res.data.isNeedLogistics,
-          allGoodsPrice: res.data.amountTotle,
-          allGoodsAndYunPrice: res.data.amountLogistics + res.data.amountTotle,
-          yunPrice: res.data.amountLogistics
+          // totalScoreToPay: res.data.score,
+          // isNeedLogistics: res.data.isNeedLogistics,
+          // allGoodsPrice: res.data.amountTotle,
+          // allGoodsAndYunPrice: res.data.amountLogistics + res.data.amountTotle,
+          // yunPrice: res.data.amountLogistics
         });
-        that.getMyCoupons();
+        that.getMyCoupons()
         return;
       }
       that.processAfterCreateOrder(res)
@@ -254,7 +331,7 @@ Page({
       isNeedLogistics: isNeedLogistics,
       goodsJsonStr: goodsJsonStr
     });
-    this.createOrder();
+    this.createOrder()
   },
   addAddress: function () {
     wx.navigateTo({
