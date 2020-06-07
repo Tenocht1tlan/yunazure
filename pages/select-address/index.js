@@ -1,5 +1,6 @@
 const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
+const db = wx.cloud.database()
 
 const app = getApp()
 Page({
@@ -32,42 +33,44 @@ Page({
 
   onLoad: function() {
   },
-  onShow: function() {
-    AUTH.checkHasLogined().then(isLogined => {
-      if (isLogined) {
-        this.initShippingAddress();
-      } else {
-        wx.showModal({
-          title: '提示',
-          content: '本次操作需要您的登录授权',
-          cancelText: '暂不登录',
-          confirmText: '前往登录',
-          success(res) {
-            if (res.confirm) {
-              wx.switchTab({
-                url: "/pages/my/index"
-              })
-            } else {
-              wx.navigateBack()
-            }
+  async onShow() {
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
+      this.initShippingAddress();
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '本次操作需要您的登录授权',
+        cancelText: '暂不登录',
+        confirmText: '前往登录',
+        success(res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: "/pages/my/index"
+            })
+          } else {
+            wx.navigateBack()
           }
+        }
+      })
+    }
+  },
+  initShippingAddress: function() {
+    const id = wx.getStorageSync('openid')
+    db.collection('shipping-address').where({
+      _openid: id,
+    }).get().then(res=>{
+      if(res.data){
+        var list = []
+        list.push(res.data[0].info)
+        this.setData({
+          addressList: list
+        })
+      }else {
+        this.setData({
+          addressList: []
         })
       }
     })
-  },
-  initShippingAddress: function() {
-    var that = this;
-    WXAPI.queryAddress(wx.getStorageSync('token')).then(function(res) {
-      if (res.code == 0) {
-        that.setData({
-          addressList: res.data
-        });
-      } else if (res.code == 700) {
-        that.setData({
-          addressList: null
-        });
-      }
-    })
   }
-
 })

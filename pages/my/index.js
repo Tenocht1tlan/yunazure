@@ -152,6 +152,9 @@ Page({
             title: '已解绑',
             icon: 'success',
           })
+          wx.removeTabBarBadge({
+            index: 3,
+          })
           that.setData({
             name:'',
             avatarUrl:'',
@@ -160,6 +163,9 @@ Page({
           })
           try {
             wx.setStorageSync('isloged', false)
+            wx.setStorageSync('avatarUrl', '')
+            wx.setStorageSync('mail', '')
+            wx.setStorageSync('openid', '')
           } catch (e) {
             // Do something when catch error
           }
@@ -191,13 +197,14 @@ Page({
         this.setData({
           openid:res.result.openid
         })
+        try {
+          wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
+          wx.setStorageSync('mail', e.detail.userInfo.nickName)
+          wx.setStorageSync('isloged', true)
+          wx.setStorageSync('openid', this.data.openid)
+        } catch (e) { }
       })
-      try {
-        wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
-        wx.setStorageSync('mail', e.detail.userInfo.nickName)
-        wx.setStorageSync('isloged', true)
-        wx.setStorageSync('openid', this.data.openid)
-      } catch (e) { }
+      
       this.setData({
         name: e.detail.userInfo.nickName,
         wxlogin:true,

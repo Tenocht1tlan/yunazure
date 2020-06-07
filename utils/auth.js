@@ -16,6 +16,7 @@ async function checkSession(){
 async function checkHasLogined() {
   const token = wx.getStorageSync('isloged')
   if (!token) {
+    wx.removeStorageSync('isloged')
     return false
   }
   // const loggined = await checkSession()

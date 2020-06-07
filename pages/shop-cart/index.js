@@ -7,7 +7,7 @@ const app = getApp()
 import NumberAnimate from 'index_model.js'
 Page({
   data: {
-    wxlogin: true,
+    wxlogin: false,
     saveHidden: true,
     allSelect: false,
     noSelect: true,
@@ -41,27 +41,46 @@ Page({
       delBtnWidth: delBtnWidth
     });
   },
-  onPullDownRefresh(){
-    wx.showLoading({
-      title: '加载中...',
-    })
-    wx.cloud.callFunction({
-      name:'login'
-    }).then(res=>{
-      db.collection('shopping-cart').where({
-        _openid:res.result.openid
-      }).get().then(res=>{
-        this.setData({
-          noSelect: res.data[0].items.length > 0 ? false : true,
-          'shippingCarInfo.items': res.data[0].items
-        })
-        wx.stopPullDownRefresh({
-          complete: (res) => {
-            wx.hideLoading()
-          },
+  async onPullDownRefresh(){
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
+      wx.showLoading({
+        title: '加载中...',
+      })
+      wx.cloud.callFunction({
+        name:'login'
+      }).then(res=>{
+        db.collection('shopping-cart').where({
+          _openid:res.result.openid
+        }).get().then(res=>{
+          this.setData({
+            noSelect: res.data[0].items.length > 0 ? false : true,
+            'shippingCarInfo.items': res.data[0].items
+          })
+          wx.stopPullDownRefresh({
+            complete: (res) => {
+              wx.hideLoading()
+            },
+          })
         })
       })
-    })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '您还未登录账号...',
+        confirmText: '去登录',
+        success (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: "/pages/my/index"
+            });
+          }else if (res.cancel){
+
+          }
+        }
+      })
+      wx.stopPullDownRefresh()
+    }
   },
   onLoad: function() {
     this.initEleWidth();
@@ -76,6 +95,14 @@ Page({
       if (isLogined) {
         this.shippingCarInfo()
       }
+    }else{
+      wx.removeTabBarBadge({
+        index: 3,
+      })
+      this.setData({
+        noSelect: true,
+        'shippingCarInfo.items': 0
+      })
     }
   },
   shippingCarInfo: function() {
@@ -353,13 +380,19 @@ Page({
       })
       return;
     }else{
-      try {
-        wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
-        wx.setStorageSync('mail', e.detail.userInfo.nickName)
-        wx.setStorageSync('isloged', true)
-      } catch (e) { }
-      this.setData({
-        wxlogin:true,
+      wx.cloud.callFunction({
+        name:'login'
+      }).then(res=>{
+        this.setData({
+          wxlogin:true
+        })
+        try {
+          wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
+          wx.setStorageSync('mail', e.detail.userInfo.nickName)
+          wx.setStorageSync('isloged', true)
+          wx.setStorageSync('openid', this.data.openid)
+        } catch (e) { }
+        this.shippingCarInfo()
       })
     }
   },

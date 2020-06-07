@@ -4,7 +4,7 @@
 		"urlCheck": false,
 		"es6": true,
 		"enhance": true,
-		"postcss": false,
+		"postcss": true,
 		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
@@ -27,7 +27,7 @@
 		"useIsolateContext": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.4",
+	"libVersion": "2.11.1",
 	"appid": "wx755bdf146462d272",
 	"projectname": "Yunazure",
 	"scripts": {},
@@ -133,6 +133,13 @@
 					"id": -1,
 					"name": "pages/start/start",
 					"pathName": "pages/start/start",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/address-add/index",
+					"pathName": "pages/address-add/index",
 					"scene": null
 				}
 			]

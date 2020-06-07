@@ -16,6 +16,7 @@ Page({
     goodsJsonStr: "",
     orderType: "", //订单类型，购物车下单或立即支付下单，默认是购物车，
     pingtuanOpenId: undefined, //拼团的话记录团号
+    hasAddressData: false,
 
     hasNoCoupons: true,
     coupons: [],
@@ -36,7 +37,7 @@ Page({
   },
   async doneShow() {
     let shopList = []
-    const token = wx.getStorageSync('token')
+    const openid = wx.getStorageSync('openid')
     //立即购买下单
     if ("buyNow" == this.data.orderType) {
       var buyNowInfoMem = wx.getStorageSync('buyNowInfo');
@@ -95,13 +96,13 @@ Page({
     this.data.remark = e.detail.value
   },
   //提交订单
-  confirmOrder: function() {
+  confirmOrder: function(res) {
     let that = this;
     wx.cloud.callFunction({
       name: "payment",
       data: {
         command: "pay",
-        out_trade_no: "pay003",
+        out_trade_no: res.orderid,
         body: 'yunazure-scarf-DIY',
         total_fee: 1
       },
@@ -111,6 +112,9 @@ Page({
       },
       fail(res) {
         console.log("云函数payment提交失败：", res)
+        wx.redirectTo({
+          url: "/pages/order-list/index"
+        });
       }
     })
   },
@@ -135,8 +139,11 @@ Page({
       fail(res) {
         console.log("支付失败：", res)
       },
-     complete(res) {
+      complete(res) {
         console.log("支付完成：", res)
+        wx.redirectTo({
+          url: "/pages/order-list/index"
+        });
       }
     })
   },
@@ -162,7 +169,6 @@ Page({
   //   })
   // },
   goCreateOrder(){
-    this.confirmOrder()
     // const subscribe_ids = wx.getStorageSync('subscribe_ids')
     // if (subscribe_ids) {
     //   wx.requestSubscribeMessage({
@@ -177,16 +183,16 @@ Page({
     //     },
     //   })
     // } else {
-    //   this.createOrder(true)
+      this.createOrder(true)
     // }    
   },
   createOrder: function (e) {
     var that = this
-    var loginToken = wx.getStorageSync('openid') // 用户登录 token
+    var openid = wx.getStorageSync('openid') // 用户 openid
     var remark = this.data.remark // 备注信息
 
     let postData = {
-      token: loginToken,
+      orderid: 'Yunazure-' + new Date().getTime(),
       goodsJsonStr: that.data.goodsJsonStr,
       remark: remark,
       peisongType: that.data.peisongType
@@ -197,14 +203,16 @@ Page({
     // if (that.data.pingtuanOpenId) {
     //   postData.pingtuanOpenId = that.data.pingtuanOpenId
     // }
+    
     if (that.data.isNeedLogistics > 0 && postData.peisongType == 'kd') {
-      if (!that.data.curAddressData) {
-        wx.hideLoading();
+      console.log("hasAddressData = "+that.data.hasAddressData)
+      if (!that.data.hasAddressData) {
+        wx.hideLoading()
         wx.showToast({
           title: '请设置收货地址',
           icon: 'none'
         })
-        return;
+        return
       }
       if (postData.peisongType == 'kd') {
         postData.provinceId = that.data.curAddressData.provinceId;
@@ -224,69 +232,80 @@ Page({
     if (!e) {
       postData.calculate = "true";
     }
-
-    WXAPI.orderCreate(postData).then(function (res) {
-      // if (res.code != 0) {
-      //   wx.showModal({
-      //     title: '错误',
-      //     content: res.msg,
-      //     showCancel: false
-      //   })
-      //   return;
-      // }
-
-      if (e && "buyNow" != that.data.orderType) {
-        // 清空购物车数据
-        WXAPI.shippingCarInfoRemoveAll(loginToken)
-      }
-      if (!e) {
-        that.setData({
-          // totalScoreToPay: res.data.score,
-          // isNeedLogistics: res.data.isNeedLogistics,
-          // allGoodsPrice: res.data.amountTotle,
-          // allGoodsAndYunPrice: res.data.amountLogistics + res.data.amountTotle,
-          // yunPrice: res.data.amountLogistics
-        });
-        that.getMyCoupons()
-        return;
-      }
-      that.processAfterCreateOrder(res)
-    })
-  },
-  async processAfterCreateOrder(res) {
-    // 直接弹出支付，取消支付的话，去订单列表
-    const res1 = await WXAPI.userAmount(wx.getStorageSync('token'))
-    if (res1.code != 0) {
-      wx.showToast({
-        title: '无法获取用户资金信息',
-        icon: 'none'
+    if (!e) {
+      let yunPrice = 1
+      that.setData({
+        // totalScoreToPay: that.data.score,
+        isNeedLogistics: that.data.isNeedLogistics,
+        allGoodsPrice: that.data.allGoodsPrice,
+        allGoodsAndYunPrice: that.data.allGoodsPrice + yunPrice,
+        yunPrice: yunPrice
       })
-      wx.redirectTo({
-        url: "/pages/order-list/index"
-      });
+      // that.getMyCoupons() //优惠券
       return
     }
-    const money = res.data.amountReal * 1 - res1.data.balance*1
-    if (money <= 0) {
-      wx.redirectTo({
-        url: "/pages/order-list/index"
+    if(e){
+      db.collection('orderlist').add({
+        data:{
+          postData: postData
+        },
+        success(res){
+          if (e && "buyNow" != that.data.orderType) {
+            // 清空购物车数据
+            // WXAPI.shippingCarInfoRemoveAll(openid)
+          }
+          that.processAfterCreateOrder(postData)
+        },
+        fail(err){
+          wx.showModal({
+            title: '错误',
+            content: err.errMsg,
+            showCancel: false
+          })
+          return
+        },
+        complete: console.log
       })
-    } else {
-      wxpay.wxpay('order', money, res.data.id, "/pages/order-list/index");
     }
   },
+  async processAfterCreateOrder(res) {
+    // const res1 = await WXAPI.userAmount(wx.getStorageSync('openid'))
+    // if (res1.code != 0) {
+    //   wx.showToast({
+    //     title: '无法获取用户资金信息',
+    //     icon: 'none'
+    //   })
+    //   wx.redirectTo({
+    //     url: "/pages/order-list/index"
+    //   });
+    //   return
+    // }
+    this.confirmOrder(res)
+  },
   async initShippingAddress() {
-    const res = await WXAPI.defaultAddress(wx.getStorageSync('token'))
-    if (res.code == 0) {
-      this.setData({
-        curAddressData: res.data.info
-      });
-    } else {
-      this.setData({
-        curAddressData: null
-      });
-    }
-    this.processYunfei();
+    const id = wx.getStorageSync('openid')
+    db.collection('shipping-address').where({
+      _openid: id,
+      'info.default':true
+    }).get().then(res=>{
+      if(res.data[0] == undefined){
+        this.setData({
+          hasAddressData: false,
+          curAddressData: null
+        })
+      } else if(res.data[0]){
+        this.setData({
+          hasAddressData: true,
+          curAddressData: res.data[0].info
+        })
+      } else {
+        this.setData({
+          hasAddressData: false,
+          curAddressData: null
+        })
+      }
+      this.processYunfei()
+    })
   },
   processYunfei() {    
     var goodsList = this.data.goodsList
@@ -294,22 +313,19 @@ Page({
       return
     }
     var goodsJsonStr = "[";
-    var isNeedLogistics = 0;
+    // var isNeedLogistics = 0;
     var allGoodsPrice = 0;
-
-
-    let inviter_id = 0;
-    let inviter_id_storge = wx.getStorageSync('referrer');
-    if (inviter_id_storge) {
-      inviter_id = inviter_id_storge;
-    }
+    // let inviter_id = 0;
+    // let inviter_id_storge = wx.getStorageSync('referrer');
+    // if (inviter_id_storge) {
+      // inviter_id = inviter_id_storge;
+    // }
     for (let i = 0; i < goodsList.length; i++) {
       let carShopBean = goodsList[i];
-      if (carShopBean.logistics || carShopBean.logisticsId) {
-        isNeedLogistics = 1;
-      }
-      allGoodsPrice += carShopBean.price * carShopBean.number;
-
+      // if (carShopBean.logistics || carShopBean.logisticsId) {
+      //   isNeedLogistics = 1;
+      // }
+      allGoodsPrice += parseInt(carShopBean.price) * carShopBean.number;
       var goodsJsonStrTmp = '';
       if (i > 0) {
         goodsJsonStrTmp = ",";
@@ -321,17 +337,16 @@ Page({
         })
         carShopBean.propertyChildIds = propertyChildIds
       }
-      goodsJsonStrTmp += '{"goodsId":' + carShopBean.goodsId + ',"number":' + carShopBean.number + ',"propertyChildIds":"' + carShopBean.propertyChildIds + '","logisticsType":0, "inviter_id":' + inviter_id + '}';
+      goodsJsonStrTmp += '{"goodsId":' + carShopBean.good_id + ',"number":' + carShopBean.number + ',"propertyChildIds":"' + carShopBean.propertyChildIds + '}';
       goodsJsonStr += goodsJsonStrTmp;
-
-
     }
     goodsJsonStr += "]";
     this.setData({
-      isNeedLogistics: isNeedLogistics,
-      goodsJsonStr: goodsJsonStr
+      isNeedLogistics: 1,
+      goodsJsonStr: goodsJsonStr,
+      allGoodsPrice: allGoodsPrice
     });
-    this.createOrder()
+    this.createOrder(false)
   },
   addAddress: function () {
     wx.navigateTo({
@@ -345,7 +360,7 @@ Page({
   },
   async getMyCoupons() {
     const res = await WXAPI.myCoupons({
-      token: wx.getStorageSync('token'),
+      openid: wx.getStorageSync('openid'),
       status: 0
     })
     if (res.code == 0) {
