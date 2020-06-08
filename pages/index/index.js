@@ -1,5 +1,6 @@
 const WXAPI = require('apifm-wxapi')
 const TOOLS = require('../../utils/tools.js')
+const AUTH = require('../../utils/auth')
 const db = wx.cloud.database();
 const APP = getApp()
 // fixed首次打开不显示标题的bug
@@ -125,7 +126,10 @@ Page({
   ],
   textHidden:[true,false,false,false],
   currTxthide:0,
-  tempIdx:0
+  tempIdx:0,
+  addFavInfo:{
+    items:[]
+  }
 },
   activeItem:function(e){
     this.setData({
@@ -157,8 +161,142 @@ Page({
       [temp]:!(this.data.imageChose[index].starsetnum)
     })
   },
-  addFav:function(e){
-    let id = e.currentTarget.dataset.id
+  async  addFav(e){
+    this.addFavCheck({
+      goodsId : e.currentTarget.dataset.id,
+     })
+  },
+  async addFavCheck(options){
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
+      this.setData({
+        wxlogin: isLogined
+      })
+      //加入心愿单逻辑
+      db.collection('goods').where({
+        good_id:goodsId
+      }).get().then(res=>{
+        this.setData({
+          addFavInfo:{
+            items:[{
+              good_id:options.goodsId,
+              name: res.data[0].name,
+              pic: '/images/my/cancel.png',
+              color:'黑色',
+            }]
+          }
+        })
+        this.addFavDone(options)
+      })
+    }
+
+  },
+  addFavDone:function(options){
+    wx.showLoading({
+      title: '加载中...',
+    })
+      const that = this 
+      let goodsId = option.goodsId
+      var canFav = false
+      var existFav = false 
+      wx.cloud.callFunction({
+        name:'login'
+      }).then(res=>{
+        db.collection('favorite').where({
+          _openid:res.result.openid
+        }).get().then(res=>{
+          if(res.data[0] == undefined){
+            canFav = true
+          }else{
+            var list =[]
+            res.data[0].items.forEach(value=>{
+              if(value !=null){
+                list.push(value)
+              }
+            })
+            list.forEach(e=>{
+              if(e.good_id == goodsId){
+                existFav = true
+                return
+              }
+            })
+          }
+        })
+      })
+      setTimeout(function(){
+        wx.hideLoading({
+          complete: (res) => {
+            if(canFav){
+              db.collection('favorite').add({
+                data: {
+                  items:that.data.addFavInfo.items
+                }
+              }).then(res=>{
+                wx.showToast({
+                  title: '加入购物车',
+                  icon: 'success'
+                })
+              }).catch(console.err)
+            }else{
+              if(existFav){
+                this.delFavDone(item.good_id)
+              }else{
+                wx.cloud.callFunction({
+                name:'addFav',
+                data: {
+                  items:that.data.addFavInfo.items
+                }
+              }).then(res=>{
+                wx.showToast({
+                  title: '加入购物车',
+                  icon: 'success'
+                })
+              }).catch(console.error)
+              }
+            }
+          }
+        })
+      },1000)
+  },
+  async delItemDone(key){
+    wx.showLoading({
+      title: '加载中...',
+    })
+    var openid = ''
+    var list = []
+    const that = this
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      openid = res.result.openid
+      db.collection('favorite').where({
+        _openid:res.result.openid
+      }).get().then(res=>{
+        res.data[0].items.forEach(value=>{
+          if(value != null && value.good_id != key){
+            list.push(value)
+          }
+        })
+        db.collection('favorite').where({
+          _openid:openid
+        }).update({
+          data:{
+            items: list
+          },
+          success(){
+            //
+          },
+          complete(){
+            TOOLS.showTabBarBadge()
+            that.setData({
+              noSelect: list.length > 0 ? false : true,
+              'addFavInfo.items':list
+            })
+            wx.hideLoading()
+          }
+        })
+      })
+    })
   },
   tabClick: function(e) {
     wx.setStorageSync("_categoryId", e.currentTarget.id)
