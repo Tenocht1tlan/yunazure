@@ -9,14 +9,48 @@ Page({
   },
 
   selectTap: function(e) {
-    var id = e.currentTarget.dataset.id;
-    WXAPI.updateAddress({
-      token: wx.getStorageSync('token'),
-      id: id,
-      isDefault: 'true'
-    }).then(function(res) {
-      wx.navigateBack({})
+    var id = e.currentTarget.dataset.id
+    var selectAddr = {}
+    var elsAddr = []
+    this.data.addressList.forEach(val=>{
+      if(id == val.id){
+        selectAddr = val
+      }else{
+        elsAddr.push(val)
+      }
     })
+    wx.cloud.callFunction({
+      name:'changeAddress',
+      data: {
+        key: id,
+        address: selectAddr.address,
+        cityId: selectAddr.cityId,
+        code: selectAddr.code,
+        default: true,
+        districtId: selectAddr.districtId,
+        linkMan: selectAddr.linkMan,
+        mobile: selectAddr.mobile,
+        provinceId: selectAddr.provinceId
+      }
+    }).then(res=>{
+      elsAddr.forEach(val=>{
+        wx.cloud.callFunction({
+          name:'changeAddress',
+          data: {
+            key: val.id,
+            address: val.address,
+            cityId: val.cityId,
+            code: val.code,
+            default: false,
+            districtId: val.districtId,
+            linkMan: val.linkMan,
+            mobile: val.mobile,
+            provinceId: val.provinceId
+          }
+        })
+      })
+      wx.navigateBack()
+    }).catch(console.error)
   },
 
   addAddess: function() {
@@ -36,7 +70,7 @@ Page({
   async onShow() {
     const isLogined = await AUTH.checkHasLogined()
     if(isLogined){
-      this.initShippingAddress();
+      this.initShippingAddress()
     }else{
       wx.showModal({
         title: '提示',
@@ -61,10 +95,8 @@ Page({
       _openid: id,
     }).get().then(res=>{
       if(res.data){
-        var list = []
-        list.push(res.data[0].info)
         this.setData({
-          addressList: list
+          addressList: res.data[0].info
         })
       }else {
         this.setData({

@@ -32,15 +32,10 @@ Page({
     this.categories();
   },
   async categories() {
-    wx.showLoading({
-      title: '加载中',
-    })
-    wx.hideLoading()
     let categories = [];
     let categoryName = ''
     let categoryId = ''
     goodsCategory.get().then(res=>{
-      console.log(res.data[0].category)
       if(res.data[0].category){
         if (this.data.categorySelected.id) {
           const _curCategory = res.data[0].category.find(ele => {
@@ -77,9 +72,6 @@ Page({
     this.getGoodsList();
   },
   async getGoodsList() {
-    wx.showLoading({
-      title: '加载中',
-    })
     //   categoryId: this.data.categorySelected.id,
     //   page: 1,
     //   pageSize: 100000
@@ -94,7 +86,6 @@ Page({
         });
       }
     }).catch(console.error)
-    wx.hideLoading()
   },
   toDetailsTap: function(e) {
     wx.navigateTo({
@@ -199,6 +190,21 @@ Page({
           })
           this.addShopCarDone(options)
       })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '您还未登录账号...',
+        confirmText: '去登录',
+        success (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: "/pages/my/index"
+            });
+          }else if (res.cancel){
+
+          }
+        }
+      })
     }
   },
    addShopCarDone:function(options){
@@ -281,7 +287,7 @@ Page({
       })
     }, 1000)
     //判断是否需要选吃尺码
-    if (true) {
+    if (false) {
       // 需要选择规格尺寸
       goodsDetails.where({
         id:options.goodsId
@@ -298,12 +304,7 @@ Page({
         this.setData({
           skuCurGoods: null
         })
-      }).catch(err=>{
-        wx.showToast({
-          title: '',
-          icon: 'none'
-        })
-      })
+      }).catch(console.error)
       wx.hideTabBar()
     }
     wx.showTabBar()

@@ -160,41 +160,37 @@ Page({
       })
       return
     }    
-    const postData = {
-      // id: 'Address-' + new Date().getTime(),
+    const postData = [{
       linkMan: linkMan,
       address: address,
       mobile: mobile,
       code: code,
-      // default: true
-    }
-    postData.provinceId = this.data.region[0]
-    postData.cityId = this.data.region[1]
-    postData.districtId = this.data.region[2]
-    // if (this.data.pIndex > 0) {
-    //   postData.provinceId = this.data.provinces[this.data.pIndex].id
-    // }
-    // if (this.data.cIndex > 0) {
-    //   postData.cityId = this.data.cities[this.data.cIndex].id
-    // }
-    // if (this.data.aIndex > 0) {
-    //   postData.districtId = this.data.areas[this.data.aIndex].id
-    // }    
+      provinceId: this.data.region[0],
+      cityId: this.data.region[1],
+      districtId: this.data.region[2]
+    }]
     wx.showLoading({
       title: '加载中...'
     })
     var canAdd = false
     var addressid = this.data.id
     var exist = false
+    var hasAddress = false
     const id = wx.getStorageSync('openid')
     db.collection('shipping-address').where({
       _openid: id,
     }).get().then(res=>{
-
+      console.log(res.data[0])
       if(res.data[0] == undefined){
+        hasAddress = false
         canAdd = true
       }else{
         var list = []
+        if(res.data[0].info.length > 0){
+          hasAddress = true
+        }else{
+          hasAddress = false
+        }
         res.data[0].info.forEach(value=>{
           if(value != null){
             list.push(value)
@@ -208,12 +204,13 @@ Page({
         })
       }
     })
+    const that = this
     setTimeout(function () {
       wx.hideLoading({
         complete: (res) => {
           if (canAdd){
-            postData.id = 'Address-' + new Date().getTime()
-            postData.default = true
+            postData[0].id = 'Address-' + new Date().getTime()
+            postData[0].default = hasAddress ? false : true
             db.collection('shipping-address').add({
               data: {
                 info: postData
@@ -223,17 +220,26 @@ Page({
             }).catch(console.error)
           }else{
             if(exist){
+              postData[0].default = that.data.addressData.default
               wx.cloud.callFunction({
                 name:'changeAddress',
                 data: {
                   key: addressid,
+                  address:postData[0].address,
+                  cityId:postData[0].cityId,
+                  code:postData[0].code,
+                  default:postData[0].default,
+                  districtId:postData[0].districtId,
+                  linkMan:postData[0].linkMan,
+                  mobile:postData[0].mobile,
+                  provinceId:postData[0].provinceId
                 }
               }).then(res=>{
                 wx.navigateBack()
               }).catch(console.error)
             }else{
-              postData.id = 'Address-' + new Date().getTime()
-              postData.default = false
+              postData[0].id = 'Address-' + new Date().getTime()
+              postData[0].default = hasAddress ? false : true
               wx.cloud.callFunction({
                 name:'pushAddress',
                 data: {
@@ -270,13 +276,18 @@ Page({
     if (e.id){
       const openid = wx.getStorageSync('openid')
       db.collection('shipping-address').where({
-        _openid: openid,
-        'info.id': e.id
+        _openid: openid
       }).get().then(res=>{
         if(res.data){
-          this.setData({
-            id: e.id,
-            addressData: res.data[0].info
+          res.data[0].info.forEach(val=>{
+            if(val.id == e.id){
+              this.setData({
+                id: e.id,
+                addressData: val,
+                region: [val.provinceId, val.cityId, val.districtId]
+              })
+              return
+            }
           })
         }else {
 
@@ -285,14 +296,49 @@ Page({
     }
   },
   deleteAddress: function (e) {
-    const id = e.currentTarget.dataset.id;
+    const id = e.currentTarget.dataset.id
+    var list = []
     wx.showModal({
       title: '提示',
       content: '确定要删除该收货地址吗？',
       success: function (res) {
         if (res.confirm) {
-          WXAPI.deleteAddress(wx.getStorageSync('token'), id).then(function () {
-            wx.navigateBack({})
+          const openid = wx.getStorageSync('openid')
+          db.collection('shipping-address').where({
+            _openid: openid
+          }).get().then(res=>{
+            res.data[0].info.forEach(value=>{
+              if(value != null && value.id != id){
+                list.push(value)
+              }
+            })
+            if(list.length > 0){
+              var find = false
+              list.forEach(val=>{
+                if(val.id == id){
+                  find = true
+                  return
+                }
+              })
+              if(!find){
+                list[0].default = true
+              }
+            }
+            db.collection('shipping-address').where({
+              _openid:openid
+            }).update({
+              data:{
+                info: list
+              },
+              fail(err){
+                console.log('fail')
+                wx.navigateBack()
+              },
+              complete(){
+                console.log('complete')
+                wx.navigateBack()
+              }
+            })
           })
         } else {
           console.log('用户点击取消')
@@ -357,25 +403,35 @@ Page({
   },
   wxAddress: function () {
     var that = this
-    wx.chooseAddress({
-      success: function (res) {
-        var address = {
-          linkMan: res.userName,
-          mobile: res.telNumber,
-          province: res.provinceName,
-          city: res.cityName,
-          county: res.countyName,
-          address: res.detailInfo,
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.address']) {
+          wx.openSetting()
+         
+        }else{
+          wx.chooseAddress({
+            success: function (res) {
+              var addressList = {
+                linkMan: res.userName,
+                mobile: res.telNumber,
+                province: res.provinceName,
+                city: res.cityName,
+                county: res.countyName,
+                address: res.detailInfo,
+              }
+              that.setData({     
+                addressData: addressList,
+                region: [res.provinceName, res.cityName, res.countyName]
+              })
+            },
+            fail: () => {
+              console.log(err)
+            }
+          })
         }
-         //获取到的地址存到data里的areaList中
-        that.setData({     
-          addressData:that.data.addressData.push(address),
-          region: [res.provinceName, res.cityName, res.countyName]
-        })
-      },
-      fail: () => {
-        that.openConfirm()   // 如果获取地址权限失败，弹出确认弹窗，让用户选择是否要打开设置，手动去开权限
       }
     })
+    
+    
   }
 })

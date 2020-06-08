@@ -205,7 +205,6 @@ Page({
     // }
     
     if (that.data.isNeedLogistics > 0 && postData.peisongType == 'kd') {
-      console.log("hasAddressData = "+that.data.hasAddressData)
       if (!that.data.hasAddressData) {
         wx.hideLoading()
         wx.showToast({
@@ -286,7 +285,6 @@ Page({
     const id = wx.getStorageSync('openid')
     db.collection('shipping-address').where({
       _openid: id,
-      'info.default':true
     }).get().then(res=>{
       if(res.data[0] == undefined){
         this.setData({
@@ -294,10 +292,22 @@ Page({
           curAddressData: null
         })
       } else if(res.data[0]){
-        this.setData({
-          hasAddressData: true,
-          curAddressData: res.data[0].info
-        })
+        if(res.data[0].info.length == 0){
+          this.setData({
+            hasAddressData: false,
+            curAddressData: null
+          })
+        }else{
+          res.data[0].info.forEach(e=>{
+            if(e.default){
+              this.setData({
+                hasAddressData: true,
+                curAddressData: e
+              })
+              return
+            }
+          })
+        }
       } else {
         this.setData({
           hasAddressData: false,
