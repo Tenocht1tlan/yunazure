@@ -131,10 +131,10 @@
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
   </view>
   <view style='display: inline-block;flex-wrap:wrap;'>
-    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
+    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}" data-index="{{index}}">
       <view class="imag-box">
         <image class="scroll-view-imag" src="{{item.pic}}" mode="aspectFit" lazy-load="true" ></image>
-        <image class="star" catchtap="addFav" src="{{item.fav?'/images/staryes.png':'/images/starno.png'}}" data-id="{{item.good_id}}" ></image>
+        <image class="star" catchtap="addFav" src="{{item.fav?'/images/staryes.png':'/images/starno.png'}}" data-id="{{item.good_id}}"   ></image>
       </view>
       <view style="margin:20rpx 25rpx;width:250rpx">新品
         <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  catchtap="showUp" data-index="{{index}}"></image>
