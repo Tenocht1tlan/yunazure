@@ -174,7 +174,7 @@ Page({
       })
       //加入心愿单逻辑
       db.collection('goods').where({
-        good_id:goodsId
+        good_id:options.goodsId
       }).get().then(res=>{
         this.setData({
           addFavInfo:{
@@ -195,8 +195,9 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
+
       const that = this 
-      let goodsId = option.goodsId
+      let goodsId = options.goodsId
       var canFav = false
       var existFav = false 
       wx.cloud.callFunction({
@@ -224,7 +225,9 @@ Page({
         })
       })
       setTimeout(function(){
+        console.log(existFav)
         wx.hideLoading({
+          
           complete: (res) => {
             if(canFav){
               db.collection('favorite').add({
@@ -236,14 +239,15 @@ Page({
                   title: '加入购物车',
                   icon: 'success'
                 })
-              }).catch(console.err)
+              }).catch(console.error)
             }else{
               if(existFav){
-                this.delFavDone(item.good_id)
+                that.delFavDone(options.good_id)
               }else{
+                console.log(that.data.addFavInfo.items)
                 wx.cloud.callFunction({
                 name:'addFav',
-                data: {
+                data:{
                   items:that.data.addFavInfo.items
                 }
               }).then(res=>{
@@ -258,7 +262,7 @@ Page({
         })
       },1000)
   },
-  async delItemDone(key){
+  async delFavDone(key){
     wx.showLoading({
       title: '加载中...',
     })
