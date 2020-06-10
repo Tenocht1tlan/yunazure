@@ -428,20 +428,20 @@ Page({
     })
     this.initBanners()
     this.categories()
-    WXAPI.goods({
-      recommendStatus: 1
-    }).then(res => {
-      if (res.code === 0){
-        that.setData({
-          goodsRecommend: res.data
-        })
-      }      
-    })
-    that.getCoupons()
-    that.getNotice()
-    that.kanjiaGoods()
-    that.pingtuanGoods()
-    this.wxaMpLiveRooms()    
+    // WXAPI.goods({
+    //   recommendStatus: 1
+    // }).then(res => {
+    //   if (res.code === 0){
+    //     that.setData({
+    //       goodsRecommend: res.data
+    //     })
+    //   }      
+    // })
+    // that.getCoupons()
+    // that.getNotice()
+    // that.kanjiaGoods()
+    // that.pingtuanGoods()
+    // this.wxaMpLiveRooms()    
   },
   async miaoshaGoods(){
     const res = await WXAPI.goods({
@@ -656,11 +656,8 @@ Page({
       if (goodsKanjiaSetRes.code == 0) {
         res.data.forEach(ele => {
           const _process = goodsKanjiaSetRes.data.find(_set => {
-            console.log(_set)
             return _set.goodsId == ele.id
           })
-          console.log(ele)
-          console.log(_process)
           if (_process) {
             ele.process = 100 * _process.numberBuy / _process.number
           }

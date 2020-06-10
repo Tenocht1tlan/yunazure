@@ -29,14 +29,27 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })
-    this.categories();
+    this.categories()
+  },
+  async onShow() {
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
+      this.setData({
+        wxlogin: isLogined
+      })
+      TOOLS.showTabBarBadge() // 获取购物车数据，显示TabBarBadge
+    }
+
+    this.data.categorySelected.id = 'hat'
+    this.categories()
   },
   async categories() {
-    let categories = [];
+    let categories = []
     let categoryName = ''
     let categoryId = ''
     goodsCategory.get().then(res=>{
       if(res.data[0].category){
+        console.log("1 = "+this.data.categorySelected.id)
         if (this.data.categorySelected.id) {
           const _curCategory = res.data[0].category.find(ele => {
             return ele.id == this.data.categorySelected.id
@@ -45,12 +58,12 @@ Page({
           categoryId = _curCategory.id;
         }
         for (let i = 0; i < res.data[0].category.length; i++) {
-          let item = res.data[0].category[i];
-          categories.push(item);
-          // if (i == 0 && !this.data.categorySelected.id) {
-            categoryName = item.name;
-            categoryId = item.id;
-          // }
+          let item = res.data[0].category[i]
+          categories.push(item)
+          if (i == 0 && !this.data.categorySelected.id) {
+            categoryName = item.name
+            categoryId = item.id
+          }
         }
         this.setData({
           categories: categories,
@@ -69,21 +82,24 @@ Page({
         })
       }
     }).catch(console.error)
-    this.getGoodsList();
+    this.getGoodsList()
   },
   async getGoodsList() {
-    //   categoryId: this.data.categorySelected.id,
-    //   page: 1,
-    //   pageSize: 100000
     goodsDetails.get().then(res=>{
-      if(res.data){
+      var list = []
+      res.data.forEach(val=>{
+        if(val.type == this.data.categorySelected.id){
+          list.push(val)
+        }
+      })
+      if(list.length > 0){
         this.setData({
-          currentGoods:res.data
+          currentGoods: list
         })
       }else{
         this.setData({
           currentGoods: null
-        });
+        })
       }
     }).catch(console.error)
   },
@@ -131,32 +147,14 @@ Page({
       url: '/pages/goods/list?name=' + this.data.inputVal,
     })
   },
+  //shareListener
   onShareAppMessage() {    
     return {
       title: '"' + wx.getStorageSync('mallName') + '" ' + wx.getStorageSync('share_profile'),
       path: '/pages/index/index?inviter_id=' + wx.getStorageSync('uid')
     }
   },
-  async onShow() {
-    const isLogined = await AUTH.checkHasLogined()
-    if(isLogined){
-      this.setData({
-        wxlogin: isLogined
-      })
-      TOOLS.showTabBarBadge() // 获取购物车数据，显示TabBarBadge
-    }
-
-    const _categoryId = wx.getStorageSync('_categoryId')
-    wx.removeStorageSync('_categoryId')
-    if (_categoryId) {
-      this.data.categorySelected.id = _categoryId
-      this.categories();
-    } else {
-      this.data.categorySelected.id = null
-    }
-  },
   async addShopCar(e) {
-    
     this.addShopCarCheck({
       goodsId: e.currentTarget.dataset.id,
       sku: []
