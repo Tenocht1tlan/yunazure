@@ -1,4 +1,3 @@
-const WXAPI = require('apifm-wxapi')
 const CONFIG = require('../../config.js')
 //获取应用实例
 var app = getApp();
@@ -26,36 +25,36 @@ Page({
       }
     } else {
       // 展示启动页
-      WXAPI.banners({
-        type: 'app'
-      }).then(function (res) {
-        if (res.code == 700) {
-          if (CONFIG.shopMod) {
-            wx.redirectTo({
-              url: '/pages/shop/select',
-            });
-          } else {
-            wx.switchTab({
-              url: '/pages/index/index',
-            });
-          }
-        } else {
-          _this.setData({
-            banners: res.data,
-            swiperMaxNumber: res.data.length
-          });
-        }
-      }).catch(function (e) {
-        if (CONFIG.shopMod) {
-          wx.redirectTo({
-            url: '/pages/shop/select',
-          });
-        } else {
-          wx.switchTab({
-            url: '/pages/index/index',
-          });
-        }
-      })
+      // WXAPI.banners({
+      //   type: 'app'
+      // }).then(function (res) {
+      //   if (res.code == 700) {
+      //     if (CONFIG.shopMod) {
+      //       wx.redirectTo({
+      //         url: '/pages/shop/select',
+      //       });
+      //     } else {
+      //       wx.switchTab({
+      //         url: '/pages/index/index',
+      //       });
+      //     }
+      //   } else {
+      //     _this.setData({
+      //       banners: res.data,
+      //       swiperMaxNumber: res.data.length
+      //     });
+      //   }
+      // }).catch(function (e) {
+      //   if (CONFIG.shopMod) {
+      //     wx.redirectTo({
+      //       url: '/pages/shop/select',
+      //     });
+      //   } else {
+      //     wx.switchTab({
+      //       url: '/pages/index/index',
+      //     });
+      //   }
+      // })
     }
   },
   onShow:function(){

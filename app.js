@@ -1,9 +1,9 @@
-const WXAPI = require('apifm-wxapi')
-const CONFIG = require('config.js')
+// //const WXAPI = require('apifm-wxapi')
+// const CONFIG = require('config.js')
 const AUTH = require('utils/auth')
 App({
   onLaunch: function() {
-    WXAPI.init(CONFIG.subDomain)
+    // WXAPI.init(CONFIG.subDomain)
     const that = this;
     wx.cloud.init({
       env:'yunazure-sygca',

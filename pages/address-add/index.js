@@ -1,4 +1,4 @@
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 const db = wx.cloud.database()
 
@@ -19,101 +19,101 @@ Page({
       region: e.detail.value
     })
   },
-  async provinces(provinceId, cityId, districtId) {
-    const res = await WXAPI.province()
-    if (res.code == 0) {
-      const provinces = [{
-        id: 0,
-        name: '请选择'
-      }].concat(res.data)
-      let pIndex = 0
-      if (provinceId) {
-        pIndex = provinces.findIndex(ele => {
-          return ele.id == provinceId
-        })
-      }
-      this.setData({
-        pIndex,
-        provinces: provinces
-      })
-      if (provinceId) {
-        const e = { detail: { value: pIndex}}
-        this.provinceChange(e, cityId, districtId)
-      }
-    }
-  },
-  async provinceChange(e, cityId, districtId) {
-    const index = e.detail.value
-    this.setData({
-      pIndex: index
-    })
-    const pid = this.data.provinces[index].id
-    if (pid == 0) {
-      this.setData({
-        cities: null,
-        cIndex: 0,
-        areas: null,
-        aIndex: 0
-      })
-      return
-    }
-    const res = await WXAPI.nextRegion(pid);
-    if (res.code == 0) {
-      const cities = [{
-        id: 0,
-        name: '请选择'
-      }].concat(res.data)
-      let cIndex = 0
-      if (cityId) {
-        cIndex = cities.findIndex(ele => {
-          return ele.id == cityId
-        })
-      }
-      this.setData({
-        cIndex,
-        cities: cities
-      })
-      if (cityId) {
-        const e = { detail: { value: cIndex } }
-        this.cityChange(e, districtId)
-      }
-    }
-  },
-  async cityChange(e, districtId) {
-    const index = e.detail.value
-    this.setData({
-      cIndex: index
-    })
-    const pid = this.data.cities[index].id
-    if (pid == 0) {
-      this.setData({
-        areas: null,
-        aIndex: 0
-      })
-      return
-    }
-    const res = await WXAPI.nextRegion(pid);
-    if (res.code == 0) {
-      const areas = [{
-        id: 0,
-        name: '请选择'
-      }].concat(res.data)
-      let aIndex = 0
-      if (districtId) {
-        aIndex = areas.findIndex(ele => {
-          return ele.id == districtId
-        })
-      }
-      this.setData({
-        aIndex,
-        areas: areas
-      })
-      if (districtId) {
-        const e = { detail: { value: aIndex } }
-        this.areaChange(e)
-      }
-    }
-  },
+  // async provinces(provinceId, cityId, districtId) {
+  //   const res = await WXAPI.province()
+  //   if (res.code == 0) {
+  //     const provinces = [{
+  //       id: 0,
+  //       name: '请选择'
+  //     }].concat(res.data)
+  //     let pIndex = 0
+  //     if (provinceId) {
+  //       pIndex = provinces.findIndex(ele => {
+  //         return ele.id == provinceId
+  //       })
+  //     }
+  //     this.setData({
+  //       pIndex,
+  //       provinces: provinces
+  //     })
+  //     if (provinceId) {
+  //       const e = { detail: { value: pIndex}}
+  //       this.provinceChange(e, cityId, districtId)
+  //     }
+  //   }
+  // },
+  // async provinceChange(e, cityId, districtId) {
+  //   const index = e.detail.value
+  //   this.setData({
+  //     pIndex: index
+  //   })
+  //   const pid = this.data.provinces[index].id
+  //   if (pid == 0) {
+  //     this.setData({
+  //       cities: null,
+  //       cIndex: 0,
+  //       areas: null,
+  //       aIndex: 0
+  //     })
+  //     return
+  //   }
+  //   const res = await WXAPI.nextRegion(pid);
+  //   if (res.code == 0) {
+  //     const cities = [{
+  //       id: 0,
+  //       name: '请选择'
+  //     }].concat(res.data)
+  //     let cIndex = 0
+  //     if (cityId) {
+  //       cIndex = cities.findIndex(ele => {
+  //         return ele.id == cityId
+  //       })
+  //     }
+  //     this.setData({
+  //       cIndex,
+  //       cities: cities
+  //     })
+  //     if (cityId) {
+  //       const e = { detail: { value: cIndex } }
+  //       this.cityChange(e, districtId)
+  //     }
+  //   }
+  // },
+  // async cityChange(e, districtId) {
+  //   const index = e.detail.value
+  //   this.setData({
+  //     cIndex: index
+  //   })
+  //   const pid = this.data.cities[index].id
+  //   if (pid == 0) {
+  //     this.setData({
+  //       areas: null,
+  //       aIndex: 0
+  //     })
+  //     return
+  //   }
+  //   const res = await WXAPI.nextRegion(pid);
+  //   if (res.code == 0) {
+  //     const areas = [{
+  //       id: 0,
+  //       name: '请选择'
+  //     }].concat(res.data)
+  //     let aIndex = 0
+  //     if (districtId) {
+  //       aIndex = areas.findIndex(ele => {
+  //         return ele.id == districtId
+  //       })
+  //     }
+  //     this.setData({
+  //       aIndex,
+  //       areas: areas
+  //     })
+  //     if (districtId) {
+  //       const e = { detail: { value: aIndex } }
+  //       this.areaChange(e)
+  //     }
+  //   }
+  // },
   async areaChange(e) {
     const index = e.detail.value
     this.setData({

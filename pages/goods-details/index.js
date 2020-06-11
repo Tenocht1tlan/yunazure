@@ -1,10 +1,8 @@
-const WXAPI = require('apifm-wxapi')
 const app = getApp()
 const CONFIG = require('../../config.js')
 const AUTH = require('../../utils/auth')
 const SelectSizePrefix = "选择："
 const db = wx.cloud.database()
-import Poster from 'wxa-plugin-canvas/poster/poster'
 
 Page({
   data: {
@@ -90,19 +88,19 @@ Page({
     this.getGoodsDetailAndKanjieInfo(this.data.goodsId)
   },
   async goodsFavCheck() {
-    WXAPI.goodsFavList({
-      token: wx.getStorageSync('token')
-    })
-    const res = await WXAPI.goodsFavCheck(wx.getStorageSync('token'), this.data.goodsId)
-    if (res.code == 0) {
-      this.setData({
-        faved: true
-      })
-    } else {
-      this.setData({
-        faved: false
-      })
-    }
+    // WXAPI.goodsFavList({
+    //   token: wx.getStorageSync('token')
+    // })
+    // const res = await WXAPI.goodsFavCheck(wx.getStorageSync('token'), this.data.goodsId)
+    // if (res.code == 0) {
+    //   this.setData({
+    //     faved: true
+    //   })
+    // } else {
+    //   this.setData({
+    //     faved: false
+    //   })
+    // }
   },
   async addFav(){
     const isLogined = await AUTH.checkHasLogined()
@@ -111,17 +109,17 @@ Page({
         wxlogin: isLogined
       })
       if (isLogined) {
-        if (this.data.faved) {
-          // 取消收藏
-          WXAPI.goodsFavDelete(wx.getStorageSync('token'), '', this.data.goodsId).then(res => {
-            this.goodsFavCheck()
-          })
-        } else {
-          // 加入收藏
-          WXAPI.goodsFavPut(wx.getStorageSync('token'), this.data.goodsId).then(res => {
-            this.goodsFavCheck()
-          })
-        }
+        // if (this.data.faved) {
+        //   // 取消收藏
+        //   WXAPI.goodsFavDelete(wx.getStorageSync('token'), '', this.data.goodsId).then(res => {
+        //     this.goodsFavCheck()
+        //   })
+        // } else {
+        //   // 加入收藏
+        //   WXAPI.goodsFavPut(wx.getStorageSync('token'), this.data.goodsId).then(res => {
+        //     this.goodsFavCheck()
+        //   })
+        // }
       }
     }
   },
@@ -203,12 +201,12 @@ Page({
     // const goodsKanjiaSetRes = await WXAPI.kanjiaSet(goodsId)
   },
   async shopSubdetail(shopId){
-    const res = await WXAPI.shopSubdetail(shopId)
-    if (res.code == 0) {
-      this.setData({
-        shopSubdetail: res.data
-      })
-    }
+    // const res = await WXAPI.shopSubdetail(shopId)
+    // if (res.code == 0) {
+    //   this.setData({
+    //     shopSubdetail: res.data
+    //   })
+    // }
   },
   goShopCar: function() {
     wx.reLaunch({
@@ -318,22 +316,22 @@ Page({
     }
     // 计算当前价格
     if (canSubmit) {
-      const res = await WXAPI.goodsPrice(this.data.goodsDetail.id, propertyChildIds)
-      if (res.code == 0) {
-        let _price = res.data.price
-        // if (this.data.shopType == 'toPingtuan') {
-        //   _price = res.data.pingtuanPrice
-        // }
-        this.setData({
-          selectSizePrice: _price,
-          selectSizeOPrice: res.data.originalPrice,
-          totalScoreToPay: res.data.score,
-          propertyChildIds: propertyChildIds,
-          propertyChildNames: propertyChildNames,
-          buyNumMax: res.data.stockNum,
-          buyNumber: (res.data.stockNum > 0) ? 1 : 0
-        });
-      }
+      // const res = await WXAPI.goodsPrice(this.data.goodsDetail.id, propertyChildIds)
+      // if (res.code == 0) {
+      //   let _price = res.data.price
+      // if (this.data.shopType == 'toPingtuan') {
+      //   _price = res.data.pingtuanPrice
+      // }
+      //   this.setData({
+      //     selectSizePrice: _price,
+      //     selectSizeOPrice: res.data.originalPrice,
+      //     totalScoreToPay: res.data.score,
+      //     propertyChildIds: propertyChildIds,
+      //     propertyChildNames: propertyChildNames,
+      //     buyNumMax: res.data.stockNum,
+      //     buyNumber: (res.data.stockNum > 0) ? 1 : 0
+      //   });
+      // }
     }
     let skuGoodsPic = this.data.skuGoodsPic
     if (this.data.goodsDetail.subPics && this.data.goodsDetail.subPics.length > 0) {
@@ -775,101 +773,101 @@ Page({
     })
   },
   async drawSharePic() {
-    const _this = this
-    const qrcodeRes = await WXAPI.wxaQrcode({
-      scene: _this.data.goodsDetail.basicInfo.id + ',' + wx.getStorageSync('uid'),
-      page: 'pages/goods-details/index',
-      is_hyaline: true,
-      autoColor: true,
-      expireHours: 1
-    })
-    if (qrcodeRes.code != 0) {
-      wx.showToast({
-        title: qrcodeRes.msg,
-        icon: 'none'
-      })
-      return
-    }
-    const qrcode = qrcodeRes.data
-    const pic = _this.data.goodsDetail.basicInfo.pic
-    wx.getImageInfo({
-      src: pic,
-      success(res) {
-        const height = 490 * res.height / res.width
-        _this.drawSharePicDone(height, qrcode)
-      },
-      fail(e) {
-        console.error(e)
-      }
-    })
+    // const _this = this
+    // const qrcodeRes = await WXAPI.wxaQrcode({
+    //   scene: _this.data.goodsDetail.basicInfo.id + ',' + wx.getStorageSync('uid'),
+    //   page: 'pages/goods-details/index',
+    //   is_hyaline: true,
+    //   autoColor: true,
+    //   expireHours: 1
+    // })
+    // if (qrcodeRes.code != 0) {
+    //   wx.showToast({
+    //     title: qrcodeRes.msg,
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
+    // const qrcode = qrcodeRes.data
+    // const pic = _this.data.goodsDetail.basicInfo.pic
+    // wx.getImageInfo({
+    //   src: pic,
+    //   success(res) {
+    //     const height = 490 * res.height / res.width
+    //     // _this.drawSharePicDone(height, qrcode)
+    //   },
+    //   fail(e) {
+    //     console.error(e)
+    //   }
+    // })
   },
   drawSharePicDone(picHeight, qrcode) {
-    const _this = this
-    const _baseHeight = 74 + (picHeight + 120)
-    this.setData({
-      posterConfig: {
-        width: 750,
-        height: picHeight + 660,
-        backgroundColor: '#fff',
-        debug: false,
-        blocks: [
-          {
-            x: 76,
-            y: 74,
-            width: 604,
-            height: picHeight + 120,
-            borderWidth: 2,
-            borderColor: '#c2aa85',
-            borderRadius: 8
-          }
-        ],
-        images: [
-          {
-            x: 133,
-            y: 133,
-            url: _this.data.goodsDetail.basicInfo.pic, // 商品图片
-            width: 490,
-            height: picHeight
-          },
-          {
-            x: 76,
-            y: _baseHeight + 199,
-            url: qrcode, // 二维码
-            width: 222,
-            height: 222
-          }
-        ],
-        texts: [
-          {
-            x: 375,
-            y: _baseHeight + 80,
-            width: 650,
-            lineNum:2,
-            text: _this.data.goodsDetail.basicInfo.name,
-            textAlign: 'center',
-            fontSize: 40,
-            color: '#333'
-          },
-          {
-            x: 375,
-            y: _baseHeight + 180,
-            text: '￥' + _this.data.goodsDetail.basicInfo.minPrice,
-            textAlign: 'center',
-            fontSize: 50,
-            color: '#e64340'
-          },
-          {
-            x: 352,
-            y: _baseHeight + 320,
-            text: '长按识别小程序码',
-            fontSize: 28,
-            color: '#999'
-          }
-        ],
-      }
-    }, () => {
-      Poster.create();
-    });
+    // const _this = this
+    // const _baseHeight = 74 + (picHeight + 120)
+    // this.setData({
+    //   posterConfig: {
+    //     width: 750,
+    //     height: picHeight + 660,
+    //     backgroundColor: '#fff',
+    //     debug: false,
+    //     blocks: [
+    //       {
+    //         x: 76,
+    //         y: 74,
+    //         width: 604,
+    //         height: picHeight + 120,
+    //         borderWidth: 2,
+    //         borderColor: '#c2aa85',
+    //         borderRadius: 8
+    //       }
+    //     ],
+    //     images: [
+    //       {
+    //         x: 133,
+    //         y: 133,
+    //         url: _this.data.goodsDetail.basicInfo.pic, // 商品图片
+    //         width: 490,
+    //         height: picHeight
+    //       },
+    //       {
+    //         x: 76,
+    //         y: _baseHeight + 199,
+    //         url: qrcode, // 二维码
+    //         width: 222,
+    //         height: 222
+    //       }
+    //     ],
+    //     texts: [
+    //       {
+    //         x: 375,
+    //         y: _baseHeight + 80,
+    //         width: 650,
+    //         lineNum:2,
+    //         text: _this.data.goodsDetail.basicInfo.name,
+    //         textAlign: 'center',
+    //         fontSize: 40,
+    //         color: '#333'
+    //       },
+    //       {
+    //         x: 375,
+    //         y: _baseHeight + 180,
+    //         text: '￥' + _this.data.goodsDetail.basicInfo.minPrice,
+    //         textAlign: 'center',
+    //         fontSize: 50,
+    //         color: '#e64340'
+    //       },
+    //       {
+    //         x: 352,
+    //         y: _baseHeight + 320,
+    //         text: '长按识别小程序码',
+    //         fontSize: 28,
+    //         color: '#999'
+    //       }
+    //     ],
+    //   }
+    // }, () => {
+    //   Poster.create();
+    // });
   },
   onPosterSuccess(e) {
     console.log('success:', e)

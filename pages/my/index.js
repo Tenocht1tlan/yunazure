@@ -1,6 +1,5 @@
 const app = getApp()
 const CONFIG = require('../../config.js')
-const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 const TOOLS = require('../../utils/tools.js')
 const db = wx.cloud.database();
@@ -51,64 +50,6 @@ Page({
     AUTH.loginOut()
     wx.reLaunch({
       url: '/pages/my/index'
-    })
-  },
-  getPhoneNumber: function(e) {
-    if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
-      wx.showModal({
-        title: '提示',
-        content: e.detail.errMsg,
-        showCancel: false 
-      })
-      return;
-    }
-    WXAPI.bindMobileWxa(wx.getStorageSync('token'), e.detail.encryptedData, e.detail.iv).then(res => {
-      if (res.code === 10002) {
-        this.setData({
-          wxlogin: false
-        })
-        return
-      }
-      if (res.code == 0) {
-        wx.showToast({
-          title: '绑定成功',
-          icon: 'success',
-          duration: 2000
-        })
-        this.getUserApiInfo();
-      } else {
-        wx.showModal({
-          title: '提示',
-          content: res.msg,
-          showCancel: false
-        })
-      }
-    })
-  },
-  getUserApiInfo: function () {
-    var that = this;
-    WXAPI.userDetail(wx.getStorageSync('token')).then(function (res) {
-      if (res.code == 0) {
-        let _data = {}
-        _data.apiUserInfoMap = res.data
-        if (res.data.base.mobile) {
-          _data.userMobile = res.data.base.mobile
-        }
-        if (that.data.order_hx_uids && that.data.order_hx_uids.indexOf(res.data.base.id) != -1) {
-          _data.canHX = true // 具有扫码核销的权限
-        }
-        that.setData(_data);
-      }
-    })
-  },
-  getUserAmount: function () {
-    var that = this;
-    WXAPI.userAmount(wx.getStorageSync('token')).then(function (res) {
-      if (res.code == 0) {
-        that.setData({
-
-        });
-      }
     })
   },
   goAsset: function () {

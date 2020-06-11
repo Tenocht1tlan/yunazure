@@ -1,6 +1,6 @@
 const wxpay = require('../../utils/pay.js')
 const app = getApp()
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 
 Page({

@@ -1,4 +1,4 @@
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 
 Page({
@@ -26,32 +26,32 @@ Page({
       page: 1,
       pageSize: 10000,
     }    
-    const res = await WXAPI.goodsFavList(_data)
+    // const res = await WXAPI.goodsFavList(_data)
     wx.hideLoading()
-    if (res.code == 0) {
-      this.setData({
-        goods: res.data,
-      })
-    } else {
-      this.setData({
-        goods: null
-      })
-    }
+    // if (res.code == 0) {
+    //   this.setData({
+    //     goods: res.data,
+    //   })
+    // } else {
+    //   this.setData({
+    //     goods: null
+    //   })
+    // }
   },
   async removeFav(e){
-    const id = e.currentTarget.dataset.id
-    const res = await WXAPI.goodsFavDelete(wx.getStorageSync('token'), '', id)
-    if (res.code == 0) {
-      wx.showToast({
-        title: '取消收藏',
-        icon: 'success'
-      })
-      this.goodsFavList()
-    } else {
-      wx.showToast({
-        title: res.msg,
-        icon: 'none'
-      })
-    }
+    // const id = e.currentTarget.dataset.id
+    // const res = await WXAPI.goodsFavDelete(wx.getStorageSync('token'), '', id)
+    // if (res.code == 0) {
+    //   wx.showToast({
+    //     title: '取消收藏',
+    //     icon: 'success'
+    //   })
+    //   this.goodsFavList()
+    // } else {
+    //   wx.showToast({
+    //     title: res.msg,
+    //     icon: 'none'
+    //   })
+    // }
   },
 })

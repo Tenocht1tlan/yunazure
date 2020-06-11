@@ -1,4 +1,4 @@
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 Page({
 
@@ -51,17 +51,17 @@ Page({
     if (this.data.categoryId) {
       _data.categoryId = this.data.categoryId
     }
-    const res = await WXAPI.goods(_data)
+    // const res = await WXAPI.goods(_data)
     wx.hideLoading()
-    if (res.code == 0) {
-      this.setData({
-        goods: res.data,
-      })
-    } else {
-      this.setData({
-        goods: null,
-      })
-    }
+    // if (res.code == 0) {
+    //   this.setData({
+    //     goods: res.data,
+    //   })
+    // } else {
+    //   this.setData({
+    //     goods: null,
+    //   })
+    // }
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -150,31 +150,31 @@ Page({
     })
   },
   async addShopCarDone(options) {
-    const res = await WXAPI.shippingCarInfoAddItem(wx.getStorageSync('token'), options.goodsId, options.buyNumber, options.sku)
-    if (res.code == 30002) {
-      // 需要选择规格尺寸
-      const skuCurGoodsRes = await WXAPI.goodsDetail(options.goodsId)
-      if (skuCurGoodsRes.code != 0) {
-        wx.showToast({
-          title: skuCurGoodsRes.msg,
-          icon: 'none'
-        })
-        return
-      }
-      const skuCurGoods = skuCurGoodsRes.data
-      skuCurGoods.basicInfo.storesBuy = 1
-      this.setData({
-        skuCurGoods
-      })
-      return
-    }
-    if (res.code != 0) {
-      wx.showToast({
-        title: res.msg,
-        icon: 'none'
-      })
-      return
-    }
+    // const res = await WXAPI.shippingCarInfoAddItem(wx.getStorageSync('token'), options.goodsId, options.buyNumber, options.sku)
+    // if (res.code == 30002) {
+    //   // 需要选择规格尺寸
+    //   const skuCurGoodsRes = await WXAPI.goodsDetail(options.goodsId)
+    //   if (skuCurGoodsRes.code != 0) {
+    //     wx.showToast({
+    //       title: skuCurGoodsRes.msg,
+    //       icon: 'none'
+    //     })
+    //     return
+    //   }
+    //   const skuCurGoods = skuCurGoodsRes.data
+    //   skuCurGoods.basicInfo.storesBuy = 1
+    //   this.setData({
+    //     skuCurGoods
+    //   })
+    //   return
+    // }
+    // if (res.code != 0) {
+    //   wx.showToast({
+    //     title: res.msg,
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
     wx.showToast({
       title: '加入成功',
       icon: 'success'

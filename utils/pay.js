@@ -1,4 +1,3 @@
-const WXAPI = require('apifm-wxapi')
 
 /**
  * type: order 支付订单 recharge 充值 paybill 优惠买单
@@ -29,39 +28,39 @@ function wxpay(type, money, orderId, redirectUrl, data) {
   if (postData.nextAction) {
     postData.nextAction = JSON.stringify(postData.nextAction);  
   }
-  WXAPI.wxpay(postData).then(function (res) {
-    if (res.code == 0) {
-      // 发起支付
-      wx.requestPayment({
-        timeStamp: res.data.timeStamp,
-        nonceStr: res.data.nonceStr,
-        package: res.data.package,
-        signType: res.data.signType,
-        paySign: res.data.paySign,
-        fail: function (aaa) {
-          console.error(aaa)
-          wx.showToast({
-            title: '支付失败:' + aaa
-          })
-        },
-        success: function () {
-          // 提示支付成功
-          wx.showToast({
-            title: '支付成功'
-          })
-          wx.redirectTo({
-            url: redirectUrl
-          });
-        }
-      })
-    } else {
-      wx.showModal({
-        title: '出错了',
-        content: JSON.stringify(res),
-        showCancel: false
-      })
-    }
-  })
+  // WXAPI.wxpay(postData).then(function (res) {
+  //   if (res.code == 0) {
+  //     // 发起支付
+  //     wx.requestPayment({
+  //       timeStamp: res.data.timeStamp,
+  //       nonceStr: res.data.nonceStr,
+  //       package: res.data.package,
+  //       signType: res.data.signType,
+  //       paySign: res.data.paySign,
+  //       fail: function (aaa) {
+  //         console.error(aaa)
+  //         wx.showToast({
+  //           title: '支付失败:' + aaa
+  //         })
+  //       },
+  //       success: function () {
+  //         // 提示支付成功
+  //         wx.showToast({
+  //           title: '支付成功'
+  //         })
+  //         wx.redirectTo({
+  //           url: redirectUrl
+  //         });
+  //       }
+  //     })
+  //   } else {
+  //     wx.showModal({
+  //       title: '出错了',
+  //       content: JSON.stringify(res),
+  //       showCancel: false
+  //     })
+  //   }
+  // })
 }
 
 module.exports = {

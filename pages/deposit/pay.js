@@ -1,4 +1,4 @@
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const app = getApp()
 Page({
 
@@ -30,41 +30,41 @@ Page({
       })
       return
     }
-    WXAPI.payDeposit({
-      token: wx.getStorageSync('token'),
-      amount: amount
-    }, 'post').then(res => {
-      if (res.code == 40000) {
-        wx.showModal({
-          title: '请先充值',
-          content: res.msg,
-          showCancel: false,
-          success(res) {
-            wx.navigateTo({
-              url: "/pages/recharge/index"
-            })
-          }
-        })
-        return
-      }
-      if (res.code != 0) {
-        wx.showModal({
-          title: '错误',
-          content: res.msg,
-          showCancel: false
-        })
-        return
-      }
-      wx.showModal({
-        title: '成功',
-        content: '押金支付成功',
-        showCancel: false,
-        success(res) {
-          wx.navigateTo({
-            url: "/pages/asset/index"
-          })
-        }
-      })
-    })
+    // WXAPI.payDeposit({
+    //   token: wx.getStorageSync('token'),
+    //   amount: amount
+    // }, 'post').then(res => {
+    //   if (res.code == 40000) {
+    //     wx.showModal({
+    //       title: '请先充值',
+    //       content: res.msg,
+    //       showCancel: false,
+    //       success(res) {
+    //         wx.navigateTo({
+    //           url: "/pages/recharge/index"
+    //         })
+    //       }
+    //     })
+    //     return
+    //   }
+    //   if (res.code != 0) {
+    //     wx.showModal({
+    //       title: '错误',
+    //       content: res.msg,
+    //       showCancel: false
+    //     })
+    //     return
+    //   }
+    //   wx.showModal({
+    //     title: '成功',
+    //     content: '押金支付成功',
+    //     showCancel: false,
+    //     success(res) {
+    //       wx.navigateTo({
+    //         url: "/pages/asset/index"
+    //       })
+    //     }
+    //   })
+    // })
   }
 })

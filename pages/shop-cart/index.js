@@ -1,4 +1,3 @@
-const WXAPI = require('apifm-wxapi')
 const TOOLS = require('../../utils/tools.js')
 const AUTH = require('../../utils/auth')
 const db = wx.cloud.database()

@@ -1,5 +1,5 @@
 const app = getApp()
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 const wxpay = require('../../utils/pay.js')
 const db = wx.cloud.database()

@@ -1,4 +1,4 @@
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 const ImageUtil = require('../../utils/image')
 
@@ -47,35 +47,35 @@ Page({
   },
   async doneShow() {
     const _this = this
-    const userDetail = await WXAPI.userDetail(wx.getStorageSync('token'))
-    WXAPI.fxApplyProgress(wx.getStorageSync('token')).then(res => {
-      let applyStatus = userDetail.data.base.isSeller ? 2 : -1
-      if (res.code == 2000) {
-        this.setData({
-          wxlogin: false
-        })
-        return
-      }
-      if (res.code === 700) {
-        _this.setData({
-          applyStatus: applyStatus
-        })
-      }
-      if (res.code === 0) {
-        if (userDetail.data.base.isSeller) {
-          applyStatus = 2
-        } else {
-          applyStatus = res.data.status
-        }
-        _this.setData({
-          applyStatus: applyStatus,
-          applyInfo: res.data
-        })
-      }
-      if (applyStatus == 2) {
-        _this.fetchQrcode()
-      }
-    })
+    // const userDetail = await WXAPI.userDetail(wx.getStorageSync('token'))
+    // WXAPI.fxApplyProgress(wx.getStorageSync('token')).then(res => {
+    //   let applyStatus = userDetail.data.base.isSeller ? 2 : -1
+    //   if (res.code == 2000) {
+    //     this.setData({
+    //       wxlogin: false
+    //     })
+    //     return
+    //   }
+    //   if (res.code === 700) {
+    //     _this.setData({
+    //       applyStatus: applyStatus
+    //     })
+    //   }
+    //   if (res.code === 0) {
+    //     if (userDetail.data.base.isSeller) {
+    //       applyStatus = 2
+    //     } else {
+    //       applyStatus = res.data.status
+    //     }
+    //     _this.setData({
+    //       applyStatus: applyStatus,
+    //       applyInfo: res.data
+    //     })
+    //   }
+    //   if (applyStatus == 2) {
+    //     _this.fetchQrcode()
+    //   }
+    // })
     this.setData({
       currentPages: getCurrentPages()
     })
@@ -86,18 +86,18 @@ Page({
       title: '加载中',
       mask: true
     })
-    WXAPI.wxaQrcode({
-      scene: 'inviter_id=' + wx.getStorageSync('uid'),
-      page: 'pages/index/index',
-      is_hyaline: true,
-      autoColor: true,
-      expireHours: 1
-    }).then(res => {
-      wx.hideLoading()
-      if (res.code == 0) {
-        _this.showCanvas(res.data)
-      }
-    })
+    // WXAPI.wxaQrcode({
+    //   scene: 'inviter_id=' + wx.getStorageSync('uid'),
+    //   page: 'pages/index/index',
+    //   is_hyaline: true,
+    //   autoColor: true,
+    //   expireHours: 1
+    // }).then(res => {
+    //   wx.hideLoading()
+    //   if (res.code == 0) {
+    //     _this.showCanvas(res.data)
+    //   }
+    // })
   },
   showCanvas(qrcode){
     const _this = this

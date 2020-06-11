@@ -1,5 +1,5 @@
 const app = getApp()
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
@@ -72,29 +72,29 @@ Page({
       })
       return
     }
-    WXAPI.userAmount(token).then(function (res) {
-      if (res.code == 700) {
-        wx.showToast({
-          title: '当前账户存在异常',
-          icon: 'none'
-        })
-        return
-      }
-      if (res.code == 2000) {
-        this.setData({
-          wxlogin: false
-        })
-        return
-      }
-      if (res.code == 0) {
-        _this.setData({
-          balance: res.data.balance.toFixed(2),
-          freeze: res.data.freeze.toFixed(2),
-          totleConsumed: res.data.totleConsumed.toFixed(2),
-          score: res.data.score
-        });
-      }
-    })
+    // WXAPI.userAmount(token).then(function (res) {
+    //   if (res.code == 700) {
+    //     wx.showToast({
+    //       title: '当前账户存在异常',
+    //       icon: 'none'
+    //     })
+    //     return
+    //   }
+    //   if (res.code == 2000) {
+    //     this.setData({
+    //       wxlogin: false
+    //     })
+    //     return
+    //   }
+    //   if (res.code == 0) {
+    //     _this.setData({
+    //       balance: res.data.balance.toFixed(2),
+    //       freeze: res.data.freeze.toFixed(2),
+    //       totleConsumed: res.data.totleConsumed.toFixed(2),
+    //       score: res.data.score
+    //     });
+    //   }
+    // })
     this.fetchTabData(this.data.activeIndex)
   },
   fetchTabData(activeIndex){

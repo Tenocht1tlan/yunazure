@@ -1,4 +1,4 @@
-const WXAPI = require('apifm-wxapi')
+//const WXAPI = require('apifm-wxapi')
 const TOOLS = require('../../utils/tools.js')
 const AUTH = require('../../utils/auth')
 const db = wx.cloud.database();
@@ -443,33 +443,33 @@ Page({
     // that.pingtuanGoods()
     // this.wxaMpLiveRooms()    
   },
-  async miaoshaGoods(){
-    const res = await WXAPI.goods({
-      miaosha: true
-    })
-    if (res.code == 0) {
-      res.data.forEach(ele => {
-        const _now = new Date().getTime()
-        if (ele.dateStart) {
-          ele.dateStartInt = new Date(ele.dateStart).getTime() - _now
-        }
-        if (ele.dateEnd) {
-          ele.dateEndInt = new Date(ele.dateEnd).getTime() -_now
-        }
-      })
-      this.setData({
-        miaoshaGoods: res.data
-      })
-    }
-  },
-  async wxaMpLiveRooms(){
-    const res = await WXAPI.wxaMpLiveRooms()
-    if (res.code == 0 && res.data.length > 0) {
-      this.setData({
-        aliveRooms: res.data
-      })
-    }
-  },
+  // async miaoshaGoods(){
+  //   const res = await WXAPI.goods({
+  //     miaosha: true
+  //   })
+  //   if (res.code == 0) {
+  //     res.data.forEach(ele => {
+  //       const _now = new Date().getTime()
+  //       if (ele.dateStart) {
+  //         ele.dateStartInt = new Date(ele.dateStart).getTime() - _now
+  //       }
+  //       if (ele.dateEnd) {
+  //         ele.dateEndInt = new Date(ele.dateEnd).getTime() -_now
+  //       }
+  //     })
+  //     this.setData({
+  //       miaoshaGoods: res.data
+  //     })
+  //   }
+  // },
+  // async wxaMpLiveRooms(){
+  //   const res = await WXAPI.wxaMpLiveRooms()
+  //   if (res.code == 0 && res.data.length > 0) {
+  //     this.setData({
+  //       aliveRooms: res.data
+  //     })
+  //   }
+  // },
   async initBanners(){
     const _data = {}
     // 读取头部轮播图
@@ -510,31 +510,31 @@ Page({
     }
     // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge()
-    this.goodsDynamic()
-    this.miaoshaGoods()
+    // this.goodsDynamic()
+    // this.miaoshaGoods()
   },
-  async goodsDynamic(){
-    const res = await WXAPI.goodsDynamic(0)
-    if (res.code == 0) {
-      this.setData({
-        goodsDynamic: res.data
-      })
-    }
-  },
+  // async goodsDynamic(){
+  //   const res = await WXAPI.goodsDynamic(0)
+  //   if (res.code == 0) {
+  //     this.setData({
+  //       goodsDynamic: res.data
+  //     })
+  //   }
+  // },
   async categories(){
-    const res = await WXAPI.goodsCategory()
+    // const res = await WXAPI.goodsCategory()
     let categories = [];
-    if (res.code == 0) {
-      const _categories = res.data.filter(ele => {
-        return ele.level == 1
-      })
-      categories = categories.concat(_categories)
-    }
-    this.setData({
-      categories: categories,
-      activeCategoryId: 0,
-      curPage: 1
-    });
+    // if (res.code == 0) {
+    //   const _categories = res.data.filter(ele => {
+    //     return ele.level == 1
+    //   })
+    //   categories = categories.concat(_categories)
+    // }
+    // this.setData({
+    //   categories: categories,
+    //   activeCategoryId: 0,
+    //   curPage: 1
+    // });
     this.getGoodsList(0);
   },
   onPageScroll(e) {
@@ -567,7 +567,7 @@ Page({
       }else{
         wx.showModal({
           title: '提示',
-          content: '请在后台添加 banner 轮播图片，自定义类型填写 index',
+          content: 'fail',
           showCancel: false
         })
       }
@@ -604,14 +604,14 @@ Page({
     })
   },
   getCoupons: function() {
-    var that = this;
-    WXAPI.coupons().then(function (res) {
-      if (res.code == 0) {
-        that.setData({
-          coupons: res.data
-        });
-      }
-    })
+    // var that = this;
+    // WXAPI.coupons().then(function (res) {
+    //   if (res.code == 0) {
+    //     that.setData({
+    //       coupons: res.data
+    //     });
+    //   }
+    // })
   },
   onShareAppMessage: function() {    
     return {
@@ -620,14 +620,14 @@ Page({
     }
   },
   getNotice: function() {
-    var that = this;
-    WXAPI.noticeList({pageSize: 5}).then(function (res) {
-      if (res.code == 0) {
-        that.setData({
-          noticeList: res.data
-        });
-      }
-    })
+    // var that = this;
+    // WXAPI.noticeList({pageSize: 5}).then(function (res) {
+    //   if (res.code == 0) {
+    //     that.setData({
+    //       noticeList: res.data
+    //     });
+    //   }
+    // })
   },
   onReachBottom: function() {
     // this.setData({
@@ -644,29 +644,29 @@ Page({
   },
   // 获取砍价商品
   async kanjiaGoods(){
-    const res = await WXAPI.goods({
-      kanjia: true
-    });
-    if (res.code == 0) {
-      const kanjiaGoodsIds = []
-      res.data.forEach(ele => {
-        kanjiaGoodsIds.push(ele.id)
-      })
-      const goodsKanjiaSetRes = await WXAPI.kanjiaSet(kanjiaGoodsIds.join())
-      if (goodsKanjiaSetRes.code == 0) {
-        res.data.forEach(ele => {
-          const _process = goodsKanjiaSetRes.data.find(_set => {
-            return _set.goodsId == ele.id
-          })
-          if (_process) {
-            ele.process = 100 * _process.numberBuy / _process.number
-          }
-        })
-        this.setData({
-          kanjiaList: res.data
-        })
-      }
-    }
+    // const res = await WXAPI.goods({
+    //   kanjia: true
+    // });
+    // if (res.code == 0) {
+    //   const kanjiaGoodsIds = []
+    //   res.data.forEach(ele => {
+    //     kanjiaGoodsIds.push(ele.id)
+    //   })
+    //   const goodsKanjiaSetRes = await WXAPI.kanjiaSet(kanjiaGoodsIds.join())
+    //   if (goodsKanjiaSetRes.code == 0) {
+    //     res.data.forEach(ele => {
+    //       const _process = goodsKanjiaSetRes.data.find(_set => {
+    //         return _set.goodsId == ele.id
+    //       })
+    //       if (_process) {
+    //         ele.process = 100 * _process.numberBuy / _process.number
+    //       }
+    //     })
+    //     this.setData({
+    //       kanjiaList: res.data
+    //     })
+    //   }
+    // }
   },
   goCoupons: function (e) {
     wx.navigateTo({
@@ -674,16 +674,16 @@ Page({
     })
   },
   pingtuanGoods(){ // 获取团购商品列表
-    const _this = this
-    WXAPI.goods({
-      pingtuan: true
-    }).then(res => {
-      if (res.code === 0) {
-        _this.setData({
-          pingtuanList: res.data
-        })
-      }
-    })
+    // const _this = this
+    // WXAPI.goods({
+    //   pingtuan: true
+    // }).then(res => {
+    //   if (res.code === 0) {
+    //     _this.setData({
+    //       pingtuanList: res.data
+    //     })
+    //   }
+    // })
   },
   bindinput(e) {
     this.setData({

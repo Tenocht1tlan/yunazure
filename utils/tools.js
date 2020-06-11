@@ -1,4 +1,3 @@
-const WXAPI = require('apifm-wxapi')
 const db = wx.cloud.database()
 // 显示购物车tabBar的Badge
 function showTabBarBadge(){
