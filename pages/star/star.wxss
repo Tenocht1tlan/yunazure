@@ -11,9 +11,14 @@
   font-size: 24rpx;
 }
 .all{
+  width: 750rpx;
   display: flex;
   flex-direction: row;
-justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.star-box{
+  margin-left: 25rpx;
 }
 .starImag{
   width:220rpx;

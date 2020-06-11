@@ -23,7 +23,6 @@ Page({
     categories: [],
     activeCategoryId: 0,
     goods: [],
-  
     scrollTop: 0,
     hiddenNav:true,
     loadingMoreHidden: true,
@@ -135,6 +134,7 @@ Page({
     this.setData({
       imageChose:this.data.array[e.target.dataset.index].imageChose,
       currentChoseItem:e.target.dataset.index
+
     })
   },
   Boutiques:function(e){
@@ -164,6 +164,7 @@ Page({
   async  addFav(e){
     this.addFavCheck({
       goodsId : e.currentTarget.dataset.id,
+      index :e.currentTarget.dataset.index
      })
   },
   async addFavCheck(options){
@@ -183,23 +184,26 @@ Page({
               name: res.data[0].name,
               pic: '/images/my/cancel.png',
               color:'黑色',
+              index:options.index
             }]
           }
         })
         this.addFavDone(options)
       })
+    }else{
+      wx.switchTab({
+        url: '/pages/my/index',
+      })
     }
 
   },
   addFavDone:function(options){
-    wx.showLoading({
-      title: '加载中...',
-    })
+
 
       const that = this 
       let goodsId = options.goodsId
       var canFav = false
-      var existFav = false 
+      var existFav = false
       wx.cloud.callFunction({
         name:'login'
       }).then(res=>{
@@ -224,48 +228,40 @@ Page({
           }
         })
       })
+
       setTimeout(function(){
-        console.log(existFav)
-        wx.hideLoading({
-          
-          complete: (res) => {
-            if(canFav){
-              db.collection('favorite').add({
-                data: {
-                  items:that.data.addFavInfo.items
-                }
-              }).then(res=>{
-                wx.showToast({
-                  title: '加入购物车',
-                  icon: 'success'
-                })
-              }).catch(console.error)
-            }else{
-              if(existFav){
-                that.delFavDone(options.good_id)
-              }else{
-                console.log(that.data.addFavInfo.items)
-                wx.cloud.callFunction({
-                name:'addFav',
-                data:{
-                  items:that.data.addFavInfo.items
-                }
-              }).then(res=>{
-                wx.showToast({
-                  title: '加入购物车',
-                  icon: 'success'
-                })
-              }).catch(console.error)
-              }
+        if(canFav){
+          db.collection('favorite').add({
+            data: {
+              items:that.data.addFavInfo.items
             }
+          }).then(res=>{
+            wx.showToast({
+              title: '加入购物车',
+              icon: 'success'
+            })
+          }).catch(console.error)
+        }else{
+          if(existFav){
+            that.delFavDone(goodsId)
+          }else{
+            wx.cloud.callFunction({
+            name:'addFav',
+            data:{
+              items:that.data.addFavInfo.items
+            }
+          }).then(res=>{
+            wx.showToast({
+              title: '加入购物车',
+              icon: 'success'
+            })
+          }).catch(console.error)
           }
-        })
-      },1000)
+        }
+      },500)
   },
   async delFavDone(key){
-    wx.showLoading({
-      title: '加载中...',
-    })
+
     var openid = ''
     var list = []
     const that = this
@@ -274,18 +270,22 @@ Page({
     }).then(res=>{
       openid = res.result.openid
       db.collection('favorite').where({
-        _openid:res.result.openid
+        _openid:openid
       }).get().then(res=>{
         res.data[0].items.forEach(value=>{
           if(value != null && value.good_id != key){
             list.push(value)
           }
         })
+        console.log(list)
         db.collection('favorite').where({
           _openid:openid
         }).update({
           data:{
             items: list
+          },
+          fail(err){
+            console.log(err)
           },
           success(){
             //

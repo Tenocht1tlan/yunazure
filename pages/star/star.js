@@ -1,5 +1,6 @@
 // pages/register/index.js
 let app = getApp();
+const AUTH = require('../../utils/auth')
 //获取云数据库引用
 const db = wx.cloud.database();
 Page({
@@ -7,7 +8,7 @@ Page({
   data: {
     isEdit:false,
     Edit:'编辑',
-    goods:[],
+    favGoods:[],
     isChecked:false,//控制打勾的隐藏与否
     checkHidden:true,
     animationData: {},
@@ -43,7 +44,7 @@ Page({
 //  --------------------底部弹出框--------------------
   showModal() {
     var animation = wx.createAnimation({
-        duration: 500,
+        duration: 100,
         timingFunction: 'ease'
     })
     animation.translateY(500).step()
@@ -51,31 +52,52 @@ Page({
         animationData: animation.export(),
         showPop: true
     })
-    setTimeout(() => {
-        animation.translateY(0).step()
-        this.setData({
-            animationData: animation.export(),
-        })
-    }, 50)
+    animation.translateY(0).step()
+    this.setData({
+        animationData: animation.export(),
+    })
 },
 
 // 隐藏遮罩层
 hideModal() {
     var animation = wx.createAnimation({
-        duration: 500,
+        duration: 100,
         timingFunction: 'ease-in-out'
     })
     animation.translateY(500).step()
     this.setData({
-        animationData: animation.export()
+        animationData: animation.export(),
     })
-    setTimeout(() => {
-        animation.translateY(0).step()
-        this.setData({
-            animationData: animation.export(),
-            showPop: false
-        })
-    }, 500)
+    animation.translateY(0).step()
+    this.setData({
+      animationData: animation.export(),
+      showPop: false
+  })
 },
 
+async onShow() {
+  this.getFavGoodsList()
+},
+async getFavGoodsList(){
+  const isLogined = await AUTH.checkHasLogined()
+  if(isLogined){
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('favorite').where({
+          _openid:res.result.openid
+      }).get().then(res=>{
+        this.setData({
+          favGoods:res.data[0].items
+        })
+      })
+    })
+  }else{
+    wx.switchTab({
+      url: '/pages/my/index',
+    })
+  }
+
+}
 })
+
