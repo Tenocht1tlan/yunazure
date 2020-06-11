@@ -170,13 +170,12 @@ Page({
   async onShow() {
     const isLogined = await AUTH.checkHasLogined()
     if (isLogined) {
-      this.doneShow();
+      this.doneShow()
     } else {
       wx.showModal({
         title: '提示',
         content: '本次操作需要您的登录授权',
-        cancelText: '暂不登录',
-        confirmText: '前往登录',
+        confirmText: '去登录',
         success(res) {
           if (res.confirm) {
             wx.switchTab({
@@ -188,13 +187,10 @@ Page({
         }
       })
     }
-    // AUTH.checkHasLogined().then(isLogined => {
-      
-    // })
   },
   doneShow() {
     // 获取订单列表
-    var that = this;
+    var that = this
     // var postData = {
     //   token: wx.getStorageSync('token')
     // };

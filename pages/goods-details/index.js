@@ -7,8 +7,8 @@ const db = wx.cloud.database()
 Page({
   data: {
     wxlogin: false,
-
     goodsDetail: {},
+    pics:[],
     hasMoreSelect: false,
     selectSize: SelectSizePrefix,
     selectSizePrice: 0,
@@ -19,7 +19,6 @@ Page({
     buyNumber: 0,
     buyNumMin: 1,
     buyNumMax: 0,
-
     propertyChildIds: "",
     propertyChildNames: "",
     canSubmit: true, //  选中规格尺寸时候是否允许加入购物车
@@ -30,14 +29,6 @@ Page({
     goodsId:''
   },
   async onLoad(e) {
-    // if (e && e.scene) {
-    //   const scene = decodeURIComponent(e.scene) // 处理扫码进商品详情页面的逻辑
-    //   if (scene && scene.split(',').length >= 2) {
-    //     e.id = scene.split(',')[0]
-    //     wx.setStorageSync('referrer', scene.split(',')[1])
-    //   }
-    // }
-    
     this.data.kjJoinUid = e.kjJoinUid
     this.setData({
       goodsId : e.id,
@@ -162,6 +153,10 @@ Page({
           // if (goodsDetailRes.videoId) {
           //   that.getVideoSrc(goodsDetailRes.videoId)
           // }
+          that.data.pics.push(goodsDetailRes.pic)
+          that.setData({
+            pics:that.data.pics
+          })
           let _data = {
             goodsDetail: goodsDetailRes,
             selectSizePrice: goodsDetailRes.minPrice,

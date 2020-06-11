@@ -66,8 +66,8 @@ Page({
     })
   },
   handleContact (e) {
-    console.log("ppp = "+e.detail.path)
-    console.log("qqq= "+e.detail.query)
+    console.log(e.detail.path)
+    console.log(e.detail.query)
 },
   onClick:function(){
     var _this = this
@@ -166,18 +166,10 @@ Page({
     })
   },
   showImage(){
-    wx.cloud.callFunction({
-      name:'login'
-    }).then(res=>{
-      db.collection('image').where({
-        _openid:res.result.openid
-      }).get().then(res2=>{
-        this.setData({
-          image:res2.data[res2.data.length - 1].fileID
-        })
+    db.collection('image').get().then(res2=>{
+      this.setData({
+        image:res2.data[res2.data.length - 1].fileID
       })
-    }).catch(err=>{
-      console.error(err)
     })
   },
   reservationInfo:function(e){

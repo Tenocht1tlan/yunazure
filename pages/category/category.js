@@ -49,7 +49,6 @@ Page({
     let categoryId = ''
     goodsCategory.get().then(res=>{
       if(res.data[0].category){
-        console.log("1 = "+this.data.categorySelected.id)
         if (this.data.categorySelected.id) {
           const _curCategory = res.data[0].category.find(ele => {
             return ele.id == this.data.categorySelected.id

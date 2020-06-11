@@ -26,7 +26,7 @@ Page({
     scrollTop: 0,
     hiddenNav:true,
     loadingMoreHidden: true,
-    swiperHeight:575,
+    swiperHeight:750,
 
     coupons: [],
 
@@ -473,23 +473,17 @@ Page({
   async initBanners(){
     const _data = {}
     // 读取头部轮播图
-    wx.cloud.callFunction({
-      name:'login'
-    }).then(res=>{
-      db.collection('image').get().then(res=>{
-        if(res.data){
-          _data.banners = res.data
-          this.setData(_data)
-        }else{
-          wx.showModal({
-            title: '提示',
-            content: '请在后台添加 banner 轮播图片，自定义类型填写 index',
-            showCancel: false
-          })
-        }
-      })
-    }).catch(err=>{
-      console.error(err)
+    db.collection('image').get().then(res=>{
+      if(res.data){
+        _data.banners = res.data
+        this.setData(_data)
+      }else{
+        wx.showModal({
+          title: '提示',
+          content: 'error',
+          showCancel: false
+        })
+      }
     })
   },
   onShow: function(e){

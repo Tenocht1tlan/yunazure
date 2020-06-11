@@ -5,8 +5,8 @@
       <swiper-item wx:if="{{goodsDetail.videoId}}">
         <video src="{{videoMp4Src}}" autoplay="true" loop="true" style='width:100%;height:100%;'></video>
       </swiper-item>
-      <swiper-item wx:for="{{goodsDetail.pics}}" wx:key="id">
-        <image src="{{item.pic}}" class="slide-image" mode="aspectFill" lazy-load="true" />
+      <swiper-item wx:for="{{pics}}" wx:key="id">
+        <image src="{{item}}" class="slide-image" mode="scaleToFill" lazy-load="true" />
       </swiper-item>      
     </swiper>
   </view>
@@ -17,7 +17,6 @@
     <view class="goods-profile">
       <view class="p"><text>¥</text> {{selectSizePrice}}</view>
       <view wx:if="{{goodsDetail.originalPrice && goodsDetail.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;padding: 15rpx 0rpx 0rpx 15rpx;'><text>¥</text> {{selectSizeOPrice}}</view>
-      <!-- <view class="r">{{goodsDetail.numberSells}}人已买</view> -->
     </view>
     <view class="goods-info-fx">
       <view class='item'>
@@ -173,6 +172,8 @@
       </view>
     </view>
   </view>
+
+
   <view wx:if="{{shopSubdetail}}" class="shop-container">
     <image mode="aspectFill" src="{{shopSubdetail.info.pic}}"></image>
     <view class="info">
@@ -182,8 +183,7 @@
   </view>
   <view class="goods-des-info">
     <view class="label-title">商品介绍</view>
-    <view class="goods-text">
-      <parser html="{{goodsDetail.description}}" />
+    <view class="goods-text" >{{goodsDetail.description}}
     </view>
   </view>
   <view class="goods-des-info" style="margin-top:35rpx;" wx:if="{{!curGoodsKanjia && reputation}}">
