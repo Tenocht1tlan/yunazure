@@ -43,6 +43,7 @@
   margin-left: 10rpx;
   z-index: 2;
   border-radius: 50rpx 50rpx;
+  background-color: lavenderblush;
 }
 /* .movebutton{
   position: fixed;
