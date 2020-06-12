@@ -65,20 +65,14 @@ delFav(e){
   return
 },
 
- async delFavgood(key){
-   var that = this
-   var openid=''
-   var list = []
-   var goods = [] 
-   const thst = this
+  async delFavgood(key){
+    var openid = ''
+    var list = []
+    var goods = [] 
     if(key.length==0){
-      console.log('null')
+
     }else{
-      console.log('!=null')
-      wx.cloud.callFunction({
-      name:'login',
-    }).then(res=>{
-      openid = res.result.openid
+      openid = wx.getStorageSync('openid')
       db.collection('favorite').where({
         _openid:openid
       }).get().then(res=>{
@@ -97,7 +91,6 @@ delFav(e){
             console.log(err)
           },
           success(){
-     
           },
         })
         this.data.favGoods.forEach(value=>{
@@ -108,14 +101,9 @@ delFav(e){
             favGoods:goods
           })
         })
-
       })
-    })
-
-      }
-    },
-
-
+    }
+  },
 //  --------------------底部弹出框--------------------
   showModal() {
     var animation = wx.createAnimation({
