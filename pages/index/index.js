@@ -182,7 +182,7 @@ Page({
             items:[{
               good_id:options.goodsId,
               name: res.data[0].name,
-              pic: '/images/my/cancel.png',
+              pic: res.data[0].pic,
               color:'黑色',
               index:options.index,
               select:false
