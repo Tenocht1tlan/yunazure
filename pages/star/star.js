@@ -6,13 +6,10 @@ const db = wx.cloud.database();
 Page({
 
   data: {
-    currentChoseItem:0,
     isEdit:false,
     Edit:'编辑',
     favGoods:[],
-    unFav:[],
     goodId:[],
-    isChecked:false,//控制打勾的隐藏与否
     checkHidden:true,
     animationData: {},
     showPop: false,
@@ -40,7 +37,6 @@ Page({
     var index = e.currentTarget.dataset.index
     var id = e.currentTarget.dataset.id
     var select = !this.data.favGoods[index].select
-    var delgood = []
     var temp ='favGoods['+index+'].select'
     // console.log(this.data.favGoods)
     console.log(select)
@@ -60,18 +56,65 @@ Page({
       }
     }
     console.log(this.data.goodId)
-   
-    // this.setData({
-    //   isChecked:ischecked,
-    //   currentChoseItem:index,
-
-    // })
-
   },
   // 数据库favorite里面有goodid有的就删除掉
-  delFav:function(){
+delFav(e){
+  // for(var i = 0;i<this.data.goodId.length;i++){
+    this.delFavgood(this.data.goodId)
+  // }
+  return
+},
 
-  },
+ async delFavgood(key){
+   var that = this
+   var openid=''
+   var list = []
+   var goods = [] 
+   const thst = this
+    if(key.length==0){
+      console.log('null')
+    }else{
+      console.log('!=null')
+      wx.cloud.callFunction({
+      name:'login',
+    }).then(res=>{
+      openid = res.result.openid
+      db.collection('favorite').where({
+        _openid:openid
+      }).get().then(res=>{
+        res.data[0].items.forEach(value=>{
+          if(value !=null && key.indexOf(value.good_id) == -1){
+            list.push(value)
+          }
+        })
+        db.collection('favorite').where({
+          _openid:openid
+        }).update({
+          data:{
+            items:list
+          },
+          fail(err){
+            console.log(err)
+          },
+          success(){
+     
+          },
+        })
+        this.data.favGoods.forEach(value=>{
+          if(value != null && key.indexOf(value.good_id) == -1){
+            goods.push(value)
+          }
+          this.setData({
+            favGoods:goods
+          })
+        })
+
+      })
+    })
+
+      }
+    },
+
 
 //  --------------------底部弹出框--------------------
   showModal() {
