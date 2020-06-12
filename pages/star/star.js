@@ -6,9 +6,12 @@ const db = wx.cloud.database();
 Page({
 
   data: {
+    currentChoseItem:0,
     isEdit:false,
     Edit:'编辑',
     favGoods:[],
+    unFav:[],
+    goodId:[],
     isChecked:false,//控制打勾的隐藏与否
     checkHidden:true,
     animationData: {},
@@ -33,13 +36,42 @@ Page({
       })
      },
 
-  check:function(){
-    var ischecked = !this.data.isChecked
+  check:function(e){
+    var index = e.currentTarget.dataset.index
+    var id = e.currentTarget.dataset.id
+    var select = !this.data.favGoods[index].select
+    var delgood = []
+    var temp ='favGoods['+index+'].select'
+    // console.log(this.data.favGoods)
+    console.log(select)
     this.setData({
-      isChecked:ischecked
+      [temp]:select
     })
-  },
+    if(select){
+      this.data.goodId.push(id)
+      this.setData({
+        goodId:this.data.goodId
+      })
+    }else{
+      for(let i=0;i<this.data.goodId.length;i++){
+        if(this.data.goodId[i] == id){
+          this.data.goodId.splice(i,i+1)
+        }
+      }
+    }
+    console.log(this.data.goodId)
+   
+    // this.setData({
+    //   isChecked:ischecked,
+    //   currentChoseItem:index,
 
+    // })
+
+  },
+  // 数据库favorite里面有goodid有的就删除掉
+  delFav:function(){
+
+  },
 
 //  --------------------底部弹出框--------------------
   showModal() {

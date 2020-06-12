@@ -184,7 +184,8 @@ Page({
               name: res.data[0].name,
               pic: '/images/my/cancel.png',
               color:'黑色',
-              index:options.index
+              index:options.index,
+              select:false
             }]
           }
         })
