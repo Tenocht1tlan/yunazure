@@ -38,30 +38,39 @@ Page({
     var id = e.currentTarget.dataset.id
     var select = !this.data.favGoods[index].select
     var temp ='favGoods['+index+'].select'
+    var hidden = this.data.isEdit
     // console.log(this.data.favGoods)
     console.log(select)
-    this.setData({
-      [temp]:select
-    })
-    if(select){
-      this.data.goodId.push(id)
+    if(hidden){
       this.setData({
-        goodId:this.data.goodId
+        [temp]:select
       })
-    }else{
-      for(let i=0;i<this.data.goodId.length;i++){
-        if(this.data.goodId[i] == id){
-          this.data.goodId.splice(i,i+1)
+      if(select){
+        this.data.goodId.push(id)
+        this.setData({
+          goodId:this.data.goodId
+        })
+      }else{
+        for(let i=0;i<this.data.goodId.length;i++){
+          if(this.data.goodId[i] == id){
+            this.data.goodId.splice(i,i+1)
+          }
         }
       }
+      console.log(this.data.goodId)
+  
+    }else{
+      wx.navigateTo({
+        url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+      })
     }
-    console.log(this.data.goodId)
   },
   // 数据库favorite里面有goodid有的就删除掉
 delFav(e){
   // for(var i = 0;i<this.data.goodId.length;i++){
     this.delFavgood(this.data.goodId)
   // }
+
   return
 },
 
@@ -98,7 +107,7 @@ delFav(e){
             goods.push(value)
           }
           this.setData({
-            favGoods:goods
+            favGoods:goods,
           })
         })
       })

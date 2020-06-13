@@ -140,6 +140,13 @@
 					"id": -1,
 					"name": "pages/address-add/index",
 					"pathName": "pages/address-add/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/goods-details/index",
+					"pathName": "pages/goods-details/index",
 					"scene": null
 				}
 			]
