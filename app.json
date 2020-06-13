@@ -37,7 +37,13 @@
     "pages/invoice/apply",
     "pages/deposit/pay",
     "pages/register/index",
-    "pages/star/star"
+    "pages/star/star",
+    "pages/DIY/index",
+    "pages/Ad/index",
+    "pages/Special/index",
+    "pages/Activity/index",
+    "pages/New/index",
+    "pages/Comp/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -95,6 +101,5 @@
   "usingComponents": {
     "float-menu": "/components/float-menu/index"
   },
- 
   "sitemapLocation": "sitemap.json"
 }

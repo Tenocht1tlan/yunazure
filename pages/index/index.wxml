@@ -1,15 +1,21 @@
 <view wx:if="{{hiddenNav}}" class="home-page" >
 		<view class="search">
-    <image src='/images/search.png'  bindtap="goSearch"></image>
-    <input type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:white"></input>
+      <view class="DiyText" bindtap="toDiy">我要定制</view>
+      <image src='/images/search.png'  bindtap="goSearch"></image>
+    <!-- <input type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:white"></input> -->
+    <view class="searchText" bindtap="goSearch" >搜索</view>
   </view>
 </view>
 
   <view wx:else class="home-page" style="height:{{navHeight}}rpx" >
 		<view class="search">
-    <input class="input" type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:gray" ></input>
-    <image  class="image" src='/images/search2.png' bindtap="goSearch" ></image>
-    <image class="logo" src="/images/my/logo.jpg" mode="aspectFit"></image>
+      <view class="DiyText">我要定制</view>
+      <image src='/images/search.png'  bindtap="goSearch"></image>
+    <!-- <input class="input" type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:gray" ></input> -->
+    <!-- <image  class="image" src='/images/search2.png' bindtap="goSearch" ></image> -->
+        <view class="searchText" bindtap="goSearch" >搜索</view>
+    <!-- <image class="logo" src="/images/my/logo.jpg"   style="height:{{navHeight}}rpx" mode="aspectFit"></image> -->
+    <view class="logo">Yunazure</view>
    </view>
 	</view>
 <navigator url="/pages/shop/select">
@@ -18,13 +24,12 @@
       <image src="/images/order-details/icon-address.png"></image>
       <text>{{shopInfo.name}}</text>
     </view>
-
   </view>
 </navigator>
 <view class="swiper-container" style="height:{{swiperHeight}}rpx;">
   <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;">
     <swiper-item wx:for="{{banners}}" wx:key="id" >
-      <image  mode="aspectFill" bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"  />
+      <image  bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"  />
     </swiper-item>
   </swiper>
 
@@ -52,10 +57,9 @@
 
 </view>
 <!-- 选择操作 -->
-<view class='space'></view>  
 
 <!-- 热卖商品 -->
-<view class="selling-goods">
+<!-- <view class="selling-goods">
     <view class="remai">热卖商品</view>
     <scroll-view class="selling-goods-chose" scroll-x="true">
       <view bindtap="activeItem"  data-index="{{index}}" class="chose-item {{index===currentChoseItem?'active':''}}" wx:for="{{array}}" wx:key="index" hover-class="none">{{item.text}}</view>
@@ -76,13 +80,12 @@
       <view style="color:gray;margin:0rpx 45rpx 20rpx 25rpx">￥299.00  </view>
     </view>
   </scroll-view>
-</view>
+</view> -->
 <!-- 遮盖层 -->
 <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}" catchtouchmove = "doNotMove">
   <view class="modal-cancel" bindtap="hideModal"></view>
-  <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
-      <!--  -->
-    <view class='Mselect'>
+  <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}"> 
+        <view class='Mselect'>
         <image src="{{upImage}}" ></image>
         <view>------选择尺码------</view>
         <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption' hover-class="hovSelect"	>
@@ -91,9 +94,9 @@
     </view>
     </view>
   </view>
-<!-- 精品   四个图标-->
+
 <!-- 6.1 -->
-<view style="margin-left:50rpx;margin-top:25rpx;">精品</view>
+<!-- <view style="margin-left:50rpx;margin-top:25rpx;">精品</view>
 <view class="upBoutiques">
     <view class="Boutiques" wx:for="{{Boutique}}" data-index="{{index}}" bindtap="Boutiques" wx:key="index">
         <image class="Boutiques-imag" src="{{item.src}}" > </image>
@@ -116,17 +119,27 @@
       <view style="color:gray ; width:250rpx ; margin:0rpx 45rpx 0rpx 25rpx">菠萝印花短裤 </view>
       <view style="color:gray;margin:0rpx 45rpx 20rpx 25rpx">￥299.00  </view>
   </view>
-</view>
+</view> -->
 <!-- <view class="forMore" hover-class="hovSelect">查看更多>></view> -->
-<view class="forMore" >
+<!-- <view class="forMore" >
   <navigator class="more"   url="/pages/category/category" open-type="switchTab" hover-class="hovSelect" >查看更多>>
   </navigator>
-</view>
+</view> -->
 
 <!-- 6.1 -->
+<!-- 定制 -->
+<view class="spe-box">
+    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toDiy" ></image>
+    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toAd" ></image>
+    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toSpecial" ></image>
+    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toActivity" ></image>
+    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toNew" ></image>
+    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toComp" ></image>
+</view>
 
+
+<!-- 广告 -->           
 <view>
-  <view class='space'></view>
   <view class="weui-loadmore weui-loadmore_line">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
   </view>

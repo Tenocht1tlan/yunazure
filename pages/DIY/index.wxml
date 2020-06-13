@@ -1,0 +1,8 @@
+<!--pages/DIY/index.wxml-->
+<!-- 图片展示框 -->
+<view>
+<image></image>
+</view>
+<view>
+</view>
+<!-- 选择选项-->
