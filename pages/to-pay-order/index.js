@@ -11,6 +11,7 @@ Page({
     goodsList: [],
     isNeedLogistics: 0, // 是否需要物流信息
     allGoodsPrice: 0,
+    goodsNum: 0,
     yunPrice: 0,
     allGoodsAndYunPrice: 0,
     goodsJsonStr: "",
@@ -47,25 +48,21 @@ Page({
       }
     } else {
       //购物车下单
-      wx.cloud.callFunction({
-        name:'login'
-      }).then(res=>{
-        db.collection('shopping-cart').where({
-          _openid:res.result.openid
-        }).get().then(res=>{
-          if(res.data[0].items.length > 0){
-            shopList = res.data[0].items
-            this.setData({
-              goodsList: shopList,
-              peisongType: this.data.peisongType
-            })
-            this.initShippingAddress()
-          }
-          // res.data[0].items.forEach(value=>{
-          //   if(value != null){
-          //   }
-          // })
-        })
+      db.collection('shopping-cart').where({
+        _openid: openid
+      }).get().then(res=>{
+        if(res.data[0].items.length > 0){
+          shopList = res.data[0].items
+          this.setData({
+            goodsList: shopList,
+            peisongType: this.data.peisongType
+          })
+          this.initShippingAddress()
+        }
+        // res.data[0].items.forEach(value=>{
+        //   if(value != null){
+        //   }
+        // })
       })
     }
   },
@@ -114,7 +111,10 @@ Page({
         console.log("云函数payment提交失败：", res)
         wx.redirectTo({
           url: "/pages/order-list/index"
-        });
+        })
+      },
+      complete(){
+       
       }
     })
   },
@@ -138,6 +138,9 @@ Page({
       },
       fail(res) {
         console.log("支付失败：", res)
+        wx.redirectTo({
+          url: "/pages/order-list/index"
+        })
       },
       complete(res) {
         console.log("支付完成：", res)
@@ -188,9 +191,9 @@ Page({
   },
   createOrder: function (e) {
     var that = this
-    var openid = wx.getStorageSync('openid') // 用户 openid
+    var openid = wx.getStorageSync('openid')
     var remark = this.data.remark // 备注信息
-
+    
     let postData = {
       orderid: 'Yunazure-' + new Date().getTime(),
       goodsJsonStr: that.data.goodsJsonStr,
@@ -244,41 +247,44 @@ Page({
       return
     }
     if(e){
-      db.collection('orderlist').add({
-        data:{
-          postData: postData
-        },
-        success(res){
-          if (e && "buyNow" != that.data.orderType) {
-            // 清空购物车数据
-            // WXAPI.shippingCarInfoRemoveAll(openid)
-          }
-          that.processAfterCreateOrder(postData)
-        },
-        fail(err){
-          wx.showModal({
-            title: '错误',
-            content: err.errMsg,
-            showCancel: false
-          })
-          return
-        },
-        complete: console.log
+      postData.price = that.data.allGoodsAndYunPrice
+      postData.goodsNum = that.data.goodsNum
+      var orderNum = 0
+      db.collection('orderlist').where({
+        _openid: openid
+      }).count().then(res => {
+        if(res.total){
+          orderNum = res.total
+        }else{
+          orderNum = 0
+        }
+        orderNum += 1
+        postData.orderNum = orderNum
+        db.collection('orderlist').add({
+          data:{
+            postData: postData
+          },
+          success(res){
+            if (e && "buyNow" != that.data.orderType) {
+              // 清空购物车数据
+              // WXAPI.shippingCarInfoRemoveAll(openid)
+            }
+            that.processAfterCreateOrder(postData)
+          },
+          fail(err){
+            wx.showModal({
+              title: '错误',
+              content: err.errMsg,
+              showCancel: false
+            })
+            return
+          },
+          complete: console.log
+        })
       })
     }
   },
   async processAfterCreateOrder(res) {
-    // const res1 = await WXAPI.userAmount(wx.getStorageSync('openid'))
-    // if (res1.code != 0) {
-    //   wx.showToast({
-    //     title: '无法获取用户资金信息',
-    //     icon: 'none'
-    //   })
-    //   wx.redirectTo({
-    //     url: "/pages/order-list/index"
-    //   });
-    //   return
-    // }
     this.confirmOrder(res)
   },
   async initShippingAddress() {
@@ -322,23 +328,25 @@ Page({
     if (goodsList.length == 0) {
       return
     }
-    var goodsJsonStr = "[";
-    // var isNeedLogistics = 0;
-    var allGoodsPrice = 0;
+    var goodsJsonStr = "["
+    // var isNeedLogistics = 0
+    var allGoodsPrice = 0
+    var goodsNum = 0
     // let inviter_id = 0;
     // let inviter_id_storge = wx.getStorageSync('referrer');
     // if (inviter_id_storge) {
       // inviter_id = inviter_id_storge;
     // }
     for (let i = 0; i < goodsList.length; i++) {
-      let carShopBean = goodsList[i];
+      let carShopBean = goodsList[i]
       // if (carShopBean.logistics || carShopBean.logisticsId) {
       //   isNeedLogistics = 1;
       // }
       allGoodsPrice += parseInt(carShopBean.price) * carShopBean.number;
+      goodsNum += carShopBean.number
       var goodsJsonStrTmp = '';
       if (i > 0) {
-        goodsJsonStrTmp = ",";
+        goodsJsonStrTmp = ","; 
       }
       if (carShopBean.sku && carShopBean.sku.length > 0) {
         let propertyChildIds = ''
@@ -347,14 +355,15 @@ Page({
         })
         carShopBean.propertyChildIds = propertyChildIds
       }
-      goodsJsonStrTmp += '{"goodsId":' + carShopBean.good_id + ',"number":' + carShopBean.number + ',"propertyChildIds":"' + carShopBean.propertyChildIds + '}';
+      goodsJsonStrTmp += '{"goodsId":"' + carShopBean.good_id + '","pic":"' + carShopBean.pic + '"}'
       goodsJsonStr += goodsJsonStrTmp;
     }
     goodsJsonStr += "]";
     this.setData({
       isNeedLogistics: 1,
       goodsJsonStr: goodsJsonStr,
-      allGoodsPrice: allGoodsPrice
+      allGoodsPrice: allGoodsPrice,
+      goodsNum: goodsNum
     });
     this.createOrder(false)
   },

@@ -19,7 +19,6 @@ Page({
       items:[]
     }
   },
-
   //获取元素自适应后的实际宽度
   getEleWidth: function(w) {
     var real = 0;

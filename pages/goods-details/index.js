@@ -445,16 +445,14 @@ Page({
     that.setData({
       shippingCarInfo:{
         items:[{
-          good_id:goodsId,
+          good_id: goodsId,
           name: name,
           price: price,
-          originalPrice:originalPrice,
+          originalPrice: originalPrice,
           number: number,
-          active: false,
-          pic: '/images/my/cancel.png',
-          color:'黑色',
+          pic: that.data.goodsDetail.pic,
+          color: that.data.goodsDetail.color,
           size:'L',
-          left:''
         }]
       }
     })
@@ -502,7 +500,7 @@ Page({
           }
         },
       })
-    }, 1000)
+    }, 500)
     this.closePopupTap()
     this.shippingCartInfo()
   },

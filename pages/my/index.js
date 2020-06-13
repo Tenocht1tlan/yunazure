@@ -34,16 +34,6 @@ Page({
         avatarUrl:avatarUrl
       })
     }
-    // AUTH.checkHasLogined().then(isLogined => {
-    //   this.setData({
-    //     wxlogin: isLogined
-    //   })
-    //   if (isLogined) {        
-    //     _this.getUserApiInfo();
-    //     _this.getUserAmount();
-    //   }
-    // })
-    // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge();
   },
   loginOut(){
@@ -62,9 +52,14 @@ Page({
       url: "/pages/star/star"
     })
   },
-  goOrder: function (e) {
+  toMyAddr: function () {
     wx.navigateTo({
-      url: "/pages/order-list/index?type=" + e.currentTarget.dataset.type
+      url: "/pages/select-address/index"
+    })
+  },
+  toMyOrder: function () {
+    wx.navigateTo({
+      url: "/pages/order-list/index"
     })
   },
   goRegister: function (e) {

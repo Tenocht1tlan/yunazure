@@ -1,8 +1,7 @@
 const wxpay = require('../../utils/pay.js')
 const app = getApp()
-//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
-
+const db = wx.cloud.database()
 Page({
   data: {
     statusType: [
@@ -151,21 +150,6 @@ Page({
   },
   onReady: function() {
     // 生命周期函数--监听页面初次渲染完成
-
-  },
-  getOrderStatistics() {
-    WXAPI.orderStatistics(wx.getStorageSync('token')).then(res => {
-      if (res.code == 0) {
-        const badges = this.data.badges;
-        badges[1] = res.data.count_id_no_pay
-        badges[2] = res.data.count_id_no_transfer
-        badges[3] = res.data.count_id_no_confirm
-        badges[4] = res.data.count_id_no_reputation
-        this.setData({
-          badges
-        })
-      }
-    })
   },
   async onShow() {
     const isLogined = await AUTH.checkHasLogined()
@@ -191,32 +175,53 @@ Page({
   doneShow() {
     // 获取订单列表
     var that = this
-    // var postData = {
-    //   token: wx.getStorageSync('token')
-    // };
-    // postData.hasRefund = that.data.hasRefund;
-    // if (!postData.hasRefund) {
-    //   postData.status = that.data.status;
-    // }
-    // if (postData.status == 9999) {
-    //   postData.status = ''
-    // }
-    // this.getOrderStatistics();
-    // WXAPI.orderList(postData).then(function(res) {
-    //   if (res.code == 0) {
-    //     that.setData({
-    //       orderList: res.data.orderList,
-    //       logisticsMap: res.data.logisticsMap,
-    //       goodsMap: res.data.goodsMap
-    //     });
-    //   } else {
-    //     that.setData({
-    //       orderList: null,
-    //       logisticsMap: {},
-    //       goodsMap: {}
-    //     });
-    //   }
-    // })
+    var openid = wx.getStorageSync('openid')
+    var postData = {
+      openid: openid
+    };
+    postData.hasRefund = this.data.hasRefund
+    if (!postData.hasRefund) {
+      postData.status = this.data.status
+    }
+    if (postData.status == 9999) {
+      postData.status = ''
+    }
+    // this.getOrderStatistics(openid)
+    db.collection("orderlist").where({
+      _openid: openid //key: postData
+    }).get().then(res=>{
+      if(res.data.length > 0){
+        var list = []
+        var goodsMap = []
+        for(let i=0;i<res.data.length;i++){
+          list.push(res.data[i].postData)
+          goodsMap.push(JSON.parse(res.data[i].postData.goodsJsonStr))
+        }
+        that.setData({
+          orderList: list,
+          goodsMap: goodsMap
+        })
+      }else{
+        that.setData({
+          orderList: null,
+          goodsMap: {}
+        })
+      }
+    })
+  },
+  getOrderStatistics(key) {
+    db.collection("orderlist").where({
+      _openid: key
+    }).get().then(res=>{
+        const badges = this.data.badges
+        badges[1] = res.data.count_id_no_pay
+        badges[2] = res.data.count_id_no_transfer
+        badges[3] = res.data.count_id_no_confirm
+        badges[4] = res.data.count_id_no_reputation
+        this.setData({
+          badges
+        })
+    })
   },
   onHide: function() {
     // 生命周期函数--监听页面隐藏

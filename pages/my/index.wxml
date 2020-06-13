@@ -10,35 +10,36 @@
     <button class="we" plain="true" size="mini" open-type="getUserInfo" bindgetuserinfo="goLogin">点击登录</button>
 	</view>
   <view class="space"></view>
-  <view class="list-box">
-  <image class="list-image" src="/images/my/address.png" mode="aspectFit" ></image>
-  <text class="list-text">我的地址簿</text>
-  <image class="list-in" src="/images/my/in.png" ></image>
+
+  <view class="list-box" bindtap="toMyAddr">
+    <image class="list-image" src="/images/my/address.png" mode="aspectFit" ></image>
+    <text class="list-text">我的地址簿</text>
+    <image class="list-in" src="/images/my/in.png" ></image>
   </view>
-  <view class="list-box">
-  <image class="list-image" src="/images/my/myorder.png" mode="aspectFit"></image>
-  <text class="list-text">我的订单</text>
-  <image class="list-in" src="/images/my/in.png" ></image>
+  <view class="list-box" bindtap="toMyOrder">
+    <image class="list-image" src="/images/my/myorder.png" mode="aspectFit"></image>
+    <text class="list-text">我的订单</text>
+    <image class="list-in" src="/images/my/in.png" ></image>
   </view>
   <view class="list-box" bindtap="toMyfav">
-  <image class="list-image" src="/images/my/star.png" mode="aspectFit"></image>
-  <text class="list-text">我的心愿单</text>
-  <image class="list-in" src="/images/my/in.png" ></image>
+    <image class="list-image" src="/images/my/star.png" mode="aspectFit"></image>
+    <text class="list-text">我的心愿单</text>
+    <image class="list-in" src="/images/my/in.png" ></image>
   </view>
   <view class="list-box">
-  <image class="list-image" src="/images/my/history.png" mode="aspectFit"></image>
-  <text class="list-text">浏览历史</text>
-  <image class="list-in" src="/images/my/in.png" ></image>
+    <image class="list-image" src="/images/my/history.png" mode="aspectFit"></image>
+    <text class="list-text">浏览历史</text>
+    <image class="list-in" src="/images/my/in.png" ></image>
   </view>
   <view class="list-box">
-  <image class="list-image" src="/images/my/kefu.png" mode="aspectFit"></image>
-  <text class="list-text">客服与售后</text>
-  <image class="list-in" src="/images/my/in.png" ></image>
+    <image class="list-image" src="/images/my/kefu.png" mode="aspectFit"></image>
+    <text class="list-text">客服与售后</text>
+    <image class="list-in" src="/images/my/in.png" ></image>
   </view>
   <view class="list-box">
-  <image class="list-image" src="/images/my/fadeback.png" mode="aspectFit"></image>
-  <text class="list-text">意见与反馈</text>
-  <image class="list-in" src="/images/my/in.png" ></image>
+    <image class="list-image" src="/images/my/fadeback.png" mode="aspectFit"></image>
+    <text class="list-text">意见与反馈</text>
+    <image class="list-in" src="/images/my/in.png" ></image>
   </view>
   <view class="space"></view>
   <view class="space"></view>

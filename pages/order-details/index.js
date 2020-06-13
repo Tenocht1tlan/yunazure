@@ -1,7 +1,7 @@
 const app = getApp();
 const CONFIG = require('../../config.js')
-//const WXAPI = require('apifm-wxapi')
 // import wxbarcode from 'wxbarcode'
+const db = wx.cloud.database()
 
 Page({
     data:{
@@ -9,34 +9,32 @@ Page({
       goodsList:[]
     },
     onLoad:function(e){
-      // e.id = 478785
       const accountInfo = wx.getAccountInfoSync()
-      var orderId = e.id;
-      this.data.orderId = orderId;
+      var orderId = e.id
       this.setData({
         orderId: orderId,
         appid: accountInfo.miniProgram.appId
       });
     },
     onShow : function () {
-      var that = this;
-      WXAPI.orderDetail(wx.getStorageSync('token'), that.data.orderId).then(function (res) {
-        if (res.code != 0) {
-          wx.showModal({
-            title: '错误',
-            content: res.msg,
-            showCancel: false
-          })
-          return;
-        }
+      var that = this
+      db.collection("orderlist").where({
+        "postData.orderid": that.data.orderId
+      }).get().then(res=>{
+        var goodsList = JSON.parse(res.data[0].postData.goodsJsonStr)
+        // for(let i=0;i<res.data.length;i++){
+        //   goodsList.push(JSON.parse(res.data[i].postData.goodsJsonStr))
+        // }
+        console.log(goodsList)
+        that.setData({
+          orderDetail: res.data,
+          goodsList: goodsList
+        })
+      })
         // 绘制核销码
         // if (res.data.orderInfo.hxNumber && res.data.orderInfo.status > 0) {
-        //   wxbarcode.qrcode('qrcode', res.data.orderInfo.hxNumber, 650, 650);
-        // }        
-        that.setData({
-          orderDetail: res.data
-        });
-      })
+        //   wxbarcode.qrcode('qrcode', res.data.orderInfo.hxNumber, 650, 650)
+        // }
     },
     wuliuDetailsTap:function(e){
       var orderId = e.currentTarget.dataset.id;

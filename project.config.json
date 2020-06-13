@@ -147,6 +147,14 @@
 					"id": -1,
 					"name": "pages/goods-details/index",
 					"pathName": "pages/goods-details/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/to-pay-order/index",
+					"pathName": "pages/to-pay-order/index",
+					"query": "",
 					"scene": null
 				}
 			]
