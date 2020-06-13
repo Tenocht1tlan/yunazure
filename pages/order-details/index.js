@@ -22,12 +22,8 @@ Page({
         "postData.orderid": that.data.orderId
       }).get().then(res=>{
         var goodsList = JSON.parse(res.data[0].postData.goodsJsonStr)
-        // for(let i=0;i<res.data.length;i++){
-        //   goodsList.push(JSON.parse(res.data[i].postData.goodsJsonStr))
-        // }
-        console.log(goodsList)
         that.setData({
-          orderDetail: res.data,
+          orderDetail: res.data[0].postData,
           goodsList: goodsList
         })
       })
@@ -37,14 +33,14 @@ Page({
         // }
     },
     wuliuDetailsTap:function(e){
-      var orderId = e.currentTarget.dataset.id;
+      var orderId = e.currentTarget.dataset.id
       wx.navigateTo({
         url: "/pages/wuliu/index?id=" + orderId
       })
     },
     confirmBtnTap:function(e){
-      let that = this;
-      let orderId = this.data.orderId;
+      let that = this
+      let orderId = this.data.orderId
       wx.showModal({
           title: '确认您已收到商品？',
           content: '',

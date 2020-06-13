@@ -624,19 +624,17 @@ Page({
   },
   onShareAppMessage() {
     let _data = {
-      title: this.data.goodsDetail.basicInfo.name,
-      path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid'),
+      title: this.data.goodsDetail.name,
+      path: '/pages/goods-details/index?id=' + this.data.goodsDetail.good_id + '&inviter_id=' + wx.getStorageSync('uid'),
       success: function(res) {
-        // 转发成功
       },
       fail: function(res) {
-        // 转发失败
       }
     }
-    if (this.data.kjJoinUid) {
-      _data.title = this.data.curKanjiaprogress.joiner.nick + '邀请您帮TA砍价'
-      _data.path += '&kjJoinUid=' + this.data.kjJoinUid
-    }
+    // if (this.data.kjJoinUid) {
+    //   _data.title = this.data.curKanjiaprogress.joiner.nick + '邀请您帮TA砍价'
+    //   _data.path += '&kjJoinUid=' + this.data.kjJoinUid
+    // }
     return _data
   },
   reputation: function(goodsId) {

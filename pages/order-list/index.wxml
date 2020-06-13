@@ -10,30 +10,30 @@
     <view class="text">暂无订单</view>
   </view>
   <view class="order-list" hidden="{{orderList ? false : true}}">
-    <view class="a-order" wx:for="{{orderList}}" wx:key="index">
-      <navigator url="/pages/order-details/index?id={{item.orderid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-        <view class="weui-cell__bd">{{item.orderid}}</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access">{{item.status}}</view>
+    <view class="a-order" wx:for="{{orderList}}" wx:key="index" wx:for-item="order">
+      <navigator url="/pages/order-details/index?id={{order.orderid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">{{order.orderid}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">{{order.statusType}}</view>
       </navigator>
       <scroll-view class="goods-img-container" scroll-x="true">
-        <view class="img-box" wx:for="{{goodsMap[item.orderNum - 1]}}" wx:key="index">
+        <view class="img-box" wx:for="{{order.goodsJsonStr}}" wx:key="index">
           <navigator url="/pages/goods-details/index?id={{item.goodsId}}"><image src="{{item.pic}}" class="goods-img"></image></navigator>
         </view>
       </scroll-view>
       <view class="goods-price">
-        共 {{item.goodsNum}} 件商品 合计：
-        <text class="p" >¥ {{item.price}}</text>
+        共 {{order.goodsNum}} 件商品 合计：
+        <text class="p" >¥ {{order.totalAmount}}</text>
       </view>
       <view class="goods-info">
         <view class="goods-des">
-          <view class="remark" wx:if="{{item.remark && item.remark != ''}}">{{item.remark}}</view>
-          <view>{{item.dateAdd}} </view>
+          <view class="remark" wx:if="{{order.remark && order.remark != ''}}">{{order.remark}}</view>
+          <view>{{order.dateAdd}} </view>
         </view>
       </view>
       <view class="price-box">
-        <view class="btn" hidden="{{item.status==0? false : true}}" bindtap="cancelOrderTap" data-id="{{item.id}}">取消订单</view>
-        <view class="btn active" hidden="{{item.status==0? false : true}}" bindtap="toPayTap" data-id="{{item.id}}" data-money="{{item.amountReal}}" data-score="{{item.score}}">马上付款</view>
-        <view class="btn active" hidden="{{(item.status==0 || item.status==-1) ? true : false}}" bindtap="refundApply" data-id="{{item.id}}" data-amount='{{item.amountReal}}'>退换货</view>
+        <view class="btn" hidden="{{order.status==0? false : true}}" bindtap="cancelOrderTap" data-id="{{order.orderid}}">取消订单</view>
+        <view class="btn active" hidden="{{order.status==0? false : true}}" bindtap="toPayTap" data-id="{{order.orderid}}" data-money="{{order.totalAmount}}">马上付款</view>
+        <view class="btn active" hidden="{{(order.status==0 || order.status==-1) ? true : false}}" bindtap="refundApply" data-id="{{order.orderid}}" data-amount='{{order.totalAmount}}'>退换货</view>
       </view>
     </view>
   </view>

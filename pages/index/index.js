@@ -23,6 +23,7 @@ Page({
     categories: [],
     activeCategoryId: 0,
     goods: [],
+    favStr: [],
     scrollTop: 0,
     hiddenNav:true,
     loadingMoreHidden: true,
@@ -186,7 +187,7 @@ Page({
               name: res.data[0].name,
               pic: res.data[0].pic,
               color:'黑色',
-              index:options.index,
+              id:options.index,
               select:false
             }]
           }
@@ -237,22 +238,34 @@ Page({
                 title: '加入心愿单',
                 icon: 'success'
               })
+              that.data.favStr[options.index] = 1
+              that.setData({
+                favStr: that.data.favStr
+              })
             }).catch(console.error)
           }else{
             if(existFav){
               that.delFavDone(goodsId)
+              that.data.favStr[options.index] = 0
+              that.setData({
+                favStr: that.data.favStr
+              })
             }else{
               wx.cloud.callFunction({
               name:'addFav',
               data:{
                 items:that.data.addFavInfo.items
               }
-            }).then(res=>{
-              wx.showToast({
-                title: '加入心愿单',
-                icon: 'success'
-              })
-            }).catch(console.error)
+              }).then(res=>{
+                wx.showToast({
+                  title: '加入心愿单',
+                  icon: 'success'
+                })
+                that.data.favStr[options.index] = 1
+                that.setData({
+                  favStr: that.data.favStr
+                })
+              }).catch(console.error)
             }
           }
         })
@@ -276,7 +289,6 @@ Page({
             list.push(value)
           }
         })
-        console.log(list)
         db.collection('favorite').where({
           _openid:openid
         }).update({
@@ -517,20 +529,38 @@ Page({
   },
   onShow: function(e){
     if(APP.globalData.isIos){
-    this.setData({
-      navHeight:APP.globalData.navHeight*2,
-      // hiddenNav:false,
-      imageChose:this.data.array[0].imageChose,
-      shopInfo: wx.getStorageSync('shopInfo')
-    })
+      this.setData({
+        navHeight:APP.globalData.navHeight*2,
+        imageChose:this.data.array[0].imageChose,
+        shopInfo: wx.getStorageSync('shopInfo')
+      })
     }else{
       this.setData({
         navHeight:APP.globalData.navHeight*2+16,
-        // hiddenNav:false,
         imageChose:this.data.array[0].imageChose,
         shopInfo: wx.getStorageSync('shopInfo')
       })
     }
+    var tmp = []
+    db.collection('goods').count().then(res=>{
+      for(let i=0;i<res.total;i++){
+        tmp.push(0)
+      }
+      console.log("t1 = "+tmp)
+      db.collection('favorite').get().then(res=>{
+        if(res.data[0].items.length > 0){
+          res.data[0].items.forEach(res=>{
+            if(res != null){
+              tmp[res.id] = 1
+            }
+          })
+          console.log("t2 = "+tmp)
+        }
+        this.setData({
+          favStr: tmp
+        })
+      })
+    })
     // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge()
     // this.goodsDynamic()
@@ -582,6 +612,25 @@ Page({
     wx.showLoading({
       "mask": true
     })
+    // var tmp = []
+    // db.collection('goods').count().then(res=>{
+    //   for(let i=0;i<res.total;i++){
+    //     tmp.push(0)
+    //   }
+    //   db.collection('favorite').get().then(res=>{
+    //     if(res.data[0].items.length > 0){
+    //       res.data[0].items.forEach(res=>{
+    //         if(res != null){
+    //           tmp[res.id] = 1
+    //         }
+    //       })
+    //     }
+    //     this.setData({
+    //       favStr: tmp
+    //     })
+    //   })
+    // })
+
     db.collection('goods').get().then(res=>{
       if(res.data){
         this.setData({

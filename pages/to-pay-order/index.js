@@ -1,5 +1,4 @@
 const app = getApp()
-//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
 const wxpay = require('../../utils/pay.js')
 const db = wx.cloud.database()
@@ -110,7 +109,7 @@ Page({
       fail(res) {
         console.log("云函数payment提交失败：", res)
         wx.redirectTo({
-          url: "/pages/order-list/index"
+          url: "/pages/order-list/index?type=0"
         })
       },
       complete(){
@@ -139,7 +138,7 @@ Page({
       fail(res) {
         console.log("支付失败：", res)
         wx.redirectTo({
-          url: "/pages/order-list/index"
+          url: "/pages/order-list/index?type=0"
         })
       },
       complete(res) {
@@ -247,40 +246,31 @@ Page({
       return
     }
     if(e){
-      postData.price = that.data.allGoodsAndYunPrice
+      postData.status = 0
+      postData.amountLogistics = that.data.yunPrice
+      postData.totalAmount = that.data.allGoodsAndYunPrice
+      postData.amount = that.data.allGoodsPrice
       postData.goodsNum = that.data.goodsNum
-      var orderNum = 0
-      db.collection('orderlist').where({
-        _openid: openid
-      }).count().then(res => {
-        if(res.total){
-          orderNum = res.total
-        }else{
-          orderNum = 0
-        }
-        orderNum += 1
-        postData.orderNum = orderNum
-        db.collection('orderlist').add({
-          data:{
-            postData: postData
-          },
-          success(res){
-            if (e && "buyNow" != that.data.orderType) {
-              // 清空购物车数据
-              // WXAPI.shippingCarInfoRemoveAll(openid)
-            }
-            that.processAfterCreateOrder(postData)
-          },
-          fail(err){
-            wx.showModal({
-              title: '错误',
-              content: err.errMsg,
-              showCancel: false
-            })
-            return
-          },
-          complete: console.log
-        })
+      db.collection('orderlist').add({
+        data:{
+          postData: postData
+        },
+        success(res){
+          if (e && "buyNow" != that.data.orderType) {
+            // 清空购物车数据
+            // WXAPI.shippingCarInfoRemoveAll(openid)
+          }
+          that.processAfterCreateOrder(postData)
+        },
+        fail(err){
+          wx.showModal({
+            title: '错误',
+            content: err.errMsg,
+            showCancel: false
+          })
+          return
+        },
+        complete: console.log
       })
     }
   },
@@ -354,8 +344,8 @@ Page({
           propertyChildIds = propertyChildIds + ',' + option.optionId + ':' + option.optionValueId
         })
         carShopBean.propertyChildIds = propertyChildIds
-      }
-      goodsJsonStrTmp += '{"goodsId":"' + carShopBean.good_id + '","pic":"' + carShopBean.pic + '"}'
+      }//
+      goodsJsonStrTmp += '{"goodsId":"' + carShopBean.good_id + '","price":"' + carShopBean.price + '","pic":"' + carShopBean.pic + '","name":"' + carShopBean.name + '","number":"' + carShopBean.number + '","size":"' + carShopBean.size + '"}'
       goodsJsonStr += goodsJsonStrTmp;
     }
     goodsJsonStr += "]";

@@ -28,7 +28,7 @@
         <image src='/images/share/share2.png'></image>
       </view> -->
     </view>   
-     <!--  -->
+    
   </view>
   <view class="decolor">{{goodsDetail.color}} - {{goodsDetail.good_id}}</view>
   <view class="detail">{{goodsDetail.description}}</view>

@@ -28,27 +28,34 @@ Page({
     ],
     status: 9999,
     hasRefund: false,
-    badges: [0, 0, 0, 0, 0]
+    badges: [0, 0, 0, 0, 0],
+    // orderList:{
+    //   postData: [],
+    //   goods: []
+    // }
   },
   statusTap: function(e) {
-    const status = e.currentTarget.dataset.status;
+    const status = e.currentTarget.dataset.status
     this.setData({
       status
     });
-    this.onShow();
+    this.onShow()
   },
   cancelOrderTap: function(e) {
-    const that = this;
-    const orderId = e.currentTarget.dataset.id;
+    const that = this
+    const orderid = e.currentTarget.dataset.id
     wx.showModal({
       title: '确定要取消该订单吗？',
       content: '',
       success: function(res) {
         if (res.confirm) {
-          WXAPI.orderClose(wx.getStorageSync('token'), orderId).then(function(res) {
-            if (res.code == 0) {
-              that.onShow();
-            }
+          db.collection('orderlist').where({
+            'postData.orderid': orderid
+          }).remove().then(res=>{
+            console.log(res)
+            that.onShow()
+          }).catch(err=>{
+            console.log(err)
           })
         }
       }
@@ -74,77 +81,93 @@ Page({
     this.data.payButtonClicked = true
     setTimeout(() => {
       this.data.payButtonClicked = false
-    }, 3000)  // 可自行修改时间间隔（目前是3秒内只能点击一次支付按钮）
-    // 防止连续点击--结束
-    const that = this;
-    const orderId = e.currentTarget.dataset.id;
-    let money = e.currentTarget.dataset.money;
-    const needScore = e.currentTarget.dataset.score;
-    WXAPI.userAmount(wx.getStorageSync('token')).then(function(res) {
-      if (res.code == 0) {
-        // 增加提示框
-        if (res.data.score < needScore) {
-          wx.showToast({
-            title: '您的积分不足，无法支付',
-            icon: 'none'
-          })
-          return;
+    }, 2000)  // 可自行修改时间间隔（目前是3秒内只能点击一次支付按钮）
+    const that = this
+    const orderId = e.currentTarget.dataset.id
+    let money = e.currentTarget.dataset.money
+    let _msg = '订单金额: ' + money +' 元'
+    wx.showModal({
+      title: '请确认支付',
+      content: _msg,
+      confirmText: "确认支付",
+      cancelText: "取消支付",
+      success: function (res) {
+        if (res.confirm) {
+          that.confirmOrder(orderId, money)
+        } else {
+          console.log('用户点击取消支付')
         }
-        let _msg = '订单金额: ' + money +' 元'
-        if (res.data.balance > 0) {
-          _msg += ',可用余额为 ' + res.data.balance +' 元'
-          if (money - res.data.balance > 0) {
-            _msg += ',仍需微信支付 ' + (money - res.data.balance) + ' 元'
-          }          
-        }
-        if (needScore > 0) {
-          _msg += ',并扣除 ' + needScore + ' 积分'
-        }
-        money = money - res.data.balance
-        wx.showModal({
-          title: '请确认支付',
-          content: _msg,
-          confirmText: "确认支付",
-          cancelText: "取消支付",
-          success: function (res) {
-            console.log(res);
-            if (res.confirm) {
-              that._toPayTap(orderId, money)
-            } else {
-              console.log('用户点击取消支付')
-            }
-          }
-        });
-      } else {
-        wx.showModal({
-          title: '错误',
-          content: '无法获取用户资金信息',
-          showCancel: false
-        })
       }
     })
   },
-  _toPayTap: function (orderId, money){
-    const _this = this
-    if (money <= 0) {
-      // 直接使用余额支付
-      WXAPI.orderPay(wx.getStorageSync('token'), orderId).then(function (res) {
-        _this.onShow();
-      })
-    } else {
-      wxpay.wxpay('order', money, orderId, "/pages/order-list/index");
-    }
+  //提交订单
+  confirmOrder: function(orderId, money) {
+    let that = this
+    wx.cloud.callFunction({
+      name: "payment",
+      data: {
+        command: "pay",
+        out_trade_no: orderId,
+        body: 'yunazure-scarf-DIY',
+        total_fee: 1
+      },
+      success(res) {
+        console.log("云函数payment提交成功：", res.result)
+        that.pay(res.result)
+      },
+      fail(res) {
+        console.log("云函数payment提交失败：", res)
+        wx.redirectTo({
+          url: "/pages/order-list/index"
+        })
+      },
+      complete(){
+       
+      }
+    })
+  },
+  pay(payData) {
+    wx.requestPayment({
+      timeStamp: payData.timeStamp,
+      nonceStr: payData.nonceStr,
+      package: payData.package, //统一下单接口返回的 prepay_id
+      signType: 'MD5',
+      paySign: payData.paySign, //签名
+      success(res) {
+        console.log("支付成功：", res)
+        wx.cloud.callFunction({  //巧妙利用小程序支付成功后的回调，再次调用云函数，通知其支付成功，以便进行订单状态变更
+          name: "payment",
+          data: {
+            command: "payOK",
+            out_trade_no: 'Yunazure-' + new Date().getTime()
+          }
+        })
+      },
+      fail(res) {
+        wx.showToast({
+          title: '支付取消！',
+          icon: 'none'
+        })
+      },
+      complete(res) {
+        console.log("支付完成：", res)
+        // wx.redirectTo({
+        //   url: "/pages/order-list/index"
+        // });
+      }
+    })
   },
   onLoad: function(options) {
+    console.log("type:"+options.type)
     if (options && options.type) {
       if (options.type == 99) {
         this.setData({
           hasRefund: true
-        });
+        })
       } else {
         this.setData({
           status: options.type
-        });
+        })
       }      
     }
   },
@@ -192,19 +215,17 @@ Page({
     }).get().then(res=>{
       if(res.data.length > 0){
         var list = []
-        var goodsMap = []
         for(let i=0;i<res.data.length;i++){
-          list.push(res.data[i].postData)
-          goodsMap.push(JSON.parse(res.data[i].postData.goodsJsonStr))
+          let tmp = res.data[i].postData
+          tmp.goodsJsonStr = JSON.parse(res.data[i].postData.goodsJsonStr)
+          list.push(tmp)
         }
         that.setData({
-          orderList: list,
-          goodsMap: goodsMap
+          orderList: list
         })
       }else{
         that.setData({
-          orderList: null,
-          goodsMap: {}
+          orderList: []
         })
       }
     })
