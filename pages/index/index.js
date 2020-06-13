@@ -199,8 +199,6 @@ Page({
 
   },
   addFavDone:function(options){
-
-
       const that = this 
       let goodsId = options.goodsId
       var canFav = false
@@ -227,39 +225,37 @@ Page({
               }
             })
           }
+          if(canFav){
+            db.collection('favorite').add({
+              data: {
+                items:that.data.addFavInfo.items
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入心愿单',
+                icon: 'success'
+              })
+            }).catch(console.error)
+          }else{
+            if(existFav){
+              that.delFavDone(goodsId)
+            }else{
+              wx.cloud.callFunction({
+              name:'addFav',
+              data:{
+                items:that.data.addFavInfo.items
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入心愿单',
+                icon: 'success'
+              })
+            }).catch(console.error)
+            }
+          }
         })
       })
 
-      setTimeout(function(){
-        if(canFav){
-          db.collection('favorite').add({
-            data: {
-              items:that.data.addFavInfo.items
-            }
-          }).then(res=>{
-            wx.showToast({
-              title: '加入购物车',
-              icon: 'success'
-            })
-          }).catch(console.error)
-        }else{
-          if(existFav){
-            that.delFavDone(goodsId)
-          }else{
-            wx.cloud.callFunction({
-            name:'addFav',
-            data:{
-              items:that.data.addFavInfo.items
-            }
-          }).then(res=>{
-            wx.showToast({
-              title: '加入购物车',
-              icon: 'success'
-            })
-          }).catch(console.error)
-          }
-        }
-      },500)
   },
   async delFavDone(key){
 

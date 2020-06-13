@@ -6,7 +6,7 @@ page,view,image,input,textarea {
 }
 
 .container {
-  background-color: #F2f2f2;
+  background-color: rgb(255, 255, 255);
   min-height: 100%;
   padding-bottom: 100rpx;
 }
@@ -18,7 +18,25 @@ page,view,image,input,textarea {
   width: 100%;
   height:748rpx;
 }
-
+.decolor{
+  margin-left: -490rpx;
+  font-size: 25rpx;
+  color: #000;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
+  margin-top: 10rpx;
+  
+}
+.detail{
+  
+  font-size: 25rpx;
+  color: #000;
+  margin-left: 30rpx;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
+  margin-top: 10rpx;
+  
+}
 swiper-item image {
   width: 100%;
   display: inline-block;
@@ -34,17 +52,18 @@ swiper-item image {
 }
 .goods-info-fx {
   position: absolute;
-  right: 35rpx;
+  right: 30rpx;
   bottom: 60rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 130rpx;
+  width: 60rpx;
+
 }
 .goods-info-fx .item {
   width: 50rpx;
   height: 50rpx;
-  right: 130rpx;
+  right: 60rpx;
   top: 100rpx;
   display: flex;
   flex-direction: column;
@@ -53,6 +72,7 @@ swiper-item image {
   font-size: 24rpx;
   background: #fff;
   z-index: 20;
+
 } 
 .goods-info-fx .item image {
   width: 50rpx;
@@ -183,8 +203,8 @@ swiper-item image {
   height: 55rpx;
 }
 .fav-icon {
-  width: 60rpx;
-  height: 60rpx;
+  width: 54rpx;
+  height: 54rpx;
   margin-left: 32rpx;
 }
 .footer-box .shop-cart-btn .shop-num{
@@ -198,23 +218,24 @@ swiper-item image {
   font-size: 24rpx;
 }
 .footer-box .join-shop-cart{
+  border: 1rpx solid;
   text-align: center;
-  height: 100%;
-  line-height: 100rpx;
-  background-color: #ff6850;
-  color:#fff;
-  font-size: 34rpx;
+  height: 80%;
+  line-height: 80rpx;
+  background-color: #ffffff;
+  color:rgb(0, 0, 0);
+  font-size: 30rpx;
   flex: 1;
   margin-left: 32rpx;
 }
 .footer-box .now-buy{
   text-align: center;
-  height: 100%;
+  height: 80%;
   width: 250rpx;
-  line-height: 100rpx;
-  background-color: #e64340;
+  line-height: 80rpx;
+  background-color: #000000;
   color:#fff;
-  font-size: 34rpx;
+  font-size: 30rpx;
   flex: 1;
 }
 .show-popup{
@@ -348,12 +369,12 @@ swiper-item image {
 }
 .popup-join-btn{
   width: 100%;
-  height: 89rpx;
+  height: 80rpx;
   text-align: center;
-  line-height: 89rpx;
-  font-size:34rpx;
+  line-height: 80rpx;
+  font-size:30rpx;
   color:#ffffff;
-  background-color: #e64340;
+  background-color: #000000;
 }
 .buy-num-box .num-box .hui{
   background-color: #f5f5f9;

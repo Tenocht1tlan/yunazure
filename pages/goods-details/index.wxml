@@ -18,17 +18,21 @@
       <view class="p"><text>¥</text> {{selectSizePrice}}</view>
       <view wx:if="{{goodsDetail.originalPrice && goodsDetail.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;padding: 15rpx 0rpx 0rpx 15rpx;'><text>¥</text> {{selectSizeOPrice}}</view>
     </view>
+    <!-- 分享的那两个按钮 -->
     <view class="goods-info-fx">
       <view class='item'>
         <image src='/images/share/share1.png'></image>
         <button open-type='share'></button>
       </view>
-      <view class='item' bindtap="drawSharePic">
+      <!-- <view class='item' bindtap="drawSharePic">
         <image src='/images/share/share2.png'></image>
-      </view>
-    </view>    
+      </view> -->
+    </view>   
+     <!--  -->
   </view>
-  <view class="page__bd" wx:if="{{curGoodsKanjia}}" style='width:750rpx;'>
+  <view class="decolor">{{goodsDetail.color}} - {{goodsDetail.good_id}}</view>
+  <view class="detail">{{goodsDetail.description}}</view>
+  <!-- <view class="page__bd" wx:if="{{curGoodsKanjia}}" style='width:750rpx;'>
     <view class="weui-cells__title">商品砍价设置</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
@@ -144,11 +148,12 @@
         <button type="warn" size="mini" data-pingtuanopenid="{{item.id}}" bindtap="toPingtuan"> 去拼单 </button>
       </view>
     </view>
-  </view>
-  <view wx:if="{{hasMoreSelect && goodsDetailSkuShowType==0}}" class="row-arrow" bindtap="bindGuiGeTap">
+  </view> -->
+  <!-- <view wx:if="{{hasMoreSelect && goodsDetailSkuShowType==0}}" class="row-arrow" bindtap="bindGuiGeTap">
     <view>{{selectSize}}</view>
     <image src="/images/icon/next.png"></image>
-  </view>
+  </view> -->
+
   <view class="size-label-box2" wx:if="{{goodsDetailSkuShowType==1}}">
     <view class="label-title">选择商品规格</view>
     <view class="size-label-box">
@@ -181,11 +186,14 @@
       <view class="address">{{shopSubdetail.info.address}}</view>
     </view>
   </view>
-  <view class="goods-des-info">
+  <!--  商品介绍下面改一改-->
+  <!-- <view class="goods-des-info">
     <view class="label-title">商品介绍</view>
     <view class="goods-text" >{{goodsDetail.description}}
     </view>
-  </view>
+  </view> -->
+  <view style="width:650rpx;height:1rpx;background-color:gray;margin-top:20rpx;"></view>
+  <!--  -->
   <view class="goods-des-info" style="margin-top:35rpx;" wx:if="{{!curGoodsKanjia && reputation}}">
     <view class="label-title" style="border-bottom:1px solid #eee;">大家评价
       <text style="color:red">（{{reputation.length}}）</text>
@@ -228,7 +236,7 @@
       <view class="shop-num">{{shopNum}}</view>
       <image src="/images/nav/chartYes.png"></image>
     </view>
-    <image bindtap="addFav" class="fav-icon" src="/images/icon/fav{{faved?'1':'0'}}.svg"></image>
+    <image bindtap="addFav" class="fav-icon" src="/images/star{{faved?'Yes':'No'}}.png"></image>
     <view wx:if="{{!goodsDetail.pingtuan}}" class="join-shop-cart" bindtap="{{goodsDetailSkuShowType==0?'toAddShopCar':'addShopCar'}}">加入购物车</view>
     <view wx:if="{{!goodsDetail.pingtuan}}" class="now-buy"  data-shopType="{{shopType}}" bindtap="{{goodsDetailSkuShowType==0?'tobuy':'buyNow'}}">立即购买</view>
     <view wx:if="{{goodsDetail.pingtuan}}" class="join-shop-cart" bindtap="tobuy">单独购买</view>
