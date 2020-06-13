@@ -154,6 +154,7 @@ Page({
       textHidden:temp,
     })
   },
+  // 这好像没用的
   starset:function(e){
     let index = e.currentTarget.dataset.index;
     let temp = 'imageChose[' + index +'].starsetnum';
@@ -161,6 +162,7 @@ Page({
       [temp]:!(this.data.imageChose[index].starsetnum)
     })
   },
+  // 
   async  addFav(e){
     this.addFavCheck({
       goodsId : e.currentTarget.dataset.id,
@@ -381,6 +383,36 @@ Page({
   },
   doNotMove:function(){
     return
+  },
+  toDiy: function () {
+    wx.navigateTo({
+      url: "/pages/DIY/index"
+    })
+  },
+  toAd: function () {
+    wx.navigateTo({
+      url: "/pages/Ad/index"
+    })
+  },
+  toSpecial: function () {
+    wx.navigateTo({
+      url: "/pages/Special/index"
+    })
+  },
+  toActivity: function () {
+    wx.navigateTo({
+      url: "/pages/Activity/index"
+    })
+  },
+  toNew: function () {
+    wx.navigateTo({
+      url: "/pages/New/index"
+    })
+  },
+  toComp: function () {
+    wx.navigateTo({
+      url: "/pages/Comp/index"
+    })
   },
   // ----------------------------------------------------------------.....
   toDetailsTap: function(e) {
