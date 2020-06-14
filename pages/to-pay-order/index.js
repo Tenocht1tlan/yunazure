@@ -1,6 +1,5 @@
 const app = getApp()
 const AUTH = require('../../utils/auth')
-const wxpay = require('../../utils/pay.js')
 const db = wx.cloud.database()
 Page({
   data: {
@@ -40,10 +39,15 @@ Page({
     const openid = wx.getStorageSync('openid')
     //立即购买下单
     if ("buyNow" == this.data.orderType) {
-      var buyNowInfoMem = wx.getStorageSync('buyNowInfo');
-      this.data.kjId = buyNowInfoMem.kjId;
+      var buyNowInfoMem = wx.getStorageSync('buyNowInfo')
+      // this.data.kjId = buyNowInfoMem.kjId;
       if (buyNowInfoMem && buyNowInfoMem.shopList) {
         shopList = buyNowInfoMem.shopList
+        this.setData({
+          goodsList: shopList,
+          peisongType: this.data.peisongType
+        })
+        this.initShippingAddress()
       }
     } else {
       //购物车下单
@@ -58,10 +62,6 @@ Page({
           })
           this.initShippingAddress()
         }
-        // res.data[0].items.forEach(value=>{
-        //   if(value != null){
-        //   }
-        // })
       })
     }
   },
@@ -76,7 +76,7 @@ Page({
     if (e.pingtuanOpenId) {
       _data.pingtuanOpenId = e.pingtuanOpenId
     }
-    this.setData(_data);
+    this.setData(_data)
   },
 
   getDistrictId: function (obj, aaa) {
@@ -93,7 +93,8 @@ Page({
   },
   //提交订单
   confirmOrder: function(res) {
-    let that = this;
+    let that = this
+    let orderid = res.orderid
     wx.cloud.callFunction({
       name: "payment",
       data: {
@@ -104,7 +105,7 @@ Page({
       },
       success(res) {
         console.log("云函数payment提交成功：", res.result)
-        that.pay(res.result)
+        that.pay(res.result, orderid)
       },
       fail(res) {
         console.log("云函数payment提交失败：", res)
@@ -118,7 +119,7 @@ Page({
     })
   },
   //实现小程序支付
-  pay(payData) {
+  pay(payData, orderid) {
     wx.requestPayment({ //已经得到了5个参数
       timeStamp: payData.timeStamp,
       nonceStr: payData.nonceStr,
@@ -131,7 +132,19 @@ Page({
           name: "payment",
           data: {
             command: "payOK",
-            out_trade_no: "pay004"
+            out_trade_no: 'Yunazure-' + new Date().getTime()
+          },
+          success(){
+            db.collection('orderlist').where({
+              'postData.orderid': orderid
+            }).update({
+              data: {
+                'postData.status': 1
+              }
+            })
+            wx.redirectTo({
+              url: "/pages/order-list/index?type=1"
+            })
           }
         })
       },
@@ -143,9 +156,9 @@ Page({
       },
       complete(res) {
         console.log("支付完成：", res)
-        wx.redirectTo({
-          url: "/pages/order-list/index"
-        });
+        // wx.redirectTo({
+        //   url: "/pages/order-list/index"
+        // });
       }
     })
   },
@@ -238,9 +251,9 @@ Page({
       that.setData({
         // totalScoreToPay: that.data.score,
         isNeedLogistics: that.data.isNeedLogistics,
-        allGoodsPrice: that.data.allGoodsPrice,
-        allGoodsAndYunPrice: that.data.allGoodsPrice + yunPrice,
-        yunPrice: yunPrice
+        allGoodsAndYunPrice: (that.data.allGoodsPrice + yunPrice).toFixed(2),
+        allGoodsPrice: that.data.allGoodsPrice.toFixed(2),
+        yunPrice: yunPrice.toFixed(2)
       })
       // that.getMyCoupons() //优惠券
       return

@@ -1,5 +1,6 @@
-//const WXAPI = require('apifm-wxapi')
 const AUTH = require('../../utils/auth')
+const db = wx.cloud.database()
+
 Page({
 
   /**
@@ -36,32 +37,57 @@ Page({
 
   },
   async search(){
-    // 搜索商品
     wx.showLoading({
       title: '加载中',
     })
-    const _data = {
-      orderBy: this.data.orderBy,
-      page: 1,
-      pageSize: 500,
+    if(this.data.orderBy == ''){
+      db.collection('goods').where({
+        name: db.RegExp({
+          regexp: this.data.name,
+          options: 'i'
+        })
+      }).get().then(res=>{
+        if(res.data.length > 0){
+          this.setData({
+            goods: res.data
+          })
+        }else{
+          this.setData({
+            goods: null,
+          })
+          wx.showToast({
+            title: '小Yun实在找不到该商品~',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+        wx.hideLoading()
+      })
+    }else{
+      //正则 模糊搜索
+      db.collection('goods').where({
+        name: db.RegExp({
+          regexp: this.data.name,
+          options: 'i'
+        })
+      }).orderBy(this.data.orderBy,'desc').get().then(res=>{
+        if(res.data.length > 0){
+          this.setData({
+            goods: res.data
+          })
+        }else{
+          this.setData({
+            goods: null,
+          })
+          wx.showToast({
+            title: '小Yun实在找不到该商品~',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+        wx.hideLoading()
+      })
     }
-    if (this.data.name) {
-      _data.k = this.data.name
-    }
-    if (this.data.categoryId) {
-      _data.categoryId = this.data.categoryId
-    }
-    // const res = await WXAPI.goods(_data)
-    wx.hideLoading()
-    // if (res.code == 0) {
-    //   this.setData({
-    //     goods: res.data,
-    //   })
-    // } else {
-    //   this.setData({
-    //     goods: null,
-    //   })
-    // }
   },
   /**
    * 生命周期函数--监听页面隐藏

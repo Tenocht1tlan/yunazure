@@ -242,13 +242,15 @@ Page({
           // if (goodsDetailRes.pingtuan) {
           //   that.pingtuanList(goodsId)
           // }
+
           that.data.goodsDetail = goodsDetailRes
           // if (goodsDetailRes.videoId) {
           //   that.getVideoSrc(goodsDetailRes.videoId)
           // }
-          that.data.pics.push(goodsDetailRes.pic)
+          let tmpPics = []
+          tmpPics.push(goodsDetailRes.pic)
           that.setData({
-            pics:that.data.pics
+            pics: tmpPics
           })
           let _data = {
             goodsDetail: goodsDetailRes,
@@ -590,7 +592,7 @@ Page({
       this.bindGuiGeTap();
       wx.showModal({
         title: '提示',
-        content: '请先选择规格尺寸哦~',
+        content: '请先选择规格尺寸~',
         showCancel: false
       })
       return;
@@ -604,13 +606,13 @@ Page({
       return;
     }
     //组建立即购买信息
-    var buyNowInfo = this.buliduBuyNowInfo(shoptype);
+    var buyNowInfo = this.buliduBuyNowInfo(shoptype)
     // 写入本地存储
     wx.setStorage({
       key: "buyNowInfo",
       data: buyNowInfo
     })
-    this.closePopupTap();
+    this.closePopupTap()
     if (shoptype == 'toPingtuan') {
       if (this.data.pingtuanopenid) {
         wx.navigateTo({
@@ -642,54 +644,42 @@ Page({
         url: "/pages/to-pay-order/index?orderType=buyNow"
       })
     }
-
   },
   /**
    * 组建立即购买信息
    */
   buliduBuyNowInfo: function(shoptype) {
-    var shopCarMap = {};
-    shopCarMap.goodsId = this.data.goodsDetail.basicInfo.id;
-    shopCarMap.pic = this.data.goodsDetail.basicInfo.pic;
-    shopCarMap.name = this.data.goodsDetail.basicInfo.name;
-    // shopCarMap.label=this.data.goodsDetail.basicInfo.id; 规格尺寸 
-    shopCarMap.propertyChildIds = this.data.propertyChildIds;
-    shopCarMap.label = this.data.propertyChildNames;
-    shopCarMap.price = this.data.selectSizePrice;
-    // if (shoptype == 'toPingtuan') { // 20190714 拼团价格注释掉
-    //   shopCarMap.price = this.data.goodsDetail.basicInfo.pingtuanPrice;
+    var shopCarMap = {}
+    shopCarMap.good_id = this.data.goodsDetail.good_id
+    shopCarMap.pic = this.data.goodsDetail.pic
+    shopCarMap.name = this.data.goodsDetail.name
+    shopCarMap.price = this.data.selectSizePrice.toFixed(2)
+    shopCarMap.active = true
+    shopCarMap.number = this.data.buyNumber
+    shopCarMap.logisticsType = this.data.goodsDetail.logisticsId
+    shopCarMap.logistics = this.data.goodsDetail.logistics
+    shopCarMap.color = this.data.goodsDetail.color
+
+    var buyNowInfo = {}
+    buyNowInfo.shopNum = 0
+    buyNowInfo.shopList = []
+    // var hasSameGoodsIndex = -1;
+    // for (var i = 0; i < toBuyInfo.shopList.length; i++) {
+    //   var tmpShopCarMap = toBuyInfo.shopList[i];
+    //   if (tmpShopCarMap.goodsId == shopCarMap.goodsId && tmpShopCarMap.propertyChildIds == shopCarMap.propertyChildIds) {
+    //     hasSameGoodsIndex = i;
+    //     shopCarMap.number = shopCarMap.number + tmpShopCarMap.number;
+    //     break;
+    //   }
     // }
-    shopCarMap.score = this.data.totalScoreToPay;
-    shopCarMap.left = "";
-    shopCarMap.active = true;
-    shopCarMap.number = this.data.buyNumber;
-    shopCarMap.logisticsType = this.data.goodsDetail.basicInfo.logisticsId;
-    shopCarMap.logistics = this.data.goodsDetail.logistics;
-    shopCarMap.weight = this.data.goodsDetail.basicInfo.weight;
-
-    var buyNowInfo = {};
-    buyNowInfo.shopNum = 0;
-    buyNowInfo.shopList = [];
-    
-    /*    var hasSameGoodsIndex = -1;
-        for (var i = 0; i < toBuyInfo.shopList.length; i++) {
-          var tmpShopCarMap = toBuyInfo.shopList[i];
-          if (tmpShopCarMap.goodsId == shopCarMap.goodsId && tmpShopCarMap.propertyChildIds == shopCarMap.propertyChildIds) {
-            hasSameGoodsIndex = i;
-            shopCarMap.number = shopCarMap.number + tmpShopCarMap.number;
-            break;
-          }
-        }
-        toBuyInfo.shopNum = toBuyInfo.shopNum + this.data.buyNumber;
-        if (hasSameGoodsIndex > -1) {
-          toBuyInfo.shopList.splice(hasSameGoodsIndex, 1, shopCarMap);
-        } else {
-          toBuyInfo.shopList.push(shopCarMap);
-        }*/
-
-    buyNowInfo.shopList.push(shopCarMap);
-    buyNowInfo.kjId = this.data.kjId;
-    return buyNowInfo;
+    // toBuyInfo.shopNum = toBuyInfo.shopNum + this.data.buyNumber;
+    // if (hasSameGoodsIndex > -1) {
+    //   toBuyInfo.shopList.splice(hasSameGoodsIndex, 1, shopCarMap);
+    // } else {
+    //   toBuyInfo.shopList.push(shopCarMap);
+    // }
+    buyNowInfo.shopList.push(shopCarMap)
+    return buyNowInfo
   },
   onShareAppMessage() {
     let _data = {
@@ -855,103 +845,6 @@ Page({
       current: url, // 当前显示图片的http链接
       urls: [url] // 需要预览的图片http链接列表
     })
-  },
-  async drawSharePic() {
-    // const _this = this
-    // const qrcodeRes = await WXAPI.wxaQrcode({
-    //   scene: _this.data.goodsDetail.basicInfo.id + ',' + wx.getStorageSync('uid'),
-    //   page: 'pages/goods-details/index',
-    //   is_hyaline: true,
-    //   autoColor: true,
-    //   expireHours: 1
-    // })
-    // if (qrcodeRes.code != 0) {
-    //   wx.showToast({
-    //     title: qrcodeRes.msg,
-    //     icon: 'none'
-    //   })
-    //   return
-    // }
-    // const qrcode = qrcodeRes.data
-    // const pic = _this.data.goodsDetail.basicInfo.pic
-    // wx.getImageInfo({
-    //   src: pic,
-    //   success(res) {
-    //     const height = 490 * res.height / res.width
-    //     // _this.drawSharePicDone(height, qrcode)
-    //   },
-    //   fail(e) {
-    //     console.error(e)
-    //   }
-    // })
-  },
-  drawSharePicDone(picHeight, qrcode) {
-    // const _this = this
-    // const _baseHeight = 74 + (picHeight + 120)
-    // this.setData({
-    //   posterConfig: {
-    //     width: 750,
-    //     height: picHeight + 660,
-    //     backgroundColor: '#fff',
-    //     debug: false,
-    //     blocks: [
-    //       {
-    //         x: 76,
-    //         y: 74,
-    //         width: 604,
-    //         height: picHeight + 120,
-    //         borderWidth: 2,
-    //         borderColor: '#c2aa85',
-    //         borderRadius: 8
-    //       }
-    //     ],
-    //     images: [
-    //       {
-    //         x: 133,
-    //         y: 133,
-    //         url: _this.data.goodsDetail.basicInfo.pic, // 商品图片
-    //         width: 490,
-    //         height: picHeight
-    //       },
-    //       {
-    //         x: 76,
-    //         y: _baseHeight + 199,
-    //         url: qrcode, // 二维码
-    //         width: 222,
-    //         height: 222
-    //       }
-    //     ],
-    //     texts: [
-    //       {
-    //         x: 375,
-    //         y: _baseHeight + 80,
-    //         width: 650,
-    //         lineNum:2,
-    //         text: _this.data.goodsDetail.basicInfo.name,
-    //         textAlign: 'center',
-    //         fontSize: 40,
-    //         color: '#333'
-    //       },
-    //       {
-    //         x: 375,
-    //         y: _baseHeight + 180,
-    //         text: '￥' + _this.data.goodsDetail.basicInfo.minPrice,
-    //         textAlign: 'center',
-    //         fontSize: 50,
-    //         color: '#e64340'
-    //       },
-    //       {
-    //         x: 352,
-    //         y: _baseHeight + 320,
-    //         text: '长按识别小程序码',
-    //         fontSize: 28,
-    //         color: '#999'
-    //       }
-    //     ],
-    //   }
-    // }, () => {
-    //   Poster.create();
-    // });
   },
   onPosterSuccess(e) {
     console.log('success:', e)

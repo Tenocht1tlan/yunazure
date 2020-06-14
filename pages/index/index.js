@@ -549,7 +549,6 @@ Page({
       for(let i=0;i<res.total;i++){
         tmp.push(0)
       }
-      console.log("t1 = "+tmp)
       db.collection('favorite').get().then(res=>{
         if(res.data[0].items.length > 0){
           res.data[0].items.forEach(res=>{

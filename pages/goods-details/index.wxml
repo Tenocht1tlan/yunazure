@@ -18,15 +18,12 @@
       <view class="p"><text>¥</text> {{selectSizePrice}}</view>
       <view wx:if="{{goodsDetail.originalPrice && goodsDetail.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through;padding: 15rpx 0rpx 0rpx 15rpx;'><text>¥</text> {{selectSizeOPrice}}</view>
     </view>
-    <!-- 分享的那两个按钮 -->
+    <!-- share -->
     <view class="goods-info-fx">
       <view class='item'>
         <image src='/images/share/share1.png'></image>
         <button open-type='share'></button>
       </view>
-      <!-- <view class='item' bindtap="drawSharePic">
-        <image src='/images/share/share2.png'></image>
-      </view> -->
     </view>   
     
   </view>

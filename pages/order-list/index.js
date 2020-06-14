@@ -1,4 +1,3 @@
-const wxpay = require('../../utils/pay.js')
 const app = getApp()
 const AUTH = require('../../utils/auth')
 const db = wx.cloud.database()
@@ -28,11 +27,7 @@ Page({
     ],
     status: 9999,
     hasRefund: false,
-    badges: [0, 0, 0, 0, 0],
-    // orderList:{
-    //   postData: [],
-    //   goods: []
-    // }
+    badges: [0, 0, 0, 0, 0]
   },
   statusTap: function(e) {
     const status = e.currentTarget.dataset.status
@@ -109,24 +104,22 @@ Page({
         command: "pay",
         out_trade_no: orderId,
         body: 'yunazure-scarf-DIY',
-        total_fee: 1
+        total_fee: money
       },
       success(res) {
         console.log("云函数payment提交成功：", res.result)
-        that.pay(res.result)
+        that.pay(res.result, orderId)
       },
       fail(res) {
         console.log("云函数payment提交失败：", res)
-        wx.redirectTo({
-          url: "/pages/order-list/index"
-        })
+        this.onShow()
       },
       complete(){
-       
       }
     })
   },
-  pay(payData) {
+  pay(payData, orderid) {
+    const that = this
     wx.requestPayment({
       timeStamp: payData.timeStamp,
       nonceStr: payData.nonceStr,
@@ -140,6 +133,18 @@ Page({
           data: {
             command: "payOK",
             out_trade_no: 'Yunazure-' + new Date().getTime()
+          },
+          success(){
+            db.collection('orderlist').where({
+              'postData.orderid': orderid
+            }).update({
+              data: {
+                'postData.status': 1
+              }
+            })
+            that.setData({
+              status: 1
+            })
           }
         })
       },
@@ -148,17 +153,14 @@ Page({
           title: '支付取消！',
           icon: 'none'
         })
+        this.onShow()
       },
       complete(res) {
         console.log("支付完成：", res)
-        // wx.redirectTo({
-        //   url: "/pages/order-list/index"
-        // });
       }
     })
   },
   onLoad: function(options) {
-    console.log("type:"+options.type)
     if (options && options.type) {
       if (options.type == 99) {
         this.setData({
@@ -174,8 +176,8 @@ Page({
   onReady: function() {
     // 生命周期函数--监听页面初次渲染完成
   },
-  async onShow() {
-    const isLogined = await AUTH.checkHasLogined()
+  onShow() {
+    const isLogined = wx.getStorageSync('isloged')
     if (isLogined) {
       this.doneShow()
     } else {
@@ -199,36 +201,50 @@ Page({
     // 获取订单列表
     var that = this
     var openid = wx.getStorageSync('openid')
-    var postData = {
-      openid: openid
-    };
-    postData.hasRefund = this.data.hasRefund
-    if (!postData.hasRefund) {
-      postData.status = this.data.status
-    }
-    if (postData.status == 9999) {
-      postData.status = ''
-    }
     // this.getOrderStatistics(openid)
-    db.collection("orderlist").where({
-      _openid: openid //key: postData
-    }).get().then(res=>{
-      if(res.data.length > 0){
-        var list = []
-        for(let i=0;i<res.data.length;i++){
-          let tmp = res.data[i].postData
-          tmp.goodsJsonStr = JSON.parse(res.data[i].postData.goodsJsonStr)
-          list.push(tmp)
+    if(that.data.status == 9999){
+      db.collection("orderlist").where({
+        _openid: openid
+      }).get().then(res=>{
+        if(res.data.length > 0){
+          var list = []
+          for(let i=0;i<res.data.length;i++){
+            let tmp = res.data[i].postData
+            tmp.goodsJsonStr = JSON.parse(res.data[i].postData.goodsJsonStr)
+            list.push(tmp)
+          }
+          that.setData({
+            orderList: list
+          })
+        }else{
+          that.setData({
+            orderList: []
+          })
         }
-        that.setData({
-          orderList: list
-        })
-      }else{
-        that.setData({
-          orderList: []
-        })
-      }
-    })
+      })
+    }else{
+      db.collection("orderlist").where({
+        _openid: openid
+      }).get().then(res=>{
+        if(res.data.length > 0){
+          var list = []
+          for(let i=0;i<res.data.length;i++){
+            if(res.data[i].postData.status == that.data.status){
+              let tmp = res.data[i].postData
+              tmp.goodsJsonStr = JSON.parse(res.data[i].postData.goodsJsonStr)
+              list.push(tmp)
+            }
+          }
+          that.setData({
+            orderList: list
+          })
+        }else{
+          that.setData({
+            orderList: null
+          })
+        }
+      })
+    }
   },
   getOrderStatistics(key) {
     db.collection("orderlist").where({

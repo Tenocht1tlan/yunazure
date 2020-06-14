@@ -64,7 +64,7 @@ Page({
   },
   toMyOrder: function () {
     wx.navigateTo({
-      url: "/pages/order-list/index?type=0"
+      url: "/pages/order-list/index?type=1"
     })
   },
   goRegister: function (e) {

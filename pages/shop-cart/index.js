@@ -11,7 +11,7 @@ Page({
     allSelect: false,
     noSelect: true,
     totalPrice:0,
-    isCheck:[false],
+    checkedVal:[],
     loading:true,
     startX:'',
     delBtnWidth: 120, //删除按钮宽度单位（rpx）
@@ -25,11 +25,10 @@ Page({
     try {
       var res = wx.getSystemInfoSync().windowWidth
       var scale = (750 / 2) / (w / 2)
-      // console.log(scale);
       real = Math.floor(res / scale);
       return real;
     } catch (e) {
-      return false;
+      return false
       // Do something when catch error
     }
   },
@@ -81,8 +80,8 @@ Page({
     }
   },
   onLoad: function() {
-    this.initEleWidth();
-    this.onShow();
+    this.initEleWidth()
+    // this.onShow()
   },
   async onShow() {
     const isLogined = await AUTH.checkHasLogined()
@@ -92,6 +91,7 @@ Page({
       })
       if (isLogined) {
         this.shippingCarInfo()
+        
       }
     }else{
       wx.removeTabBarBadge({
@@ -114,20 +114,32 @@ Page({
       db.collection('shopping-cart').where({
         _openid:res.result.openid
       }).get().then(res=>{
-        var num = 0
-        res.data[0].items.forEach(value=>{
-          if(value != null){
-            num += value.number
-          }
-        })
-        wx.setTabBarBadge({
-          index: 3,
-          text: num.toString(),
-        })
-        this.setData({
-          noSelect: res.data[0].items.length > 0 ? false : true,
-          'shippingCarInfo.items': res.data[0].items
-        })
+        if(res.data.length > 0){
+          var num = 0
+          var tmpVal = []
+          res.data[0].items.forEach(value=>{
+            this.data.totalPrice += value.price*value.number
+            tmpVal.push('isChecked')
+            if(value != null){
+              num += value.number
+            }
+          })
+          wx.setTabBarBadge({
+            index: 3,
+            text: num.toString(),
+          })
+          this.setData({
+            checkedVal: tmpVal,
+            totalPrice: this.data.totalPrice,
+            noSelect: res.data[0].items.length > 0 ? false : true,
+            'shippingCarInfo.items': res.data[0].items
+          })
+        }else{
+          this.setData({
+            noSelect: true,
+            'shippingCarInfo.items': null
+          })
+        }
       })
     })
   },
@@ -136,7 +148,6 @@ Page({
       url: "/pages/index/index"
     });
   },
-
   touchS: function(e) {
     if (e.touches.length == 1) {
       this.setData({
@@ -165,7 +176,6 @@ Page({
       })
     }
   },
-
   touchE: function(e) {
     var index = e.currentTarget.dataset.index;
     if (e.changedTouches.length == 1) {
@@ -181,32 +191,31 @@ Page({
       })
     }
   },
-  checkGoods:function(e){
+  checkboxChange(e) {
     const index = e.currentTarget.dataset.index
+    console.log('index =', index)
+    console.log('value =', e.detail.value)
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
     const num = this.data.shippingCarInfo.items[index].number
-    const isChecked = !this.data.isCheck[index]
-    var up = "isCheck["+index+"]"
     var tempPrice = parseInt(this.data.totalPrice)
-    if(isChecked){
+    if(e.detail.value[0] == 'isChecked'){
+      this.data.checkedVal[index] = 'isChecked'
       tempPrice += price*num
     }else{
+      this.data.checkedVal[index] = ''
       tempPrice -= price*num
     }
-    this.setData({
-      [up]:isChecked
-    })
     let newNumer = new NumberAnimate({
-        from: tempPrice,
-        speed: 1000,
-        refreshTime: 100,
-        decimals: 2,
-        onUpdate:()=>{
-          this.setData({
-            totalPrice: newNumer.tempValue
-          })
-        }
-    })
+      from: tempPrice,
+      speed: 1000,
+      refreshTime: 100,
+      decimals: 2,
+      onUpdate:()=>{
+        this.setData({
+          totalPrice: newNumer.tempValue
+        })
+      }
+  })
   },
   async delItem(e) {
     const key = e.currentTarget.dataset.key
@@ -216,14 +225,14 @@ Page({
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
     const num = this.data.shippingCarInfo.items[index].number
     var tempPrice = parseInt(this.data.totalPrice)
-    const isChecked = this.data.isCheck[index]
-    if(isChecked){
+    if(this.data.checkedVal[index] == 'isChecked'){
       tempPrice -= price*num
-      var tempChecks = this.data.isCheck
+      var tempChecks = this.data.checkedVal
       tempChecks.slice(index,1)
       this.setData({
-        isCheck: tempChecks
+        checkedVal: tempChecks
       })
+      console.log("checkedVal === "+ tempChecks)
       let newNumer = new NumberAnimate({
         from: tempPrice,
         speed: 1000,
@@ -283,11 +292,11 @@ Page({
     })
     const index = e.currentTarget.dataset.index
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
-    const isChecked = this.data.isCheck[index]
     var tempPrice = parseInt(this.data.totalPrice)
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number + 1
-    if(isChecked){
+    console.log('tmp =', this.data.checkedVal)
+    if(this.data.checkedVal[index] == 'isChecked'){
       tempPrice += price
       let newNumer = new NumberAnimate({
         from: tempPrice,
@@ -299,7 +308,7 @@ Page({
             totalPrice: newNumer.tempValue
           })
         }
-      });
+      })
     }
     const that = this
     wx.cloud.callFunction({
@@ -320,7 +329,6 @@ Page({
     })
     const index = e.currentTarget.dataset.index
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
-    const isChecked = this.data.isCheck[index]
     var tempPrice = parseInt(this.data.totalPrice)
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number - 1
@@ -337,7 +345,7 @@ Page({
       })
       return
     }else{
-      if(isChecked){
+      if(this.data.checkedVal[index] == 'isChecked'){
         tempPrice -= price
         let newNumer = new NumberAnimate({
           from: tempPrice,
@@ -406,5 +414,5 @@ Page({
     }).then(res=>{
       this.shippingCarInfo()
     }).catch(console.error)
-  },
+  }
 })

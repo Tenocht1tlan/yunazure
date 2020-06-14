@@ -146,8 +146,7 @@ Page({
       url: '/pages/goods/list?name=' + this.data.inputVal,
     })
   },
-  //shareListener
-  onShareAppMessage() {    
+  onShareAppMessage() {
     return {
       title: '"' + wx.getStorageSync('mallName') + '" ' + wx.getStorageSync('share_profile'),
       path: '/pages/index/index?inviter_id=' + wx.getStorageSync('uid')
@@ -178,10 +177,9 @@ Page({
                 originalPrice:res.data[0].originalPrice,
                 number: 1,
                 active: false,
-                pic: '/images/my/cancel.png',
-                color:'黑色',
+                pic: res.data[0].pic,
+                color:res.data[0].color,
                 size:'L',
-                left:''
               }]
             }
           })

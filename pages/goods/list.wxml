@@ -8,9 +8,9 @@
 <view class="line"></view>
 <view class="filters">
   <view class="item {{orderBy==''?'active':''}}" data-val="" bindtap="filter">综合</view>
-  <view class="item {{orderBy=='addedDown'?'active':''}}" data-val="addedDown" bindtap="filter">新品</view>
+  <view class="item {{orderBy=='addedtime'?'active':''}}" data-val="addedtime" bindtap="filter">上新时间</view>
   <view class="item {{orderBy=='ordersDown'?'active':''}}" data-val="ordersDown" bindtap="filter">销量</view>
-  <view class="item {{orderBy=='priceUp'?'active':''}}" data-val="priceUp" bindtap="filter">价格</view>
+  <view class="item {{orderBy=='minPrice'?'active':''}}" data-val="minPrice" bindtap="filter">价格</view>
 </view>
 <block wx:if="{{listType == 1}}">
   <view class="list1" wx:for="{{goods}}" wx:key="id">
@@ -19,8 +19,7 @@
       <view class="title ellipsis"><navigator url="/pages/goods-details/index?id={{item.id}}">{{item.name}}</navigator></view>
       <view class="price">¥ {{item.minPrice}}</view>
       <view class="buy-info">
-        <view class="num">已售出{{item.numberSells}}件</view>
-        <image class="car" src="/images/icon/car.svg" data-id="{{item.id}}" bindtap="addShopCar"></image>
+        <image class="car" src="/images/nav/shopping.png" data-id="{{item.id}}" bindtap="addShopCar"></image>
       </view>
     </view>
   </view>
@@ -32,8 +31,7 @@
       <view class="title"><navigator url="/pages/goods-details/index?id={{item.id}}">{{item.name}}</navigator></view>
       <view class="price">¥ {{item.minPrice}}</view>
       <view class="buy-info">
-        <view class="num">{{item.numberOrders}}人已购{{item.numberSells}}件</view>
-        <image class="car" src="/images/icon/car.svg" data-id="{{item.id}}" bindtap="addShopCar"></image>
+        <image class="car" src="/images/nav/shopping.png" data-id="{{item.id}}" bindtap="addShopCar"></image>
       </view>
     </view>
   </view>
