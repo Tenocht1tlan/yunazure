@@ -138,11 +138,11 @@ page,view,image,input {
 }
 
 .goods-container .goods .soldInfo .good-price-box .price {
-  color: #d81e06;
-  margin-top: 10rpx;
+  color:#d81e06;
+  margin-top: 60rpx;
   width: 120rpx;
-  font-size: 28rpx;
-  font-weight: bold;
+  font-weight: bolder;
+  font-size: 25rpx;
   line-height: 40rpx;
 }
 
@@ -206,8 +206,8 @@ page,view,image,input {
   position: absolute;
   width: 46rpx;
   height: 46rpx;
-  bottom: 64rpx;
-  right: 36rpx;
+  bottom: 30rpx;
+  right: 45rpx;
 }
 
 .sku-mask {

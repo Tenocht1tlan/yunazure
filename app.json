@@ -43,7 +43,8 @@
     "pages/Special/index",
     "pages/Activity/index",
     "pages/New/index",
-    "pages/Comp/index"
+    "pages/Comp/index",
+    "pages/history/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -80,7 +81,7 @@
         "pagePath": "pages/shop-cart/index",
         "iconPath": "images/nav/chartNo.png",
         "selectedIconPath": "images/nav/chartYes.png",
-        "text": "购物车"
+        "text": "购物袋"
       },
       {
         "pagePath": "pages/my/index",

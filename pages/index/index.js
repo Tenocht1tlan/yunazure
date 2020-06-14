@@ -27,7 +27,7 @@ Page({
     scrollTop: 0,
     hiddenNav:true,
     loadingMoreHidden: true,
-    swiperHeight:750,
+    swiperHeight:1000,
 
     coupons: [],
 
@@ -128,6 +128,9 @@ Page({
   currTxthide:0,
   tempIdx:0,
   addFavInfo:{
+    items:[]
+  },
+  addHistoryInfo:{
     items:[]
   }
 },

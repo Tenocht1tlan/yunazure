@@ -17,8 +17,7 @@
 
 .to-index-btn {
   color: #fff;
-  background: #e64340;
-  border-radius: 6px;
+  background: #000000;
   width: 300rpx;
   height: 70rpx;
   line-height: 70rpx;
@@ -108,18 +107,20 @@
   color: #999;
   height: 38rpx;
   line-height: 38rpx;
-  margin: 8rpx 0 25rpx 0;
+  margin: 8rpx 0 5rpx 0;
 }
 .goods-info .text-box .goods-id {
   font-size: 24rpx;
   color: #999;
   height: 38rpx;
   line-height: 38rpx;
-  margin: 8rpx 0 25rpx 0;
+  margin: 0 0 25rpx 0;
 }
 .goods-info .text-box .goods-price {
-  font-size: 26rpx;
-  color: #e64340;
+  font-size: 28rpx;
+  color: #000000;
+  font-weight: bolder;
+  font-family:"Neue-Helvetica","Helvetica","Arial",Sans-Serif; 
   margin-bottom: 0;
 }
 .goods-info .text-box .buy-num {
@@ -211,7 +212,7 @@
   width: 240rpx;
   text-align: center;
   line-height: 80rpx;
-  background-color: #e64340;
+  background-color: #000000;
   font-size: 30rpx;
   color: #fff;
 }
@@ -230,15 +231,11 @@
   box-sizing: border-box;
 }
 .jiesuan-box .total {
-  color: #e64340;
+  color: #000000;
+  font-weight: bolder;
+  font-family:"Neue-Helvetica","Helvetica","Arial",Sans-Serif;
 }
-.trip {
-  background: #e64340;
-  padding: 8rpx 32rpx;
-  color: #fff;
-  width: 686rpx;
-  font-size: 24rpx;
-}
+
 
 checkbox .wx-checkbox-input{
   width: 30rpx;

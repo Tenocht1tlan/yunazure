@@ -18,14 +18,14 @@
     <view class="logo">Yunazure</view>
    </view>
 	</view>
-<navigator url="/pages/shop/select">
+<!-- <navigator url="/pages/shop/select">
   <view wx:if="{{shopInfo}}" class="shops-container">
     <view class="l">
       <image src="/images/order-details/icon-address.png"></image>
       <text>{{shopInfo.name}}</text>
     </view>
   </view>
-</navigator>
+</navigator> -->
 <view class="swiper-container" style="height:{{swiperHeight}}rpx;">
   <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;">
     <swiper-item wx:for="{{banners}}" wx:key="id" >

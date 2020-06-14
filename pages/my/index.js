@@ -52,6 +52,11 @@ Page({
       url: "/pages/star/star"
     })
   },
+  toHistory:function(){
+    wx.navigateTo({
+      url: "/pages/history/index"
+    })
+  },
   toMyAddr: function () {
     wx.navigateTo({
       url: "/pages/select-address/index"

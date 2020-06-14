@@ -1,0 +1,11 @@
+<!--pages/history/index.wxml-->
+  <view class="all">
+    <view class="star-box" wx:for="{{favGoods}}" wx:key="good_id" >
+      <image class="starImag" src="{{item.pic}}" mode="aspectFill"  bindtap="check"  data-index="{{index}}" data-id="{{item.good_id}}" >
+      </image>
+      <view class="goodName">{{item.name}}
+      </view>
+      <view class="goodDetial">{{item.color}} {{item.good_id}}
+      </view>
+    </view>
+  </view>

@@ -1,0 +1,31 @@
+/* pages/star/star.wxss */
+
+.all{
+  width: 750rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.star-box{
+  display: block;
+  margin-left: 25rpx;
+  text-align: center;
+}
+.starImag{
+  width:220rpx;
+  height: 250rpx;
+}
+.goodName{
+  font-size: 24rpx;
+  font-family: 'Times New Roman', Times, serif;
+  
+}
+.goodDetial{
+  font-size: 24rpx;
+  font-family: 'Times New Roman', Times, serif;
+  margin-left: 25rpx;
+  color: #666;
+}
+
+

@@ -248,7 +248,7 @@ Page({
               }
             }).then(res=>{
               wx.showToast({
-                title: '加入购物车',
+                title: '加入购物袋',
                 icon: 'success'
               })
             }).catch(console.error)
@@ -262,7 +262,7 @@ Page({
                 }
               }).then(res=>{
                 wx.showToast({
-                  title: '加入购物车',
+                  title: '加入购物袋',
                   icon: 'success'
                 })
               }).catch(console.error)
@@ -274,7 +274,7 @@ Page({
                 }
               }).then(res=>{
                 wx.showToast({
-                  title: '加入购物车',
+                  title: '加入购物袋',
                   icon: 'success'
                 })
               }).catch(console.error)
