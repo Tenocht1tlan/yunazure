@@ -28,7 +28,7 @@
   <navigator url="/pages/shop-cart/index" open-type="switchTab">
     <view class="item">
       <image src="/images/nav/cart-off.png"></image>
-      <text>购物车</text>
+      <text>购物袋</text>
     </view>
   </navigator>
   <navigator url="/pages/my/index" open-type="switchTab">

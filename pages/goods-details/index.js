@@ -3,6 +3,7 @@ const CONFIG = require('../../config.js')
 const AUTH = require('../../utils/auth')
 const SelectSizePrefix = "选择："
 const db = wx.cloud.database()
+const _ = db.command
 
 Page({
   data: {
@@ -32,6 +33,9 @@ Page({
     addFavInfo:{
       items:[]
     },
+    historyInfo:{
+      items:[]
+    },
   },
    onLoad(e) {
     this.data.kjJoinUid = e.kjJoinUid
@@ -41,7 +45,8 @@ Page({
       curuid: wx.getStorageSync('uid')
     })
     // this.reputation(e.id)
-    this.shippingCartInfo()
+    this.shippingCartInfo() 
+    this.addHistory()
   },  
   shippingCartInfo(){
     const token = wx.getStorageSync('isloged')
@@ -71,6 +76,70 @@ Page({
         }
       })
     })
+  },
+  // 有问题 想法是先从goods里面拿到相应的数据，然后判断history里面是否有数据，有的话直接加，没的话判断goodsid是否存在，存在的话删除这个items，然后加入这个items
+  addHistory(){
+    var that = this
+    var list = [] 
+    var listNew = [] 
+    var canadd = false
+    var exist = false
+    var goodsid = this.data.goodsId
+    // console.log('goodsId'+goodsid)
+    db.collection('goods').where({
+      good_id:goodsid
+    }).get(). then(res=>{
+      this.setData({
+         historyInfo:{
+          items:[{
+            good_id:goodsid,
+            name: res.data[0].name,
+            pic: res.data[0].pic,
+            price:res.data[0].minPrice,
+          }]
+      }
+    })
+    // console.log(this.data.historyInfo)
+  })
+  db.collection('history').get().then(res=>{
+    if(res.data[0]== undefined){
+      db.collection('history').add({
+        data: {
+          items:that.data.historyInfo.items
+        }
+      })
+      console.log('items:'+ that.data.historyInfo.items)
+    }else{
+        res.data[0].items.forEach(value=>{
+          if(value != null){
+            list.push(value)
+          }
+        })
+        console.log('list'+ list)
+        list.forEach(e=>{
+          if(e.good_id == goodsid){
+            exist = true
+          }else{
+            listNew.push(e)
+          }
+        })
+        console.log(listNew)
+    }
+    if(exist){
+      db.collection('history').update({
+        data:{
+          items: listNew
+        },
+      })
+    }
+    db.collection('history').update({
+      data: {
+        items:_.push({
+          each:that.data.historyInfo.items
+        })
+      }
+    })
+  })
   },
    onShow (){
     var that  = this
@@ -466,7 +535,7 @@ Page({
               }
             }).then(res=>{
               wx.showToast({
-                title: '加入购物车',
+                title: '加入购物袋',
                 icon: 'success'
               })
             }).catch(console.error)
@@ -480,7 +549,7 @@ Page({
                 }
               }).then(res=>{
                 wx.showToast({
-                  title: '加入购物车',
+                  title: '加入购物袋',
                   icon: 'success'
                 })
               }).catch(console.error)
@@ -492,7 +561,7 @@ Page({
                 }
               }).then(res=>{
                 wx.showToast({
-                  title: '加入购物车',
+                  title: '加入购物袋',
                   icon: 'success'
                 })
               }).catch(console.error)

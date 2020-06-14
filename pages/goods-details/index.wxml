@@ -237,7 +237,7 @@
       <image src="/images/nav/shopping.png"></image>
     </view>
     <image bindtap="addFav" class="fav-icon" src="{{faved?'/images/staryes.png':'/images/starno.png'}}"></image>
-    <view wx:if="{{!goodsDetail.pingtuan}}" class="join-shop-cart" bindtap="{{goodsDetailSkuShowType==0?'toAddShopCar':'addShopCar'}}">加入购物车</view>
+    <view wx:if="{{!goodsDetail.pingtuan}}" class="join-shop-cart" bindtap="{{goodsDetailSkuShowType==0?'toAddShopCar':'addShopCar'}}">加入购物袋</view>
     <view wx:if="{{!goodsDetail.pingtuan}}" class="now-buy"  data-shopType="{{shopType}}" bindtap="{{goodsDetailSkuShowType==0?'tobuy':'buyNow'}}">立即购买</view>
     <view wx:if="{{goodsDetail.pingtuan}}" class="join-shop-cart" bindtap="tobuy">单独购买</view>
     <view wx:if="{{goodsDetail.pingtuan}}" class="now-buy" bindtap="toPingtuan">发起拼团</view>
@@ -279,7 +279,7 @@
         </view>
       </view>
       <view class="safeAreaOldPaddingBttom safeAreaNewPaddingBttom" wx:if="{{shopType =='addShopCar'}}" bindtap="addShopCar">
-        <view class="popup-join-btn">加入购物车</view>
+        <view class="popup-join-btn">加入购物袋</view>
       </view>
       <view class="safeAreaOldPaddingBttom safeAreaNewPaddingBttom" data-shopType="{{shopType}}" wx:if="{{shopType =='tobuy' || shopType =='toPingtuan'}}" bindtap="buyNow">
         <view class="popup-join-btn">立即购买</view>

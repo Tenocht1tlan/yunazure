@@ -45,13 +45,7 @@
             <text class="price">¥{{item.minPrice}}</text>
           </view>
         </view>
-        <view class='soldInfo'>
-          <view class='good-sales-box'>
-            <text class="number">已售 {{item.numberSells}}件</text>
-            <text>评价 +{{item.gotScore}}积分</text>
-          </view>
-        </view>
-        <image data-id="{{item.good_id}}" bindtap="addShopCar" class="car" src="/images/nav/chartYes.png"></image>
+        <image data-id="{{item.good_id}}" bindtap="addShopCar" class="car" src="/images/nav/shopping.png"></image>
       </view>
     </scroll-view>
   </view>
