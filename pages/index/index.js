@@ -556,7 +556,6 @@ Page({
               tmp[res.id] = 1
             }
           })
-          console.log("t2 = "+tmp)
         }
         this.setData({
           favStr: tmp

@@ -33,9 +33,7 @@ Page({
     addFavInfo:{
       items:[]
     },
-    historyInfo:{
-      items:[]
-    },
+
   },
    onLoad(e) {
     this.data.kjJoinUid = e.kjJoinUid
@@ -46,7 +44,7 @@ Page({
     })
     // this.reputation(e.id)
     this.shippingCartInfo() 
-    this.addHistory()
+
   },  
   shippingCartInfo(){
     const token = wx.getStorageSync('isloged')
@@ -77,70 +75,6 @@ Page({
       })
     })
   },
-  // 有问题 想法是先从goods里面拿到相应的数据，然后判断history里面是否有数据，有的话直接加，没的话判断goodsid是否存在，存在的话删除这个items，然后加入这个items
-  addHistory(){
-    var that = this
-    var list = [] 
-    var listNew = [] 
-    var canadd = false
-    var exist = false
-    var goodsid = this.data.goodsId
-    // console.log('goodsId'+goodsid)
-    db.collection('goods').where({
-      good_id:goodsid
-    }).get(). then(res=>{
-      this.setData({
-         historyInfo:{
-          items:[{
-            good_id:goodsid,
-            name: res.data[0].name,
-            pic: res.data[0].pic,
-            price:res.data[0].minPrice,
-          }]
-      }
-    })
-    // console.log(this.data.historyInfo)
-  })
-  db.collection('history').get().then(res=>{
-    if(res.data[0]== undefined){
-      db.collection('history').add({
-        data: {
-          items:that.data.historyInfo.items
-        }
-      })
-      console.log('items:'+ that.data.historyInfo.items)
-    }else{
-        res.data[0].items.forEach(value=>{
-          if(value != null){
-            list.push(value)
-          }
-        })
-        console.log('list'+ list)
-        list.forEach(e=>{
-          if(e.good_id == goodsid){
-            exist = true
-          }else{
-            listNew.push(e)
-          }
-        })
-        console.log(listNew)
-    }
-    if(exist){
-      db.collection('history').update({
-        data:{
-          items: listNew
-        },
-      })
-    }
-    db.collection('history').update({
-      data: {
-        items:_.push({
-          each:that.data.historyInfo.items
-        })
-      }
-    })
-  })
-  },
    onShow (){
     var that  = this
     const isloged = wx.getStorageSync('isloged')
@@ -170,6 +104,27 @@ Page({
     
     this.getGoodsDetailAndKanjieInfo(this.data.goodsId)
     this.goodsFavCheck()
+  },
+  addHistory(){
+    var that = this
+    db.collection('history').get().then(res=>{
+      res.data.forEach(val=>{
+        if(val.good_id == that.data.goodsId){
+          db.collection('history').where({
+            good_id:that.data.goodsId
+          }).remove()
+          return
+        }
+      })
+      db.collection('history').add({
+        data: {
+          good_id:that.data.goodsId,
+          name:that.data.goodsDetail.name,
+          pic:that.data.goodsDetail.pic,
+          price:that.data.goodsDetail.minPrice,
+        }
+      })
+    })
   },
   async goodsFavCheck() {
     // WXAPI.goodsFavList({
@@ -286,6 +241,7 @@ Page({
           // }
           that.setData(_data);
         }
+        that.addHistory()
       }
     })
     // const goodsKanjiaSetRes = await WXAPI.kanjiaSet(goodsId)
