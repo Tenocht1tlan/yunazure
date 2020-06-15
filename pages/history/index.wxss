@@ -13,19 +13,23 @@
   text-align: center;
 }
 .starImag{
-  width:220rpx;
-  height: 250rpx;
+  /* width:220rpx;
+  height: 250rpx; */
+  width:340rpx;
+  height: 500rpx;
 }
 .goodName{
   font-size: 24rpx;
   font-family: 'Times New Roman', Times, serif;
-  
 }
 .goodDetial{
   font-size: 24rpx;
   font-family: 'Times New Roman', Times, serif;
-  margin-left: 25rpx;
   color: #666;
+}
+.space{
+  height: 20rpx;
+  background-color: #fff;
 }
 
 
