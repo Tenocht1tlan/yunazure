@@ -14,9 +14,7 @@
       <view class="a-goods-conts {{item.active? 'active':''}}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.left}}">
       <!-- 购物车 -->
         <view class="goods-info">
-          <checkbox-group bindchange="checkboxChange" data-index="{{index}}">
-            <checkbox class="checkbox" value="isChecked" checked="true"></checkbox>
-          </checkbox-group>
+          <checkbox class="checkbox" bindtap="cbChange" value="isChecked" checked="{{checkedVal[index]? 'true':'false'}}" data-index="{{index}}"></checkbox>
           <view class="img-box">
             <image mode="aspectFill" src="{{item.pic}}" class="img" />
           </view>

@@ -6,6 +6,8 @@ const app = getApp()
 import NumberAnimate from 'index_model.js'
 Page({
   data: {
+    isFirst: 0,
+    openId:'',
     wxlogin: false,
     saveHidden: true,
     allSelect: false,
@@ -18,6 +20,12 @@ Page({
     shippingCarInfo:{
       items:[]
     }
+  },
+  onHide: function() {
+    console.log("isFirst")
+    this.setData({
+      isFirst: 0
+    })
   },
   //获取元素自适应后的实际宽度
   getEleWidth: function(w) {
@@ -36,7 +44,7 @@ Page({
     var delBtnWidth = this.getEleWidth(this.data.delBtnWidth);
     this.setData({
       delBtnWidth: delBtnWidth
-    });
+    })
   },
   async onPullDownRefresh(){
     const isLogined = await AUTH.checkHasLogined()
@@ -47,9 +55,7 @@ Page({
       wx.cloud.callFunction({
         name:'login'
       }).then(res=>{
-        db.collection('shopping-cart').where({
-          _openid:res.result.openid
-        }).get().then(res=>{
+        db.collection('shopping-cart').get().then(res=>{
           this.setData({
             noSelect: res.data[0].items.length > 0 ? false : true,
             'shippingCarInfo.items': res.data[0].items
@@ -80,6 +86,17 @@ Page({
     }
   },
   onLoad: function() {
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      this.setData({
+        wxlogin: true,
+        openId: res.result.openid
+      })
+      try {
+        wx.setStorageSync('openid', res.result.openid)
+      } catch (e) { }
+    })
     this.initEleWidth()
     // this.onShow()
   },
@@ -90,8 +107,7 @@ Page({
         wxlogin: isLogined
       })
       if (isLogined) {
-        this.shippingCarInfo()
-        
+        this.shippingCarInfo(true)
       }
     }else{
       wx.removeTabBarBadge({
@@ -103,44 +119,51 @@ Page({
       })
     }
   },
-  shippingCarInfo: function() {
-    const token = wx.getStorageSync('isloged')
-    if (!token) {
+  shippingCarInfo: function(needUpdate) {
+    var isloged = wx.getStorageSync('isloged')
+    if(!isloged){
       return
     }
-    wx.cloud.callFunction({
-      name:'login'
-    }).then(res=>{
-      db.collection('shopping-cart').where({
-        _openid:res.result.openid
-      }).get().then(res=>{
-        if(res.data.length > 0){
-          var num = 0
-          var tmpVal = []
-          res.data[0].items.forEach(value=>{
-            this.data.totalPrice += value.price*value.number
-            tmpVal.push('isChecked')
-            if(value != null){
-              num += value.number
-            }
-          })
-          wx.setTabBarBadge({
-            index: 3,
-            text: num.toString(),
-          })
+    db.collection('shopping-cart').get().then(res=>{
+      if(res.data.length > 0){
+        var tmp = []
+        var tmpPrice = 0
+        var num = 0
+        res.data[0].items.forEach(value=>{
+          if(this.data.isFirst == 0 || needUpdate){
+            console.log('in in in')
+            tmpPrice += value.price*value.number
+            tmp.push('isChecked')
+          }
+          if(value != null){
+            num += value.number
+          }
+        })
+        wx.setTabBarBadge({
+          index: 3,
+          text: num.toString(),
+        })
+        if(needUpdate){
           this.setData({
-            checkedVal: tmpVal,
-            totalPrice: this.data.totalPrice,
+            checkedVal: tmp,
+            isFirst: 1,
+            totalPrice: tmpPrice,
             noSelect: res.data[0].items.length > 0 ? false : true,
             'shippingCarInfo.items': res.data[0].items
           })
         }else{
           this.setData({
-            noSelect: true,
-            'shippingCarInfo.items': null
+            noSelect: res.data[0].items.length > 0 ? false : true,
+            'shippingCarInfo.items': res.data[0].items
           })
         }
-      })
+        console.log("init = "+this.data.checkedVal)
+      }else{
+        this.setData({
+          noSelect: true,
+          'shippingCarInfo.items': null
+        })
+      }
     })
   },
   toIndexPage: function() {
@@ -191,102 +214,94 @@ Page({
       })
     }
   },
-  checkboxChange(e) {
+  cbChange(e) {
     const index = e.currentTarget.dataset.index
-    console.log('index =', index)
-    console.log('value =', e.detail.value)
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
     const num = this.data.shippingCarInfo.items[index].number
     var tempPrice = parseInt(this.data.totalPrice)
-    if(e.detail.value[0] == 'isChecked'){
+    console.log('index =', index)
+    if(this.data.checkedVal[index] == 'isChecked'){
+      this.data.checkedVal[index] = '0'
+      tempPrice -= price*num
+      console.log('checkedVal =', this.data.checkedVal)
+    }else{
       this.data.checkedVal[index] = 'isChecked'
       tempPrice += price*num
-    }else{
-      this.data.checkedVal[index] = ''
-      tempPrice -= price*num
+      console.log('checkedVal =', this.data.checkedVal)
     }
-    let newNumer = new NumberAnimate({
-      from: tempPrice,
-      speed: 1000,
-      refreshTime: 100,
-      decimals: 2,
-      onUpdate:()=>{
+    // let newNumer = new NumberAnimate({
+    //   from: tempPrice,
+    //   speed: 1000,
+    //   refreshTime: 100,
+    //   decimals: 2,
+    //   onUpdate:()=>{
         this.setData({
-          totalPrice: newNumer.tempValue
+          totalPrice: tempPrice//newNumer.tempValue
         })
-      }
-  })
+    //   }
+    // })
   },
   async delItem(e) {
     const key = e.currentTarget.dataset.key
-    this.delItemDone(key)
-
     const index = e.currentTarget.dataset.index
+    this.delItemDone(key, index)
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
     const num = this.data.shippingCarInfo.items[index].number
     var tempPrice = parseInt(this.data.totalPrice)
     if(this.data.checkedVal[index] == 'isChecked'){
       tempPrice -= price*num
-      var tempChecks = this.data.checkedVal
-      tempChecks.slice(index,1)
-      this.setData({
-        checkedVal: tempChecks
-      })
-      console.log("checkedVal === "+ tempChecks)
-      let newNumer = new NumberAnimate({
-        from: tempPrice,
-        speed: 1000,
-        refreshTime: 100,
-        decimals: 2,
-        onUpdate:()=>{
+      // let newNumer = new NumberAnimate({
+      //   from: tempPrice,
+      //   speed: 1000,
+      //   refreshTime: 100,
+      //   decimals: 2,
+      //   onUpdate:()=>{
           this.setData({
-            totalPrice: newNumer.tempValue
+            totalPrice: tempPrice//newNumer.tempValue
           })
-        }
-      })
+      //   }
+      // })
     }
   },
-  async delItemDone(key){
+  async delItemDone(key, index){
     wx.showLoading({
       title: '加载中...',
     })
-    var openid = ''
     var list = []
     const that = this
-    wx.cloud.callFunction({
-      name:'login'
-    }).then(res=>{
-      openid = res.result.openid
+    db.collection('shopping-cart').get().then(res=>{
+      res.data[0].items.forEach(value=>{
+        if(value != null && value.good_id != key){
+          list.push(value)
+        }
+      })
       db.collection('shopping-cart').where({
-        _openid:res.result.openid
-      }).get().then(res=>{
-        res.data[0].items.forEach(value=>{
-          if(value != null && value.good_id != key){
-            list.push(value)
-          }
-        })
-        db.collection('shopping-cart').where({
-          _openid:openid
-        }).update({
-          data:{
-            items: list
-          },
-          success(){
-            //
-          },
-          complete(){
-            TOOLS.showTabBarBadge()
-            that.setData({
-              noSelect: list.length > 0 ? false : true,
-              'shippingCarInfo.items':list
-            })
-            wx.hideLoading()
-          }
-        })
+        _openid: that.data.openId
+      }).update({
+        data:{
+          items: list
+        },
+        fail(err){
+          console.log(err)
+        },
+        success(){
+          TOOLS.showTabBarBadge()
+          let tmp = that.data.checkedVal.splice(index,1)
+          that.setData({
+            checkedVal: that.data.checkedVal,
+            noSelect: list.length > 0 ? false : true,
+            'shippingCarInfo.items': list
+          })
+          wx.hideLoading()
+        },
+        complete(){
+
+        }
       })
     })
   },
   async jiaBtnTap(e) {
+    const that = this
     wx.showLoading({
       title: '加载中...',
     })
@@ -295,22 +310,21 @@ Page({
     var tempPrice = parseInt(this.data.totalPrice)
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number + 1
-    console.log('tmp =', this.data.checkedVal)
+    console.log('jia checkedVal =', this.data.checkedVal)
     if(this.data.checkedVal[index] == 'isChecked'){
       tempPrice += price
-      let newNumer = new NumberAnimate({
-        from: tempPrice,
-        speed: 1500,
-        refreshTime: 100,
-        decimals: 2,
-        onUpdate:()=>{
+      // let newNumer = new NumberAnimate({
+      //   from: tempPrice,
+      //   speed: 1500,
+      //   refreshTime: 100,
+      //   decimals: 2,
+      //   onUpdate:()=>{
           this.setData({
-            totalPrice: newNumer.tempValue
+            totalPrice: tempPrice//newNumer.tempValue
           })
-        }
-      })
+      //   }
+      // })
     }
-    const that = this
     wx.cloud.callFunction({
       name:'changeSCartNum',
       data: {
@@ -318,12 +332,13 @@ Page({
         number: number,
       },
       complete(){
-        that.shippingCarInfo()
+        that.shippingCarInfo(false)
         wx.hideLoading()
       }
     })
   },
   async jianBtnTap(e) {
+    const that = this
     wx.showLoading({
       title: '加载中...',
     })
@@ -332,14 +347,20 @@ Page({
     var tempPrice = parseInt(this.data.totalPrice)
     const item = this.data.shippingCarInfo.items[index]
     const number = item.number - 1
+    console.log('jian checkedVal =', this.data.checkedVal)
     if (number <= 0) {
-      // 弹出删除确认
       wx.hideLoading()
       wx.showModal({
         content: '确定要删除该商品吗？',
         success: (res) => {
           if (res.confirm) {
-            this.delItemDone(item.good_id)
+            if(this.data.checkedVal[index] == 'isChecked'){
+              tempPrice -= price
+              this.setData({
+                totalPrice: tempPrice
+              })
+            }
+            this.delItemDone(item.good_id, index)
           }
         }
       })
@@ -347,20 +368,19 @@ Page({
     }else{
       if(this.data.checkedVal[index] == 'isChecked'){
         tempPrice -= price
-        let newNumer = new NumberAnimate({
-          from: tempPrice,
-          speed: 1500,
-          refreshTime: 100,
-          decimals: 2,
-          onUpdate:()=>{
+        // let newNumer = new NumberAnimate({
+        //   from: tempPrice,
+        //   speed: 1500,
+        //   refreshTime: 100,
+        //   decimals: 2,
+        //   onUpdate:()=>{
             this.setData({
-              totalPrice: newNumer.tempValue
+              totalPrice: tempPrice//newNumer.tempValue
             })
-          }
-        })
+        //   }
+        // })
       }
     }
-    const that = this
     wx.cloud.callFunction({
       name:'changeSCartNum',
       data: {
@@ -368,7 +388,7 @@ Page({
         number: number,
       },
       complete(){
-        that.shippingCarInfo()
+        that.shippingCarInfo(false)
         wx.hideLoading()
       }
     })
@@ -396,9 +416,9 @@ Page({
           wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
           wx.setStorageSync('mail', e.detail.userInfo.nickName)
           wx.setStorageSync('isloged', true)
-          wx.setStorageSync('openid', this.data.openid)
+          wx.setStorageSync('openid', res.result.openid)
+          this.shippingCarInfo(true)
         } catch (e) { }
-        this.shippingCarInfo()
       })
     }
   },
