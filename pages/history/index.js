@@ -6,6 +6,7 @@ Page({
    */
   data: {
     favGoods:[],
+    list:[]
 
   },
 
@@ -32,17 +33,23 @@ Page({
       this.getFavGoodsList()
     },
     getFavGoodsList(){
+      var that = this
       wx.cloud.callFunction({
         name:'login'
       }).then(res=>{
-        db.collection('favorite').where({
-            _openid:res.result.openid
-        }).get().then(res=>{
+        db.collection('history').get().then(res=>{
+          if(res.data){
+            this.setData({
+              list:res.data
+            })
+          }
           this.setData({
-            favGoods:res.data[0].items
+            favGoods:that.data.list.reverse()
           })
         })
       })
+
+
   },
 
 
