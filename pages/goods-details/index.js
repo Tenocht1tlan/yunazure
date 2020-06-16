@@ -618,7 +618,7 @@ Page({
 
     var buyNowInfo = {}
     buyNowInfo.shopNum = 0
-    buyNowInfo.shopList = []
+    buyNowInfo.items = []
     // var hasSameGoodsIndex = -1;
     // for (var i = 0; i < toBuyInfo.shopList.length; i++) {
     //   var tmpShopCarMap = toBuyInfo.shopList[i];
@@ -634,7 +634,7 @@ Page({
     // } else {
     //   toBuyInfo.shopList.push(shopCarMap);
     // }
-    buyNowInfo.shopList.push(shopCarMap)
+    buyNowInfo.items.push(shopCarMap)
     return buyNowInfo
   },
   onShareAppMessage() {

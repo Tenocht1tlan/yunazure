@@ -22,10 +22,11 @@ Page({
     }
   },
   onHide: function() {
-    console.log("isFirst")
-    this.setData({
-      isFirst: 0
+    wx.setStorage({
+      key: "checked",
+      data: this.data.checkedVal
     })
+    console.log("sto ck = "+ this.data.checkedVal)
   },
   //获取元素自适应后的实际宽度
   getEleWidth: function(w) {
@@ -98,7 +99,6 @@ Page({
       } catch (e) { }
     })
     this.initEleWidth()
-    // this.onShow()
   },
   async onShow() {
     const isLogined = await AUTH.checkHasLogined()
@@ -107,7 +107,7 @@ Page({
         wxlogin: isLogined
       })
       if (isLogined) {
-        this.shippingCarInfo(true)
+        this.shippingCarInfo(false)
       }
     }else{
       wx.removeTabBarBadge({
@@ -124,14 +124,36 @@ Page({
     if(!isloged){
       return
     }
+
+    var stoCheck = [] 
+    stoCheck = wx.getStorageSync('checked')
     db.collection('shopping-cart').get().then(res=>{
+      console.log("stoCheck.length = "+ stoCheck.length)
+      if(stoCheck.length < res.data[0].items.length){
+        needUpdate = true
+      }
+      if(this.data.isFirst == 0){
+        needUpdate = false
+      }
       if(res.data.length > 0){
         var tmp = []
         var tmpPrice = 0
         var num = 0
+        if(needUpdate){
+          let dx = res.data[0].items.length - stoCheck.length
+          for(let i=0;i<dx;i++){
+            stoCheck.push('isChecked')
+          }
+          tmp = stoCheck
+          for(let i=0;i<res.data[0].items.length;i++){
+            if(tmp[i] == 'isChecked'){
+              tmpPrice += res.data[0].items[i].price*res.data[0].items[i].number
+            }
+          }
+        }
         res.data[0].items.forEach(value=>{
-          if(this.data.isFirst == 0 || needUpdate){
-            console.log('in in in')
+          
+          if(this.data.isFirst == 0){
             tmpPrice += value.price*value.number
             tmp.push('isChecked')
           }
@@ -139,11 +161,12 @@ Page({
             num += value.number
           }
         })
+        console.log("tmp = "+ tmp)
         wx.setTabBarBadge({
           index: 3,
           text: num.toString(),
         })
-        if(needUpdate){
+        if(this.data.isFirst == 0 || needUpdate) {
           this.setData({
             checkedVal: tmp,
             isFirst: 1,
@@ -157,7 +180,7 @@ Page({
             'shippingCarInfo.items': res.data[0].items
           })
         }
-        console.log("init = "+this.data.checkedVal)
+        // console.log("init = "+this.data.checkedVal)
       }else{
         this.setData({
           noSelect: true,
@@ -392,6 +415,38 @@ Page({
         wx.hideLoading()
       }
     })
+  },
+  toPayOrder(){
+    var tmp = false
+    var index = []
+    var goodsInfo = {
+      items:[]
+    }
+    for(let i=0;i<this.data.checkedVal.length;i++){
+      if(this.data.checkedVal[i] == 'isChecked'){
+        index.push(i)
+        tmp = true
+      }
+    }
+   
+    if(tmp){
+      index.forEach(e=>{
+        goodsInfo.items.push(this.data.shippingCarInfo.items[e])
+      })
+      wx.setStorage({
+        key: "shopCartInfo",
+        data: goodsInfo
+      })
+      wx.navigateTo({
+        url: "/pages/to-pay-order/index"
+      })
+    }else{
+      wx.showToast({
+        title: '请选择商品~',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
   cancelLogin() {
     this.setData({

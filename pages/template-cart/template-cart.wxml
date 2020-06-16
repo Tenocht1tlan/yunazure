@@ -10,7 +10,7 @@
 
 <template name="cart-goods-list">
   <view class="goodsList">
-    <view class="a-gooods" wx:for="{{items}}" wx:key="key">
+    <view class="a-gooods" wx:for="{{items}}" wx:key="good_id">
       <view class="a-goods-conts {{item.active? 'active':''}}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.left}}">
       <!-- 购物车 -->
         <view class="goods-info">
@@ -47,8 +47,8 @@
     <view class="left-price">
       <view class="total" hidden="{{noSelect}}">合计：¥ {{totalPrice}}</view>
     </view>
-    <view class="to-pay-btn">
-      <navigator url="/pages/to-pay-order/index">去结算</navigator>
+    <view class="to-pay-btn" bindtap="toPayOrder">
+      <view>去结算</view>
     </view>
   </view>
 </template>

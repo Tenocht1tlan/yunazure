@@ -36,34 +36,23 @@ Page({
   },
   async doneShow() {
     let shopList = []
-    const openid = wx.getStorageSync('openid')
-    //立即购买下单
+    var goodsInfo = {}
     if ("buyNow" == this.data.orderType) {
-      var buyNowInfoMem = wx.getStorageSync('buyNowInfo')
-      // this.data.kjId = buyNowInfoMem.kjId;
-      if (buyNowInfoMem && buyNowInfoMem.shopList) {
-        shopList = buyNowInfoMem.shopList
-        this.setData({
-          goodsList: shopList,
-          peisongType: this.data.peisongType
-        })
-        this.initShippingAddress()
-      }
+      //立即购买下单
+      var goodsInfo = wx.getStorageSync('buyNowInfo')
     } else {
       //购物车下单
-      db.collection('shopping-cart').where({
-        _openid: openid
-      }).get().then(res=>{
-        if(res.data[0].items.length > 0){
-          shopList = res.data[0].items
-          this.setData({
-            goodsList: shopList,
-            peisongType: this.data.peisongType
-          })
-          this.initShippingAddress()
-        }
-      })
+      var goodsInfo = wx.getStorageSync('shopCartInfo')
     }
+    if (goodsInfo && goodsInfo.items) {
+      shopList = goodsInfo.items
+      this.setData({
+        goodsList: shopList,
+        peisongType: this.data.peisongType
+      })
+      this.initShippingAddress()
+    }
+    
   },
 
   onLoad(e) {
