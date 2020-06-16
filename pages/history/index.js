@@ -27,32 +27,28 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-
-
   onShow:function() {
       this.getFavGoodsList()
-    },
-    getFavGoodsList(){
-      var that = this
-      wx.cloud.callFunction({
-        name:'login'
-      }).then(res=>{
-        db.collection('history').get().then(res=>{
-          if(res.data){
-            this.setData({
-              list:res.data
-            })
-          }
-          this.setData({
-            favGoods:that.data.list.reverse()
-          })
-        })
-      })
-
-
   },
-
-
+  getFavGoodsList(){
+    var that = this
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('history').get().then(res=>{
+        if(res.data){
+          this.setData({
+            list:res.data
+          })
+        }
+        this.setData({
+          favGoods:that.data.list.reverse()
+        })
+      }).catch(err=>{
+        console.log(err)
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

@@ -141,27 +141,6 @@ Page({
     //   })
     // }
   },
-  // async addFav(){
-  //   const isLogined = await AUTH.checkHasLogined()
-  //   if(isLogined){
-  //     this.setData({
-  //       wxlogin: isLogined
-  //     })
-  //     if (isLogined) {
-        // if (this.data.faved) {
-        //   // 取消收藏
-        //   WXAPI.goodsFavDelete(wx.getStorageSync('token'), '', this.data.goodsId).then(res => {
-        //     this.goodsFavCheck()
-        //   })
-        // } else {
-        //   // 加入收藏
-        //   WXAPI.goodsFavPut(wx.getStorageSync('token'), this.data.goodsId).then(res => {
-        //     this.goodsFavCheck()
-        //   })
-        // }
-  //     }
-  //   }
-  // },
   async getGoodsDetailAndKanjieInfo(goodsId) {
     const that = this
     var goodsDetailRes = {}
@@ -194,14 +173,7 @@ Page({
           // if (goodsDetailRes.shopId) {
           //   this.shopSubdetail(goodsDetailRes.shopId)
           // }
-          // if (goodsDetailRes.pingtuan) {
-          //   that.pingtuanList(goodsId)
-          // }
-
           that.data.goodsDetail = goodsDetailRes
-          // if (goodsDetailRes.videoId) {
-          //   that.getVideoSrc(goodsDetailRes.videoId)
-          // }
           let tmpPics = []
           tmpPics.push(goodsDetailRes.pic)
           that.setData({
@@ -211,7 +183,6 @@ Page({
             goodsDetail: goodsDetailRes,
             selectSizePrice: goodsDetailRes.minPrice,
             selectSizeOPrice: goodsDetailRes.originalPrice,
-            // totalScoreToPay: goodsDetailRes.data.basicInfo.minScore,
             buyNumMax: goodsDetailRes.stockNum,
             buyNumber: (goodsDetailRes.stockNum > 0) ? 1 : 0
           }
@@ -239,12 +210,11 @@ Page({
           //     _data.selectSizePrice = goodsDetailRes.data.basicInfo.pingtuanPrice
           //   }        
           // }
-          that.setData(_data);
+          that.setData(_data)
         }
         that.addHistory()
       }
     })
-    // const goodsKanjiaSetRes = await WXAPI.kanjiaSet(goodsId)
   },
   async shopSubdetail(shopId){
     // const res = await WXAPI.shopSubdetail(shopId)
