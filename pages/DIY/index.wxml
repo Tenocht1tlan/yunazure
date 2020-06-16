@@ -1,8 +1,12 @@
 <!--pages/DIY/index.wxml-->
 <!-- 图片展示框 -->
 <view>
-<image></image>
+  <image class="Preview"></image>
 </view>
-<view>
+<view class="color">
+</view>
+<view class="size">
+</view>
+<view class="pattern">
 </view>
 <!-- 选择选项-->

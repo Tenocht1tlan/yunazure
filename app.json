@@ -42,7 +42,8 @@
     "pages/Activity/index",
     "pages/New/index",
     "pages/Comp/index",
-    "pages/history/index"
+    "pages/history/index",
+    "pages/opinion/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

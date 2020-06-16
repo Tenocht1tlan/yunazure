@@ -1,1 +1,5 @@
-/* pages/DIY/index.wxss */
+.Preview{
+  width: 750rpx;
+  height: 650rpx;
+  border: 1rpx #666 solid;
+}

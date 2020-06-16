@@ -1,0 +1,11 @@
+.input-box{
+  display: flex;
+  justify-content: center;
+  width: 750rpx;
+  height: 600rpx;
+}
+.input{
+  width: 500rpx;
+  height: 400rpx;
+  border: 1rpx #666 solid;
+}

@@ -45,7 +45,6 @@
             <text class="price">¥{{item.minPrice}}</text>
           </view>
         </view>
-        <image data-id="{{item.good_id}}" bindtap="addShopCar" class="car" src="/images/nav/shopping.png"></image>
       </view>
     </scroll-view>
   </view>

@@ -57,6 +57,11 @@ Page({
       url: "/pages/history/index"
     })
   },
+  toOpinion:function(){
+    wx.navigateTo({
+      url: "/pages/opinion/index"
+    })
+  },
   toMyAddr: function () {
     wx.navigateTo({
       url: "/pages/select-address/index"
