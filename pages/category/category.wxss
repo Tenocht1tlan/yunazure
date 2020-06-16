@@ -202,14 +202,6 @@ page,view,image,input {
   font-size: 24rpx;
   color: #666;
 }
-.car {
-  position: absolute;
-  width: 46rpx;
-  height: 46rpx;
-  bottom: 30rpx;
-  right: 45rpx;
-}
-
 .sku-mask {
   width: 100vw;
   height: 100vh;

@@ -1,6 +1,6 @@
 <view wx:if="{{hiddenNav}}" class="home-page" >
 		<view class="search">
-      <view class="DiyText" bindtap="toDiy">我要定制</view>
+      <view class="DiyText" catchtap="toDiy">我要定制</view>
       <image src='/images/search.png'  bindtap="goSearch"></image>
     <!-- <input type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:white"></input> -->
     <view class="searchText" bindtap="goSearch" >搜索</view>
@@ -9,7 +9,7 @@
 
   <view wx:else class="home-page" style="height:{{navHeight}}rpx" >
 		<view class="search">
-      <view class="DiyText">我要定制</view>
+      <view class="DiyText" catchtap="toDiy">我要定制</view>
       <image src='/images/search.png'  bindtap="goSearch"></image>
     <!-- <input class="input" type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:gray" ></input> -->
     <!-- <image  class="image" src='/images/search2.png' bindtap="goSearch" ></image> -->
@@ -86,7 +86,7 @@
   <view class="modal-cancel" bindtap="hideModal"></view>
   <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}"> 
         <view class='Mselect'>
-        <image src="{{upImage}}" ></image>
+        <image src="{{upImage}}" mode="scaleToFill"></image>
         <view>------选择尺码------</view>
         <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption' hover-class="hovSelect"	>
         {{item}}
@@ -150,7 +150,7 @@
         <image class="star" catchtap="addFav" src="{{favStr[item.id] == 1 ?'/images/staryes.png':'/images/starno.png'}}" data-index="{{item.id}}" data-id="{{item.good_id}}"></image>
       </view>
       <view style="margin:10rpx 25rpx;width:250rpx">新品
-        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  catchtap="showUp" data-index="{{index}}"></image>
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  catchtap="showUp" data-index="{{index}}"  data-id="{{item.good_id}}"></image>
       </view>
       <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 25rpx">{{item.name}}</view>
       <view style="color:gray;margin:0rpx 45rpx 5rpx 25rpx;display:flex;flex-direction:row;">

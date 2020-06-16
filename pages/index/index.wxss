@@ -332,11 +332,12 @@ font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
   height: 450rpx;
 }
 .star{
-  width: 35rpx;
-  height: 35rpx;
+  width: 25rpx;
+  height: 25rpx;
   position: absolute;
   margin-top: 10rpx;
   margin-left: -45rpx;
+  padding: 8rpx;
   z-index: 2;
   border-radius: 50rpx 50rpx;
   background-color: #fff;

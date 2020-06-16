@@ -1,7 +1,7 @@
 <!--pages/DIY/index.wxml-->
 <!-- 图片展示框 -->
 <view>
-<image></image>
+<image class="Preview"></image>
 </view>
 <view>
 </view>

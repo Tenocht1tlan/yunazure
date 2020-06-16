@@ -98,7 +98,7 @@ Page({
   // 被点击的热卖商品的索引
     currentChoseItem :0,
     // 弹出界面
-    optionList:['XS(160/62A)','S(165/66A)','M(170/70A)','L(175/78A)','XL(175/82A)'],
+    optionList:[],
     // value:'所有',
  
     hideFlag: true,//true-隐藏  false-显示
@@ -338,6 +338,7 @@ Page({
   mCancel: function () {
     var that = this;
     that.hideModal();
+    
   },
  
   // ----------------------------------------------------------------------modal
@@ -345,10 +346,18 @@ Page({
   showUp: function (e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
-    var upImage = that.data.imageChose[index].src
-    that.setData({
-      upImage:upImage,
-      hideFlag: false
+    var goodid = e.currentTarget.dataset.id;
+    db.collection('goods').where({
+      good_id:goodid
+    }).get().then(res=>{
+      this.setData({
+        upImage:res.data[0].pic,
+        optionList:res.data[0].size,
+      })
+      console.log(this.data.optionList)
+    })
+    this.setData({
+    hideFlag:false
     })
     // 创建动画实例
     var animation = wx.createAnimation({
@@ -374,7 +383,9 @@ Page({
     that.slideDown();//调用动画--滑出
     var time1 = setTimeout(function () {
       that.setData({
-        hideFlag: true
+        hideFlag: true,
+        upImage:'',
+        optionList:[]
       })
       clearTimeout(time1);
       time1 = null;
