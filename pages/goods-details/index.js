@@ -103,10 +103,7 @@ Page({
         wxlogin: isloged
       })
     }
-    
     this.getGoodsDetailAndKanjieInfo(this.data.goodsId)
-    this.goodsFavCheck()
-  
   },
   addHistory(){
     var that = this
@@ -128,21 +125,6 @@ Page({
         }
       })
     })
-  },
-  async goodsFavCheck() {
-    // WXAPI.goodsFavList({
-    //   token: wx.getStorageSync('token')
-    // })
-    // const res = await WXAPI.goodsFavCheck(wx.getStorageSync('token'), this.data.goodsId)
-    // if (res.code == 0) {
-    //   this.setData({
-    //     faved: true
-    //   })
-    // } else {
-    //   this.setData({
-    //     faved: false
-    //   })
-    // }
   },
   async getGoodsDetailAndKanjieInfo(goodsId) {
     const that = this
@@ -170,7 +152,6 @@ Page({
               selectSize: selectSizeTemp,
               selectSizePrice: goodsDetailRes.minPrice,
               selectSizeOPrice: goodsDetailRes.originalPrice,
-              // totalScoreToPay: goodsDetailRes.minScore
             });
           }
           // if (goodsDetailRes.shopId) {
@@ -305,14 +286,14 @@ Page({
     const propertyindex = e.currentTarget.dataset.propertyindex
     const propertychildindex = e.currentTarget.dataset.propertychildindex
 
-    const property = this.data.goodsDetail.properties[propertyindex]
-    const child = property.childsCurGoods[propertychildindex]
+    const sku = this.data.goodsDetail.sku[propertyindex]
+    const child = sku.childsCurGoods[propertychildindex]
     // 取消该分类下的子栏目所有的选中状态
-    property.childsCurGoods.forEach(child => {
+    sku.childsCurGoods.forEach(child => {
       child.active = false
     })
     // 设置当前选中状态
-    property.optionValueId = child.id
+    sku.optionValueId = child.id
     child.active = true
     // 获取所有的选中规格尺寸数据
     const needSelectNum = this.data.goodsDetail.sku.length
@@ -325,7 +306,7 @@ Page({
         if (c.active) {
           curSelectNum++;
           propertyChildIds = propertyChildIds + p.id + ":" + c.id + ",";
-          propertyChildNames = propertyChildNames + p.name + ":" + c.name + "  ";
+          propertyChildNames = propertyChildNames + p.name + ":" + c.value + "  ";
         }
       })
     })
@@ -338,9 +319,6 @@ Page({
       // const res = await WXAPI.goodsPrice(this.data.goodsDetail.id, propertyChildIds)
       // if (res.code == 0) {
       //   let _price = res.data.price
-      // if (this.data.shopType == 'toPingtuan') {
-      //   _price = res.data.pingtuanPrice
-      // }
       //   this.setData({
       //     selectSizePrice: _price,
       //     selectSizeOPrice: res.data.originalPrice,
@@ -395,7 +373,6 @@ Page({
     //   })
     //   return
     // }
-    
     const sku = []
     if (this.data.goodsDetail.sku) {
       this.data.goodsDetail.sku.forEach(p => {
@@ -405,7 +382,6 @@ Page({
         })
       })
     }
-    
     var canAdd = false
     wx.showLoading({
       title: '加载中...'

@@ -146,6 +146,7 @@
     <image src="/images/icon/next.png"></image>
   </view> -->
 
+<!-- 不弹框 -->
   <view class="size-label-box2" wx:if="{{goodsDetailSkuShowType==1}}">
     <view class="label-title">选择商品规格</view>
     <view class="size-label-box">
@@ -245,7 +246,7 @@
           <view class="label">{{sku.name}}</view>
           <view class="label-item-box">
             <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{sku.childsCurGoods}}" wx:key="id" bindtap="labelItemTap" data-propertyindex="{{idx}}" data-propertychildindex="{{index}}">
-              {{item}}
+              {{item.value}}
             </view>
           </view>
         </block>

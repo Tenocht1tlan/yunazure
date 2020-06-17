@@ -104,7 +104,7 @@ Page({
   },
   toDetailsTap: function(e) {
     wx.navigateTo({
-      url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+      url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name
     })
   },
   onCategoryClick: function(e) {
