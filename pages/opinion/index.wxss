@@ -21,12 +21,29 @@
   border: 1rpx #666 solid;
 }
 .currentWordNumber{
-  position: relative;
+  align-self: flex-end;
   height: 35rpx;
   line-height: 35rpx;
   font-size: 24rpx;
   float: right;
   color: #666;
-  top: 0;
-  right: 0;
+
+}
+.commit{
+  width: 650rpx;
+  height: 110rpx;
+  line-height:110rpx;
+  margin-top: 100rpx;
+  color: #fff;
+  background-color: #000;
+  margin-left: 50rpx;
+  border-radius: 0%;
+}
+.button-hover{
+  width: 630rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin-top: 105rpx;
+  margin-left: 60rpx;
+  font-size: 80rpx;
 }

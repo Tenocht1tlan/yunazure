@@ -73,8 +73,10 @@ page,view,image,input {
   width: 100%;
 }
 .list1 .goods-info .title {
-  color: #333;
-  font-size: 30rpx;
+  color: #000;
+  font-size: 28rpx;
+  line-height: 46rpx;
+  font-weight: bold;
 }
 .ellipsis {
   display: -webkit-box;
@@ -85,8 +87,12 @@ page,view,image,input {
   word-break: break-all;
 }
 .list1 .goods-info .price {
-  color: #FF3B30;
-  font-size: 34rpx;
+  color:#d81e06;
+  margin-top: 100rpx;
+  width: 120rpx;
+  font-weight: bolder;
+  font-size: 25rpx;
+  line-height: 40rpx;
 }
 .list1 .goods-info .buy-info {
   display: flex;
@@ -127,12 +133,16 @@ page,view,image,input {
   padding: 16rpx;
 }
 .list2 .goods-info .title {
-  color: #333;
-  font-size: 30rpx;
+  color: #000;
+  font-size: 28rpx;
 }
 .list2 .goods-info .price {
-  color: #FF3B30;
-  font-size: 34rpx;
+  color:#d81e06;
+  margin-bottom: 5rpx;
+  width: 120rpx;
+  font-weight: bolder;
+  font-size: 28rpx;
+  line-height: 40rpx;
 }
 .list2 .goods-info .buy-info {
   display: flex;

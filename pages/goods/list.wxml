@@ -18,9 +18,6 @@
     <view class="goods-info">
       <view class="title ellipsis"><navigator url="/pages/goods-details/index?id={{item.id}}">{{item.name}}</navigator></view>
       <view class="price">¥ {{item.minPrice}}</view>
-      <view class="buy-info">
-        <image class="car" src="/images/nav/shopping.png" data-id="{{item.id}}" bindtap="addShopCar"></image>
-      </view>
     </view>
   </view>
 </block>
@@ -30,9 +27,6 @@
     <view class="goods-info">
       <view class="title"><navigator url="/pages/goods-details/index?id={{item.id}}">{{item.name}}</navigator></view>
       <view class="price">¥ {{item.minPrice}}</view>
-      <view class="buy-info">
-        <image class="car" src="/images/nav/shopping.png" data-id="{{item.id}}" bindtap="addShopCar"></image>
-      </view>
     </view>
   </view>
 </view>

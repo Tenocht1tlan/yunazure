@@ -42,7 +42,7 @@
       <view class="more"><navigator url="/pages/goods/list?categoryId={{item.id}}">更多 ></navigator></view>
     </view>
     <view class="goods-container">
-      <view class="goods-box" wx:for="{{item.goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
+      <view class="goods-box" wx:for="{{item.goods}}" wx:key="good_id" bindtap="toDetailsTap" data-id="{{item.good_id}}">
         <view class="img-box">
           <image src="{{item.pic}}" class="image" mode="aspectFit" lazy-load="true" />
         </view>
@@ -144,7 +144,7 @@
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品列表</view>
   </view>
   <view style='display: inline-block;flex-wrap:wrap;'>
-    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}" >
+    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}"  data-name="{{item.name}}" >
       <view class="imag-box" style="height: 450rpx;">
         <image class="scroll-view-imag" src="{{item.pic}}" mode="scaleToFill" lazy-load="true" ></image>
         <image class="star" catchtap="addFav" src="{{favStr[item.id] == 1 ?'/images/staryes.png':'/images/starno.png'}}" data-index="{{item.id}}" data-id="{{item.good_id}}"></image>
