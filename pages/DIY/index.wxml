@@ -1,12 +1,12 @@
 <!--pages/DIY/index.wxml-->
 <!-- 图片展示框 -->
-<view>
+<view class="imgBox">
   <image class="Preview"></image>
 </view>
-<view class="color">
+<view class="color">选择颜色
 </view>
-<view class="size">
+<view class="size">选择尺码
 </view>
-<view class="pattern">
+<view class="pattern">选择图案
 </view>
 <!-- 选择选项-->

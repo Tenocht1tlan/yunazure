@@ -44,7 +44,9 @@ Page({
     })
     // this.reputation(e.id)
     this.shippingCartInfo() 
-
+    wx.setNavigationBarTitle({
+      title: e.name
+    })
   },  
   shippingCartInfo(){
     const token = wx.getStorageSync('isloged')
@@ -104,6 +106,7 @@ Page({
     
     this.getGoodsDetailAndKanjieInfo(this.data.goodsId)
     this.goodsFavCheck()
+  
   },
   addHistory(){
     var that = this

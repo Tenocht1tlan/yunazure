@@ -1,5 +1,10 @@
+.imgBox{
+display: flex;
+justify-content: center;
+}
 .Preview{
-  width: 750rpx;
-  height: 650rpx;
+  width: 700rpx;
+  height: 500rpx;
+  margin-top: 50rpx;
   border: 1rpx #666 solid;
 }

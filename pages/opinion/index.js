@@ -7,8 +7,9 @@ Page({
   data: {
     max:400,
     min:2,
-    minWord:''
-
+    minWord:'',
+    problem:'',
+    phoMail:''
   },
 
   getValueLength:function(e){
@@ -24,12 +25,22 @@ Page({
         minWord:""
       })
     }
-    if(len>200) return;
+    if(len>400) return;
     this.setData({
-      currentWordNumber:len
+      currentWordNumber:len,
+      problem:value
     })
   },
-
+  commit:function(){
+    console.log(this.data.problem)
+    console.log(this.data.phoMail)
+  },
+  getPhoMail:function(e){
+    let value =  e.detail.value
+    this.setData({
+      phoMail:value
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
