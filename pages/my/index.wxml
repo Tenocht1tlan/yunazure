@@ -26,7 +26,7 @@
     <text class="list-text">我的心愿单</text>
     <image class="list-in" src="/images/my/in.png" ></image>
   </view>
-  <view class="list-bux" bindtap="toHistory">
+  <view class="list-box" bindtap="toHistory">
     <image class="list-image" src="/images/my/history.png" mode="aspectFit"></image>
     <text class="list-text">浏览历史</text>
     <image class="list-in" src="/images/my/in.png" ></image>

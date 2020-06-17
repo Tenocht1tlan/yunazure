@@ -1,4 +1,7 @@
 <view class="input-box" >
-  <input class="input"></input>
-</view>
 
+    <textarea class="input" focus="true" placeholder="请详细描述您的问题" type="text"  maxlength="200" bindblur="getText" bindinput="getValueLength" show-confirm-bar="true" value="{{editText}}" bindconfirm="getText" maxlength="{{max}}" minlength="{{min}}" >
+      <view class="currentWordNumber">{{currentWordNumber|0}}/{{max}}  </view>
+    </textarea>
+</view>
+<input class="phoMail" placeholder="手机号/邮箱"></input>

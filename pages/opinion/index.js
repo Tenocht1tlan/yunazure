@@ -5,7 +5,29 @@ Page({
    * 页面的初始数据
    */
   data: {
+    max:400,
+    min:2,
+    minWord:''
 
+  },
+
+  getValueLength:function(e){
+    let value = e.detail.value
+    let len = parseInt(value.length)
+
+    if(len <= this.data.min){
+      this.setData({
+        minWord:"最少填写两个字哦"
+      })
+    }else{
+      this.setData({
+        minWord:""
+      })
+    }
+    if(len>200) return;
+    this.setData({
+      currentWordNumber:len
+    })
   },
 
   /**

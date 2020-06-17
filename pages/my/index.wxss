@@ -49,27 +49,24 @@ page,view,image,input {
   align-items: center;
   border-bottom: 0.5rpx #f0f0f0 solid;
 }
-.list-bux{
-  display: flex;
-  width: 750rpx;
-  height: 100rpx;
-  flex-direction: row;
-  align-items: center;
-}
+
 .list-btn {
   display: flex;
   width: 750rpx;
   height: 100rpx;
+  font-size: 28rpx;
   flex-direction: row;
   align-items: center;
   background-color: #fff;
-  padding-left: unset;
-  padding-right: unset;
+  padding-left: 0;
+  padding-right: 0;
   text-align: unset;
   line-height: unset;
-  border-radius: unset;
-  border: unset;
-  border-top: none;
+  border-radius: 0%;
+  border-bottom: 0.5rpx #f0f0f0 solid;
+}
+button::after{
+  border: none;
 }
 
 .list-image{
