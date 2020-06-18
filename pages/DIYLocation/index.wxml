@@ -1,0 +1,12 @@
+<!--pages/DIYLocation/index.wxml-->
+<view class="contain">
+  <view class="text">左右滑动选择定制位置</view>
+  <view class="swapimg">
+    <swiper class="imgSwiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" current="{{index}}" >
+      <swiper-item wx:for="{{clothImg}}" wx:key="*this" data-index="{{index}}" >
+      <image class="img" src="{{item}}">
+      </image>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
