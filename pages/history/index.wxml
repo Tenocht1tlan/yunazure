@@ -1,6 +1,6 @@
 <!--pages/history/index.wxml-->
   <view class="all">
-    <view class="star-box" wx:for="{{favGoods}}" wx:key="good_id" bindtap="toDetailsTap" data-id="{{item.good_id}}" >
+    <view class="star-box" wx:for="{{favGoods}}" wx:key="good_id" bindtap="toDetailsTap" data-id="{{item.good_id}}" data-name="{{item.name}}">
       <image class="starImag" src="{{item.pic}}" mode="aspectFill" data-index="{{index}}" >
       </image>
       <view class="goodName">{{item.name}}

@@ -23,7 +23,7 @@ Page({
     buyNumMax: 0,
     propertyChildIds: "",
     propertyChildNames: "",
-    canSubmit: true, //  选中规格尺寸时候是否允许加入购物车
+    canSubmit: false, //  选中规格尺寸时候是否允许加入购物车
     shopType: "addShopCar", //购物类型，加入购物车或立即购买，默认为加入购物车
     shippingCarInfo:{
       items:[]
@@ -300,16 +300,18 @@ Page({
     let curSelectNum = 0;
     let propertyChildIds = "";
     let propertyChildNames = "";
-
+    let properties = []
     this.data.goodsDetail.sku.forEach(p => {
       p.childsCurGoods.forEach(c => {
         if (c.active) {
           curSelectNum++;
           propertyChildIds = propertyChildIds + p.id + ":" + c.id + ",";
           propertyChildNames = propertyChildNames + p.name + ":" + c.value + "  ";
+          properties.push(c.value)
         }
       })
     })
+    console.log('properties = '+ properties)
     let canSubmit = false;
     if (needSelectNum == curSelectNum) {
       canSubmit = true;
@@ -319,15 +321,15 @@ Page({
       // const res = await WXAPI.goodsPrice(this.data.goodsDetail.id, propertyChildIds)
       // if (res.code == 0) {
       //   let _price = res.data.price
-      //   this.setData({
-      //     selectSizePrice: _price,
-      //     selectSizeOPrice: res.data.originalPrice,
-      //     totalScoreToPay: res.data.score,
-      //     propertyChildIds: propertyChildIds,
-      //     propertyChildNames: propertyChildNames,
-      //     buyNumMax: res.data.stockNum,
-      //     buyNumber: (res.data.stockNum > 0) ? 1 : 0
-      //   });
+        this.setData({
+          // selectSizePrice: _price,
+          // selectSizeOPrice: res.data.originalPrice,
+          propertyChildIds: propertyChildIds,
+          propertyChildNames: propertyChildNames,
+          properties: properties,
+          // buyNumMax: res.data.stockNum,
+          // buyNumber: (res.data.stockNum > 0) ? 1 : 0
+        })
       // }
     }
     let skuGoodsPic = this.data.skuGoodsPic
@@ -366,13 +368,6 @@ Page({
       })
       return
     }
-    // const isLogined = await AUTH.checkHasLogined()
-    // if (!isLogined) {
-    //   this.setData({
-    //     wxlogin: false
-    //   })
-    //   return
-    // }
     const sku = []
     if (this.data.goodsDetail.sku) {
       this.data.goodsDetail.sku.forEach(p => {
@@ -417,6 +412,11 @@ Page({
     var name = this.data.goodsDetail.name
     var price = this.data.selectSizePrice.toFixed(2)
     var originalPrice = this.data.selectSizeOPrice.toFixed(2)
+    var size = this.data.properties[0]
+    var color = this.data.properties[1]
+    console.log('size = '+ size)
+    console.log('color = '+ color)
+
     var that = this
     that.setData({
       shippingCarInfo:{
@@ -427,8 +427,8 @@ Page({
           originalPrice: originalPrice,
           number: number,
           pic: that.data.goodsDetail.pic,
-          color: that.data.goodsDetail.color,
-          size:'L',
+          color: color,
+          size: size,
         }]
       }
     })
@@ -490,17 +490,12 @@ Page({
       if (!this.data.canSubmit) {
         wx.showModal({
           title: '提示',
-          content: '请选择商品规格！',
+          content: '请先选择规格尺寸~',
           showCancel: false
         })
       }
-      this.bindGuiGeTap();
-      wx.showModal({
-        title: '提示',
-        content: '请先选择规格尺寸~',
-        showCancel: false
-      })
-      return;
+      this.bindGuiGeTap()
+      return
     }
     if (this.data.buyNumber < 1) {
       wx.showModal({
@@ -563,8 +558,9 @@ Page({
     shopCarMap.number = this.data.buyNumber
     shopCarMap.logisticsType = this.data.goodsDetail.logisticsId
     shopCarMap.logistics = this.data.goodsDetail.logistics
-    shopCarMap.color = this.data.goodsDetail.color
-
+    shopCarMap.color = this.data.properties[1]
+    shopCarMap.size = this.data.properties[0]
+    
     var buyNowInfo = {}
     buyNowInfo.shopNum = 0
     buyNowInfo.items = []
