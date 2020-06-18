@@ -412,7 +412,7 @@ Page({
   },
   toDiy: function () {
     wx.navigateTo({
-      url: "/pages/DIY/index"
+      url: "/pages/DIYLocation/index"
     })
   },
   toAd: function () {

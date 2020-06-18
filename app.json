@@ -43,7 +43,8 @@
     "pages/New/index",
     "pages/Comp/index",
     "pages/history/index",
-    "pages/opinion/index"
+    "pages/opinion/index",
+    "pages/DIYLocation/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
