@@ -160,6 +160,9 @@ Page({
           that.data.goodsDetail = goodsDetailRes
           let tmpPics = []
           tmpPics.push(goodsDetailRes.pic)
+          goodsDetailRes.subPics.forEach(e=>{
+            tmpPics.push(e.pic)
+          })
           that.setData({
             pics: tmpPics
           })
@@ -742,9 +745,10 @@ Page({
   },
   previewImage(e){
     const url = e.currentTarget.dataset.url
+    const urls = e.currentTarget.dataset.urls
     wx.previewImage({
       current: url, // 当前显示图片的http链接
-      urls: [url] // 需要预览的图片http链接列表
+      urls: urls // 需要预览的图片http链接列表
     })
   },
   onPosterSuccess(e) {

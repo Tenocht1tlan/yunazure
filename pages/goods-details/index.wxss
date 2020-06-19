@@ -19,23 +19,16 @@ page,view,image,input,textarea {
   height:748rpx;
 }
 .decolor{
-  margin-left: -490rpx;
   font-size: 25rpx;
   color: #000;
-  /* font-family: 'Times New Roman', Times, serif; */
   font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
   margin-top: 10rpx;
-  
 }
 .detail{
-  
   font-size: 25rpx;
   color: #000;
-  margin-left: 30rpx;
-  /* font-family: 'Times New Roman', Times, serif; */
   font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
   margin-top: 10rpx;
-  
 }
 swiper-item image {
   width: 100%;

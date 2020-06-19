@@ -32,7 +32,6 @@
       <image  bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"  />
     </swiper-item>
   </swiper>
-
 </view>
 
 <view class="container">

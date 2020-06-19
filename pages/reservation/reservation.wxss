@@ -1,4 +1,3 @@
-/* pages/reservation/reservation.wxss */
 .background{
   display: flex;
   width: 100%;
@@ -12,7 +11,6 @@
     height: 80rpx; 
     justify-content: center;
 }
-
 .reservationInput {
   display: flex;
   margin-left: 50rpx;
@@ -27,7 +25,6 @@
   height: 65rpx;
   justify-content: start;
 }
-
 .reservationInput .reservationInputtext {
   display: flex;
   margin-left: 10rpx;
@@ -54,7 +51,6 @@
   align-items: center;
   margin-top: 12rpx;
 }
-
 .space{
   background-color: #FFFFFF;
   width: 30rpx;
@@ -66,46 +62,38 @@
 .weui-article__section {
   margin-bottom: 1.5em;
 }
-
 .protocol{
-
-display: flex;
-flex-direction: row;
-align-items: center;
-margin-left: 85rpx;
-background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 85rpx;
+  background-color: white;
 }
-
 .protocol .icon{
 width: 28rpx;
 height: 28rpx;
 }
 .protocol .protext{
-  
   font-size: 24rpx;
   font-family: SimSun;
-  }
-
-  .protocol .probutton{
-    margin-left: 0px;
-    padding-left: 0px;
-    font-size: 24rpx;
-    font-family: SimSun;
-    border: transparent;
-    text-decoration-line: underline;
-    background-color: white;
-  }
-/* 为了把button的背景去掉，button有一个伪元素（after）的伪border属性，默认为border：1px solid rgba(0,0,0,0.2) */
-  button[class="probutton"]::after{
-    border: 0;
-  }
-
+}
+.protocol .probutton{
+  margin-left: 0px;
+  padding-left: 0px;
+  font-size: 24rpx;
+  font-family: SimSun;
+  border: transparent;
+  text-decoration-line: underline;
+  background-color: white;
+} 
+button[class="probutton"]::after{
+  border: 0;
+}
 .Confirm{
   display: flex;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
 }
-
 .Confirm .Confirmbutton{
   background-color: #ffffff;
   width: 600rpx;
@@ -115,44 +103,44 @@ height: 28rpx;
   border:  1px solid;
 }
 .dotted{
-    background: rgb(175, 182, 180);
-    width: 100%;
-    height: 5rpx;
-   }
- .hotline{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 150rpx;
-    background-color: white;
-    }
-   .hotline .icon{
-    width: 50rpx;
-    height: 50rpx;
-    }
-    .hotline .hotext{
-    font-size: 40rpx;
-    font-family: SimSun;
-    }
-  .hotline .hotbutton{
-    margin-left: 0px;
-    padding-left: 0px;
-    font-size: 40rpx;
-    font-family: SimSun;
-    border: transparent;
-    background-color: white;
-    text-decoration-line: underline;
-  }
+  background: rgb(175, 182, 180);
+  width: 90%;
+  height: 3rpx;
+}
+.hotline{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 150rpx;
+  background-color: white;
+}
+.hotline .icon{
+  width: 50rpx;
+  height: 50rpx;
+}
+.hotline .hotext{
+  font-size: 40rpx;
+  font-family: SimSun;
+}
+.hotline .hotbutton{
+  margin-left: 0px;
+  padding-left: 0px;
+  font-size: 40rpx;
+  font-family: SimSun;
+  border: transparent;
+  background-color: white;
+  text-decoration-line: underline;
+}
 
-  button[class="hotbutton"]::after{
-    border: 0;
-  }
-  .kefu{
-    position: fixed;
-    height: 80rpx;
-    bottom:80rpx;
-    right: -20rpx;
-  }
+button[class="hotbutton"]::after{
+  border: 0;
+}
+.kefu{
+  position: fixed;
+  height: 80rpx;
+  bottom:80rpx;
+  right: -20rpx;
+}
 .kefu .kefubutton{
   width: 175rpx;
   height: 55rpx;
@@ -173,12 +161,11 @@ height: 28rpx;
   opacity: 0;
 }
 .store{
-display: flex;
-/* flex-direction: row; */
-width: 750rpx;
-height: 80rpx;
-justify-content:center;
-align-items: center;
+  display: flex;
+  width: 750rpx;
+  height: 80rpx;
+  justify-content:center;
+  align-items: center;
 }
 .store .storeAddress{
   width: 200rpx;
@@ -186,8 +173,6 @@ align-items: center;
 .storeCoverView{
   position: absolute;
   background-color:rgb(200, 198, 231);
-  /* width: fit-content;
-  height: fit-content; */
   width: 700rpx;
   height: 200rpx;
   bottom: -100px;

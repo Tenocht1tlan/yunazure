@@ -6,7 +6,7 @@
         <video src="{{videoMp4Src}}" autoplay="true" loop="true" style='width:100%;height:100%;'></video>
       </swiper-item>
       <swiper-item wx:for="{{pics}}" wx:key="id">
-        <image src="{{item}}" class="slide-image" mode="scaleToFill" lazy-load="true" />
+        <image src="{{item}}" class="slide-image" mode="scaleToFill" lazy-load="true" bindtap="previewImage" data-url="{{item}}" data-urls="{{pics}}"/>
       </swiper-item>      
     </swiper>
   </view>
@@ -23,7 +23,7 @@
       </view>
     </view>   
   </view>
-  <view class="decolor">{{goodsDetail.color}} - {{goodsDetail.good_id}}</view>
+  <view class="decolor">选择颜色 - {{goodsDetail.good_id}}</view>
   <view class="detail">{{goodsDetail.description}}</view>
   <!-- <view class="page__bd" wx:if="{{curGoodsKanjia}}" style='width:750rpx;'>
     <view class="weui-cells__title">商品砍价设置</view>
@@ -230,7 +230,7 @@
     <view class="popup-contents">
       <view class="pop-goods-info">
         <view class="pop-img-box">
-          <image src="{{skuGoodsPic}}" class="goods-thumbnail" bindtap="previewImage" data-url="{{skuGoodsPic}}" />
+          <image src="{{skuGoodsPic}}" class="goods-thumbnail" bindtap="previewImage" data-url="{{skuGoodsPic}}" data-urls="{{[skuGoodsPic]}}"/>
         </view>
         <view class="pop-goods-des">
           <view class="pop-goods-title">{{goodsDetail.name}}</view>
