@@ -1,12 +1,18 @@
 <!--pages/DIY/index.wxml-->
 <!-- 图片展示框 -->
-<view class="imgBox">
-  <image class="Preview"></image>
-</view>
-<view class="color">选择颜色
-</view>
-<view class="size">选择尺码
-</view>
-<view class="pattern">选择图案
+<view class="background" >
+  <view class="imgBox">
+    <image class="Preview"></image>
+  </view>
+  <view class="title">
+    <scroll-view class="scroll-title" scroll-x="true" > 
+      <view  class="itm" wx:for="{{title}}" wx:key="*this" >{{item}}</view>
+    </scroll-view>
+  </view>
+  <view class="inner">
+    <scroll-view class="scroll-title" scroll-x="true" > 
+      <view  class="itm" wx:for="{{inner}}" wx:key="*this" >{{item}}</view>
+    </scroll-view>
+  </view>
 </view>
 <!-- 选择选项-->

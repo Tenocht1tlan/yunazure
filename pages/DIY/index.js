@@ -5,6 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title:['marvel','disney','tom','jerry','NBA','DC','yunazure','yxh','zy'],
+    inner:[]
 
   },
 
@@ -12,6 +14,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var temp = []
+    for(var i = 0;i<12;i++){
+      temp[i] = i
+    }
+    this.setData({
+      inner:temp
+    })
+    console.log(this.data.inner)
 
   },
 

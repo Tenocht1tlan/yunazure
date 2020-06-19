@@ -4,7 +4,7 @@
   <view class="swapimg">
     <swiper class="imgSwiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" current="{{index}}" >
       <swiper-item wx:for="{{clothImg}}" wx:key="*this" data-index="{{index}}" >
-      <image class="img" src="{{item}}">
+      <image class="img" src="{{item}}" bindtap="toDiy" >
       </image>
       </swiper-item>
     </swiper>

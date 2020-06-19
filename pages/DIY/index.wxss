@@ -1,10 +1,32 @@
 .imgBox{
-display: flex;
-justify-content: center;
+  margin-top: 400rpx;
+  display: block;
+  text-align: center;
 }
 .Preview{
-  width: 700rpx;
-  height: 500rpx;
-  margin-top: 50rpx;
-  border: 1rpx #666 solid;
+  width: 350rpx;
+  height: 350rpx;
+  margin: 0 auto;
+  border: 1rpx dashed #666;
+}
+.title{
+  position: fixed;
+  bottom: 100rpx;
+}
+.inner{
+  position: fixed;
+  bottom: 0rpx;
+}
+.scroll-title{
+  width: 750rpx;
+  display: inline-block;
+  white-space: nowrap;
+  text-align: center;
+}
+.itm{
+  margin-left: 2rpx;
+  width: 100rpx;
+  display: inline-block;
+  background: linear-gradient(to bottom right, rgb(168, 235, 247),rgb(248, 198, 244), rgb(168, 235, 247));
+  border: 1rpx dashed #666;
 }
