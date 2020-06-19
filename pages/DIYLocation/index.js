@@ -66,5 +66,10 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  toDiy: function () {
+    wx.navigateTo({
+      url: "/pages/DIY/index"
+    })
+  },
 })
