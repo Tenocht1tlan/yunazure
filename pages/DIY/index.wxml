@@ -15,4 +15,9 @@
     </scroll-view>
   </view>
 </view>
+<button class="pic-box" >
+  <image class="pic" src="/images/img/img.png" style="width:50rpx;height:50rpx;margin-left:40rpx"></image>
+    <text style="font-size:1rem;color:#000000;margin-left:10rpx">图片</text>
+</button>
+
 <!-- 选择选项-->

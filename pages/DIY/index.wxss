@@ -30,3 +30,50 @@
   background: linear-gradient(to bottom right, rgb(168, 235, 247),rgb(248, 198, 244), rgb(168, 235, 247));
   border: 1rpx dashed #666;
 }
+.pic-box{
+width: 300rpx;
+height: 81rpx;
+padding-left: 0rpx;
+white-space: nowrap;
+}
+button::after {
+  padding-left: 0rpxs;
+  border: none;
+}
+.pic{
+width: 81rpx;
+height: 81rpx;
+}
+.setting{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; 
+
+}
+.pic-box{
+  width: 200rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; 
+  position: fixed;
+  bottom: 300rpx;
+  border-radius: 40rpx;
+  margin-left: -40rpx;
+  background-color: rgb(255, 255, 255);
+  border: 1rpx #000 solid;
+}
+.text-box{
+  width: 180rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; 
+  position: fixed;
+  bottom: 200rpx;
+  border-radius: 40rpx;
+  margin-left: -30rpx;
+  background-color: rgb(255, 255, 255);
+  border: 1rpx #000 solid;
+}
