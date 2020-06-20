@@ -1,4 +1,3 @@
-const AUTH = require('../../utils/auth')
 const db = wx.cloud.database()
 
 Page({
@@ -161,56 +160,5 @@ Page({
         skuCurGoods
       })
     }
-  },
-  closeSku() {
-    this.setData({
-      skuCurGoods: null
-    })
-    wx.showTabBar()
-  },
-  skuSelect(e) {
-    const pid = e.currentTarget.dataset.pid
-    const id = e.currentTarget.dataset.id
-    // 处理选中
-    const skuCurGoods = this.data.skuCurGoods
-    const property = skuCurGoods.properties.find(ele => { return ele.id == pid })
-    property.childsCurGoods.forEach(ele => {
-      if (ele.id == id) {
-        ele.active = true
-      } else {
-        ele.active = false
-      }
-    })
-    this.setData({
-      skuCurGoods
-    })
-  },
-  addCarSku() {
-    const skuCurGoods = this.data.skuCurGoods
-    const propertySize = skuCurGoods.properties.length // 有几组SKU
-    const sku = []
-    skuCurGoods.properties.forEach(p => {
-      const o = p.childsCurGoods.find(ele => { return ele.active })
-      if (!o) {
-        return
-      }
-      sku.push({
-        optionId: o.propertyId,
-        optionValueId: o.id
-      })
-    })
-    if (sku.length != propertySize) {
-      wx.showToast({
-        title: '请选择规格',
-        icon: 'none'
-      })
-      return
-    }
-    const options = {
-      goodsId: skuCurGoods.basicInfo.id,
-      buyNumber: skuCurGoods.basicInfo.storesBuy,
-      sku
-    }
-    this.addShopCarDone(options)
-  },
+  }
 })

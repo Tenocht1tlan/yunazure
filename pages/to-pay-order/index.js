@@ -80,8 +80,68 @@ Page({
   remarkChange(e){
     this.data.remark = e.detail.value
   },
+  order:function(e){
+    var orderInfo = {
+      sender: {
+        name: '周晓赟',
+        tel: '',
+        mobile: '',
+        company: '',
+        country: '中国',
+        province: '浙江省',
+        city: '杭州市',
+        area: '滨江区',
+        address: '',
+        postCode: ''
+      },receiver: {
+        name: e.linkMan,
+        tel: '',
+        mobile: e.mobile,
+        company: '',
+        country: '中国',
+        province: e.provinceId,
+        city: e.cityId,
+        area: e.districtId,
+        address: e.address,
+        postCode: e.code
+      },shop: {
+        wxaPath: '/index/index?from=waybill&id=01234567890123456789',
+        imgUrl: 'https://mmbiz.qpic.cn/mmbiz_png/OiaFLUqewuIDNQnTiaCInIG8ibdosYHhQHPbXJUrqYSNIcBL60vo4LIjlcoNG1QPkeH5GWWEB41Ny895CokeAah8A/640',
+        goodsName: '',
+        goodsCount: 2
+      },cargo: {
+        count: 2,
+        weight: 5.5,
+        spaceX: 30.5,
+        spaceY: 20,
+        spaceZ: 20,
+        detailList: [
+          {
+            name: '微信气泡狗抱枕',
+            count: 1
+          },
+          {
+            name: '微信气泡狗钥匙扣',
+            count: 1
+          }
+        ]
+      },insured: {
+        useInsured: 1,
+        insuredValue: 10000
+      },
+      service: {
+        serviceType: 0,
+        serviceName: '标准快递'
+      },
+      addSource: 0,
+      orderId: e.orderId,
+      deliveryId: 'SF',
+      bizId: 'xyz',
+      customRemark: '易碎物品'
+    }
+  },
   //提交订单
-  confirmOrder: function(res) {
+  confirmOrder: function(res) { 
     let that = this
     let orderid = res.orderid
     wx.cloud.callFunction({
