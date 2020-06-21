@@ -39,20 +39,10 @@ Page({
           'id':0,
           'imageChose':[
             {
-              'src':'/images/my/ask.png',
+              'src':'/images/my/kefu.png',
               'id':'0',
               'starsetnum':false    
-            },
-            {
-              'src':'/images/my/cancel.png',
-              'id':'1',
-              'starsetnum':false    
-            },
-            {
-              'src':'/images/my/dsm.png',
-              'id':'2',
-              'starsetnum':false    
-            },
+            }
           ]
     },
     {
@@ -60,20 +50,10 @@ Page({
       'id':1,
       'imageChose':[
         {
-          'src':'/images/my/check.png',
+          'src':'/images/my/kefu.png',
           'id':'0',
           'starsetnum':false    
-        },
-        {
-          'src':'/images/my/zan.png',
-          'id':'1',
-          'starsetnum':false    
-        },
-        {
-          'src':'/images/my/address.png',
-          'id':'2',
-          'starsetnum':false    
-        },
+        }
       ],
     },
     {
@@ -94,13 +74,10 @@ Page({
     },
   ],
   upImage:'',
-
   // 被点击的热卖商品的索引
     currentChoseItem :0,
     // 弹出界面
     optionList:[],
-    // value:'所有',
- 
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},//
     // 精品Boutique
@@ -115,13 +92,10 @@ Page({
     // ]
     },{
       'src':'/images/man.png',
- 
     },{
       'src':'/images/scarfWoman.png',
-   
     },{
       'src':'/images/scarfMan.png',
-
     },
   ],
   textHidden:[true,false,false,false],
@@ -158,7 +132,6 @@ Page({
       textHidden:temp,
     })
   },
-  // 这好像没用的
   starset:function(e){
     let index = e.currentTarget.dataset.index;
     let temp = 'imageChose[' + index +'].starsetnum';
@@ -166,7 +139,6 @@ Page({
       [temp]:!(this.data.imageChose[index].starsetnum)
     })
   },
-  // 
   async  addFav(e){
     this.addFavCheck({
       goodsId : e.currentTarget.dataset.id,
@@ -179,7 +151,6 @@ Page({
       this.setData({
         wxlogin: isLogined
       })
-      //加入心愿单逻辑
       db.collection('goods').where({
         good_id:options.goodsId
       }).get().then(res=>{
