@@ -179,7 +179,6 @@ Page({
             'shippingCarInfo.items': res.data[0].items
           })
         }
-        // console.log("init = "+this.data.checkedVal)
       }else{
         this.setData({
           noSelect: true,
@@ -475,18 +474,5 @@ Page({
         } catch (e) { }
       })
     }
-  },
-  changeCarNumber(e){
-    const key = e.currentTarget.dataset.key
-    const number = parseInt(e.detail.value)
-    wx.cloud.callFunction({
-      name:'changeSCartNum',
-      data: {
-        key: key,
-        number: number,
-      }
-    }).then(res=>{
-      this.shippingCarInfo()
-    }).catch(console.error)
   }
 })

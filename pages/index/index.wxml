@@ -83,16 +83,14 @@
 <!-- 遮盖层 -->
 <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}" catchtouchmove = "doNotMove">
   <view class="modal-cancel" bindtap="hideModal"></view>
-  <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}"> 
-        <view class='Mselect'>
-        <image src="{{upImage}}" mode="scaleToFill"></image>
-        <view>------选择尺码------</view>
-        <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption' hover-class="hovSelect"	>
-        {{item}}
-        </view>
-    </view>
+    <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}"> 
+      <view class='Mselect'>
+      <image src="{{upImage}}" mode="scaleToFill"></image>
+      <view>------选择尺码------</view>
+      <view wx:for="{{optionList}}" wx:key="unique" data-value='{{item}}' bindtap='getOption' hover-class="hovSelect"	>{{item}}</view>
     </view>
   </view>
+</view>
 
 <!-- 6.1 -->
 <!-- <view style="margin-left:50rpx;margin-top:25rpx;">精品</view>
@@ -149,7 +147,7 @@
         <image class="star" catchtap="addFav" src="{{favStr[item.id] == 1 ?'/images/staryes.png':'/images/starno.png'}}" data-index="{{item.id}}" data-id="{{item.good_id}}"></image>
       </view>
       <view style="margin:10rpx 25rpx;width:250rpx">新品
-        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  catchtap="showUp" data-index="{{index}}"  data-id="{{item.good_id}}"></image>
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx " catchtap="showUp" data-index="{{index}}" data-id="{{item.good_id}}"></image>
       </view>
       <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 25rpx">{{item.name}}</view>
       <view style="color:gray;margin:0rpx 45rpx 5rpx 25rpx;display:flex;flex-direction:row;">
@@ -163,13 +161,13 @@
   </view>
 </view>
 
-
-<view class='coupons-float' bindtap="goCoupons">
+<!-- Coupons -->
+<!-- <view class='coupons-float' bindtap="goCoupons">
   <image src="/images/gift.png"></image>
-</view>
+</view> -->
 
-<navigator wx:if="{{aliveRooms}}" url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{aliveRooms[0].roomid}}">
+<!-- <navigator wx:if="{{aliveRooms}}" url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{aliveRooms[0].roomid}}">
   <view style="bottom:200rpx;" class='coupons-float'>
     <image src="/images/live.png"></image>
   </view>
-</navigator>
+</navigator> -->

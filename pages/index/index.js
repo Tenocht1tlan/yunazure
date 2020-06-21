@@ -75,29 +75,21 @@ Page({
   ],
   upImage:'',
   // 被点击的热卖商品的索引
-    currentChoseItem :0,
-    // 弹出界面
-    optionList:[],
-    hideFlag: true,//true-隐藏  false-显示
-    animationData: {},//
-    // 精品Boutique
-    // 6.1
-    Boutique:[{
-      'src':'/images/woman.png',
-    //   picture:[{
-    //     'pic':'/images/share/check.png',
-    //   },{
-    //     'pic':'/images/share/check.png',
-    //   },
-    // ]
+  currentChoseItem :0,
+  // 弹出界面
+  optionList:[],
+  hideFlag: true,//true-隐藏  false-显示
+  animationData: {},//
+  // 精品Boutique
+  Boutique:[{
+      'src':'/images/woman.png'
     },{
-      'src':'/images/man.png',
+      'src':'/images/man.png'
     },{
-      'src':'/images/scarfWoman.png',
+      'src':'/images/scarfWoman.png'
     },{
-      'src':'/images/scarfMan.png',
-    },
-  ],
+      'src':'/images/scarfMan.png'
+  }],
   textHidden:[true,false,false,false],
   currTxthide:0,
   tempIdx:0,
@@ -292,26 +284,17 @@ Page({
     wx.switchTab({
       url: '/pages/category/category',
     })
-    // wx.navigateTo({
-    //   url: '/pages/goods/list?categoryId=' + e.currentTarget.id,
-    // })
   },
-  // 从下部弹上来界面.............................................................
   getOption:function(e){
-    var that = this;
-    that.setData({
+    this.setData({
       value:e.currentTarget.dataset.value,
-      // hideFlag: true
     });
-    that.hideModal();
+    this.hideModal()
   },
   //取消
   mCancel: function () {
-    var that = this;
-    that.hideModal();
-    
+    this.hideModal()
   },
- 
   // ----------------------------------------------------------------------modal
   // 显示遮罩层
   showUp: function (e) {
@@ -325,10 +308,9 @@ Page({
         upImage:res.data[0].pic,
         optionList:res.data[0].size,
       })
-      console.log(this.data.optionList)
     })
     this.setData({
-    hideFlag:false
+      hideFlag:false
     })
     // 创建动画实例
     var animation = wx.createAnimation({
@@ -342,7 +324,6 @@ Page({
       time1 = null;
     }, 100)
   },
- 
   // 隐藏遮罩层
   hideModal: function () {
     var that = this;
@@ -363,7 +344,6 @@ Page({
     }, 220)//先执行下滑动画，再隐藏模块
 
   },
-  //动画 -- 滑入
   slideIn: function () {
     this.animation.translateY(0).step() // 在y轴偏移，然后用step()完成一个动画
     this.setData({
@@ -371,7 +351,6 @@ Page({
       animationData: this.animation.export()
     })
   },
-  //动画 -- 滑出
   slideDown: function () {
     this.animation.translateY(300).step()
     this.setData({

@@ -417,9 +417,6 @@ Page({
     var originalPrice = this.data.selectSizeOPrice.toFixed(2)
     var size = this.data.properties[0]
     var color = this.data.properties[1]
-    console.log('size = '+ size)
-    console.log('color = '+ color)
-
     var that = this
     that.setData({
       shippingCarInfo:{
