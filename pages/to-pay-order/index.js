@@ -54,7 +54,6 @@ Page({
     }
     
   },
-
   onLoad(e) {
     let _data = {
       isNeedLogistics: 1
@@ -67,7 +66,6 @@ Page({
     }
     this.setData(_data)
   },
-
   getDistrictId: function (obj, aaa) {
     if (!obj) {
       return "";
@@ -81,12 +79,22 @@ Page({
     this.data.remark = e.detail.value
   },
   order:function(e){
+    let orderInfoDetail = JSON.parse(this.data.goodsJsonStr)
+    console.log("orderInfoDetail = "+ orderInfoDetail)
+    let list = []
+    orderInfoDetail.forEach(e=>{
+      list.push({
+          name: e.name,
+          count: e.count
+      })
+    })
+    console.log("detail = "+ list)
     var orderInfo = {
       sender: {
         name: '周晓赟',
         tel: '',
-        mobile: '',
-        company: '',
+        mobile: '13575726661',
+        company: '杭州知语服饰有限公司',
         country: '中国',
         province: '浙江省',
         city: '杭州市',
@@ -105,26 +113,17 @@ Page({
         address: e.address,
         postCode: e.code
       },shop: {
-        wxaPath: '/index/index?from=waybill&id=01234567890123456789',
-        imgUrl: 'https://mmbiz.qpic.cn/mmbiz_png/OiaFLUqewuIDNQnTiaCInIG8ibdosYHhQHPbXJUrqYSNIcBL60vo4LIjlcoNG1QPkeH5GWWEB41Ny895CokeAah8A/640',
-        goodsName: '',
-        goodsCount: 2
+        wxaPath: '/order-details/index?from=waybill&id=' + e.orderId,
+        imgUrl: 'https://7975-yunazure-sygca-1302289079.tcb.qcloud.la/goods/woolblendcap.jpg?sign=bbfec6989b1d6c0f4a3861c64f937702&t=1592715477',
+        goodsName: orderInfoDetail[0].name,
+        goodsCount: this.data.goodsNum
       },cargo: {
-        count: 2,
-        weight: 5.5,
-        spaceX: 30.5,
-        spaceY: 20,
-        spaceZ: 20,
-        detailList: [
-          {
-            name: '微信气泡狗抱枕',
-            count: 1
-          },
-          {
-            name: '微信气泡狗钥匙扣',
-            count: 1
-          }
-        ]
+        count: this.data.goodsNum,
+        weight: 0.5,
+        spaceX: 35,
+        spaceY: 35,
+        spaceZ: 3,
+        detailList: list
       },insured: {
         useInsured: 1,
         insuredValue: 10000
@@ -136,9 +135,30 @@ Page({
       addSource: 0,
       orderId: e.orderId,
       deliveryId: 'SF',
-      bizId: 'xyz',
-      customRemark: '易碎物品'
+      bizId: 'SF_CASH',
+      customRemark: '衣帽包包'
     }
+    wx.cloud.callFunction({
+      name:'addOrder',
+      data: {
+        sender: orderInfo.sender,
+        receiver: orderInfo.receiver,
+        shop: orderInfo.shop,
+        cargo: orderInfo.cargo,
+        insured: orderInfo.insured,
+        service: orderInfo.service,
+        addSource: orderInfo.addSource,
+        orderId: orderInfo.orderId,
+        deliveryId: orderInfo.deliveryId,
+        bizId: orderInfo.bizId,
+        customRemark: orderInfo.customRemark
+      }
+    }).then(res=>{
+      wx.showToast({
+        title: '成功通知物流',
+        icon: 'success'
+      })
+    }).catch(console.error)
   },
   //提交订单
   confirmOrder: function(res) { 

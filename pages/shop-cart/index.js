@@ -26,7 +26,6 @@ Page({
       key: "checked",
       data: this.data.checkedVal
     })
-    console.log("sto ck = "+ this.data.checkedVal)
   },
   //获取元素自适应后的实际宽度
   getEleWidth: function(w) {
@@ -124,11 +123,13 @@ Page({
     if(!isloged){
       return
     }
-
     var stoCheck = [] 
     stoCheck = wx.getStorageSync('checked')
     db.collection('shopping-cart').get().then(res=>{
-      console.log("stoCheck.length = "+ stoCheck.length)
+      if(res.data[0] == undefined){
+        needUpdate = false
+        return
+      }
       if(stoCheck.length < res.data[0].items.length){
         needUpdate = true
       }
@@ -152,7 +153,6 @@ Page({
           }
         }
         res.data[0].items.forEach(value=>{
-          
           if(this.data.isFirst == 0){
             tmpPrice += value.price*value.number
             tmp.push('isChecked')
@@ -161,7 +161,6 @@ Page({
             num += value.number
           }
         })
-        console.log("tmp = "+ tmp)
         wx.setTabBarBadge({
           index: 3,
           text: num.toString(),
