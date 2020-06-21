@@ -1,8 +1,12 @@
 <!--pages/DIY/index.wxml-->
 <!-- 图片展示框 -->
 <view class="background" >
-  <view class="imgBox">
-    <image class="Preview"></image>
+  <view class="imgBox" >
+    <movable-area class="Preview">
+      <movable-view class="movableIcon" direction="all" inertia="true" scale="true" scale-value="2" >
+        <image   mode="aspectFill" src="/images/staryes.png" style="width:80rpx;height:80rpx"></image>
+      </movable-view>
+    </movable-area>
   </view>
   <view class="title">
     <scroll-view class="scroll-title" scroll-x="true" > 
@@ -15,9 +19,12 @@
     </scroll-view>
   </view>
 </view>
-<button class="pic-box" >
-  <image class="pic" src="/images/img/img.png" style="width:50rpx;height:50rpx;margin-left:40rpx"></image>
-    <text style="font-size:1rem;color:#000000;margin-left:10rpx">图片</text>
+<button class="{{isChosed?'picBlack':'pic-box'}}" bindtap="choseMode" >
+  <image  class="pic" src="{{isChosed?'/images/img/picYes.png':'/images/img/picNo.png'}}" ></image>
+  <text class="picText">图片</text>
 </button>
-
+<button class="{{isChosed?'text-box':'textBlack'}}" bindtap="choseMode" >
+  <image  class="pic" src="{{isChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
+  <text class="picText">文字</text>
+</button>
 <!-- 选择选项-->

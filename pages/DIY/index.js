@@ -6,7 +6,8 @@ Page({
    */
   data: {
     title:['marvel','disney','tom','jerry','NBA','DC','yunazure','yxh','zy'],
-    inner:[]
+    inner:[],
+    isChosed:true
 
   },
 
@@ -22,7 +23,7 @@ Page({
       inner:temp
     })
     console.log(this.data.inner)
-
+    
   },
 
   /**
@@ -38,7 +39,12 @@ Page({
   onShow: function () {
 
   },
-
+  choseMode:function(){
+    var chose = !this.data.isChosed
+    this.setData({
+      isChosed:chose
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
