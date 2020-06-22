@@ -1,5 +1,5 @@
-<view class="container">
-  <view class="img" style="width:{{ width }}px; height:{{height}}px;" catchtouchstart="touchstartCallback"  catchtouchmove="touchmoveCallback" catchtouchend="touchendCallback"  >
-    <image style="transform: translate({{stv.offsetX}}px, {{stv.offsetY}}px) scale({{stv.scale}}) rotate({{ stv.rotate }}deg);width:{{originImg.width}}px; height: {{originImg.height}}px" src="{{ originImg.url }}"></image>
+<view class="container" >
+  <view class="img" style="width:{{ width }}px; height:{{height}}px;top:{{height/2}}rpx;left{{width/2}}rpx" catchtouchstart="touchstartCallback"  catchtouchmove="touchmoveCallback" catchtouchend="touchendCallback"  >
+    <image style="transform: translate({{stv.offsetX}}px, {{stv.offsetY}}px) scale({{stv.scale}}) rotate({{ stv.rotate }}deg);width:{{originImg.width/2}}px; height: {{originImg.height/2}}px;border:solid;" src="{{ originImg.url }}"></image>
   </view>
 </view>

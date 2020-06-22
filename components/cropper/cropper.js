@@ -16,8 +16,8 @@ Component({
       type: Number,
       observer: function (newVal, oldVal) {
         this.setData({
-          width: device.windowWidth * 0.7,
-          height: device.windowWidth * 0.7 / newVal
+          width: device.windowWidth * 0.5,
+          height: device.windowWidth * 0.5 / newVal
         })
       }
     },

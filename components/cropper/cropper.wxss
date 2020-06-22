@@ -6,6 +6,9 @@
   border: 1rpx #666 dashed;
 }
 .img {
-   overflow: hidden;
-   background: #fff;
+  position: fixed;
+  overflow: hidden;
+  background:rgba(0, 0,0,0);
+  border: 1rpx dashed #666;
+
 }
