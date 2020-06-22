@@ -1,13 +1,16 @@
 <!--pages/DIY/index.wxml-->
 <!-- 图片展示框 -->
-<view class="background" >
- <view class="container">
-    <view class="view-row" style="color:#aaa;font-size:36rpx;margin:30rpx;border-bottom:1rpx solid #aaa;padding:10rpx">custom—拖拽、缩放和旋转</view>
-    <view style="font-size:32rpx;color:#aaa;margin-bottom:30rpx">请拖拽、缩放或旋转下图</view>
-    <cropper  url="{{ originUrl }}" ratio="{{ ratio }}"></cropper>
-    <button bindtap='chooseImg' style="margin-top:30rpx">变更图片</button>
-</view>
 
+<view class="TotalView">
+  <image class="backImg" src="/images/scarfMan.png" style="top:0rpx">
+  </image>
+   <view class="container">
+    <!-- <view class="view-row" style="color:#aaa;font-size:36rpx;margin:30rpx;border-bottom:1rpx solid #aaa;padding:10rpx">custom—拖拽、缩放和旋转</view>
+    <view style="font-size:32rpx;color:#aaa;margin-bottom:30rpx">请拖拽、缩放或旋转下图</view> -->
+    <cropper  url="{{ originUrl }}" ratio="{{ ratio }}" ></cropper>
+    <button bindtap='chooseImg' style="margin-top:30rpx;">变更图片</button>
+  </view>
+</view>
   <view class="title">
     <scroll-view class="scroll-title" scroll-x="true" > 
       <view  class="itm" wx:for="{{title}}" wx:key="*this" >{{item}}</view>
@@ -18,7 +21,6 @@
       <view  class="itm" wx:for="{{inner}}" wx:key="*this" >{{item}}</view>
     </scroll-view>
   </view>
-</view>
 <button class="{{isChosed?'picBlack':'pic-box'}}" bindtap="choseMode" >
   <image  class="pic" src="{{isChosed?'/images/img/picYes.png':'/images/img/picNo.png'}}" ></image>
   <text class="picText">图片</text>
