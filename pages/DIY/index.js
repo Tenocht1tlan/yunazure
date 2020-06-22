@@ -7,7 +7,9 @@ Page({
   data: {
     title:['marvel','disney','tom','jerry','NBA','DC','yunazure','yxh','zy'],
     inner:[],
-    isChosed:true
+    isChosed:true,
+    originUrl:"/images/staryes.png",
+    ratio: 102 / 152,
 
   },
 
@@ -45,6 +47,21 @@ Page({
       isChosed:chose
     })
   },
+  //缩放旋转模板的选择图片
+  chooseImg:function(){
+    var that = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        that.setData({
+          originUrl: res.tempFilePaths[0],
+        })
+      }
+    })
+  },
+//
   /**
    * 生命周期函数--监听页面隐藏
    */

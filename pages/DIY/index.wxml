@@ -1,13 +1,13 @@
 <!--pages/DIY/index.wxml-->
 <!-- 图片展示框 -->
 <view class="background" >
-  <view class="imgBox" >
-    <movable-area class="Preview">
-      <movable-view class="movableIcon" direction="all" inertia="true" scale="true" scale-value="2" >
-        <image   mode="aspectFill" src="/images/staryes.png" style="width:80rpx;height:80rpx"></image>
-      </movable-view>
-    </movable-area>
-  </view>
+ <view class="container">
+    <view class="view-row" style="color:#aaa;font-size:36rpx;margin:30rpx;border-bottom:1rpx solid #aaa;padding:10rpx">custom—拖拽、缩放和旋转</view>
+    <view style="font-size:32rpx;color:#aaa;margin-bottom:30rpx">请拖拽、缩放或旋转下图</view>
+    <cropper  url="{{ originUrl }}" ratio="{{ ratio }}"></cropper>
+    <button bindtap='chooseImg' style="margin-top:30rpx">变更图片</button>
+</view>
+
   <view class="title">
     <scroll-view class="scroll-title" scroll-x="true" > 
       <view  class="itm" wx:for="{{title}}" wx:key="*this" >{{item}}</view>
@@ -27,4 +27,5 @@
   <image  class="pic" src="{{isChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
   <text class="picText">文字</text>
 </button>
+
 <!-- 选择选项-->

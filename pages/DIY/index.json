@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "定制"
+  "navigationBarTitleText": "定制",
+    "usingComponents": {
+      "cropper":"../../components/cropper/cropper"
+    }
 }

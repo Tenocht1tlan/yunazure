@@ -1,0 +1,11 @@
+.container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1rpx #666 dashed;
+}
+.img {
+   overflow: hidden;
+   background: #fff;
+}
