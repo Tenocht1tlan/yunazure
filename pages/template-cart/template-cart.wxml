@@ -10,7 +10,7 @@
 
 <template name="cart-goods-list">
   <view class="goodsList">
-    <view class="a-gooods" wx:for="{{items}}" wx:key="good_id">
+    <view class="a-gooods" wx:for="{{items}}" wx:key="createTime">
       <view class="a-goods-conts {{item.active? 'active':''}}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.left}}">
       <!-- 购物车 -->
         <view class="goods-info">
@@ -29,14 +29,14 @@
               <text>¥</text> {{item.originalPrice}}
             </view>
             <view class="buy-num">
-              <view class="jian-btn" catchtap="jianBtnTap" data-index="{{index}}">-</view>
+              <view class="jian-btn" catchtap="jianBtnTap" data-index="{{index}}" data-size="{{item.size}}">-</view>
               <!-- <input type="number" value="{{item.number}}" data-key="{{item.good_id}}"/> -->
               <view class="itemNum">{{item.number}}</view>
               <view class="jia-btn {{item.number==curTouchGoodStore? 'disabled' : ''}}" catchtap="jiaBtnTap" data-index="{{index}}">+</view>
             </view>
           </view>
         </view>
-        <view class="delete-btn" data-key="{{item.good_id}}" data-index="{{index}}" catchtap="delItem">
+        <view class="delete-btn" data-key="{{item.good_id}}" data-index="{{index}}" data-size="{{item.size}}" catchtap="delItem">
           删除
         </view>
       </view>

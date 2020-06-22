@@ -123,7 +123,7 @@ Page({
     if(!isloged){
       return
     }
-    var stoCheck = [] 
+    var stoCheck = []
     stoCheck = wx.getStorageSync('checked')
     db.collection('shopping-cart').get().then(res=>{
       if(res.data[0] == undefined){
@@ -265,7 +265,8 @@ Page({
   async delItem(e) {
     const key = e.currentTarget.dataset.key
     const index = e.currentTarget.dataset.index
-    this.delItemDone(key, index)
+    const size = e.currentTarget.dataset.size
+    this.delItemDone(key, index, size)
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
     const num = this.data.shippingCarInfo.items[index].number
     var tempPrice = parseInt(this.data.totalPrice)
@@ -284,7 +285,7 @@ Page({
       // })
     }
   },
-  async delItemDone(key, index){
+  async delItemDone(key, index, size){
     wx.showLoading({
       title: '加载中...',
     })
@@ -292,7 +293,7 @@ Page({
     const that = this
     db.collection('shopping-cart').get().then(res=>{
       res.data[0].items.forEach(value=>{
-        if(value != null && value.good_id != key){
+        if(value != null && value.good_id != key || (value.good_id == key && value.size != size) ){
           list.push(value)
         }
       })
@@ -364,6 +365,7 @@ Page({
       title: '加载中...',
     })
     const index = e.currentTarget.dataset.index
+    const size = e.currentTarget.dataset.size
     const price = parseInt(this.data.shippingCarInfo.items[index].price)
     var tempPrice = parseInt(this.data.totalPrice)
     const item = this.data.shippingCarInfo.items[index]
@@ -381,7 +383,7 @@ Page({
                 totalPrice: tempPrice
               })
             }
-            this.delItemDone(item.good_id, index)
+            this.delItemDone(item.good_id, index, size)
           }
         }
       })

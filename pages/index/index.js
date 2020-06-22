@@ -23,14 +23,13 @@ Page({
     categories: [],
     activeCategoryId: 0,
     goods: [],
+    curGoodInfo:{}, //current choose good info
     favStr: [],
     scrollTop: 0,
     hiddenNav:true,
     loadingMoreHidden: true,
     swiperHeight:1000,
-
     coupons: [],
-
     curPage: 1,
     pageSize: 20,
     cateScrollTop: 0,
@@ -285,28 +284,120 @@ Page({
       url: '/pages/category/category',
     })
   },
-  getOption:function(e){
-    this.setData({
-      value:e.currentTarget.dataset.value,
-    });
+  addShopCarBySize:function(e){
+    var that = this
+    var canAdd = false
+    var goodsId = this.data.curGoodInfo.good_id
+    var size = e.currentTarget.dataset.value
+    var name = this.data.curGoodInfo.name
+    var price = this.data.curGoodInfo.minPrice.toFixed(2)
+    var originalPrice = this.data.curGoodInfo.originalPrice.toFixed(2)
+    var color = '白色'
+    var number = 1
+    var exist = false
+    that.setData({
+      shippingCarInfo:{
+        items:[{
+          good_id: goodsId,
+          name: name,
+          price: price,
+          originalPrice: originalPrice,
+          number: number,
+          pic: that.data.curGoodInfo.pic,
+          color: color,
+          size: size,
+          createTime: new Date().getTime()
+        }]
+      }
+    })
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      db.collection('shopping-cart').where({
+        _openid:res.result.openid
+      }).get().then(res=>{
+        if(res.data[0] == undefined){
+          canAdd = true
+        }else{
+          var list = []
+          res.data[0].items.forEach(value=>{
+            if(value != null){
+              list.push(value)
+            }
+          })
+          list.forEach(e=>{
+            if(e.good_id == goodsId && e.size == size){
+              exist = true
+              number += e.number
+              return
+            }
+          })
+        }
+        if (canAdd){
+          db.collection('shopping-cart').add({
+            data: {
+              items: that.data.shippingCarInfo.items
+            }
+          }).then(res=>{
+            wx.showToast({
+              title: '加入购物袋',
+              icon: 'success'
+            })
+          }).catch(console.error)
+        }else{
+          if(exist){
+            wx.cloud.callFunction({
+              name:'changeSCartNum',
+              data: {
+                key: goodsId,
+                number: number,
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入购物袋',
+                icon: 'success'
+              })
+            }).catch(console.error)
+          }else{
+            wx.cloud.callFunction({
+              name:'addShippingCart',
+              data: {
+                items: that.data.shippingCarInfo.items
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入购物袋',
+                icon: 'success'
+              })
+            }).catch(console.error)
+          }
+        }
+      })
+    })
     this.hideModal()
   },
   //取消
   mCancel: function () {
     this.hideModal()
   },
-  // ----------------------------------------------------------------------modal
-  // 显示遮罩层
+  // choose current good size 
   showUp: function (e) {
-    var that = this;
-    var index = e.currentTarget.dataset.index;
-    var goodid = e.currentTarget.dataset.id;
+    var that = this
+    var goodid = e.currentTarget.dataset.id
+    let sizeList = []
     db.collection('goods').where({
       good_id:goodid
     }).get().then(res=>{
+      res.data[0].sku[0].childsCurGoods.forEach(e=>{
+        sizeList.push({
+          id: e.id,
+          value: e.value
+        })
+      })
       this.setData({
-        upImage:res.data[0].pic,
-        optionList:res.data[0].size,
+        upImage: res.data[0].pic,
+        optionList: sizeList,
+        curGoodInfo: res.data[0]
       })
     })
     this.setData({

@@ -380,12 +380,30 @@ Page({
         })
       })
     }
+    var that = this
     var canAdd = false
-    wx.showLoading({
-      title: '加载中...'
-    })
+    var name = this.data.goodsDetail.name
+    var price = this.data.selectSizePrice.toFixed(2)
+    var originalPrice = this.data.selectSizeOPrice.toFixed(2)
+    var size = this.data.properties[0]
+    var color = this.data.properties[1]
     var goodsId = this.data.goodsDetail.good_id
     var number = this.data.buyNumber
+    that.setData({
+      shippingCarInfo:{
+        items:[{
+          good_id: goodsId,
+          name: name,
+          price: price,
+          originalPrice: originalPrice,
+          number: number,
+          pic: that.data.goodsDetail.pic,
+          color: color,
+          size: size,
+          createTime: new Date().getTime()
+        }]
+      }
+    })
     var exist = false
     wx.cloud.callFunction({
       name:'login'
@@ -403,40 +421,48 @@ Page({
             }
           })
           list.forEach(e=>{
-            if(e.good_id == goodsId){
+            if(e.good_id == goodsId && e.size == size){
               exist = true
               number += e.number
               return
             }
           })
         }
-      })
-    })
-    var name = this.data.goodsDetail.name
-    var price = this.data.selectSizePrice.toFixed(2)
-    var originalPrice = this.data.selectSizeOPrice.toFixed(2)
-    var size = this.data.properties[0]
-    var color = this.data.properties[1]
-    var that = this
-    that.setData({
-      shippingCarInfo:{
-        items:[{
-          good_id: goodsId,
-          name: name,
-          price: price,
-          originalPrice: originalPrice,
-          number: number,
-          pic: that.data.goodsDetail.pic,
-          color: color,
-          size: size,
-        }]
-      }
-    })
-    setTimeout(function () {
-      wx.hideLoading({
-        complete: (res) => {
-          if (canAdd){
-            db.collection('shopping-cart').add({
+
+        if (canAdd){
+          db.collection('shopping-cart').add({
+            data: {
+              items:that.data.shippingCarInfo.items
+            }
+          }).then(res=>{
+            wx.showToast({
+              title: '加入购物袋',
+              icon: 'success'
+            })
+            this.setData({
+              shopNum: that.data.shopNum + 1
+            })
+          }).catch(console.error)
+        }else{
+          if(exist){
+            wx.cloud.callFunction({
+              name:'changeSCartNum',
+              data: {
+                key: goodsId,
+                number: number,
+              }
+            }).then(res=>{
+              wx.showToast({
+                title: '加入购物袋',
+                icon: 'success'
+              })
+              this.setData({
+                shopNum: that.data.shopNum + 1
+              })
+            }).catch(console.error)
+          }else{
+            wx.cloud.callFunction({
+              name:'addShippingCart',
               data: {
                 items:that.data.shippingCarInfo.items
               }
@@ -445,38 +471,15 @@ Page({
                 title: '加入购物袋',
                 icon: 'success'
               })
+              this.setData({
+                shopNum: that.data.shopNum + 1
+              })
             }).catch(console.error)
-          }else{
-            if(exist){
-              wx.cloud.callFunction({
-                name:'changeSCartNum',
-                data: {
-                  key: goodsId,
-                  number: number,
-                }
-              }).then(res=>{
-                wx.showToast({
-                  title: '加入购物袋',
-                  icon: 'success'
-                })
-              }).catch(console.error)
-            }else{
-              wx.cloud.callFunction({
-                name:'addShippingCart',
-                data: {
-                  items:that.data.shippingCarInfo.items
-                }
-              }).then(res=>{
-                wx.showToast({
-                  title: '加入购物袋',
-                  icon: 'success'
-                })
-              }).catch(console.error)
-            }
           }
-        },
+        }
+        
       })
-    }, 500)
+    })
     this.closePopupTap()
     this.shippingCartInfo()
   },

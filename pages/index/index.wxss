@@ -405,30 +405,41 @@ z-index: 0;
   display: inline-block;
   width: 350rpx;
   margin: 20rpx 0rpx 0rpx 16rpx;
-  /* border: #e0e0e0 1rpx solid; */
   font-size: 25rpx;
 }
 .packge{
   height: max-content;
-  /* z-index: 999; */
 }
-/*  */
-/* ---------------------------- */
-/*模态框*/
 .modal{position:fixed; top:0; right:0; bottom:0; left:0; z-index:1000;}
-.modal-cancel{position:absolute; z-index:2000; top:0; right:0; bottom: 0; left:0; background:rgba(0,0,0,0.3);}
-.bottom-dialog-body{width:100%; position:absolute; z-index:3000; bottom:0; left:0;background:#dfdede;}
+.modal-cancel{
+  position:absolute; 
+  z-index:2000; 
+  top:0; 
+  right:0; 
+  bottom: 0; 
+  left:0; 
+  background:rgba(0,0,0,0.3);
+}
+.bottom-dialog-body{width:100%; position:absolute; z-index:3000; bottom:0; left:0;background:#fff;}
 /*动画前初始位置*/
 .bottom-positon{-webkit-transform:translateY(100%);transform:translateY(100%);}
- 
- 
 /* 底部弹出框 */
 .bottom-positon{
+  text-align: left;
+}
+.bottom-size-pos{
   text-align: center;
+}
+.select-desc{
+  display: flex;
+  flex-direction: column;
+}
+.select-good{
+  display: flex;
+  flex-direction: row;
 }
 .Mselect{
   z-index: 4000;
-  margin-bottom: 20rpx;
 }
 .Mselect view{
   padding: 26rpx 0;
