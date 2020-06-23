@@ -83,5 +83,62 @@ Page({
           that.onShow();
         }
       })
+    },
+    queryOrder:function(){
+      wx.cloud.callFunction({
+        name:'queryOrderInfo',
+        data: {
+          orderId: this.data.orderId,
+          deliveryId: 'TEST',
+          waybillId: ''
+        }
+      }).then(res=>{
+        wx.showModal({
+          content: 'orderId:' + res.result.orderId + ' -key ' + res.result.waybillData[0].key +' -value ' + res.result.waybillData[0].value,
+          showCancel: true,
+          title: 'result'
+        })
+        console.log(res)
+      }).catch(err=>{
+        console.log("getOrderInfo fail "+ err)
+      })
+    },
+    queryOrderPath:function(){
+      wx.cloud.callFunction({
+        name:'getOrderPath',
+        data: {
+          orderId: this.data.orderId,
+          deliveryId: 'TEST',
+          waybillId: 'Yunazure-1592918244451_1592918252_waybill_id'
+        }
+      }).then(res=>{
+        wx.showModal({
+          content: 'orderId:' + res.result.orderId + ' -waybillId ' + res.result.waybillId +' -pathItemNum ' + res.result.pathItemNum + '- pathItemList' + res.result.pathItemList,
+          showCancel: true,
+          title: 'result'
+        })
+        console.log(res)
+      }).catch(err=>{
+        console.log("queryOrderPath fail "+ err)
+      })
+    },
+    cancelOrder(){
+      wx.cloud.callFunction({
+        name:'cancelOrder',
+        data: {
+          orderId: this.data.orderId,
+          deliveryId: 'TEST',
+          waybillId: 'Yunazure-1592918244451_1592918252_waybill_id'
+        }
+      }).then(res=>{
+        wx.showModal({
+          content: 'succ',
+          showCancel: true,
+          title: 'result'
+        })
+        console.log(res)
+      }).catch(err=>{
+        console.log("cancelOrder fail "+ err)
+      })
     }
 })

@@ -127,15 +127,14 @@ Page({
       },insured: {
         useInsured: 1,
         insuredValue: 10000
-      },
-      service: {
-        serviceType: 0,
-        serviceName: '标准快递'
+      },service: {
+        serviceType: 1,//0,
+        serviceName: 'test_service_name'//'标准快递'
       },
       addSource: 0,
-      orderId: e.orderId,
-      deliveryId: 'SF',
-      bizId: 'SF_CASH',
+      orderId: e.orderid,
+      deliveryId: 'TEST', //'SF',
+      bizId: 'test_biz_id',//'SF_CASH',
       customRemark: '衣帽包包'
     }
     wx.cloud.callFunction({
@@ -158,23 +157,44 @@ Page({
         title: '成功通知物流',
         icon: 'success'
       })
-    }).catch(console.error)
+      console.log("下单成功：" + res)
+    }).catch(err=>{
+      console.log("下单失败："+ err)
+    })
   },
+  // queryOrder:function(){
+  //   wx.cloud.callFunction({
+  //     name:'queryOrderInfo',
+  //     data: {
+  //       orderId: orderInfo.orderId,
+  //       deliveryId: orderInfo.deliveryId,
+  //       waybillId: event.waybillId
+  //     }
+  //   }).then(res=>{
+  //     wx.showToast({
+  //       title: '成功通知物流',
+  //       icon: 'success'
+  //     })
+  //     console.log("下单成功：" + res);
+  //   }).catch(err=>{
+  //     console.log("下单失败："+ err)
+  //   })
+  // },
   //提交订单
-  confirmOrder: function(res) { 
+  confirmOrder: function(orderInfo) { 
     let that = this
-    let orderid = res.orderid
+    let orderid = orderInfo.orderid
     wx.cloud.callFunction({
       name: "payment",
       data: {
         command: "pay",
-        out_trade_no: res.orderid,
+        out_trade_no: orderid,
         body: 'yunazure-scarf-DIY',
         total_fee: 1
       },
       success(res) {
         console.log("云函数payment提交成功：", res.result)
-        that.pay(res.result, orderid)
+        that.pay(res.result, orderInfo)
       },
       fail(res) {
         console.log("云函数payment提交失败：", res)
@@ -183,12 +203,13 @@ Page({
         })
       },
       complete(){
-       
+
       }
     })
   },
   //实现小程序支付
-  pay(payData, orderid) {
+  pay(payData, orderInfo) {
+    const that = this
     wx.requestPayment({ //已经得到了5个参数
       timeStamp: payData.timeStamp,
       nonceStr: payData.nonceStr,
@@ -205,7 +226,7 @@ Page({
           },
           success(){
             db.collection('orderlist').where({
-              'postData.orderid': orderid
+              'postData.orderid': orderInfo.orderid
             }).update({
               data: {
                 'postData.status': 1
@@ -216,6 +237,7 @@ Page({
             })
           }
         })
+        that.order(orderInfo)
       },
       fail(res) {
         console.log("支付失败：", res)
