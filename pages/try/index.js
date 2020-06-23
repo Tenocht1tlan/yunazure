@@ -24,41 +24,42 @@ Page({
         imgUrl: '',                // 要绘入的图片地址
         imgWidth: 100,             // 图片宽度
         imgHeight: 100,            // 图片高度
-        tempImgWidth: 100,         // 最终绘入的图片高度
-        tempImgHeight: 100,        // 最终绘入的图片高度
+        tempImgWidth: 81,         // 最终绘入的图片高度
+        tempImgHeight: 81,        // 最终绘入的图片高度
         rotateAngle: 0,            // 旋转角度
         rotateTemp: 0,             // 缓存 旋转角度
-        iconSize: 20,              // 操作图标的大小
+        iconSize: 81,              // 操作图标的大小
         operate: 'draw'            // 操作类型
     },
 
       onStart (e) {
         // console.log(e)
-        this.operate = 'none'
+        this.data.operate = 'none'
         // 图标半径
-        let r = this.iconSize
-        let x = this.X - this.tempImgWidth / 2
-        let y = this.Y - this.tempImgHeight / 2
+        let r = this.data.iconSize / 4
+        let x = this.data.X - this.data.tempImgWidth / 2
+        let y = this.data.Y - this.data.tempImgHeight / 2
+        console.log("r,x,y"+r+' '+x+" "+y+' ')
         // 存储新点击的位置,方便计算
-        this.tempX = e.touches[0].x
-        this.tempY = e.touches[0].y
+        this.data.tempX = e.touches[0].x
+        this.data.tempY = e.touches[0].y
         // 是否点中 缩放 按钮
         let isScale = this.isInRange(
-          x + this.tempImgWidth - r,
-          y + this.tempImgHeight - r,
-          x + this.tempImgWidth + r,
-          y + this.tempImgHeight + r,
-          this.tempX,
-          this.tempY
+          x + this.data.tempImgWidth - r,
+          y + this.data.tempImgHeight - r,
+          x + this.data.tempImgWidth + r,
+          y + this.data.tempImgHeight + r,
+          this.data.tempX,
+          this.data.tempY
         )
         // 是否点中 旋转 按钮
         let isRotate = this.isInRange(
-          x + this.tempImgWidth - r,
+          x + this.data.tempImgWidth - r,
           y - r,
-          x + this.tempImgWidth + r,
+          x + this.data.tempImgWidth + r,
           y + r,
-          this.tempX,
-          this.tempY
+          this.data.tempX,
+          this.data.tempY
         )
         // 是否点中 删除 按钮
         let isDelete = this.isInRange(
@@ -66,43 +67,43 @@ Page({
           y - r,
           x + r,
           y + r,
-          this.tempX,
-          this.tempY
+          this.data.tempX,
+          this.data.tempY
         )
         // 是否是 拖动 (点中除以上按钮以外的其他区域,但是又在图片区域内)
         let isDraw = this.isInRange(
           x,
           y,
-          x + this.tempImgWidth,
-          y + this.tempImgHeight,
-          this.tempX,
-          this.tempY
+          x + this.data.tempImgWidth,
+          y + this.data.tempImgHeight,
+          this.data.tempX,
+          this.data.tempY
         )
         if (isScale) {
-          this.operate = 'scale'
-          this.imgHeight = this.tempImgHeight
-          this.imgWidth = this.tempImgWidth
+          this.data.operate = 'scale'
+          this.data.imgHeight = this.data.tempImgHeight
+          this.data.imgWidth = this.data.tempImgWidth
           // console.log('scale')
           return
         }
         if (isRotate) {
-          this.operate = 'rotate'
+          this.data.operate = 'rotate'
           // console.log('rotate')
           return
         }
         if (isDelete) {
-          this.operate = 'delete'
+          this.data.operate = 'delete'
           // console.log('delete')
           this.draw()
           return
         }
         if (isDraw) {
           // 保存点击的位置(diffX,diffY),避免每次都以中心拖动
-          this.diffX = e.touches[0].x - this.X
-          this.diffY = e.touches[0].y - this.Y
-          this.X = e.touches[0].x - this.diffX
-          this.Y = e.touches[0].y - this.diffY
-          this.operate = 'draw'
+          this.data.diffX = e.touches[0].x - this.data.X
+          this.data.diffY = e.touches[0].y - this.data.Y
+          this.data.X = e.touches[0].x - this.data.diffX
+          this.data.Y = e.touches[0].y - this.data.diffY
+          this.data.operate = 'draw'
           // console.log('draw')
           this.draw()
           return
@@ -110,44 +111,44 @@ Page({
       },
       onMove (e) {
         // console.log('move')
-        if (this.operate === 'scale' || this.operate === 'rotate') {
-          this.newX = e.touches[0].x
-          this.newY = e.touches[0].y
+        if (this.data.operate === 'scale' || this.data.operate === 'rotate') {
+          this.data.newX = e.touches[0].x
+          this.data.newY = e.touches[0].y
         }
-        if (this.operate === 'draw') {
+        if (this.data.operate === 'draw') {
           // 扣除掉 点击位置到中心的距离(diffX,diffY)
-          this.X = e.touches[0].x - this.diffX
-          this.Y = e.touches[0].y - this.diffY
+          this.data.X = e.touches[0].x - this.data.diffX
+          this.data.Y = e.touches[0].y - this.data.diffY
         }
         this.draw()
       },
       onEnd (e) {
-        if (this.operate === 'rotate') {
-          this.rotateAngle += this.rotateTemp
-          this.rotateAngle %= 360
-          this.rotateTemp = 0
+        if (this.data.operate === 'rotate') {
+          this.data.rotateAngle += this.data.rotateTemp
+          this.data.rotateAngle %= 360
+          this.data.rotateTemp = 0
           // console.log('end')
         }
-        this.operate = 'none'
+        this.data.operate = 'none'
       },
       draw () {
         // 判断是否超出边界
-        if (this.X > this.canvasWidth + this.tempImgWidth / 2 - 20) {
-          this.X = this.canvasWidth + this.tempImgWidth / 2 - 20
+        if (this.data.X > this.data.canvasWidth + this.data.tempImgWidth / 2 - 20) {
+          this.data.X = this.data.canvasWidth + this.data.tempImgWidth / 2 - 20
         }
-        if (this.Y > this.canvasHeight + this.tempImgHeight / 2 - 20) {
-          this.Y = this.canvasHeight + this.tempImgHeight / 2 - 20
+        if (this.data.Y > this.data.canvasHeight + this.data.tempImgHeight / 2 - 20) {
+          this.data.Y = this.data.canvasHeight + this.data.tempImgHeight / 2 - 20
         }
-        if (this.X < -this.tempImgWidth / 2 + 20) {
-          this.X = -this.tempImgWidth / 2 + 20
+        if (this.data.X < -this.data.tempImgWidth / 2 + 20) {
+          this.data.X = -this.data.tempImgWidth / 2 + 20
         }
-        if (this.Y < -this.tempImgHeight / 2 + 20) {
-          this.Y = -this.tempImgHeight / 2 + 20
+        if (this.data.Y < -this.data.tempImgHeight / 2 + 20) {
+          this.data.Y = -this.data.tempImgHeight / 2 + 20
         }
-        let r = this.iconSize / 2     // 图标半径
-        let d = this.iconSize         // 图标直径
+        let r = this.data.iconSize / 8   // 图标半径
+        let d = this.data.iconSize / 4        // 图标直径
 
-        if (this.operate === 'delete') {
+        if (this.data.operate === 'delete') {
           // this.X = 150
           // this.Y = 150
           // this.rotateAngle = 0
@@ -164,44 +165,46 @@ Page({
           return
         }
         const ctx = wx.createCanvasContext('mainCanvas')
-        if (this.operate === 'scale') {
-          let scaleX = (this.X - this.newX) / (this.X - this.tempX)
-          let scaleY = (this.Y - this.newY) / (this.Y - this.tempY)
+        if (this.data.operate === 'scale') {
+          let scaleX = (this.data.X - this.data.newX) / (this.data.X - this.data.tempX)
+          let scaleY = (this.data.Y - this.data.newY) / (this.data.Y - this.data.tempY)
           let scale = scaleX < scaleY ? scaleX : scaleY
-          this.tempImgWidth = this.imgWidth * scale
-          this.tempImgHeight = this.imgHeight * scale
+          this.data.tempImgWidth = this.data.imgWidth * scale
+          this.data.tempImgHeight = this.data.imgHeight * scale
         }
-        if (this.operate === 'rotate') {
-          this.rotateTemp = this.getAngle(this.tempX, this.tempX, this.newX, this.newY)
+        if (this.data.operate === 'rotate') {
+          this.data.rotateTemp = this.getAngle(this.data.tempX, this.data.tempX, this.data.newX, this.data.newY)
         }
         // 中心位移
-        ctx.translate(this.X, this.Y)
+        ctx.translate(this.data.X, this.data.Y)
         // 设置新的原点
-        let x = -this.tempImgWidth / 2
-        let y = -this.tempImgHeight / 2
+        let x = -this.data.tempImgWidth / 2
+        let y = -this.data.tempImgHeight / 2
         // 新旧2种角度,分开旋转
-        ctx.rotate(this.rotateTemp * Math.PI / 180)
-        ctx.rotate(this.rotateAngle * Math.PI / 180)
-        if (!this.imgUrl) return
-        ctx.drawImage(this.imgUrl, x, y, this.tempImgWidth, this.tempImgHeight)
+        ctx.rotate(this.data.rotateTemp * Math.PI / 180)
+        ctx.rotate(this.data.rotateAngle * Math.PI / 180)
+        if (!this.data.imgUrl) return
+        ctx.drawImage(this.data.imgUrl, x, y, this.data.tempImgWidth, this.data.tempImgHeight)
         // 旋转回来,保证除了图片以外的其他元素不被旋转
-        ctx.rotate((360 - this.rotateTemp) * Math.PI / 180)
-        ctx.rotate((360 - this.rotateAngle) * Math.PI / 180)
+        ctx.rotate((360 - this.data.rotateTemp) * Math.PI / 180)
+        ctx.rotate((360 - this.data.rotateAngle) * Math.PI / 180)
         // 画边框
         ctx.setStrokeStyle('#fd749c')
         ctx.setLineDash([5, 5], 10);
-        ctx.strokeRect(x, y, this.tempImgWidth, this.tempImgHeight)
+        ctx.strokeRect(x, y, this.data.tempImgWidth, this.data.tempImgHeight)
         // 画 删除 按钮
         ctx.drawImage('/images/delete.png', x - r, y - r, d, d)
         // 画 旋转 按钮
-        ctx.drawImage('/images/rotate.png', x + this.tempImgWidth - r, y - r, d, d)
+        ctx.drawImage('/images/rotate.png', x + this.data.tempImgWidth - r, y - r, d, d)
         // 画 缩放 按钮
-        ctx.drawImage('/images/scale.png', x + this.tempImgWidth - r, y + this.tempImgHeight - r, d, d)
+        ctx.drawImage('/images/scale.png', x + this.data.tempImgWidth - r, y + this.data.tempImgHeight - r, d, d)
+        // console.log("x:"+x+"y:"+y+"this.data.tempImgWidth:"+this.tempImgWidth+"r"+r+"d"+d)
         ctx.draw()
+        // console.log(this.data)
       },
       // 保存图片配置到服务器
       async saveConfig () {
-        if (!this.imgUrl) {
+        if (!this.data.imgUrl) {
           wx.showToast({
             title: '请先选择图案',
             icon: 'none',
@@ -209,16 +212,16 @@ Page({
           })
           return
         }
-        console.log(this.currentMaterial)
+        console.log(this.data.currentMaterial)
         let url = 'https://api.mic.hn.cn/api/po/123'
         let body = {
           id: 0,
           sid: '123',
           type: 1,
-          sex: this.currentGender === 'm' ? '男' : '女',
-          LorR: this.currentPosition === 'left' ? 0 : 1,
-          iscustom: this.currentMaterial.styleId === 0,
-          imgindex: this.currentMaterial.styleId,
+          sex: this.data.currentGender === 'm' ? '男' : '女',
+          LorR: this.data.currentPosition === 'left' ? 0 : 1,
+          iscustom: this.data.currentMaterial.styleId === 0,
+          imgindex: this.data.currentMaterial.styleId,
           orderdate: this.miment().format('YYYY-MM-DD hh:mm:ss')
         }
         wx.showLoading({title:'保存中...'})
@@ -230,7 +233,7 @@ Page({
       },
       // 把平常图片到本地
       async drawToTemp () {
-        if (!this.imgUrl) {
+        if (!this.data.imgUrl) {
           wx.showToast({
             title: '请先选择图案',
             icon: 'none',
@@ -240,10 +243,10 @@ Page({
         }
         const ctx = wx.createCanvasContext('tempCanvas')
         ctx.translate(0, 0)
-        let socksUrl = this.socks.url + this.currentColor + '.png'
+        let socksUrl = this.data.socks.url + this.data.currentColor + '.png'
         let that = this
-        let w = 0.9 * this.winWidth
-        let h = 0.5 * this.winHeight
+        let w = 0.9 * this.data.winWidth
+        let h = 0.5 * this.data.winHeight
         let x = 0
         let y = 0
         let whRate = w / h
@@ -255,22 +258,22 @@ Page({
                 if (res.width > w) {
                   // console.log('enter')
                   h = res.height * w / res.width
-                  y = (0.5 * that.winHeight - h) / 2
+                  y = (0.5 * that.data.winHeight - h) / 2
                 } else {
                   w = res.width
                   h = res.height
-                  x = (0.9 * that.winWidth - w) / 2
-                  y = (0.5 * that.winHeight - h) / 2
+                  x = (0.9 * that.data.winWidth - w) / 2
+                  y = (0.5 * that.data.winHeight - h) / 2
                 }
               } else {
                 if (res.height > h) {
                   w = res.width * h / res.height
-                  x = (0.9 * that.winWidth - w) / 2
+                  x = (0.9 * that.data.winWidth - w) / 2
                 } else {
                   w = res.width
                   h = res.height
-                  x = (0.9 * that.winWidth - w) / 2
-                  y = (0.5 * that.winHeight - h) / 2
+                  x = (0.9 * that.data.winWidth - w) / 2
+                  y = (0.5 * that.data.winHeight - h) / 2
                 }
               }
               resolve(res)
@@ -280,18 +283,18 @@ Page({
         ctx.drawImage(socksUrl, x, y, w, h)
         ctx.save()
         // 设置 蒙版 剪切掉框外面多余的像素
-        ctx.rect(this.socks.x * this.winWidth, this.socks.y * this.winHeight, this.canvasWidth, this.canvasHeight)
+        ctx.rect(this.data.socks.x * this.data.winWidth, this.data.socks.y * this.data.winHeight, this.data.canvasWidth, this.data.canvasHeight)
         // ctx.fill()
         ctx.clip()
         // 设置新的原点
-        let nx = this.socks.x * this.winWidth + this.X
-        let ny = this.socks.y * this.winHeight + this.Y
+        let nx = this.data.socks.x * this.data.winWidth + this.data.X
+        let ny = this.data.socks.y * this.data.winHeight + this.data.Y
         // 中心位移
         ctx.translate(nx, ny)
         // 新旧2种角度,分开旋转
-        ctx.rotate(this.rotateTemp * Math.PI / 180)
-        ctx.rotate(this.rotateAngle * Math.PI / 180)
-        ctx.drawImage(this.imgUrl, -this.tempImgWidth / 2, -this.tempImgHeight / 2, this.tempImgWidth, this.tempImgHeight)
+        ctx.rotate(this.data.rotateTemp * Math.PI / 180)
+        ctx.rotate(this.data.rotateAngle * Math.PI / 180)
+        ctx.drawImage(this.data.imgUrl, -this.data.tempImgWidth / 2, -this.data.tempImgHeight / 2, this.data.tempImgWidth, this.data.tempImgHeight)
         ctx.restore()
         ctx.draw(false, function () {
             wx.canvasToTempFilePath({
@@ -347,18 +350,18 @@ Page({
       },
       // 选择图片
       async selectImg (url) {
-        // this.clearCanvas()
+        // this.data.clearCanvas()
         let that = this
         await new Promise(resolve => {
-          that.imgUrl = url
-          that.operate = 'draw'
+          that.data.imgUrl = url
+          that.data.operate = 'draw'
           resolve()
         })
         this.draw()
       },
       // 选择本地图片
       chooseLocalImages () {
-        this.isShowHistory = false
+        this.data.isShowHistory = false
         let that = this
         wx.chooseImage({
           count: 1, // 默认9
@@ -379,33 +382,33 @@ Page({
       },
       // 查看上传历史
       viewHistory () {
-        this.isShowHistory = !this.isShowHistory
-        if (this.isShowHistory) {
+        this.data.isShowHistory = !this.data.isShowHistory
+        if (this.data.isShowHistory) {
           var that = this
           wx.getStorage({
             key: 'history',
             success (res) {
-              that.historyList = res.data
+              that.data.historyList = res.data
             }
           })
         }
       },
       // 删除单条历史记录
       deleteHistory (item) {
-        let set = new Set(this.historyList)
+        let set = new Set(this.data.historyList)
         set.delete(item)
-        this.historyList = Array.from(set)
+        this.data.historyList = Array.from(set)
         wx.setStorage({
           key: "history",
-          data: this.historyList
+          data: this.data.historyList
         })
       },
       // 清除所有历史记录
       clearHistory () {
-        this.historyList = []
+        this.data.historyList = []
         wx.setStorage({
           key: "history",
-          data: this.historyList
+          data: this.data.historyList
         })
       },
       // 选择素材
@@ -427,30 +430,30 @@ Page({
           if (dlRes) src = dlRes
         }
         let that = this
-        let whRate = this.canvasWidth / this.canvasHeight  // 图片纵横比
-        this.imgWidth = this.canvasWidth * 0.8
-        this.imgHeight = this.canvasHeight * 0.8
+        let whRate = this.data.canvasWidth / this.data.canvasHeight  // 图片纵横比
+        this.data.imgWidth = this.data.canvasWidth * 0.8
+        this.data.imgHeight = this.data.canvasHeight * 0.8
         wx.getImageInfo({
           src: src,
           success: function (res) {
             // 判断是否超大.计算缩放比例
             if (res.width > res.height * whRate) {
-              if (res.width > that.imgWidth) {
-                that.imgHeight = res.height * that.imgWidth / res.width
+              if (res.width > that.data.imgWidth) {
+                that.data.imgHeight = res.height * that.data.imgWidth / res.width
               } else {
-                that.imgWidth = res.width
-                that.imgHeight = res.height
+                that.data.imgWidth = res.width
+                that.data.imgHeight = res.height
               }
             } else {
-              if (res.height > that.imgHeight) {
-                that.imgWidth = res.width * that.imgHeight / res.height
+              if (res.height > that.data.imgHeight) {
+                that.data.imgWidth = res.width * that.data.imgHeight / res.height
               } else {
-                that.imgWidth = res.width
-                that.imgHeight = res.height
+                that.data.imgWidth = res.width
+                that.data.imgHeight = res.height
               }
             }
-            that.tempImgWidth = that.imgWidth
-            that.tempImgHeight = that.imgHeight
+            that.data.tempImgWidth = that.data.imgWidth
+            that.data.tempImgHeight = that.data.imgHeight
             that.selectImg(src)
           },
           fail (err) {
@@ -491,21 +494,22 @@ Page({
           //
           // this.imgWidth = this.tempImgWidth = this.X / 1.5
           // this.imgHeight = this.tempImgHeight = this.Y / 1.5
-          this.winWidth = res.windowWidth
-          this.winHeight = res.windowHeight
+          console.log("res.windowHeight"+res.windowHeight)
+          this.data.winWidth = res.windowWidth
+          this.data.winHeight = res.windowHeight
         } catch (e) {
         }
       },
       // 初始化 袜子信息
       loadSocksInfo () {
-        this.canvasWidth = this.winWidth *0.9
-        this.canvasHeight = this.winHeight *0.5
-        this.X = this.tempX = this.newX = this.canvasWidth / 2
-        this.Y = this.tempY = this.newY = this.canvasHeight / 2
-        this.imgWidth = this.tempImgWidth = this.canvasWidth * 0.8
-        this.imgHeight = this.tempImgHeight = this.canvasHeight * 0.8
-        this.rotateAngle = 0
-        this.imgUrl = ''
+        this.data.canvasWidth = this.data.winWidth *0.9
+        this.data.canvasHeight = this.data.winHeight *0.5
+        this.data.X = this.data.tempX = this.data.newX = this.data.canvasWidth / 2
+        this.data.Y = this.data.tempY = this.data.newY = this.data.canvasHeight / 2
+        this.data.imgWidth = this.data.tempImgWidth = this.data.canvasWidth * 0.5
+        this.data.imgHeight = this.data.tempImgHeight = this.data.canvasHeight * 0.5
+        this.data.rotateAngle = 0
+        this.data.imgUrl = ''
       },
       // 切换袜子位置
 
@@ -518,12 +522,12 @@ Page({
         this.loadSocksInfo()
         const ctx = wx.createCanvasContext('mainCanvas')
         ctx.moveTo(0, 0)
-        ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
+        ctx.clearRect(0, 0, this.data.canvasWidth, this.data.canvasHeight)
         ctx.draw()
       },
       // 设置素材分类
       setMaterialCategory (category) {
-        this.materialCategory = category
+        this.data.materialCategory = category
       },
       // 加入购物车
       toCard () {
@@ -532,14 +536,14 @@ Page({
         })
       },
       openRecommend () {
-        this.showRecommend = true
+        this.data.showRecommend = true
       },
       closeRecommend () {
-        this.showRecommend = false
+        this.data.showRecommend = false
         this.draw()
       },
       addCartNum () {
-        this.cartNum++
+        this.data.cartNum++
       },
     onLoad:function() {
       this.getDeviceInfo()
