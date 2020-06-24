@@ -457,18 +457,17 @@ z-index: 0;
   padding: 26rpx 0;
 }
 .home-page{
-width: 100%;
-position: fixed;
-top:0;
-z-index: 999;
-background-color: #fff;
-width:750rpx;
- background-position: center;
- background-repeat: no-repeat;
- background-size: 100% 100%;
- -moz-background-size: 100% 100%;
+  width: 100%;
+  position: fixed;
+  top:0;
+  z-index: 999;
+  background-color: #fff;
+  width:750rpx;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
 }
-/* jinpin */
 .upBoutiques{
   display: flex;
   flex-direction: row;
@@ -485,7 +484,6 @@ width:750rpx;
   border-radius: 50%;
   width: 100rpx;
   height: 100rpx;
-
 }
 .Boutiques-text{
 width: 100rpx;

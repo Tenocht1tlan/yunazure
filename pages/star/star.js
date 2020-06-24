@@ -39,7 +39,6 @@ Page({
     var select = !this.data.favGoods[index].select
     var temp ='favGoods['+index+'].select'
     var hidden = this.data.isEdit
-    // console.log(this.data.favGoods)
     console.log(select)
     if(hidden){
       this.setData({
@@ -65,15 +64,9 @@ Page({
       })
     }
   },
-  // 数据库favorite里面有goodid有的就删除掉
-delFav(e){
-  // for(var i = 0;i<this.data.goodId.length;i++){
-    this.delFavgood(this.data.goodId)
-  // }
-
-  return
-},
-
+  delFav(e){
+      this.delFavgood(this.data.goodId)
+  },
   async delFavgood(key){
     var openid = ''
     var list = []
@@ -113,7 +106,6 @@ delFav(e){
       })
     }
   },
-//  --------------------底部弹出框--------------------
   showModal() {
     var animation = wx.createAnimation({
         duration: 100,
@@ -157,11 +149,13 @@ async getFavGoodsList(){
       name:'login'
     }).then(res=>{
       db.collection('favorite').where({
-          _openid:res.result.openid
+        _openid:res.result.openid
       }).get().then(res=>{
-        this.setData({
-          favGoods:res.data[0].items
-        })
+        if(res.data[0]){
+          this.setData({
+            favGoods:res.data[0].items
+          })
+        }
       })
     })
   }else{
