@@ -111,8 +111,8 @@
 .mainCanvas {
   overflow: hidden;
   position: absolute;
-  max-width: 90vw;
-  max-height: 50vh;
+  width:750rpx;
+  height: 750rpx;
   left: 0;
   top: 0;
   border: 1px dashed #19a9b5;
