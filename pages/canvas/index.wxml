@@ -1,0 +1,4 @@
+<!--pages/canvas/index.wxml-->
+<canvas canvas-id="myCanvas" class="myCanvas"  ></canvas>
+<button bindtap="addcircle">添加</button>
+<button bindtap="addimage">添加图片</button>

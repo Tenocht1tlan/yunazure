@@ -261,7 +261,6 @@ var touchMove = function (_this, e) {
   } else {
     return;
   }
-  console.log("data: "+_this.data.stv)
 }
 
 //为touchMove函数节流

@@ -45,7 +45,8 @@
     "pages/history/index",
     "pages/opinion/index",
     "pages/DIYLocation/index",
-    "pages/try/index"   
+    "pages/try/index",
+    "pages/canvas/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
