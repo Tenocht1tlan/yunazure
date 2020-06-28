@@ -18,7 +18,23 @@ page,view,image,input,textarea {
   width: 100%;
   height:748rpx;
 }
+.de{
+  width: 750rpx;
+  margin-left: 120rpx;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap:wrap;
+}
+.deid{
+  font-size: 25rpx;
+  color: #000;
+  font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
+  margin-top: 10rpx;
+}
 .decolor{
+  display: flex;
+  flex-direction: row;
   font-size: 25rpx;
   color: #000;
   font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
@@ -84,6 +100,7 @@ swiper-item image {
   font-size: 32rpx;
   line-height: 1.4;
   color: #000;
+  margin-left: 30rpx;
   margin-bottom: 28rpx;
 }
 .goods-info .goods-share{
@@ -101,7 +118,7 @@ swiper-item image {
 .goods-profile .p{
    color:#e64340;
    font-size: 20pt;
-   margin-left: 30rpx;
+   margin-left: 60rpx;
 }
 .goods-profile .p text{
    font-size: 12pt;
@@ -440,9 +457,6 @@ swiper-item image {
   height:300rpx;
   margin-top: 50rpx;
 }
-
-
-
 .posterImg-box {
   position: absolute;
   top: 64rpx;
@@ -493,4 +507,21 @@ swiper-item image {
 .shop-container .info .address {
   font-size: 26rpx;
   color: #666;
+}
+.goToPage{
+  text-decoration: underline;
+}
+.afterSale-box{
+  width:750rpx;
+  margin-left: 120rpx;
+  margin-top: 40rpx;
+  display:flex;
+  flex-direction:row;
+  align-items: center;
+  font-size: 28rpx;
+}
+.afterSale{
+  width: 45rpx;
+
+  height: 45rpx;
 }

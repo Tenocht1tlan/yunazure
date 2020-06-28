@@ -10,6 +10,7 @@ Page({
     faved:false,
     wxlogin: false,
     goodsDetail: {},
+    color:{},
     pics:[],
     hasMoreSelect: false,
     selectSize: SelectSizePrefix,
@@ -171,7 +172,8 @@ Page({
             selectSizePrice: goodsDetailRes.minPrice,
             selectSizeOPrice: goodsDetailRes.originalPrice,
             buyNumMax: goodsDetailRes.stockNum,
-            buyNumber: (goodsDetailRes.stockNum > 0) ? 1 : 0
+            buyNumber: (goodsDetailRes.stockNum > 0) ? 1 : 0,
+            color:goodsDetailRes.sku[1].childsCurGoods
           }
           // if (goodsKanjiaSetRes.code == 0) {
           //   _data.curGoodsKanjia = goodsKanjiaSetRes.data[0]
@@ -198,6 +200,7 @@ Page({
           //   }        
           // }
           that.setData(_data)
+          console.log(that.data.color)
         }
         that.addHistory()
       }

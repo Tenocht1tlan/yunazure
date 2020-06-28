@@ -25,7 +25,27 @@ Page({
 
     context.draw()
   },
-
+  saveImg(){
+    var context = wx.createCanvasContext('firstCanvas')
+    context.restore()
+    context.drawImage('/images/scarfMan.png',0,0)
+    context.translate(20, 20)
+    context.drawImage('/images/scarfWoman.png',20,0)
+    context.draw(res=>{
+      wx.canvasToTempFilePath({
+        x: 100,
+        y: 200,
+        width: 50,
+        height: 50,
+        destWidth: 100,
+        destHeight: 100,
+        canvasId: 'firstCanvas',
+        success(res) {
+          console.log(res.tempFilePath)
+        }
+      }).catch(error)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
