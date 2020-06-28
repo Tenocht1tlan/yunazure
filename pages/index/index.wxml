@@ -151,7 +151,7 @@
   </view>
   <view style='display: inline-block;flex-wrap:wrap;'>
     <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}"  data-name="{{item.name}}" >
-      <view class="imag-box" style="height: 450rpx;">
+      <view class="imag-box" style="height: 420rpx;">
         <image class="scroll-view-imag" src="{{item.pic}}" mode="scaleToFill" lazy-load="true" ></image>
         <image class="star" catchtap="addFav" src="{{favStr[item.id] == 1 ?'/images/staryes.png':'/images/starno.png'}}" data-index="{{item.id}}" data-id="{{item.good_id}}"></image>
       </view>

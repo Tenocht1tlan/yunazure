@@ -7,7 +7,7 @@ Page({
   data: {
     indicatorDots:true,
     autoplay:false,
-    clothImg:["cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/1.jpg","cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/2.jpg"
+    clothImg:["cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/pearl/main.jpg","cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/pearl/gray.jpg"
   ]
 
   },

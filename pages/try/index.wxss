@@ -69,27 +69,7 @@
   justify-content: center;
   align-items: center;
 }
-.card-img {
-  width: 3vh;
-  height: 3vh;
-  position: relative;
-  overflow: visible;
-}
-.cart-num{
-  position: absolute;
-  top:-15rpx;
-  right: -15rpx;
-  width: 30rpx;
-  height: 30rpx;
-  border-radius: 50%;
-  background: #fd749c;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20rpx;
-  color: #fff;
-  font-weight: bold;
-}
+
 /*中间 canvas*/
 .main-wrap {
   position: relative;
@@ -104,15 +84,15 @@
 .canvas-wrap {
   position: absolute;
   top: 0;
-  left: 5vw;
-  width: 90vw;
+  width: 100vw;
   height: 50vh;
 }
 .mainCanvas {
   overflow: hidden;
   position: absolute;
-  width:750rpx;
-  height: 750rpx;
+  width: 90vw;
+  height: 30vh;
+  margin: 10vh 5vw;
   left: 0;
   top: 0;
   border: 1px dashed #19a9b5;

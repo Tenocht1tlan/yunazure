@@ -2,14 +2,14 @@
   display: flex;
   width: 100%;
   justify-content: center;
-
+  height: 600rpx;
 }
 .textfirst{
-   display: flex;
-   font-size: 25rpx;  
-   padding-top: 40rpx;
-    height: 80rpx; 
-    justify-content: center;
+  display: flex;
+  font-size: 25rpx;  
+  padding-top: 40rpx;
+  height: 80rpx; 
+  justify-content: center;
 }
 .reservationInput {
   display: flex;

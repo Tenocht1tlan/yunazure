@@ -33,13 +33,12 @@ Page({
     },
 
       onStart (e) {
-        // console.log(e)
         this.data.operate = 'none'
         // 图标半径
         let r = this.data.iconSize / 4
         let x = this.data.X - this.data.tempImgWidth / 2
         let y = this.data.Y - this.data.tempImgHeight / 2
-        console.log("r,x,y"+r+' '+x+" "+y+' ')
+        console.log("r ,x ,y :"+r+','+x+','+y)
         // 存储新点击的位置,方便计算
         this.data.tempX = e.touches[0].x
         this.data.tempY = e.touches[0].y
@@ -83,17 +82,14 @@ Page({
           this.data.operate = 'scale'
           this.data.imgHeight = this.data.tempImgHeight
           this.data.imgWidth = this.data.tempImgWidth
-          // console.log('scale')
           return
         }
         if (isRotate) {
           this.data.operate = 'rotate'
-          // console.log('rotate')
           return
         }
         if (isDelete) {
           this.data.operate = 'delete'
-          // console.log('delete')
           this.draw()
           return
         }
@@ -104,13 +100,11 @@ Page({
           this.data.X = e.touches[0].x - this.data.diffX
           this.data.Y = e.touches[0].y - this.data.diffY
           this.data.operate = 'draw'
-          // console.log('draw')
           this.draw()
           return
         }
       },
       onMove (e) {
-        // console.log('move')
         if (this.data.operate === 'scale' || this.data.operate === 'rotate') {
           this.data.newX = e.touches[0].x
           this.data.newY = e.touches[0].y
@@ -133,20 +127,20 @@ Page({
       },
       draw () {
         // 判断是否超出边界
-        if (this.data.X > this.data.canvasWidth + this.data.tempImgWidth / 2 - 20) {
-          this.data.X = this.data.canvasWidth + this.data.tempImgWidth / 2 - 20
+        if (this.data.X > this.data.canvasWidth - this.data.tempImgWidth / 2) {
+          this.data.X = this.data.canvasWidth - this.data.tempImgWidth / 2
         }
-        if (this.data.Y > this.data.canvasHeight + this.data.tempImgHeight / 2 - 20) {
-          this.data.Y = this.data.canvasHeight + this.data.tempImgHeight / 2 - 20
+        if (this.data.Y > this.data.canvasHeight - this.data.tempImgHeight / 2) {
+          this.data.Y = this.data.canvasHeight - this.data.tempImgHeight / 2
         }
-        if (this.data.X < -this.data.tempImgWidth / 2 + 20) {
-          this.data.X = -this.data.tempImgWidth / 2 + 20
+        if (this.data.X < this.data.tempImgWidth / 2) {
+          this.data.X = this.data.tempImgWidth / 2
         }
-        if (this.data.Y < -this.data.tempImgHeight / 2 + 20) {
-          this.data.Y = -this.data.tempImgHeight / 2 + 20
+        if (this.data.Y < this.data.tempImgHeight / 2) {
+          this.data.Y = this.data.tempImgHeight / 2
         }
         let r = this.data.iconSize / 8   // 图标半径
-        let d = this.data.iconSize / 4        // 图标直径
+        let d = this.data.iconSize / 4   // 图标直径
 
         if (this.data.operate === 'delete') {
           // this.X = 150
@@ -202,7 +196,7 @@ Page({
         ctx.draw()
         // console.log(this.data)
       },
-      // 保存图片配置到服务器
+      // 图片->服务器
       async saveConfig () {
         if (!this.data.imgUrl) {
           wx.showToast({
@@ -231,7 +225,7 @@ Page({
           wx.showToast({title:'保存成功!'})
         }
       },
-      // 把平常图片到本地
+      // 图片->本地
       async drawToTemp () {
         if (!this.data.imgUrl) {
           wx.showToast({
@@ -243,78 +237,91 @@ Page({
         }
         const ctx = wx.createCanvasContext('tempCanvas')
         ctx.translate(0, 0)
-        let socksUrl = this.data.socks.url + this.data.currentColor + '.png'
+        let socksUrl = new Date().getTime() + this.data.currentColor + '.png'
         let that = this
         let w = 0.9 * this.data.winWidth
         let h = 0.5 * this.data.winHeight
         let x = 0
         let y = 0
         let whRate = w / h
-        await new Promise((resolve) => {
-          wx.getImageInfo({
-            src: socksUrl,
-            success: function (res) {
-              if (res.width > res.height * whRate) {
-                if (res.width > w) {
-                  // console.log('enter')
-                  h = res.height * w / res.width
-                  y = (0.5 * that.data.winHeight - h) / 2
-                } else {
-                  w = res.width
-                  h = res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                  y = (0.5 * that.data.winHeight - h) / 2
-                }
-              } else {
-                if (res.height > h) {
-                  w = res.width * h / res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                } else {
-                  w = res.width
-                  h = res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                  y = (0.5 * that.data.winHeight - h) / 2
-                }
-              }
-              resolve(res)
-            }
-          })
-        })
-        ctx.drawImage(socksUrl, x, y, w, h)
+        // await new Promise((resolve) => {
+        //   wx.getImageInfo({
+        //     src: socksUrl,
+        //     success: function (res) {
+        //       if (res.width > res.height * whRate) {
+        //         if (res.width > w) {
+        //           h = res.height * w / res.width
+        //           y = (0.5 * that.data.winHeight - h) / 2
+        //         } else {
+        //           w = res.width
+        //           h = res.height
+        //           x = (0.9 * that.data.winWidth - w) / 2
+        //           y = (0.5 * that.data.winHeight - h) / 2
+        //         }
+        //       } else {
+        //         if (res.height > h) {
+        //           w = res.width * h / res.height
+        //           x = (0.9 * that.data.winWidth - w) / 2
+        //         } else {
+        //           w = res.width
+        //           h = res.height
+        //           x = (0.9 * that.data.winWidth - w) / 2
+        //           y = (0.5 * that.data.winHeight - h) / 2
+        //         }
+        //       }
+        //       resolve(res)
+        //     }
+        //   })
+        // })
+        // ctx.drawImage(socksUrl, x, y, w, h)
         ctx.save()
         // 设置 蒙版 剪切掉框外面多余的像素
-        ctx.rect(this.data.socks.x * this.data.winWidth, this.data.socks.y * this.data.winHeight, this.data.canvasWidth, this.data.canvasHeight)
+        // ctx.rect(this.data.socks.x * this.data.winWidth, this.data.socks.y * this.data.winHeight, this.data.canvasWidth, this.data.canvasHeight)
         // ctx.fill()
-        ctx.clip()
+        // ctx.clip()
         // 设置新的原点
-        let nx = this.data.socks.x * this.data.winWidth + this.data.X
-        let ny = this.data.socks.y * this.data.winHeight + this.data.Y
+        // let nx = this.data.socks.x * this.data.winWidth + this.data.X
+        // let ny = this.data.socks.y * this.data.winHeight + this.data.Y
         // 中心位移
-        ctx.translate(nx, ny)
+        // ctx.translate(nx, ny)
         // 新旧2种角度,分开旋转
         ctx.rotate(this.data.rotateTemp * Math.PI / 180)
         ctx.rotate(this.data.rotateAngle * Math.PI / 180)
-        ctx.drawImage(this.data.imgUrl, -this.data.tempImgWidth / 2, -this.data.tempImgHeight / 2, this.data.tempImgWidth, this.data.tempImgHeight)
+        ctx.drawImage("/images/search.png", this.data.tempImgWidth / 2, this.data.tempImgHeight / 2, this.data.tempImgWidth, this.data.tempImgHeight)
         ctx.restore()
-        ctx.draw(false, function () {
+        ctx.draw(false, ()=> {
             wx.canvasToTempFilePath({
-              canvasId: 'tempCanvas',
-              success: function (res) {
-                console.log('图片路径', res.tempFilePath)
-                wx.saveImageToPhotosAlbum({
-                  filePath: res.tempFilePath,
-                  success () {
-                    wx.showToast({
-                      title: '保存成功!',
-                      icon: 'none',
-                      duration: 2000
-                    })
-                  }
-                })
-              }
-            })
-          }
-        )
+            canvasId: 'tempCanvas',
+            success: function (res) {
+              console.log('图片路径', res.tempFilePath)
+              // wx.getImageInfo({
+              //   src: res.tempFilePath,
+              //   success: function (res) {
+              //       console.log(res)
+              //   }
+              // })
+              wx.saveImageToPhotosAlbum({
+                filePath: res.tempFilePath,
+                success () {
+                  wx.showToast({
+                    title: '保存成功!',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                },
+                fail: function (err) {
+                  console.log(err)
+                }
+              })
+            },
+            fail(err){
+              console.log(err)
+            },
+            complete(){
+
+            }
+          })
+        })
       },
       // 判断是否在 某个矩形范围内
       isInRange (x1, y1, x2, y2, px, py) {
@@ -494,16 +501,14 @@ Page({
           //
           // this.imgWidth = this.tempImgWidth = this.X / 1.5
           // this.imgHeight = this.tempImgHeight = this.Y / 1.5
-          console.log("res.windowHeight"+res.windowHeight)
           this.data.winWidth = res.windowWidth
           this.data.winHeight = res.windowHeight
         } catch (e) {
         }
       },
-      // 初始化 袜子信息
       loadSocksInfo () {
         this.data.canvasWidth = this.data.winWidth *0.9
-        this.data.canvasHeight = this.data.winHeight *0.5
+        this.data.canvasHeight = this.data.winHeight *0.3
         this.data.X = this.data.tempX = this.data.newX = this.data.canvasWidth / 2
         this.data.Y = this.data.tempY = this.data.newY = this.data.canvasHeight / 2
         this.data.imgWidth = this.data.tempImgWidth = this.data.canvasWidth * 0.5
@@ -511,12 +516,6 @@ Page({
         this.data.rotateAngle = 0
         this.data.imgUrl = ''
       },
-      // 切换袜子位置
-
-      // 切换袜子性别
-
-      // 切换袜子颜色
-
       // 清除画板
       clearCanvas () {
         this.loadSocksInfo()

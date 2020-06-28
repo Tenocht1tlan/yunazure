@@ -1,27 +1,25 @@
   <view class="warp">
     <!-- <image mode="aspectFill" src="/static/design/bg.png" class="bgImg"></image> 这里应该是放背景图片的-->
     <view class="content">
-      <!--主内容-->
       <view class="main-wrap">
         <image class="main-socks-img"
                mode="aspectFit"
-               src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/2.jpg">
+               src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/strawhat/main.jpg">
         </image>
         <view class="canvas-wrap">
-          <canvas canvas-id="mainCanvas"
+          <canvas canvas-id="mainCanvas" 
                   disable-scroll="true"
                   bindtouchstart="onStart"
                   bindtouchmove="onMove"
-                  bindtouchend="onEnd"
+                  bindtouchend="onEnd" 
                   class="mainCanvas"></canvas>
         </view>
       </view>
-      <!--底部-->
       <view class="footer">
         <view class="colorAndOperate">
           <view>
-            <!--<view class="operation-item" bindtap="drawToTemp">-->
-            <view class="operation-item" bindtap="saveConfig">
+            <view class="operation-item" bindtap="drawToTemp">
+            <!-- <view class="operation-item" bindtap="saveConfig"> -->
               <image mode="aspectFit" src="/images/share/share1.png" class="operation-img"></image>
               保存
             </view>
@@ -33,8 +31,6 @@
           <view class="upload-line"></view>
         </view>
       </view>
-
-      <!--素材-->
       <view class="material-wrap">
         <view class="material-title">
           <view class="category" :class="{categoryActivity:materialCategory ==='custom'}"
@@ -52,8 +48,6 @@
           </image>
         </view>
       </view>
-
     </view>
-
     <canvas canvas-id="tempCanvas" style="width:{{0.9*winWidth}}px;height:{{0.5*winHeight}}px;" class="tempCanvas"></canvas>
   </view>

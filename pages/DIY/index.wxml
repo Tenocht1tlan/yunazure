@@ -1,6 +1,3 @@
-<!--pages/DIY/index.wxml-->
-<!-- 图片展示框 -->
-
 <view class="TotalView">
   <image class="backImg" src="/images/scarfMan.png" style="top:0rpx">
   </image>
@@ -29,5 +26,3 @@
   <image  class="pic" src="{{isChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
   <text class="picText">文字</text>
 </button>
-
-<!-- 选择选项-->

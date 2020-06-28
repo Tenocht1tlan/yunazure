@@ -1,6 +1,4 @@
-<view class="background">
-  <image class="background" src="{{image}}" lazy-load="true" webp="true" bindtap="uploadFile"></image>
-</view>
+<image class="background" src="{{image}}" lazy-load="true" mode="scaleToFill" webp="true" bindtap="uploadFile"></image>
 <view class="textfirst" bindtap="showImage"> 预约完成后，客服将在24小时内联系您</view>
 <view class="reservationInput">
   <view class="reservationInputtext" >姓名</view>
@@ -75,5 +73,5 @@
   <button class="kefubutton" open-type="contact" bindcontact="handleContact">联系客服</button>
 </cover-view>
 
-<image src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcapBeige.jpg" mode="aspectFit" style="width:750rpx;"> 
+<image src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/main.jpg" mode="aspectFit" style="width:750rpx;"> 
 </image>
