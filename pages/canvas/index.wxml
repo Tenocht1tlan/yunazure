@@ -2,3 +2,4 @@
 <canvas canvas-id="myCanvas" class="myCanvas"  ></canvas>
 <button bindtap="addcircle">添加</button>
 <button bindtap="addimage">添加图片</button>
+<button bindtap="saveImg">保存</button>

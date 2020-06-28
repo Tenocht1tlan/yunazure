@@ -23,8 +23,15 @@
       </view>
     </view>   
   </view>
-  <view class="decolor">选择颜色 - {{goodsDetail.good_id}}</view>
-  <view class="detail">{{goodsDetail.description}}</view>
+  <view  class="de">
+    <view class="deid">{{goodsDetail.good_id}}</view>
+    <view class="decolor">
+      <view wx:for="{{color}}" wx:for-index="idx" wx:key="id" style="font-size:24rpx;">
+          <text style="margin-left:10rpx">- {{item.value}}</text>
+      </view>
+    </view>
+    <view class="detail">{{goodsDetail.description}}</view>
+  </view>
   <!-- <view class="page__bd" wx:if="{{curGoodsKanjia}}" style='width:750rpx;'>
     <view class="weui-cells__title">商品砍价设置</view>
     <view class="weui-cells weui-cells_after-title">
@@ -179,7 +186,24 @@
       <view class="address">{{shopSubdetail.info.address}}</view>
     </view>
   </view>
+
   <view style="width:650rpx;height:1rpx;background-color:gray;margin-top:20rpx;"></view>
+  <view class="goToPage">
+    <view class="afterSale-box" style="margin-top:80rpx">
+      <image class="afterSale" src="/images/size.png"></image>
+      <text style="margin-left:10rpx" >成分和保养</text>
+    </view>
+    <view class="afterSale-box">
+      <image class="afterSale" src="/images/size.png"></image>
+      <text style="margin-left:10rpx" >成分和保养</text>
+    </view>
+    <view class="afterSale-box" style="margin-bottom:80rpx;">
+      <image class="afterSale" src="/images/size.png"></image>
+      <text style="margin-left:10rpx" >成分和保养</text>
+    </view>
+    <!-- <view >尺码表</view>
+    <view>配送和退货</view> -->
+  </view>
   <view class="goods-des-info" style="margin-top:35rpx;" wx:if="{{!curGoodsKanjia && reputation}}">
     <view class="label-title" style="border-bottom:1px solid #eee;">大家评价
       <text style="color:red">（{{reputation.length}}）</text>
