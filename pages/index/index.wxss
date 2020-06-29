@@ -379,13 +379,27 @@ z-index: 0;
 
 /*  */
 .spe-box{
+  width: 750rpx;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 .spetical{
-  width: 750rpx;
+  width: 720rpx;
   margin-top: 0px;
   margin-bottom: 0px;
+  border-radius: 20rpx;
+}
+.spe-two{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.spetical-two{
+  width:350rpx;
+  height: 300rpx;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  border-radius: 20rpx;
 }
 .page-selection{
   white-space: nowrap;

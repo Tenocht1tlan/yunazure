@@ -134,14 +134,22 @@
 
 <!-- 6.1 -->
 <!-- 定制 -->
-<view class="spe-box">
-    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toDiy" ></image>
-    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toAd" ></image>
-    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toSpecial" ></image>
-    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toActivity" ></image>
-    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toNew" ></image>
-    <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toComp" ></image>
-</view>
+    <view class="spe-box" style=" margin-top: 10rpx;">
+      <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toNew" ></image>
+    </view>
+
+    <view class="spe-two">
+      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toDiy" ></image>
+      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toSpecial" ></image>
+    </view>
+    <view class="spe-box">
+      <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toComp" ></image>
+    </view>
+    <view class="spe-two" >
+      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toAd" ></image>
+      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toActivity" ></image>
+    </view>
+
 
 
 <!-- 广告 -->           

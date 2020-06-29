@@ -1,2 +1,11 @@
-<!--pages/Special/index.wxml-->
-<text>pages/Special/index.wxml</text>
+
+<view class="swiper-container" style="height:{{swiperHeight}}rpx;">
+  <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;">
+    <swiper-item wx:for="{{banners}}" wx:key="id" >
+      <image  bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"  />
+    </swiper-item>
+  </swiper>
+</view>
+  <!-- <view class="logout" style='text-align:center;font-family:"Microsoft Yahei";'> -->
+    <button class="logout-btn"  bindtap='logOut' hover-class="hover" >我要合作</button>
+  <!-- </view> -->
