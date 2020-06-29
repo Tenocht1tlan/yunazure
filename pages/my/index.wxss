@@ -68,7 +68,6 @@ page,view,image,input {
 button::after{
   border: none;
 }
-
 .list-image{
   margin-left: 30rpx;
   width: 45rpx;

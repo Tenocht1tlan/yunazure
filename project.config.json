@@ -161,6 +161,13 @@
 					"id": -1,
 					"name": "pages/canvas/index",
 					"pathName": "pages/canvas/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/Special/index",
+					"pathName": "pages/Special/index",
 					"scene": null
 				}
 			]
