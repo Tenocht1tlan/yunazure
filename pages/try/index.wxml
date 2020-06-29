@@ -2,16 +2,16 @@
     <!-- <image mode="aspectFill" src="/static/design/bg.png" class="bgImg"></image> 这里应该是放背景图片的-->
     <view class="content">
       <view class="main-wrap">
-        <image class="main-socks-img"
+        <!-- <image class="main-socks-img"
                mode="aspectFit"
                src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/strawhat/main.jpg">
-        </image>
+        </image> -->
         <view class="canvas-wrap">
-          <canvas canvas-id="mainCanvas" 
+          <canvas canvas-id="mainCanvas"
                   disable-scroll="true"
                   bindtouchstart="onStart"
                   bindtouchmove="onMove"
-                  bindtouchend="onEnd" 
+                  bindtouchend="onEnd"
                   class="mainCanvas"></canvas>
         </view>
       </view>
