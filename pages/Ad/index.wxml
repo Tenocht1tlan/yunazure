@@ -1,2 +1,3 @@
-<!--pages/Ad/index.wxml-->
-<text>pages/Ad/index.wxml</text>
+<view class="adContainer">
+  <image></image>
+</view>
