@@ -44,7 +44,7 @@
           <image class="material-item"
                  mode="aspectFill"
                  bindtap="selectMateria"
-                 src='/images/search.png'>
+                 src='/images/custom/custom6.png'>
           </image>
         </view>
       </view>

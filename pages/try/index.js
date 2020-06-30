@@ -29,7 +29,8 @@ Page({
         rotateAngle: 0,            // 旋转角度
         rotateTemp: 0,             // 缓存 旋转角度
         iconSize: 81,              // 操作图标的大小
-        operate: 'draw'            // 操作类型
+        operate: 'draw',            // 操作类型
+        ctx: wx.createCanvasContext('mainCanvas')
     },
 
       onStart (e) {
@@ -38,10 +39,10 @@ Page({
         let r = this.data.iconSize / 4
         let x = this.data.X - this.data.tempImgWidth / 2
         let y = this.data.Y - this.data.tempImgHeight / 2
-        console.log("r ,x ,y :"+r+','+x+','+y)
         // 存储新点击的位置,方便计算
         this.data.tempX = e.touches[0].x
         this.data.tempY = e.touches[0].y
+        console.log('curr X :' + this.data.tempX + ' , curr Y:' + this.data.tempY)
         // 是否点中 缩放 按钮
         let isScale = this.isInRange(
           x + this.data.tempImgWidth - r,
@@ -108,6 +109,7 @@ Page({
         if (this.data.operate === 'scale' || this.data.operate === 'rotate') {
           this.data.newX = e.touches[0].x
           this.data.newY = e.touches[0].y
+          console.log('scale|rotate ( newX:' + this.data.newX + ' , newY:' + this.data.newY+ ' )')
         }
         if (this.data.operate === 'draw') {
           // 扣除掉 点击位置到中心的距离(diffX,diffY)
@@ -121,7 +123,6 @@ Page({
           this.data.rotateAngle += this.data.rotateTemp
           this.data.rotateAngle %= 360
           this.data.rotateTemp = 0
-          // console.log('end')
         }
         this.data.operate = 'none'
       },
@@ -163,8 +164,19 @@ Page({
           let scaleX = (this.data.X - this.data.newX) / (this.data.X - this.data.tempX)
           let scaleY = (this.data.Y - this.data.newY) / (this.data.Y - this.data.tempY)
           let scale = scaleX < scaleY ? scaleX : scaleY
+          
           this.data.tempImgWidth = this.data.imgWidth * scale
           this.data.tempImgHeight = this.data.imgHeight * scale
+          if (this.data.tempImgWidth > 150){
+            this.data.tempImgWidth = 150
+          }else if(this.data.tempImgWidth < 50){
+            this.data.tempImgWidth = 50
+          }
+          if (this.data.tempImgHeight > 150){
+            this.data.tempImgHeight = 150
+          }else if(this.data.tempImgHeight < 50){
+            this.data.tempImgHeight = 50
+          }
         }
         if (this.data.operate === 'rotate') {
           this.data.rotateTemp = this.getAngle(this.data.tempX, this.data.tempX, this.data.newX, this.data.newY)
@@ -178,23 +190,23 @@ Page({
         ctx.rotate(this.data.rotateTemp * Math.PI / 180)
         ctx.rotate(this.data.rotateAngle * Math.PI / 180)
         if (!this.data.imgUrl) return
-        ctx.drawImage(this.data.imgUrl, x, y, this.data.tempImgWidth, this.data.tempImgHeight)
+        const that = this
+        ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
         // 旋转回来,保证除了图片以外的其他元素不被旋转
-        ctx.rotate((360 - this.data.rotateTemp) * Math.PI / 180)
-        ctx.rotate((360 - this.data.rotateAngle) * Math.PI / 180)
+        ctx.rotate((360 - that.data.rotateTemp) * Math.PI / 180)
+        ctx.rotate((360 - that.data.rotateAngle) * Math.PI / 180)
         // 画边框
         ctx.setStrokeStyle('#fd749c')
         ctx.setLineDash([5, 5], 10);
-        ctx.strokeRect(x, y, this.data.tempImgWidth, this.data.tempImgHeight)
+        // let len = Math.sqrt(Math.pow(that.data.tempImgWidth / 2, 2) + Math.pow(that.data.tempImgHeight / 2, 2)) * 2
+        ctx.strokeRect(x, y, that.data.tempImgWidth, that.data.tempImgHeight)
         // 画 删除 按钮
         ctx.drawImage('/images/delete.png', x - r, y - r, d, d)
         // 画 旋转 按钮
-        ctx.drawImage('/images/rotate.png', x + this.data.tempImgWidth - r, y - r, d, d)
+        ctx.drawImage('/images/rotate.png', x + that.data.tempImgWidth - r, y - r, d, d)
         // 画 缩放 按钮
-        ctx.drawImage('/images/scale.png', x + this.data.tempImgWidth - r, y + this.data.tempImgHeight - r, d, d)
-        // console.log("x:"+x+"y:"+y+"this.data.tempImgWidth:"+this.tempImgWidth+"r"+r+"d"+d)
+        ctx.drawImage('/images/scale.png', x + that.data.tempImgWidth - r, y + that.data.tempImgHeight - r, d, d)
         ctx.draw()
-        // console.log(this.data)
       },
       // 图片->服务器
       async saveConfig () {
@@ -206,7 +218,6 @@ Page({
           })
           return
         }
-        console.log(this.data.currentMaterial)
         let url = 'https://api.mic.hn.cn/api/po/123'
         let body = {
           id: 0,
@@ -227,123 +238,46 @@ Page({
       },
       // 图片->本地
       async drawToTemp () {
-        if (!this.data.imgUrl) {
-          wx.showToast({
-            title: '请先选择图案',
-            icon: 'none',
-            duration: 2000
-          })
-          return
-        }
-        // const ctx = wx.createCanvasContext('mainCanvas')
-        // ctx.drawImage('/images/search.png', 0, 0, 305, 406)    //绘制背景图
-        // ctx.setTextAlign('center')    // 文字居中
-        // ctx.setFillStyle('#000000')  // 文字颜色：黑色
-        // ctx.setFontSize(20)         // 文字字号：22px
-        // ctx.fillText("文本内容", 20, 70) //开始绘制文本的 x/y 坐标位置（相对于画布） 
-        // ctx.stroke()//stroke() 方法会实际地绘制出通过 moveTo() 和 lineTo() 方法定义的路径。默认颜色是黑色
-        // ctx.draw(false, this.drawPicture())//draw()的回调函数 
+        // if (!this.data.imgUrl) {
+        //   wx.showToast({
+        //     title: '请先选择图案',
+        //     icon: 'none',
+        //     duration: 2000
+        //   })
+        //   return
+        // }
 
-        const ctx = wx.createCanvasContext('mainCanvas')
-        ctx.translate(0, 0)
-        let picPath = 'https://7975-yunazure-sygca-1302289079.tcb.qcloud.la/goods/strawhat/main.jpg?sign=8aaf9e1de876eab58c0a7f3da0f7fc07&t=1593440196'
-        let that = this
-        let w = 0.9 * this.data.winWidth
-        let h = 0.5 * this.data.winHeight
-        let x = 0
-        let y = 0
-        let whRate = w / h
-        await new Promise((resolve) => {
-          wx.getImageInfo({
-            src: picPath,
-            success: function (res) {
-              console.log('getImageInfo = '+ res.path)
-              if (res.width > res.height * whRate) {
-                if (res.width > w) {
-                  h = res.height * w / res.width
-                  y = (0.5 * that.data.winHeight - h) / 2
-                } else {
-                  w = res.width
-                  h = res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                  y = (0.5 * that.data.winHeight - h) / 2
-                }
-              } else {
-                if (res.height > h) {
-                  w = res.width * h / res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                } else {
-                  w = res.width
-                  h = res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                  y = (0.5 * that.data.winHeight - h) / 2
-                }
-              }
-              resolve(res)
-              ctx.drawImage(res.path, x, y, w, h)
-            }
-          })
-        })
-        ctx.save()
         // 设置 蒙版 剪切掉框外面多余的像素
         // ctx.rect(this.data.socks.x * this.data.winWidth, this.data.socks.y * this.data.winHeight, this.data.canvasWidth, this.data.canvasHeight)
         // ctx.fill()
-        ctx.clip()
         // 设置新的原点
         // let nx = this.data.socks.x * this.data.winWidth + this.data.X
         // let ny = this.data.socks.y * this.data.winHeight + this.data.Y
         // 中心位移
         // ctx.translate(nx, ny)
         // 新旧2种角度,分开旋转
-        ctx.rotate(this.data.rotateTemp * Math.PI / 180)
-        ctx.rotate(this.data.rotateAngle * Math.PI / 180)
-        ctx.drawImage(picPath, this.data.tempImgWidth / 2, this.data.tempImgHeight / 2, this.data.tempImgWidth, this.data.tempImgHeight)
-        ctx.restore()
-        ctx.draw(true, ()=> {
-            wx.canvasToTempFilePath({
-              canvasId: 'mainCanvas',
-              success: function (res) {
-                // wx.getImageInfo({
-                //   src: res.tempFilePath,
-                //   success: function (res) {
-                //       console.log(res)
-                //   }
-                // })
-                wx.saveImageToPhotosAlbum({
-                  filePath: res.tempFilePath,
-                  success () {
-                    wx.showToast({
-                      title: '保存成功!',
-                      icon: 'none',
-                      duration: 2000
-                    })
-                  },
-                  fail: function (err) {
-                    console.log(err)
-                  }
-                })
-              },
-              fail(err){
-                console.log(err)
-              }
-          })
-        })
-      },
-      drawPicture: function () { 
-        setTimeout(function () {
-          wx.canvasToTempFilePath({ 
-            x: 0,
-            y: 0,
-            width: 610,
-            height: 812,
-            destWidth: 610, 
-            destHeight: 812,
+        const that = this
+        // that.data.ctx.rotate(that.data.rotateTemp * Math.PI / 180)
+        // that.data.ctx.rotate(that.data.rotateAngle * Math.PI / 180)
+        // that.data.ctx.drawImage(res.path, that.data.tempImgWidth / 2, that.data.tempImgHeight / 2, that.data.tempImgWidth, that.data.tempImgHeight)
+        // that.data.ctx.restore()
+        that.data.ctx.draw(true, ()=> {
+          wx.canvasToTempFilePath({
             canvasId: 'mainCanvas',
             success: function (res) {
-              console.log('++++++++++++++', res)
-            },
+              wx.saveImageToPhotosAlbum({
+                filePath: res.tempFilePath,
+                success () {
+                  wx.showToast({
+                    title: '保存成功!',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }
+              })
+            }
           })
-        }, 300)
+        })
       },
       // 判断是否在 某个矩形范围内
       isInRange (x1, y1, x2, y2, px, py) {
@@ -442,12 +376,10 @@ Page({
       },
       // 选择素材
       selectMateria(){
-        this.getFileInfo('/images/search.png')
+        this.getFileInfo('/images/custom/custom6.png')
       },
       // 获取图片信息,并把宽高设置给 canvas
       async getFileInfo (src) {
-        console.log(src)
-        // 如果是远程图片,就先下载成本地图片,再渲染
         if ((src.match('http://') || src.match('https://'))) {
           let dlRes = await new Promise(((resolve, reject) => {
             wx.downloadFile({
@@ -539,9 +471,8 @@ Page({
         this.data.imgUrl = ''
       },
       async initCanvas(){
-        const ctx = wx.createCanvasContext('mainCanvas')
-        ctx.translate(0, 0)
-        let picPath = 'https://7975-yunazure-sygca-1302289079.tcb.qcloud.la/goods/strawhat/main.jpg?sign=8aaf9e1de876eab58c0a7f3da0f7fc07&t=1593440196'
+        this.data.ctx.translate(0, 0)
+        let picPath = 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg'
         let that = this
         let w = 0.9 * this.data.winWidth
         let h = 0.5 * this.data.winHeight
@@ -553,7 +484,6 @@ Page({
           wx.getImageInfo({
             src: picPath,
             success: function (res) {
-              console.log('getImageInfo = '+ res.path)
               if (res.width > res.height * whRate) {
                 if (res.width > w) {
                   h = res.height * w / res.width
@@ -576,20 +506,20 @@ Page({
                 }
               }
               resolve(res)
-              ctx.drawImage(res.path, x, y, w, h)
+              that.data.ctx.drawImage(res.path, x, -50, w, h)
             }
           })
         })
-        ctx.save()
-        ctx.draw()
+        this.data.ctx.save()
+        this.data.ctx.draw()
       },
       // 清除画板
       clearCanvas () {
         this.loadSocksInfo()
-        const ctx = wx.createCanvasContext('mainCanvas')
-        ctx.moveTo(0, 0)
-        ctx.clearRect(0, 0, this.data.canvasWidth, this.data.canvasHeight)
-        ctx.draw()
+        // const ctx = wx.createCanvasContext('mainCanvas')
+        this.data.ctx.moveTo(0, 0)
+        this.data.ctx.clearRect(0, 0, this.data.canvasWidth, this.data.canvasHeight)
+        this.data.ctx.draw()
       },
       // 设置素材分类
       setMaterialCategory (category) {
