@@ -136,6 +136,7 @@
 <!-- 定制 -->
     <view class="spe-box" style=" margin-top: 10rpx;">
       <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toNew" ></image>
+      <view class="spe-text" hover-class="textHover" hover-stay-time="100" >了解更多</view>
     </view>
 
     <view class="spe-two">
@@ -144,6 +145,7 @@
     </view>
     <view class="spe-box">
       <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toComp" ></image>
+      <view class="spe-text" hover-class="textHover" hover-stay-time="100">了解更多</view>
     </view>
     <view class="spe-two" >
       <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toAd" ></image>

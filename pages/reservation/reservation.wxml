@@ -1,5 +1,7 @@
 <image class="background" src="{{image}}" lazy-load="true" mode="scaleToFill" webp="true" bindtap="uploadFile"></image>
 <view class="textfirst" bindtap="showImage"> 预约完成后，客服将在24小时内联系您</view>
+
+
 <view class="reservationInput">
   <view class="reservationInputtext" >姓名</view>
   <input class="reinput" placeholder="请输入姓名" value="{{name}}" bindinput="bindnaInput"/>
@@ -22,6 +24,7 @@
     </picker>
   </view>
 </view>
+
 
 <view class="space"></view>
 <view class="reservationInput">
@@ -46,11 +49,11 @@
   <view class="dotted"></view>
 </view>
 <view class="space"></view>
-<view class="hotline">
+<!-- <view class="hotline">
   <image class="icon" src="/images/my/hotline.png">  </image>
   <view class="hotext">热线电话：</view>
   <button class="hotbutton" bindtap="probook">17805805661</button>
-</view>
+</view> -->
 
 <view class="space"></view>
 <view class="container">
