@@ -95,7 +95,6 @@
   margin: 10vh 5vw;
   left: 0;
   top: 0;
-  border: 1px dashed #19a9b5;
   z-index: 99999;
 }
 .tempCanvas {

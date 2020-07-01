@@ -30,7 +30,8 @@ Page({
         rotateTemp: 0,             // 缓存 旋转角度
         iconSize: 81,              // 操作图标的大小
         operate: 'draw',            // 操作类型
-        ctx: wx.createCanvasContext('mainCanvas')
+        ctx: wx.createCanvasContext('mainCanvas'),
+        complete: false
     },
 
       onStart (e) {
@@ -109,13 +110,14 @@ Page({
         if (this.data.operate === 'scale' || this.data.operate === 'rotate') {
           this.data.newX = e.touches[0].x
           this.data.newY = e.touches[0].y
-          console.log('scale|rotate ( newX:' + this.data.newX + ' , newY:' + this.data.newY+ ' )')
         }
         if (this.data.operate === 'draw') {
           // 扣除掉 点击位置到中心的距离(diffX,diffY)
           this.data.X = e.touches[0].x - this.data.diffX
           this.data.Y = e.touches[0].y - this.data.diffY
+          console.log('draw ( x:' + e.touches[0].x + ' , diffX:' + this.data.diffX+ ' ) X= '+ this.data.X)
         }
+        // console.log('scale|rotate ( newX:' + this.data.newX + ' , newY:' + this.data.newY+ ' )')
         this.draw()
       },
       onEnd (e) {
@@ -179,7 +181,7 @@ Page({
           }
         }
         if (this.data.operate === 'rotate') {
-          this.data.rotateTemp = this.getAngle(this.data.tempX, this.data.tempX, this.data.newX, this.data.newY)
+          this.data.rotateTemp = this.getAngle(this.data.tempX, this.data.tempY, this.data.newX, this.data.newY)
         }
         // 中心位移
         ctx.translate(this.data.X, this.data.Y)
@@ -257,13 +259,9 @@ Page({
         // ctx.translate(nx, ny)
         // 新旧2种角度,分开旋转
         const that = this
-        // that.data.ctx.rotate(that.data.rotateTemp * Math.PI / 180)
-        // that.data.ctx.rotate(that.data.rotateAngle * Math.PI / 180)
-        // that.data.ctx.drawImage(res.path, that.data.tempImgWidth / 2, that.data.tempImgHeight / 2, that.data.tempImgWidth, that.data.tempImgHeight)
-        // that.data.ctx.restore()
         that.data.ctx.draw(true, ()=> {
           wx.canvasToTempFilePath({
-            canvasId: 'mainCanvas',
+            canvasId: 'completeCanvas',
             success: function (res) {
               wx.saveImageToPhotosAlbum({
                 filePath: res.tempFilePath,
@@ -278,6 +276,21 @@ Page({
             }
           })
         })
+      },
+      //have a look
+      complete(){
+        this.initCanvas()
+        this.setData({
+          complete: true
+        })
+      },
+      backDesign(){
+        this.setData({
+          complete: false
+        })
+      },
+      finalComplete(){
+        //navgate to some
       },
       // 判断是否在 某个矩形范围内
       isInRange (x1, y1, x2, y2, px, py) {
@@ -471,7 +484,8 @@ Page({
         this.data.imgUrl = ''
       },
       async initCanvas(){
-        this.data.ctx.translate(0, 0)
+        let ctx = wx.createCanvasContext('completeCanvas')
+        ctx.translate(0, 0)
         let picPath = 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg'
         let that = this
         let w = 0.9 * this.data.winWidth
@@ -506,12 +520,22 @@ Page({
                 }
               }
               resolve(res)
-              that.data.ctx.drawImage(res.path, x, -50, w, h)
+              ctx.drawImage(res.path, x, -50, w, h)
             }
           })
         })
-        this.data.ctx.save()
-        this.data.ctx.draw()
+        ctx.save()
+        ctx.draw()
+        
+        ctx.translate(this.data.X, this.data.Y)
+        let xx = -this.data.tempImgWidth / 2
+        let yy = -this.data.tempImgHeight / 2
+        ctx.rotate(this.data.rotateTemp * Math.PI / 180)
+        ctx.rotate(this.data.rotateAngle * Math.PI / 180)
+        ctx.drawImage(this.data.imgUrl, xx, yy, this.data.tempImgWidth, this.data.tempImgHeight)
+        ctx.rotate((360 - this.data.rotateTemp) * Math.PI / 180)
+        ctx.rotate((360 - this.data.rotateAngle) * Math.PI / 180)
+        ctx.draw(true)
       },
       // 清除画板
       clearCanvas () {
@@ -544,6 +568,5 @@ Page({
     onLoad:function() {
       this.getDeviceInfo()
       this.loadSocksInfo()
-      this.initCanvas()
     }
 })

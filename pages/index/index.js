@@ -453,7 +453,7 @@ Page({
   },
   toDiy: function () {
     wx.navigateTo({
-      url: "/pages/DIYLocation/index"
+      url: "/pages/try/index"
     })
   },
   toAd: function () {

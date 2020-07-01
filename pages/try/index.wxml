@@ -2,28 +2,30 @@
     <!-- <image mode="aspectFill" src="/static/design/bg.png" class="bgImg"></image> 这里应该是放背景图片的-->
     <view class="content">
       <view class="main-wrap">
-        <!-- <image class="main-socks-img"
+        <image class="main-socks-img"
                mode="aspectFit"
-               src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/strawhat/main.jpg">
-        </image> -->
+               src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg" hidden="{{complete}}">
+        </image>
         <view class="canvas-wrap">
           <canvas canvas-id="mainCanvas"
                   disable-scroll="true"
                   bindtouchstart="onStart"
                   bindtouchmove="onMove"
                   bindtouchend="onEnd"
-                  class="mainCanvas"></canvas>
+                  class="mainCanvas" hidden="{{complete}}" style="border: 1px dashed #19a9b5;"></canvas>
+          <canvas canvas-id="completeCanvas" class="mainCanvas" hidden="{{!complete}}"></canvas>
         </view>
       </view>
+      <button bindtap="complete" hidden="{{complete}}">完成</button>
+      <button bindtap="backDesign" hidden="{{!complete}}">继续设计</button>
+      <button bindtap="finalComplete" hidden="{{!complete}}">完成设计</button>
       <view class="footer">
         <view class="colorAndOperate">
-          <view>
             <view class="operation-item" bindtap="drawToTemp">
             <!-- <view class="operation-item" bindtap="saveConfig"> -->
               <image mode="aspectFit" src="/images/share/share1.png" class="operation-img"></image>
               保存
             </view>
-          </view>
         </view>
         <view class="upload-wrap">
           <view class="upload-line"></view>
@@ -49,5 +51,4 @@
         </view>
       </view>
     </view>
-    <canvas canvas-id="tempCanvas" style="width:{{0.9*winWidth}}px;height:{{0.5*winHeight}}px;" class="tempCanvas"></canvas>
   </view>
