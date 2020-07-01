@@ -1,1 +1,67 @@
-/* pages/Comp/index.wxss */
+.input-box{
+  display: flex;
+  margin-top: 100rpx;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 750rpx;
+  height: 600rpx;
+}
+.input{
+  width: 700rpx;
+  height: 600rpx;
+  text-align: left;
+  border: 1rpx #666 solid;
+}
+.phoMail{
+  width: 700rpx;
+  height: 100rpx;
+  margin-top: 50rpx;
+  margin-left: 25rpx;
+  border-radius: 10rpx 10rpx;
+  border: 1rpx #666 solid;
+}
+.currentWordNumber{
+  align-self: flex-end;
+  height: 35rpx;
+  line-height: 35rpx;
+  font-size: 24rpx;
+  float: right;
+  color: #666;
+
+}
+.commit{
+  width: 650rpx;
+  height: 110rpx;
+  line-height:110rpx;
+  margin-top: 100rpx;
+  color: #fff;
+  background-color: #000;
+  margin-left: 50rpx;
+  border-radius: 0%;
+}
+.button-hover{
+  width: 640rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin-top: 105rpx;
+  margin-left: 55rpx;
+  /* font-size: 80rpx; */
+}
+.swiper-container{
+  width: 750rpx;
+  /* height: 575rpx; */
+  position: relative;  
+}
+.swiper-container .swiper1 {
+  width: 750rpx;
+  /* height: 575rpx; */
+}
+.swiper-container .swiper1 image {
+  width: 750rpx;
+  /* height: 575rpx; */
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
