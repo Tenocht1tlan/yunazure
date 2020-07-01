@@ -180,7 +180,7 @@
       </view>
       <view style="display: flex;flex-direction: row;">
         <view style="color:gray; width: 250rpx; margin:10rpx 0rpx 0rpx 20rpx">{{item.name}}</view>
-        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:10rpx 0rpx 0rpx 50rpx " catchtap="showUp" data-index="{{index}}" data-id="{{item.good_id}}"></image>
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:10rpx 10rpx 0rpx 50rpx " catchtap="showUp" data-index="{{index}}" data-id="{{item.good_id}}"></image>
       </view>
       <view style="color:gray;margin:0rpx 45rpx 5rpx 25rpx;display:flex;flex-direction:row;">
         <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:fit-content;margin-right:20rpx;'>¥ {{item.originalPrice}}</view>
