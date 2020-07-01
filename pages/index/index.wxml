@@ -140,16 +140,29 @@
     </view>
 
     <view class="spe-two">
-      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toDiy" ></image>
-      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toSpecial" ></image>
+      <view class="two" >
+        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toDiy" ></image>
+        <view class="spe-two-text" >了解更多</view>
+      </view>
+      <view class="two" >
+        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toSpecial" ></image>
+        <view class="spe-two-text" >了解更多</view>
+      </view>
     </view>
     <view class="spe-box">
       <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toComp" ></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100">了解更多</view>
     </view>
     <view class="spe-two" >
-      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toAd" ></image>
-      <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toActivity" ></image>
+      <view class="two" >
+        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toAd" ></image>
+        <view class="spe-two-text" >了解更多</view>
+      </view>      
+      <view class="two" >
+        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toActivity" ></image>
+        <view class="spe-two-text" >了解更多</view>
+      </view>
+
     </view>
 
 

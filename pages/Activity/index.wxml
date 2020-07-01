@@ -1,4 +1,28 @@
 <!--pages/Activity/index.wxml-->
-<view>
-    
+<!-- 打算做成那样
+先是一张背景图案，然后一个打折的商品列表，展示打折的商品
+下面写明活动规则
+ -->
+<view class="background" >
+<!--pages/New/index.wxml-->
+ <view style='display: inline-block;flex-wrap:wrap;margin-top:200rpx;'>
+    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}" >
+      <view class="imag-box" style="height: 450rpx;">
+        <image class="scroll-view-imag" src="{{item.pic}}" mode="scaleToFill" lazy-load="true" ></image>
+        <image class="star" catchtap="addFav" src="{{item.fav?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" data-id="{{item.good_id}}"></image>
+      </view>
+      <view style="margin:10rpx 25rpx;width:250rpx">新品
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  catchtap="showUp" data-index="{{index}}"></image>
+      </view>
+      <view style="color:gray ; width:250rpx ; margin:20rpx 45rpx 0rpx 25rpx">{{item.name}}</view>
+      <view style="color:gray;margin:0rpx 45rpx 5rpx 25rpx;display:flex;flex-direction:row;">
+        <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:fit-content;margin-right:20rpx;'>¥ {{item.originalPrice}}</view>
+        ￥{{item.minPrice}}
+      </view>
+    </view>
+  </view>
+  <view class="activeRule">
+    <text style="width:650rpx;margin-top:20rpx">活动规则</text>
+    <text style="width:650rpx;margin-top:20rpx;text-align:start;word-wrap: break-word;">fhisdahufiluasdhfiuadshilfuahiuhafiludshalfiuhsdaliufhsdhdfhdfhdfhdfhdfhfdhdfhdffdhdfhfdhdfhdfhdfhdffhdfhdfhfdhfdhdfhdfhdfghdfhailuhfiladsuhfilauhdiulafhasdiuh</text> 
+  </view>
 </view>

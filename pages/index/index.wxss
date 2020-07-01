@@ -424,6 +424,31 @@ z-index: 0;
   justify-content: space-around;
   margin-bottom: 20rpx;
 }
+.two{
+  position: relative;
+}
+.spe-two-text{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #fff; */
+  /* background-image: linear-gradient( 135deg, #FFD3A5 10%, #FD6585 100%); */
+  background: #ee9ca7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #ffdde1, #ee9ca7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ffdde1, #ee9ca7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: rgb(255, 255, 255);
+  border-radius: 30rpx;
+  font-size: 22rpx;
+  width: 130rpx;
+  height: 50rpx;
+  font-weight: 900;
+  font-family: STHeiti ,SimHei ;
+  letter-spacing:1rpx;
+  z-index: 99;
+  top: 240rpx;
+  left:190rpx;
+}
 .spetical-two{
   width:350rpx;
   height: 300rpx;

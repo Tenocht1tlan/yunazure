@@ -124,6 +124,7 @@ page,view,image,input {
   border-radius: 30rpx;
   overflow: hidden;
   position: relative;
+  box-shadow: 10rpx 10rpx 10rpx 10rpx rgb(196, 194, 194);
 }
 .list2 .img {
   width: 350rpx;
@@ -135,6 +136,7 @@ page,view,image,input {
 .list2 .goods-info .title {
   color: #000;
   font-size: 28rpx;
+
 }
 .list2 .goods-info .price {
   color:#d81e06;
