@@ -1,0 +1,89 @@
+.background{
+  position: absolute;
+  width: 750rpx;
+  height: 1500rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title{
+  display: flex;
+  font-size: 35rpx;
+  font-weight: 900;
+  word-spacing: 4rpx;
+  margin-top: 50rpx;
+  justify-content: center;
+  align-items: center;
+  width: 500rpx;
+  height: 100rpx;
+
+}
+.imageView{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500rpx;
+  height: 650rpx;
+
+}
+.image{
+  width: 450rpx;
+  height: 450rpx;
+  margin-top: 50rpx;
+  box-shadow: 10rpx 10rpx 10rpx 0rpx rgb(175, 173, 173);
+  border-radius: 20rpx;
+}
+.ipt{
+  text-align: center;
+}
+.line{
+  width: 550rpx;
+  height: 3rpx;
+  background-color:rgb(158, 158, 158);
+}
+.Operation{
+  margin-top: 80rpx;
+  width: 750rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-size: 28rpx;
+}
+.opIcon{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 50rpx;
+  padding: 10rpx;
+  background-color: rgb(0, 0, 0);
+  border-radius: 50rpx;
+}
+.opBtn{
+  margin-right: 60rpx;
+  width: 120rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 26rpx;
+  color: #ffffff;
+  border-radius: 30rpx;
+  background-color: rgb(0, 0, 0);
+}
+button::after{
+  border:none;
+}
+.hover{
+  background-color: rgb(44, 44, 44);
+}
+.backBtn{
+  margin-top: 50rpx;
+  width: 240rpx;
+  height: 70rpx;
+  border-radius: 0rpx;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  color: #ffffff;
+  background-color: rgb(0, 0, 0);
+}
+.hover{
+  background-color: rgb(44, 44, 44);
+}
