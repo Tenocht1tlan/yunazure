@@ -168,6 +168,13 @@
 					"id": -1,
 					"name": "pages/Special/index",
 					"pathName": "pages/Special/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/DIYDemo/index",
+					"pathName": "pages/DIYDemo/index",
 					"scene": null
 				}
 			]

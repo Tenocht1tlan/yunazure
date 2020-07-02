@@ -522,6 +522,5 @@ swiper-item image {
 }
 .afterSale{
   width: 45rpx;
-
   height: 45rpx;
 }

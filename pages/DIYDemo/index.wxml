@@ -1,0 +1,27 @@
+<!--pages/DIYDemo/index.wxml-->
+<view class="background">
+   <view class="title">
+      <text>定制成功</text>
+   </view>
+   <view class="imageView" > 
+      <image  class="image" src="/images/gift.png"></image>
+      <input class="ipt" style="margin-top:50rpx" value="的定制作品"  ></input>
+   </view>
+   <view class="line"></view>
+  <view class="Operation" >
+    <image class="opIcon" src="/images/opration.png"></image>
+    <text style="margin-left:30rpx">对商品名称不满意 </text>
+    <button class="opBtn" hover-class="hover">修改</button>
+  </view>
+  <view class="Operation" style="margin-top:10rpx" >
+    <image class="opIcon" src="/images/buy.png" ></image>
+    <text style="margin-left:30rpx">可直接购买您的商品 </text>
+    <button class="opBtn" hover-class="hover">购买</button>
+  </view>
+  <view class="Operation" style="margin-top:10rpx" >
+    <image class="opIcon" src="/images/share/shareDIY.png"></image>
+    <text style="margin-left:30rpx">分享作品得五个赞后可获优惠券 </text>
+    <button class="opBtn" hover-class="hover">分享</button>
+  </view>
+    <button class="backBtn"  hover-class="hover" >返回</button>
+</view>
