@@ -4,8 +4,8 @@
       <text>定制成功</text>
    </view>
    <view class="imageView" > 
-      <image  class="image" src="/images/gift.png"></image>
-      <input class="ipt" style="margin-top:50rpx" value="的定制作品"  ></input>
+      <canvas canvas-id="completeCanvas" class="mainCanvas"></canvas>
+      <input class="ipt" value="的定制作品"></input>
    </view>
    <view class="line"></view>
   <view class="Operation" >

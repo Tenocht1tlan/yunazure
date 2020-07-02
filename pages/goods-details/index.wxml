@@ -195,11 +195,11 @@
     </view>
     <view class="afterSale-box">
       <image class="afterSale" src="/images/size.png"></image>
-      <text style="margin-left:10rpx" >成分和保养</text>
+      <text style="margin-left:10rpx" >尺码表</text>
     </view>
     <view class="afterSale-box" style="margin-bottom:80rpx;">
       <image class="afterSale" src="/images/size.png"></image>
-      <text style="margin-left:10rpx" >成分和保养</text>
+      <text style="margin-left:10rpx" >配送与退货</text>
     </view>
     <!-- <view >尺码表</view>
     <view>配送和退货</view> -->

@@ -240,26 +240,15 @@ Page({
       },
       // 图片->本地
       async drawToTemp () {
-        // if (!this.data.imgUrl) {
-        //   wx.showToast({
-        //     title: '请先选择图案',
-        //     icon: 'none',
-        //     duration: 2000
-        //   })
-        //   return
-        // }
-
-        // 设置 蒙版 剪切掉框外面多余的像素
-        // ctx.rect(this.data.socks.x * this.data.winWidth, this.data.socks.y * this.data.winHeight, this.data.canvasWidth, this.data.canvasHeight)
-        // ctx.fill()
-        // 设置新的原点
-        // let nx = this.data.socks.x * this.data.winWidth + this.data.X
-        // let ny = this.data.socks.y * this.data.winHeight + this.data.Y
-        // 中心位移
-        // ctx.translate(nx, ny)
-        // 新旧2种角度,分开旋转
-        const that = this
-        that.data.ctx.draw(true, ()=> {
+        if (!this.data.imgUrl) {
+          wx.showToast({
+            title: '请先选择图案',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
+        this.data.ctx.draw(true, ()=> {
           wx.canvasToTempFilePath({
             canvasId: 'completeCanvas',
             success: function (res) {
@@ -277,7 +266,6 @@ Page({
           })
         })
       },
-      //have a look
       complete(){
         this.initCanvas()
         this.setData({
@@ -290,7 +278,16 @@ Page({
         })
       },
       finalComplete(){
-        //navgate to some
+        this.data.ctx.draw(true, ()=> {
+          wx.canvasToTempFilePath({
+            canvasId: 'completeCanvas',
+            success: function (res) {
+              wx.navigateTo({
+                url: "/pages/DIYDemo/index?url=" + res.tempFilePath
+              })
+            }
+          })
+        })
       },
       // 判断是否在 某个矩形范围内
       isInRange (x1, y1, x2, y2, px, py) {

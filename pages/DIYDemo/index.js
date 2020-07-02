@@ -5,14 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    url:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.initCanvas(options.url)
   },
 
   /**
@@ -57,10 +57,10 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  async initCanvas(url){
+    let ctx = wx.createCanvasContext('completeCanvas')
+    ctx.translate(0, 0)
+    ctx.drawImage(url, 0, 0, this.data.tempImgWidth, this.data.tempImgHeight)
+    ctx.draw()
   }
 })
