@@ -1,83 +1,54 @@
-  <view class="warp">
-    <view class="content">
-      <view class="main-wrap">
-        <image class="main-socks-img"
-               mode="aspectFit"
-               src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg" hidden="{{complete}}">
-        </image>
-        <view class="canvas-wrap">
-          <canvas canvas-id="mainCanvas"
-                  disable-scroll="true"
-                  bindtouchstart="onStart"
-                  bindtouchmove="onMove"
-                  bindtouchend="onEnd"
-                  class="mainCanvas" hidden="{{complete}}" style="border: 1px dashed #19a9b5;"></canvas>
-          <canvas canvas-id="completeCanvas" class="mainCanvas" hidden="{{!complete}}"></canvas>
-        </view>
-      </view>
-      <button bindtap="complete" hidden="{{complete}}">完成</button>
-      <button bindtap="backDesign" hidden="{{!complete}}">继续设计</button>
-      <button bindtap="finalComplete" hidden="{{!complete}}">完成设计</button>
-
-      <view class="footer">
-        <view class="colorAndOperate">
-            <view class="operation-item" bindtap="drawToTemp">
-            <!-- <view class="operation-item" bindtap="saveConfig"> -->
-              <image mode="aspectFit" src="/images/share/share1.png" class="operation-img"></image>
-              保存
-            </view>
-        </view>
-        <view class="upload-wrap">
-          <view class="upload-line"></view>
-          <view class="upload-text">选择素材</view>
-          <view class="upload-line"></view>
-        </view>
-      </view>
-
-      <view class="custom-title">
-        <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-          <view class="category" :class="{categoryActivity:materialCategory ==='custom'}"
-               bindtap="setMaterialCategory('custom')">图形
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='utils'}"
-               bindtap="setMaterialCategory('utils')">星座
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='a'}"
-               bindtap="setMaterialCategory('a')">水果
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='b'}"
-               bindtap="setMaterialCategory('b')">动物
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='c'}"
-               bindtap="setMaterialCategory('c')">生肖
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='d'}"
-               bindtap="setMaterialCategory('d')">城市
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='e'}"
-               bindtap="setMaterialCategory('d')">标志性建筑
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='e'}"
-               bindtap="setMaterialCategory('d')">标志性建筑
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='e'}"
-               bindtap="setMaterialCategory('d')">标志性建筑
-          </view>
-          <view class="category" :class="{categoryActivity:materialCategory ==='e'}"
-               bindtap="setMaterialCategory('d')">标志性建筑
-          </view>
-        </scroll-view>
-      </view>
-      <view class="material-wrap">
-        <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true">
-          <image class="material-item" mode="aspectFill" bindtap="selectMateria" src='/images/custom/custom6.png'></image>
-          <image class="material-item" mode="aspectFill" bindtap="selectMateria" src='/images/custom/custom6.png'></image>
-          <image class="material-item" mode="aspectFill" bindtap="selectMateria" src='/images/custom/custom6.png'></image>
-          <image class="material-item" mode="aspectFill" bindtap="selectMateria" src='/images/custom/custom6.png'></image>
-          <image class="material-item" mode="aspectFill" bindtap="selectMateria" src='/images/custom/custom6.png'></image>
-          <image class="material-item" mode="aspectFill" bindtap="selectMateria" src='/images/custom/custom6.png'></image>
-        </scroll-view>
+<view class="warp">
+  <view class="content">
+    <view class="main-wrap">
+      <image class="main-socks-img"
+              mode="aspectFit"
+              src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg" hidden="{{complete}}">
+      </image>
+      <view class="canvas-wrap">
+        <canvas canvas-id="mainCanvas"
+                disable-scroll="true"
+                bindtouchstart="onStart"
+                bindtouchmove="onMove"
+                bindtouchend="onEnd"
+                class="mainCanvas" hidden="{{complete}}" style="border: 1px dashed #19a9b5;"></canvas>
+        <canvas canvas-id="completeCanvas" class="mainCanvas" hidden="{{!complete}}"></canvas>
       </view>
     </view>
+    <button bindtap="complete" hidden="{{complete}}">完成</button>
+    <button bindtap="backDesign" hidden="{{!complete}}">继续设计</button>
+    <button bindtap="finalComplete" hidden="{{!complete}}">完成设计</button>
+
+    <view class="footer">
+      <view class="colorAndOperate">
+          <view class="operation-item" bindtap="drawToTemp">
+          <!-- <view class="operation-item" bindtap="saveConfig"> -->
+            <image mode="aspectFit" src="/images/share/share1.png" class="operation-img"></image>
+            保存
+          </view>
+      </view>
+      <view class="upload-wrap">
+        <view class="upload-line"></view>
+        <view class="upload-text">选择素材</view>
+        <view class="upload-line"></view>
+      </view>
+    </view>
+
+    <view class="custom-title">
+      <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
+        <view class="category" bindtap="setMaterialCategory" data-id="0">图形</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="1">星座</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="2">水果</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="3">动物</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="4">生肖</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="5">城市</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="6">标志性建筑</view>
+      </scroll-view>
+    </view>
+    <view class="material-wrap">
+      <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true">
+        <image class="material-item" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" ></image>
+      </scroll-view>
+    </view>
   </view>
-      
+</view>

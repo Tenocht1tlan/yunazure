@@ -4,7 +4,6 @@
 .warp {
   height: 100vh;
   width: 100vw;
-  position: fixed;
   top: 0;
   left: 0;
   overflow: hidden;
@@ -120,7 +119,7 @@
 }
 .category {
   border-radius: 2px;
-  margin-left: 1vw;
+  margin-left: 3vw;
   margin-top: 1vh;
   padding: 2px 4px;
   width: fit-content;

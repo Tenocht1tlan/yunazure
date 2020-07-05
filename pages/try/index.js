@@ -1,6 +1,6 @@
 Page({
     data:{
-        materialCategory: 'custom',// 素材分类
+        materialCategory: 0,// 素材分类
         currentPosition: 'left',   // 当前袜子的位置
         currentColor: 'w',         // 当前袜子的颜色
         currentGender: 'm',        // 当前性别
@@ -8,7 +8,6 @@ Page({
         isShowHistory: false,      // 是否显示历史记录
         historyList: new Set(),    // 历史列表
         showRecommend: false,      // 是否显示推荐列表
-        cartNum:0,
         winWidth: 0,               // 窗口可用区域宽度
         winHeight: 0,              // 窗口可用区域高度
         canvasWidth: 0,            // 画布宽度
@@ -31,9 +30,17 @@ Page({
         iconSize: 81,              // 操作图标的大小
         operate: 'draw',            // 操作类型
         ctx: wx.createCanvasContext('mainCanvas'),
-        complete: false
+        complete: false,
+        icons:[
+          ['/images/custom/custom6.png'],
+          ['/images/my/checkNo.png','/images/my/check.png'],
+          ['/images/my/address.png'],
+          ['/images/my/checkYes.png'],
+          ['/images/my/hotline.png'],
+          ['/images/my/in.png'],
+          ['/images/my/kefu.png']
+        ]
     },
-
       onStart (e) {
         this.data.operate = 'none'
         // 图标半径
@@ -267,6 +274,14 @@ Page({
         })
       },
       complete(){
+        if (!this.data.imgUrl) {
+          wx.showToast({
+            title: '请先选择图案',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
         this.initCanvas()
         this.setData({
           complete: true
@@ -385,8 +400,9 @@ Page({
         })
       },
       // 选择素材
-      selectMateria(){
-        this.getFileInfo('/images/custom/custom6.png')
+      selectMateria: function(e){
+        let src =  e.currentTarget.dataset.src
+        this.getFileInfo(src)
       },
       // 获取图片信息,并把宽高设置给 canvas
       async getFileInfo (src) {
@@ -543,13 +559,9 @@ Page({
         this.data.ctx.draw()
       },
       // 设置素材分类
-      setMaterialCategory (category) {
-        this.data.materialCategory = category
-      },
-      // 加入购物车
-      toCard () {
-        wx.showToast({
-          title: '提交成功!',
+      setMaterialCategory: function(e) {
+        this.setData({
+          materialCategory: e.currentTarget.dataset.id
         })
       },
       openRecommend () {
@@ -558,9 +570,6 @@ Page({
       closeRecommend () {
         this.data.showRecommend = false
         this.draw()
-      },
-      addCartNum () {
-        this.data.cartNum++
       },
     onLoad:function() {
       this.getDeviceInfo()
