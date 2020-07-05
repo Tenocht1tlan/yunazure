@@ -1,61 +1,58 @@
 <image class="background" src="{{image}}" lazy-load="true" mode="scaleToFill" webp="true" bindtap="uploadFile"></image>
-<view class="textfirst" bindtap="showImage"> 预约完成后，客服将在24小时内联系您</view>
 
-
-<view class="reservationInput">
-  <view class="reservationInputtext" >姓名</view>
-  <input class="reinput" placeholder="请输入姓名" value="{{name}}" bindinput="bindnaInput"/>
-  <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getUserInfo" bindgetuserinfo="reservationInfo">一键获取预约信息</button>
-</view>
-<view class="space"></view>
-<view class="reservationInput">
-  <view class="reservationInputtext" >电话</view>
-  <input class="reinput" placeholder="请输入电话" type="number" value="{{phone}}" bindinput="bindphInput" />
-  <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
-</view>
-<view class="space"></view>
-<view class="reservationInput">
-  <view class="reservationInputtext" >地区</view>
-  <view class="section" style="margin-top: 8rpx;">
-    <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
-      <view class="picker">
-        {{region[0]}}，{{region[1]}}，{{region[2]}}
+<view class="x-backGard">
+  <view class="backGard" >
+    <view class="reservationInput" style= "margin-top: 50rpx;">
+      <view class="reservationInputtext" >姓名</view>
+      <input class="reinput" placeholder="请输入姓名" value="{{name}}" bindinput="bindnaInput"/>
+      <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getUserInfo" bindgetuserinfo="reservationInfo">一键获取预约信息</button>
+    </view>
+    <view class="space"></view>
+    <view class="reservationInput">
+      <view class="reservationInputtext" >电话</view>
+      <input class="reinput" placeholder="请输入电话" type="number" value="{{phone}}" bindinput="bindphInput" />
+      <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
+    </view>
+    <view class="space"></view>
+    <view class="reservationInput">
+      <view class="reservationInputtext" >地区</view>
+      <view class="section" style="margin-top: 8rpx;">
+        <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+          <view class="picker">
+            {{region[0]}}，{{region[1]}}，{{region[2]}}
+          </view>
+        </picker>
       </view>
-    </picker>
+    </view>
+    <view class="space"></view>
+    <view class="reservationInput">
+      <view class="reservationInputtext" >地址</view>
+      <input class="reinput" style="width:400rpx;" placeholder="请输入详细地址" value="{{address}}" bindinput="bindadInput"/>
+    </view>
+    <view class="space"></view>
+    <view class="protocol">
+      <image class="icon" src="/images/my/check.png" mode="aspectFit"></image>
+      <view class="protext">预约即默认同意</view>
+      <button class="probutton" bindtap="probook">协议</button>
+    </view>
+    <view class="space"></view>
+    <view class="Confirm">
+      <button class="Confirmbutton" style=" background-color: #000000;  color: rgb(255, 255, 255);" type="default" plain="true" bindtap="onClick" >我要预约</button>
+    </view>
   </view>
 </view>
-
-
-<view class="space"></view>
-<view class="reservationInput">
-  <view class="reservationInputtext" >地址</view>
-  <input class="reinput" placeholder="请输入详细地址" value="{{address}}" bindinput="bindadInput"/>
-
-</view>
-<view class="space"></view>
-
-<view class="protocol">
-  <image class="icon" src="/images/my/check.png" mode="aspectFit"></image>
-  <view class="protext">预约即默认同意</view>
-  <button class="probutton" bindtap="probook">协议</button>
-</view>
-<view class="space"></view>
-<view class="Confirm">
-  <button class="Confirmbutton" type="default" plain="true" bindtap="onClick"  >我要预约</button>
-</view>
-
-<view class="space"></view>
+<!-- <view class="space"></view>
 <view class="container">
   <view class="dotted"></view>
 </view>
-<view class="space"></view>
+<view class="space"></view> -->
 <!-- <view class="hotline">
   <image class="icon" src="/images/my/hotline.png">  </image>
   <view class="hotext">热线电话：</view>
   <button class="hotbutton" bindtap="probook">17805805661</button>
 </view> -->
-
-<view class="space"></view>
+<view class="textfirst" bindtap="showImage"> 预约完成后，客服将在24小时内联系您</view>
+<view class="space" ></view>
 <view class="container">
   <view class="dotted"></view>
 </view>

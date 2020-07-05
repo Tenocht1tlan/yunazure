@@ -175,6 +175,13 @@
 					"id": -1,
 					"name": "pages/DIYDemo/index",
 					"pathName": "pages/DIYDemo/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/reservation/reservation",
+					"pathName": "pages/reservation/reservation",
 					"scene": null
 				}
 			]

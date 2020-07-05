@@ -6,22 +6,41 @@
 }
 .textfirst{
   display: flex;
+  color: #666;
   font-size: 25rpx;  
   padding-top: 40rpx;
   height: 80rpx; 
   justify-content: center;
 }
+.x-backGard{
+  display: flex;
+  margin-top: 50rpx;
+  align-items: center;
+  justify-content: center;
+}
+.backGard{
+  width: 650rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 10rpx 10rpx 10rpx 0rpx rgb(175, 173, 173);
+  border: 2rpx  #ddd solid;
+  /* border-image: -webkit-linear-gradient(#F80, #2ED) 20 20;
+  border-image: -moz-linear-gradient(#F80, #2ED) 20 20;
+  border-image: -o-linear-gradient(#F80, #2ED) 20 20;
+  border-image: linear-gradient(#F80, #2ED) 20 20; */
+}
 .reservationInput {
   display: flex;
-  margin-left: 50rpx;
   flex-direction: row;
   background: rgb(255, 255, 255);
   border: solid ;
   border-width: 2rpx;
-  border-color: navy;
+  border-color: rgb(190, 190, 190);
   padding-top:15rpx;
   padding-bottom: 15rpx;
-  width: 650rpx;
+  width: 550rpx;
   height: 65rpx;
   justify-content: start;
 }
@@ -93,14 +112,14 @@ button[class="probutton"]::after{
   display: flex;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
+  margin-bottom: 50rpx;
 }
 .Confirm .Confirmbutton{
-  background-color: #ffffff;
-  width: 600rpx;
+  width: 350rpx;
   height: fit-content;
   border-radius: 0px;
-  color: rgb(0, 0, 0);
   border:  1px solid;
+  font-size: 26rpx;
 }
 .dotted{
   background: rgb(175, 182, 180);
@@ -139,16 +158,24 @@ button[class="hotbutton"]::after{
   position: fixed;
   height: 80rpx;
   bottom:80rpx;
-  right: -20rpx;
+  right: -25rpx;
 }
 .kefu .kefubutton{
   width: 175rpx;
-  height: 55rpx;
+  height: 70rpx;
+  line-height: 70rpx;
   align-content: center;
   font-size: 25rpx;
   font-family:simsun;
-  border-radius: 25rpx;
-  background-color:rgba(238, 197,145, 0.5);
+  font-weight: bolder;
+  word-spacing: 2px;
+  color: rgb(0, 0, 0);
+  border-radius: 30rpx;
+  background-color:rgba(203, 218, 3,0.6);
+
+}
+button::after{
+  border: none;
 }
 .locationbt{
   display: flex;
