@@ -29,7 +29,7 @@
   color: #666;
 
 }
-.commit{
+/* .commit{
   width: 650rpx;
   height: 110rpx;
   line-height:110rpx;
@@ -45,7 +45,24 @@
   line-height: 100rpx;
   margin-top: 105rpx;
   margin-left: 55rpx;
-  /* font-size: 80rpx; */
+  font-size: 80rpx;
+} */
+.commit{
+  width: 55vw;
+  height: 6vh;
+  line-height:6vh;
+  margin-top: 100rpx;
+  color: #fff;
+  background-color: #000;
+  margin-left: 169rpx;
+  border-radius: 0%;
+}
+.button-hover{
+  width: 53vw;
+  height:5vh;
+  line-height: 5vh;
+  margin-top: 105rpx;
+  margin-left: 179rpx;
 }
 .swiper-container{
   width: 750rpx;

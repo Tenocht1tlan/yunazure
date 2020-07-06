@@ -15,25 +15,27 @@
         <canvas canvas-id="completeCanvas" class="mainCanvas" hidden="{{!complete}}"></canvas>
       </view>
     </view>
-    <button bindtap="complete" hidden="{{complete}}">完成</button>
-    <button bindtap="backDesign" hidden="{{!complete}}">继续设计</button>
-    <button bindtap="finalComplete" hidden="{{!complete}}">完成设计</button>
+    <button  class="commit"  hover-class="button-hover" bindtap="complete" hidden="{{complete}}">完成</button>
+    <button class="commit" style="top:600rpx" hover-class="button-hover" bindtap="backDesign" hidden="{{!complete}}" >继续设计</button>
+    <button class="commit"  hover-class="button-hover" bindtap="finalComplete" hidden="{{!complete}}" style="top:720rpx">完成设计</button>
 
-    <view class="footer">
-      <view class="colorAndOperate">
-          <view class="operation-item" bindtap="drawToTemp">
-          <!-- <view class="operation-item" bindtap="saveConfig"> -->
-            <image mode="aspectFit" src="/images/share/share1.png" class="operation-img"></image>
-            保存
-          </view>
-      </view>
-      <view class="upload-wrap">
-        <view class="upload-line"></view>
-        <view class="upload-text">选择素材</view>
-        <view class="upload-line"></view>
-      </view>
+  <view class="footer">
+    <view class="colorAndOperate">
+        <view class="operation-item" bindtap="drawToTemp">
+        <!-- <view class="operation-item" bindtap="saveConfig"> -->
+          <image mode="aspectFit" src="/images/share/share1.png" class="operation-img"></image>
+          保存
+        </view>
     </view>
-
+  </view>
+  <button class="{{isChosed?'picBlack':'pic-box'}}" hover-class="none" bindtap="choseMode" >
+    <image  class="pic" src="{{isChosed?'/images/img/picYes.png':'/images/img/picNo.png'}}" ></image>
+    <text class="picText" >图片</text>
+  </button>
+  <button class="{{isChosed?'text-box':'textBlack'}}" hover-class="none" bindtap="choseMode" >
+    <image  class="pic" src="{{isChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
+    <text class="picText">文字</text>
+  </button>
     <view class="custom-title">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
         <view class="category" bindtap="setMaterialCategory" data-id="0">图形</view>
