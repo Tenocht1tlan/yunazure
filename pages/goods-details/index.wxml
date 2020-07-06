@@ -191,18 +191,16 @@
   <view class="goToPage">
     <view class="afterSale-box" style="margin-top:80rpx">
       <image class="afterSale" src="/images/size.png"></image>
-      <text style="margin-left:10rpx" >成分和保养</text>
+      <text style="margin-left:10rpx" bindtap="aboutGoods" data-type="composition">成分和保养</text>
     </view>
     <view class="afterSale-box">
       <image class="afterSale" src="/images/size.png"></image>
-      <text style="margin-left:10rpx" >尺码表</text>
+      <text style="margin-left:10rpx" bindtap="aboutGoods" data-type="size">尺码表</text>
     </view>
     <view class="afterSale-box" style="margin-bottom:80rpx;">
       <image class="afterSale" src="/images/size.png"></image>
-      <text style="margin-left:10rpx" >配送与退货</text>
+      <text style="margin-left:10rpx" bindtap="aboutGoods" data-type="delivery">配送与退货</text>
     </view>
-    <!-- <view >尺码表</view>
-    <view>配送和退货</view> -->
   </view>
   <view class="goods-des-info" style="margin-top:35rpx;" wx:if="{{!curGoodsKanjia && reputation}}">
     <view class="label-title" style="border-bottom:1px solid #eee;">大家评价

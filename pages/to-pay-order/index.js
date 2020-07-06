@@ -190,7 +190,7 @@ Page({
         command: "pay",
         out_trade_no: orderid,
         body: 'yunazure-scarf-DIY',
-        total_fee: 1
+        total_fee: 100
       },
       success(res) {
         console.log("云函数payment提交成功：", res.result)
@@ -240,6 +240,13 @@ Page({
         that.order(orderInfo)
       },
       fail(res) {
+        db.collection('orderlist').where({
+          'postData.orderid': orderInfo.orderid
+        }).update({
+          data: {
+            'postData.orderid': 'Yunazure-' + new Date().getTime()
+          }
+        })
         console.log("支付失败：", res)
         wx.redirectTo({
           url: "/pages/order-list/index?type=0"
@@ -247,9 +254,6 @@ Page({
       },
       complete(res) {
         console.log("支付完成：", res)
-        // wx.redirectTo({
-        //   url: "/pages/order-list/index"
-        // });
       }
     })
   },
@@ -338,7 +342,7 @@ Page({
       postData.calculate = "true";
     }
     if (!e) {
-      let yunPrice = 1
+      let yunPrice = 5
       that.setData({
         // totalScoreToPay: that.data.score,
         isNeedLogistics: that.data.isNeedLogistics,

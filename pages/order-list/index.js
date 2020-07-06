@@ -76,7 +76,7 @@ Page({
     this.data.payButtonClicked = true
     setTimeout(() => {
       this.data.payButtonClicked = false
-    }, 2000)  // 可自行修改时间间隔（目前是3秒内只能点击一次支付按钮）
+    }, 2000)
     const that = this
     const orderId = e.currentTarget.dataset.id
     let money = e.currentTarget.dataset.money
@@ -104,7 +104,7 @@ Page({
         command: "pay",
         out_trade_no: orderId,
         body: 'yunazure-scarf-DIY',
-        total_fee: money
+        total_fee: parseInt(money) * 100
       },
       success(res) {
         console.log("云函数payment提交成功：", res.result)
@@ -112,7 +112,7 @@ Page({
       },
       fail(res) {
         console.log("云函数payment提交失败：", res)
-        this.onShow()
+        // this.onShow()
       },
       complete(){
       }
@@ -153,7 +153,7 @@ Page({
           title: '支付取消！',
           icon: 'none'
         })
-        this.onShow()
+        // this.onShow()
       },
       complete(res) {
         console.log("支付完成：", res)

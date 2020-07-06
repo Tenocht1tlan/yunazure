@@ -156,33 +156,6 @@
 					"pathName": "pages/try/index",
 					"query": "",
 					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/canvas/index",
-					"pathName": "pages/canvas/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/Special/index",
-					"pathName": "pages/Special/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/DIYDemo/index",
-					"pathName": "pages/DIYDemo/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/reservation/reservation",
-					"pathName": "pages/reservation/reservation",
-					"scene": null
 				}
 			]
 		}

@@ -928,4 +928,10 @@ Page({
       })
     })
   },
+  aboutGoods(e){
+    let type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: '/pages/aboutgoods/index?type=' + type,
+    })
+  }
 })
