@@ -194,16 +194,13 @@ font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
 
 .swiper-container{
   width: 750rpx;
-  /* height: 575rpx; */
   position: relative;  
 }
 .swiper-container .swiper1 {
   width: 750rpx;
-  /* height: 575rpx; */
 }
 .swiper-container .swiper1 image {
   width: 750rpx;
-  /* height: 575rpx; */
 }
 ::-webkit-scrollbar {
   width: 0;
@@ -484,7 +481,7 @@ z-index: 0;
 .modal{position:fixed; top:0; right:0; bottom:0; left:0; z-index:1000;}
 .modal-cancel{
   position:absolute; 
-  z-index:2000; 
+  z-index:1000; 
   top:0; 
   right:0; 
   bottom: 0; 
@@ -510,7 +507,7 @@ z-index: 0;
   flex-direction: row;
 }
 .Mselect{
-  z-index: 4000;
+  z-index: 2000;
 }
 .Mselect view{
   padding: 26rpx 0;

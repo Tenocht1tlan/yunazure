@@ -28,15 +28,16 @@
         </view>
     </view>
   </view>
-  <button class="{{isChosed?'picBlack':'pic-box'}}" hover-class="none" bindtap="choseMode" >
-    <image  class="pic" src="{{isChosed?'/images/img/picYes.png':'/images/img/picNo.png'}}" ></image>
+  <button class="{{picIsChosed?'picBlack':'pic-box'}}" hover-class="none" bindtap="choseMode" >
+    <image  class="pic" src="{{picIsChosed?'/images/img/picYes.png':'/images/img/picNo.png'}}" ></image>
     <text class="picText" >图片</text>
   </button>
-  <button class="{{isChosed?'text-box':'textBlack'}}" hover-class="none" bindtap="choseMode" >
-    <image  class="pic" src="{{isChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
+  <button class="{{picIsChosed?'text-box':'textBlack'}}" hover-class="none" bindtap="choseMode" >
+    <image  class="pic" src="{{picIsChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
     <text class="picText">文字</text>
   </button>
-    <view class="custom-title">
+    
+    <view class="custom-title" hidden="{{textIsChosed}}">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
         <view class="category" bindtap="setMaterialCategory" data-id="0">图形</view>
         <view class="category" bindtap="setMaterialCategory" data-id="1">星座</view>
@@ -47,10 +48,23 @@
         <view class="category" bindtap="setMaterialCategory" data-id="6">标志性建筑</view>
       </scroll-view>
     </view>
-    <view class="material-wrap">
+    <view class="custom-title" hidden="{{picIsChosed}}">
+      <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
+        <view class="category" bindtap="setMaterialCategory" data-id="0">文本</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="1">字体</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="2">大小</view>
+        <view class="category" bindtap="setMaterialCategory" data-id="3">颜色</view>
+      </scroll-view>
+    </view>
+    <view class="material-wrap" hidden="{{textIsChosed}}">
       <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true">
         <image class="material-item" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" ></image>
       </scroll-view>
+    </view>
+    <view class="material-wrap" hidden="{{picIsChosed}}">
+      <textarea class="material-text" focus="true" maxlength="10" > 
+      </textarea>
+      <button>确定</button>
     </view>
   </view>
 </view>
