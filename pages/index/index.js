@@ -817,7 +817,7 @@ Page({
   },
   bindconfirm(e) {
     this.setData({
-      inputVal: e.detail.value
+      inputVal: e.detail.valuee
     })
     wx.navigateTo({
       url: '/pages/goods/list?name=' + this.data.inputVal,
@@ -828,11 +828,22 @@ Page({
       url: '/pages/goods/list?name=' + this.data.inputVal,
     })
   },
-
   scrollToLeft() {
     this.setAction({
       scrollTop: 0
     })
+  },
+  start:function(){
+    var animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease-out',
+      delay: 500
+    })
+    // animation.translateX(100)
+    // animation.opacity(0.5).step()
+    animation.opacity(0.5).translate(10, -200).step()
+    this.setData({
+      ani:  animation.export()
+    })
   }
-
 })

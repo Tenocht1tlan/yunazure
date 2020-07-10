@@ -145,6 +145,11 @@
   background: #fff;
   display: inline-block;
 }
+.material-text{
+background-color: #fff;
+width: 50vw;
+height: 40vh;
+}
 .footer {
   margin-left:650rpx;
   width: 100vw;

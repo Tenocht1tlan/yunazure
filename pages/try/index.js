@@ -31,7 +31,9 @@ Page({
         operate: 'draw',            // 操作类型
         ctx: wx.createCanvasContext('mainCanvas'),
         complete: false,
-        isChosed:true,
+        picIsChosed:true,
+        textIsChosed:false,
+
         icons:[
           ['/images/custom/custom6.png'],
           ['/images/my/checkNo.png','/images/my/check.png'],
@@ -383,9 +385,11 @@ Page({
         }
       },
       choseMode:function(){
-        var chose = !this.data.isChosed
+        var chose = !this.data.picIsChosed
         this.setData({
-          isChosed:chose
+          picIsChosed:chose,
+          textIsChosed:!chose
+
         })
       },
       // 删除单条历史记录

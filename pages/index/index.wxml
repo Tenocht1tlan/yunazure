@@ -29,11 +29,12 @@
 <view class="swiper-container" style="height:{{swiperHeight}}rpx;">
   <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;">
     <swiper-item wx:for="{{banners}}" wx:key="id" >
-      <image  bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"  />
+      <image bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"/>
+      <view class="bb" style="width: 150rpx;z-index: 10;border: solid;" animation="{{ani}}">活动</view>
     </swiper-item>
   </swiper>
 </view>
-
+<button class="aa" bindtap='start' style="width: 300rpx;">开始</button> 
 <view class="container">
   <block wx:for="{{categories}}" wx:key="id" wx:if="{{item.goods}}">
     <view class="category-goods-title">
