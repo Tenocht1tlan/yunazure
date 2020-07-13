@@ -200,6 +200,37 @@ font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
 .swiper-container .swiper1 image {
   width: 750rpx;
 }
+.swiper2{
+  width: 750rpx;
+  position: relative; 
+}
+.swiper-ani{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 400rpx;
+  left: 250rpx;
+  width: 250rpx;
+  height: 100rpx;
+  z-index: 10;
+  font-size: 45rpx;
+  font-weight: 900;
+}
+.swiper-morebtn{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 250rpx;
+  height: 100rpx;
+  z-index: 10;
+  top: 600rpx;
+  left: 250rpx;
+  font-size: 38rpx;
+  font-weight: 600;
+
+}
 .type-item-on{
   color:#e64340;
   border-bottom: 1rpx solid #e64340;

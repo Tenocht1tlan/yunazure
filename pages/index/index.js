@@ -33,7 +33,6 @@ Page({
     curPage: 1,
     pageSize: 20,
     cateScrollTop: 0,
-    restart: false,
     array:[{
           'text':'女士',
           'id':0,
@@ -96,7 +95,10 @@ Page({
     },
     addHistoryInfo:{
       items:[]
-    }
+    },
+    animationType:"animated bounceInRight",
+    animationButton:"animated bounceIn",
+    originLeft:'',
 },
   activeItem:function(e){
     this.setData({
@@ -496,16 +498,21 @@ Page({
   swiperChange:function(e){
     // console.log('curr = '+ e.detail.current)
     this.setData({
-      restart: true
+      originLeft:"opacity:0",
+      animationType: "animated bounceOutRight",
+      animationButton:"animated bounceInRight",
     })
-    this.start()
+    // console.log(this.data.animationType)
   },
+
+
   animationFinish:function(e){
     console.log('finish = '+ e.detail)
     this.setData({
-      restart: false,
+      originLeft:"opacity:1",
+      animationType: "animated bounceInRight",
+      animationButton:"animated bounceIn",
     })
-    this.start()
   },
   adClick: function(e) {
     const url = e.currentTarget.dataset.url
@@ -840,42 +847,4 @@ Page({
       scrollTop: 0
     })
   },
-  start:function(){
-    if(this.data.restart){
-      var animation = wx.createAnimation({
-        duration: 400,
-        timingFunction: 'ease-out',
-        delay: 100
-      })
-      animation.opacity(0)
-      animation.translateX(150).step()
-      var animationbtn = wx.createAnimation({
-        duration: 500,
-        timingFunction: 'ease-out',
-        delay: 100
-      })
-      animationbtn.opacity(0).step()
-      this.setData({
-        aniView:  animation.export(),
-        aniBtn:  animationbtn.export()
-      })
-    }else{
-      var animation = wx.createAnimation({
-        duration: 400,
-        timingFunction: 'ease-out',
-        delay: 100
-      })
-      animation.opacity(1).translateX(-150).step()
-      var animationbtn = wx.createAnimation({
-        duration: 500,
-        timingFunction: 'ease-out',
-        delay: 100
-      })
-      animationbtn.opacity(1).step()
-      this.setData({
-        aniView:  animation.export(),
-        aniBtn:  animationbtn.export()
-      })
-    }
-  }
 })
