@@ -39,21 +39,12 @@
     
     <view class="custom-title" hidden="{{textIsChosed}}">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-        <view class="category" bindtap="setMaterialCategory" data-id="0">图形</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="1">星座</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="2">水果</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="3">动物</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="4">生肖</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="5">城市</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="6">标志性建筑</view>
+        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
       </scroll-view>
     </view>
     <view class="custom-title" hidden="{{picIsChosed}}">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-        <view class="category" bindtap="setMaterialCategory" data-id="0">文本</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="1">字体</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="2">大小</view>
-        <view class="category" bindtap="setMaterialCategory" data-id="3">颜色</view>
+        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
       </scroll-view>
     </view>
     <view class="material-wrap" hidden="{{textIsChosed}}">
@@ -61,10 +52,10 @@
         <image class="material-item" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" ></image>
       </scroll-view>
     </view>
-    <view class="material-wrap" hidden="{{picIsChosed}}">
-      <textarea class="material-text" focus="true" maxlength="10" > 
+    <view class="material-wrap" hidden="{{picIsChosed}}" >
+      <textarea class="material-text" maxlength="10" > 
       </textarea>
-      <button>确定</button>
+      <view  class="text-commit" hover-class="tc-hover" hover-stay-time="100" >完成</view>
     </view>
   </view>
 </view>

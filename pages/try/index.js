@@ -33,7 +33,9 @@ Page({
         complete: false,
         picIsChosed:true,
         textIsChosed:false,
-
+        currentChoseItem :0,
+        array:['图形','星座','水果','动物','生肖','城市','标志性建筑'],
+        text:['文本','字体','大小','颜色'],
         icons:[
           ['/images/custom/custom6.png'],
           ['/images/my/checkNo.png','/images/my/check.png'],
@@ -572,7 +574,7 @@ Page({
       // 设置素材分类
       setMaterialCategory: function(e) {
         this.setData({
-          materialCategory: e.currentTarget.dataset.id
+          materialCategory:e.target.dataset.index
         })
       },
       openRecommend () {
