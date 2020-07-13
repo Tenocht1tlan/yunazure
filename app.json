@@ -36,7 +36,6 @@
     "pages/deposit/pay",
     "pages/register/index",
     "pages/star/star",
-    "pages/DIY/index",
     "pages/Ad/index",
     "pages/Special/index",
     "pages/Activity/index",
@@ -44,10 +43,9 @@
     "pages/Comp/index",
     "pages/history/index",
     "pages/opinion/index",
-    "pages/DIYLocation/index",
-    "pages/try/index",
+    "pages/customize/index",
     "pages/canvas/index",
-    "pages/DIYDemo/index",
+    "pages/custom-product/index",
     "pages/aboutgoods/index"
   ],
   "window": {

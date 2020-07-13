@@ -152,8 +152,8 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/try/index",
-					"pathName": "pages/try/index",
+					"name": "pages/customize/index",
+					"pathName": "pages/customize/index",
 					"query": "",
 					"scene": null
 				}

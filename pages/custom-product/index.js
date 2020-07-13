@@ -1,4 +1,3 @@
-// pages/DIYDemo/index.js
 Page({
 
   /**
@@ -121,12 +120,10 @@ Page({
   onShareAppMessage() {
     // let _data = {
     //   title: this.data.goodName,
-    //   path: '/pages/DIYDemo/index',
+    //   path: '/pages/custom-product/index',
     //   success: function(res) {
-
     //   },
     //   fail: function(res) {
-
     //   }
     // }
     // return _data

@@ -1,4 +1,3 @@
-<!--pages/DIYDemo/index.wxml-->
 <view class="background">
    <view class="title">
       <text>定制成功</text>

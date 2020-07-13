@@ -432,7 +432,6 @@ Page({
       clearTimeout(time1);
       time1 = null;
     }, 220)//先执行下滑动画，再隐藏模块
-
   },
   slideIn: function () {
     this.animation.translateY(0).step() // 在y轴偏移，然后用step()完成一个动画
@@ -452,7 +451,7 @@ Page({
   },
   toDiy: function () {
     wx.navigateTo({
-      url: "/pages/try/index"
+      url: "/pages/customize/index"
     })
   },
   toAd: function () {
