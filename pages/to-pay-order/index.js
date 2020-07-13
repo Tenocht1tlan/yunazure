@@ -190,7 +190,7 @@ Page({
         command: "pay",
         out_trade_no: orderid,
         body: 'yunazure-scarf-DIY',
-        total_fee: 100
+        total_fee: orderInfo.totalAmount * 100
       },
       success(res) {
         console.log("云函数payment提交成功：", res.result)
@@ -279,22 +279,7 @@ Page({
   //   })
   // },
   goCreateOrder(){
-    // const subscribe_ids = wx.getStorageSync('subscribe_ids')
-    // if (subscribe_ids) {
-    //   wx.requestSubscribeMessage({
-    //     tmplIds: subscribe_ids.split(','),
-    //     success(res) {
-    //     },
-    //     fail(e) {
-    //       console.error(e)
-    //     },
-    //     complete: (e) => {
-    //       this.createOrder(true)
-    //     },
-    //   })
-    // } else {
       this.createOrder(true)
-    // }    
   },
   createOrder: function (e) {
     var that = this
@@ -344,9 +329,8 @@ Page({
     if (!e) {
       let yunPrice = 5
       that.setData({
-        // totalScoreToPay: that.data.score,
         isNeedLogistics: that.data.isNeedLogistics,
-        allGoodsAndYunPrice: (that.data.allGoodsPrice + yunPrice).toFixed(2),
+        allGoodsAndYunPrice: that.data.allGoodsPrice + yunPrice,
         allGoodsPrice: that.data.allGoodsPrice.toFixed(2),
         yunPrice: yunPrice.toFixed(2)
       })
@@ -366,7 +350,6 @@ Page({
         success(res){
           if (e && "buyNow" != that.data.orderType) {
             // 清空购物车数据
-            // WXAPI.shippingCarInfoRemoveAll(openid)
           }
           that.processAfterCreateOrder(postData)
         },

@@ -33,6 +33,7 @@ Page({
     curPage: 1,
     pageSize: 20,
     cateScrollTop: 0,
+    restart: false,
     array:[{
           'text':'女士',
           'id':0,
@@ -71,33 +72,31 @@ Page({
       'text':'男婴',
       'id':5
     },
-  ],
-  upImage:'',
-  // 被点击的热卖商品的索引
-  currentChoseItem :0,
-  // 弹出界面
-  optionList:[],
-  hideFlag: true,//true-隐藏  false-显示
-  animationData: {},//
-  // 精品Boutique
-  Boutique:[{
-      'src':'/images/woman.png'
-    },{
-      'src':'/images/man.png'
-    },{
-      'src':'/images/scarfWoman.png'
-    },{
-      'src':'/images/scarfMan.png'
-  }],
-  textHidden:[true,false,false,false],
-  currTxthide:0,
-  tempIdx:0,
-  addFavInfo:{
-    items:[]
-  },
-  addHistoryInfo:{
-    items:[]
-  }
+    ],
+    upImage:'',
+    currentChoseItem :0,
+    // 弹出界面
+    optionList:[],
+    hideFlag: true,//true-隐藏  false-显示
+    animationData: {},//
+    Boutique:[{
+        'src':'/images/woman.png'
+      },{
+        'src':'/images/man.png'
+      },{
+        'src':'/images/scarfWoman.png'
+      },{
+        'src':'/images/scarfMan.png'
+    }],
+    textHidden:[true,false,false,false],
+    currTxthide:0,
+    tempIdx:0,
+    addFavInfo:{
+      items:[]
+    },
+    addHistoryInfo:{
+      items:[]
+    }
 },
   activeItem:function(e){
     this.setData({
@@ -495,6 +494,20 @@ Page({
       })
     }
   },
+  swiperChange:function(e){
+    // console.log('curr = '+ e.detail.current)
+    this.setData({
+      restart: true
+    })
+    this.start()
+  },
+  animationFinish:function(e){
+    console.log('finish = '+ e.detail)
+    this.setData({
+      restart: false,
+    })
+    this.start()
+  },
   adClick: function(e) {
     const url = e.currentTarget.dataset.url
     if (url) {
@@ -512,7 +525,6 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })    
-    const that = this
     if (e && e.scene) {
       const scene = decodeURIComponent(e.scene)
       if (scene) {        
@@ -614,6 +626,7 @@ Page({
         })
       })
     })
+
     // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge()
     // this.goodsDynamic()
@@ -699,11 +712,6 @@ Page({
     }).catch(err=>{
       
     })
-    // const res = await WXAPI.goods({
-    //   categoryId: categoryId,
-    //   page: this.data.curPage,
-    //   pageSize: this.data.pageSize
-    // })
     wx.hideLoading()
     if(true){
       let newData = {
@@ -834,16 +842,41 @@ Page({
     })
   },
   start:function(){
-    var animation = wx.createAnimation({
-      duration: 1000,
-      timingFunction: 'ease-out',
-      delay: 500
-    })
-    // animation.translateX(100)
-    // animation.opacity(0.5).step()
-    animation.opacity(0.5).translate(10, -200).step()
-    this.setData({
-      ani:  animation.export()
-    })
+    if(this.data.restart){
+      var animation = wx.createAnimation({
+        duration: 400,
+        timingFunction: 'ease-out',
+        delay: 100
+      })
+      animation.opacity(0)
+      animation.translateX(150).step()
+      var animationbtn = wx.createAnimation({
+        duration: 500,
+        timingFunction: 'ease-out',
+        delay: 100
+      })
+      animationbtn.opacity(0).step()
+      this.setData({
+        aniView:  animation.export(),
+        aniBtn:  animationbtn.export()
+      })
+    }else{
+      var animation = wx.createAnimation({
+        duration: 400,
+        timingFunction: 'ease-out',
+        delay: 100
+      })
+      animation.opacity(1).translateX(-150).step()
+      var animationbtn = wx.createAnimation({
+        duration: 500,
+        timingFunction: 'ease-out',
+        delay: 100
+      })
+      animationbtn.opacity(1).step()
+      this.setData({
+        aniView:  animation.export(),
+        aniBtn:  animationbtn.export()
+      })
+    }
   }
 })

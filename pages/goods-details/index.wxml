@@ -27,7 +27,7 @@
     <view class="deid">{{goodsDetail.good_id}}</view>
     <view class="decolor">
       <view wx:for="{{color}}" wx:for-index="idx" wx:key="id" style="font-size:24rpx;">
-          <text style="margin-left:10rpx">- {{item.value}}</text>
+          <text>- {{item.value}}</text>
       </view>
     </view>
     <view class="detail">{{goodsDetail.description}}</view>

@@ -12,7 +12,7 @@ Page({
     saveHidden: true,
     allSelect: false,
     noSelect: true,
-    totalPrice:0,
+    totalPrice: '0',
     checkedVal:[],
     loading:true,
     startX:'',
@@ -169,7 +169,7 @@ Page({
           this.setData({
             checkedVal: tmp,
             isFirst: 1,
-            totalPrice: tmpPrice,
+            totalPrice: String(tmpPrice.toFixed(2)),
             noSelect: res.data[0].items.length > 0 ? false : true,
             'shippingCarInfo.items': res.data[0].items
           })
@@ -257,7 +257,7 @@ Page({
     //   decimals: 2,
     //   onUpdate:()=>{
         this.setData({
-          totalPrice: tempPrice//newNumer.tempValue
+          totalPrice: String(tempPrice.toFixed(2))//newNumer.tempValue
         })
     //   }
     // })
@@ -279,7 +279,7 @@ Page({
       //   decimals: 2,
       //   onUpdate:()=>{
           this.setData({
-            totalPrice: tempPrice//newNumer.tempValue
+            totalPrice: String(tempPrice.toFixed(2))//newNumer.tempValue
           })
       //   }
       // })
@@ -342,7 +342,7 @@ Page({
       //   decimals: 2,
       //   onUpdate:()=>{
           this.setData({
-            totalPrice: tempPrice//newNumer.tempValue
+            totalPrice: String(tempPrice.toFixed(2))//newNumer.tempValue
           })
       //   }
       // })
@@ -380,7 +380,7 @@ Page({
             if(this.data.checkedVal[index] == 'isChecked'){
               tempPrice -= price
               this.setData({
-                totalPrice: tempPrice
+                totalPrice: String(tempPrice.toFixed(2))
               })
             }
             this.delItemDone(item.good_id, index, size)
@@ -398,7 +398,7 @@ Page({
         //   decimals: 2,
         //   onUpdate:()=>{
             this.setData({
-              totalPrice: tempPrice//newNumer.tempValue
+              totalPrice: String(tempPrice.toFixed(2)) //newNumer.tempValue
             })
         //   }
         // })

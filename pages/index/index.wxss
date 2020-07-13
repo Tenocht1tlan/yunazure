@@ -190,8 +190,6 @@ font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
   text-align:center;
   margin-top:10rpx;
 }
-
-
 .swiper-container{
   width: 750rpx;
   position: relative;  
@@ -201,11 +199,6 @@ font-family: "Neue-Helvetica","Helvetica","Arial",Sans-Serif;
 }
 .swiper-container .swiper1 image {
   width: 750rpx;
-}
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
 }
 .type-item-on{
   color:#e64340;
