@@ -27,11 +27,16 @@
   </view>
 </navigator> -->
 <view class="swiper-container" style="height:{{swiperHeight}}rpx;">
-  <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;" bindchange="swiperChange" bindanimationfinish="animationFinish">
-    <swiper-item wx:for="{{banners}}" wx:key="id" >
+    <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;" bindchange="swiperChange" 
+    bindanimationfinish="animationFinish">
+    <swiper-item class="swiper2" wx:for="{{banners}}" wx:key="id" >
       <image bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"/>
-      <view class="swiper-ani" style="width: 250rpx;height: 50rpx;z-index: 10;margin-top:-250rpx;margin-left:600rpx;opacity:0;" animation="{{aniView}}">探索系列</view>
-      <view class="swiper-morebtn" style="width: 250rpx;height: 50rpx;z-index: 10;margin-top:-150rpx;margin-left:350rpx;opacity:0;" animation="{{aniBtn}}">查看更多</view>
+      <view class="swiper-ani" style="{{originLeft}}" bindtap="toNew">
+        <text class="{{animationType}}" >探索系列</text>
+      </view>
+      <view class="swiper-morebtn" style="{{originLeft}}">
+        <text class="{{animationButton}}" style="width:250rpx; height:100rpx;border:solid;text-align:center;line-height:100rpx;" >查看更多</text>
+      </view>
     </swiper-item>
   </swiper>
 </view>
