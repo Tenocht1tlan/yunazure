@@ -500,25 +500,18 @@ Page({
     }
   },
   swiperChange:function(e){
-    console.log('curr = '+ e.detail.current)
     var index = e.detail.current
     var temp = this.data.textArray[index]
     var colorTemp = this.data.textColorArray[index]
-    console.log('temp= '+temp)
     this.setData({
       originLeft:"opacity:0",
       animationType: "animated bounceOutRight",
       animationButton:"animated bounceInRight",
       animationText:temp,
       textColor:colorTemp
-
     })
-    // console.log(this.data.animationType)
   },
-
-
   animationFinish:function(e){
-    console.log('finish = '+ e.detail)
     this.setData({
       originLeft:"opacity:1",
       animationType: "animated bounceInRight",

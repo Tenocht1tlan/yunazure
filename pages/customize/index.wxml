@@ -15,7 +15,7 @@
         <canvas canvas-id="completeCanvas" class="mainCanvas" hidden="{{!complete}}"></canvas>
       </view>
     </view>
-    <button  class="commit"  hover-class="button-hover" bindtap="complete" hidden="{{complete}}">完成</button>
+    <button class="commit"  hover-class="button-hover" bindtap="complete" hidden="{{complete}}">完成</button>
     <button class="commit" style="top:600rpx" hover-class="button-hover" bindtap="backDesign" hidden="{{!complete}}" >继续设计</button>
     <button class="commit"  hover-class="button-hover" bindtap="finalComplete" hidden="{{!complete}}" style="top:720rpx">完成设计</button>
 

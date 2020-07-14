@@ -1,6 +1,6 @@
 Page({
     data:{
-        materialCategory: 0,// 素材分类
+        materialCategory: 0,       // 素材分类
         currentPosition: 'left',   // 当前袜子的位置
         currentColor: 'w',         // 当前袜子的颜色
         currentGender: 'm',        // 当前性别
@@ -23,12 +23,12 @@ Page({
         imgUrl: '',                // 要绘入的图片地址
         imgWidth: 100,             // 图片宽度
         imgHeight: 100,            // 图片高度
-        tempImgWidth: 81,         // 最终绘入的图片高度
-        tempImgHeight: 81,        // 最终绘入的图片高度
+        tempImgWidth: 81,          // 最终绘入的图片高度
+        tempImgHeight: 81,         // 最终绘入的图片高度
         rotateAngle: 0,            // 旋转角度
         rotateTemp: 0,             // 缓存 旋转角度
         iconSize: 81,              // 操作图标的大小
-        operate: 'draw',            // 操作类型
+        operate: 'draw',           // 操作类型
         ctx: wx.createCanvasContext('mainCanvas'),
         complete: false,
         picIsChosed:true,
@@ -45,7 +45,11 @@ Page({
           ['/images/my/in.png'],
           ['/images/my/kefu.png']
         ],
-        textarea:""
+        textarea: "",
+        textareaLen: 0,
+        fontSize: [16, 17, 18, 20, 22, 24, 28, 32],
+        fontColor: ['red', 'yellow', 'white', 'black'],
+        addText: false
     },
       onStart (e) {
         this.data.operate = 'none'
@@ -128,7 +132,6 @@ Page({
           // 扣除掉 点击位置到中心的距离(diffX,diffY)
           this.data.X = e.touches[0].x - this.data.diffX
           this.data.Y = e.touches[0].y - this.data.diffY
-          console.log('draw ( x:' + e.touches[0].x + ' , diffX:' + this.data.diffX+ ' ) X= '+ this.data.X)
         }
         this.draw()
       },
@@ -203,9 +206,17 @@ Page({
         // 新旧2种角度,分开旋转
         ctx.rotate(this.data.rotateTemp * Math.PI / 180)
         ctx.rotate(this.data.rotateAngle * Math.PI / 180)
-        if (!this.data.imgUrl) return
+        if (!this.data.imgUrl && !this.data.addText) {
+          return
+        }
         const that = this
-        ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
+        if(this.data.imgUrl){
+          ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
+        }else if(this.data.addText){
+          ctx.setFillStyle(this.data.fontColor[0])
+          ctx.setFontSize(this.data.fontSize[6])
+          ctx.fillText(this.data.textarea, x, 0)
+        }
         // 旋转回来,保证除了图片以外的其他元素不被旋转
         ctx.rotate((360 - that.data.rotateTemp) * Math.PI / 180)
         ctx.rotate((360 - that.data.rotateAngle) * Math.PI / 180)
@@ -279,9 +290,9 @@ Page({
         })
       },
       complete(){
-        if (!this.data.imgUrl) {
+        if (!this.data.imgUrl && !this.data.addText) {
           wx.showToast({
-            title: '请先选择图案',
+            title: '请先选择图案或输入文字',
             icon: 'none',
             duration: 2000
           })
@@ -343,7 +354,6 @@ Page({
       },
       // 选择图片
       async selectImg (url) {
-        // this.data.clearCanvas()
         let that = this
         await new Promise(resolve => {
           that.data.imgUrl = url
@@ -413,16 +423,29 @@ Page({
         })
       },
       finishBtn:function(){
-        const ctx = wx.createCanvasContext('mainCanvas')
-        ctx.setFontSize(20)
-        ctx.setFillStyle('yellow')
-        ctx.fillText(this.data.textarea, this.data.canvasWidth / 2, this.data.canvasHeight / 2)
-        ctx.draw(true)
+        this.setData({
+          addText:true
+        })
+        this.getTextPicInfo()
+        // const ctx = wx.createCanvasContext('mainCanvas')
+        // ctx.setFontSize(20)
+        // ctx.setFillStyle('yellow')
+        // ctx.fillText(this.data.textarea, this.data.canvasWidth / 2, this.data.canvasHeight / 2)
+        // ctx.draw()
       },
       textInput:function(e){
         this.setData({
-          textarea: e.detail.value
+          textarea: e.detail.value,
+          textareaLen: e.detail.value.length
         })
+      },
+      getTextPicInfo(){
+        this.data.imgWidth = this.data.textareaLen * 26
+        this.data.imgHeight = this.data.canvasHeight * 0.2
+        this.data.tempImgWidth = this.data.imgWidth
+        this.data.tempImgHeight = this.data.imgHeight
+        this.data.operate = 'draw'
+        this.draw()
       },
       // 选择素材
       selectMateria: function(e){
@@ -570,7 +593,13 @@ Page({
         let yy = -this.data.tempImgHeight / 2
         ctx.rotate(this.data.rotateTemp * Math.PI / 180)
         ctx.rotate(this.data.rotateAngle * Math.PI / 180)
-        ctx.drawImage(this.data.imgUrl, xx, yy, this.data.tempImgWidth, this.data.tempImgHeight)
+        if(this.data.addText){
+          ctx.setFillStyle(this.data.fontColor[0])
+          ctx.setFontSize(this.data.fontSize[6])
+          ctx.fillText(this.data.textarea, xx, 0)
+        }else if(this.data.imgUrl){
+          ctx.drawImage(this.data.imgUrl, xx, yy, this.data.tempImgWidth, this.data.tempImgHeight)
+        }
         ctx.rotate((360 - this.data.rotateTemp) * Math.PI / 180)
         ctx.rotate((360 - this.data.rotateAngle) * Math.PI / 180)
         ctx.draw(true)
