@@ -5,3 +5,6 @@
 </view>
 <input class="phoMail" placeholder="手机号/邮箱" bindinput="getPhoMail" value="{{editText}}" ></input>
 <button class="commit" hover-class="button-hover" bindtap="commit">提交</button>
+<!-- <button class="commit" hover-class="animated rubberBand"  hover-stay-time="1000" bindtap="commit">
+    <text>提交</text>
+</button> -->

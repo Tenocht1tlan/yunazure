@@ -100,7 +100,9 @@ Page({
     animationButton:"animated bounceIn",
     originLeft:'',
     animationText:'探索系列',
-    textArray:['探索系列','男士新品','女士新品','儿童新品','百搭款式','热门商品']
+    textArray:['探索系列','男士新品','女士新品','儿童新品','百搭款式','热门商品'],
+    textColor:'#000',
+    textColorArray:['#000','#fff','#000','#fff','#000','#000']
 },
   activeItem:function(e){
     this.setData({
@@ -501,12 +503,15 @@ Page({
     console.log('curr = '+ e.detail.current)
     var index = e.detail.current
     var temp = this.data.textArray[index]
+    var colorTemp = this.data.textColorArray[index]
     console.log('temp= '+temp)
     this.setData({
       originLeft:"opacity:0",
       animationType: "animated bounceOutRight",
       animationButton:"animated bounceInRight",
       animationText:temp,
+      textColor:colorTemp
+
     })
     // console.log(this.data.animationType)
   },

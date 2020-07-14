@@ -407,8 +407,7 @@ Page({
       success(res) {
         if (!res.authSetting['scope.address']) {
           wx.openSetting()
-         
-        }else{
+        }
           wx.chooseAddress({
             success: function (res) {
               var addressList = {
@@ -424,11 +423,10 @@ Page({
                 region: [res.provinceName, res.cityName, res.countyName]
               })
             },
-            fail: () => {
+            fail: (err) => {
               console.log(err)
             }
           })
-        }
       }
     })
     

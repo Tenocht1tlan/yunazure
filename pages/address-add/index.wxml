@@ -94,7 +94,7 @@
 
     </view>
 
-    <button bindtap="wxAddress">微信添加地址</button>
+    <button bindtap="wxAddress" class="address" type="default">微信添加地址</button>
     <view class="weui-btn-area">
       <button type="primary" class="save-btn" formType="submit">保存</button>
       <button type="danger" class="save-btn" bindtap="deleteAddress" data-id="{{addressData.id}}" wx:if="{{id}}">删除该地址</button>

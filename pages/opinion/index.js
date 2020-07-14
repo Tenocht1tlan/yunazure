@@ -32,6 +32,34 @@ Page({
     })
   },
   commit:function(){
+    if(this.data.problem==''){
+      console.log('yxhyxh')
+      wx.showToast({
+        title: '请输入内容',
+        duration:2000,
+        icon:'none'
+      })
+    }else{
+      if(this.data.phoMail==''){
+        wx.showToast({
+          title: '请输入手机号或邮箱号',
+          duration:2000,
+          icon:'none'
+        })
+      }else if(!((/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(this.data.phoMail))||(/^1[34578]\d{9}$/.test(this.data.phoMail)))){
+        wx.showToast({
+          title: '请输入正确的手机号或邮箱号',
+          duration:2000,
+          icon:'none'
+        })
+      }else{
+        wx.showToast({
+          title: '提交成功',
+          duration:2000,
+          icon:'none'
+        })
+      }
+    }
     console.log(this.data.problem)
     console.log(this.data.phoMail)
   },
@@ -41,6 +69,12 @@ Page({
       phoMail:value
     })
   },
+  // getPhoMail:function(e){
+  //   let value =  e.detail.value
+  //   this.setData({
+  //     phoMail:value
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面加载
    */
