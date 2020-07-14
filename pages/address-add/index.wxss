@@ -60,7 +60,7 @@ page,view,image,input {
 }
 
 .save-btn, .cancel-btn {
-  width: 690rpx;
+  width: 550rpx;
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
@@ -78,7 +78,13 @@ button[type="default"] {
   background-color: #fff;
   color: #000;
 }
-
+.address{
+  margin-top: 100rpx;
+  width: 550rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border: 2rpx solid;
+}
 .addr-details {
   height: auto;
   padding: 30rpx 0;
@@ -116,3 +122,4 @@ picker {
   white-space: nowrap;
   overflow: hidden;
 }
+

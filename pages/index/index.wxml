@@ -26,17 +26,17 @@
     </view>
   </view>
 </navigator> -->
-<view class="swiper-container" style="height:{{swiperHeight}}rpx;">
+<view class="swiper-container" style="height:{{swiperHeight}}rpx">
     <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;" bindchange="swiperChange" 
     bindanimationfinish="animationFinish">
     <swiper-item class="swiper2" wx:for="{{banners}}" wx:key="id" >
       <image bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"/>
       <view class="swiper-ani" style="{{originLeft}}" bindtap="toNew">
         <!-- <text class="{{animationType}}" >探索系列</text> -->
-        <text class="{{animationType}}" >{{animationText}}</text>
+        <text class="{{animationType}}" style="color:{{textColor}};">{{animationText}}</text>
       </view>
-      <view class="swiper-morebtn" style="{{originLeft}}">
-        <text class="{{animationButton}}" style="width:250rpx; height:100rpx;border:solid;text-align:center;line-height:100rpx;" >查看更多</text>
+      <view class="swiper-morebtn" style="{{originLeft}};">
+        <text class="{{animationButton}}" style="width:220rpx; height:80rpx;border: 5rpx solid;text-align:center;line-height:80rpx;color:{{textColor}};" >查看更多</text>
       </view>
     </swiper-item>
   </swiper>
