@@ -32,7 +32,8 @@
     <swiper-item class="swiper2" wx:for="{{banners}}" wx:key="id" >
       <image bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"/>
       <view class="swiper-ani" style="{{originLeft}}" bindtap="toNew">
-        <text class="{{animationType}}" >探索系列</text>
+        <!-- <text class="{{animationType}}" >探索系列</text> -->
+        <text class="{{animationType}}" >{{animationText}}</text>
       </view>
       <view class="swiper-morebtn" style="{{originLeft}}">
         <text class="{{animationButton}}" style="width:250rpx; height:100rpx;border:solid;text-align:center;line-height:100rpx;" >查看更多</text>
