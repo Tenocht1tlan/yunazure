@@ -27,11 +27,27 @@
 .a-address .left-text .name-tel {
   margin-bottom: 20rpx;
 }
-
+.a-address .left-text .label-address {
+  display: flex;
+  flex-direction: row;
+}
 .a-address .left-text .address-box {
+  margin-left: 10rpx;
   font-size: 24rpx;
   color: #888;
   line-height: 36rpx;
+}
+.a-address .left-text .label {
+  width: fit-content;
+  font-size: 24rpx;
+  padding-left: 5rpx;
+  padding-right: 5rpx;
+  background-color: rgb(255, 229, 181);
+  color: rgb(255, 130, 130);
+  border: solid;
+  border-color:  rgb(255, 229, 181);
+  line-height: 36rpx;
+  border-width: 1rpx;
 }
 
 .a-address .right-edit {

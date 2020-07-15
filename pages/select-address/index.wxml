@@ -5,8 +5,11 @@
         <view class="name-tel">
           {{item.linkMan}} {{item.mobile}}
         </view>
-        <view class="address-box">
-          {{item.address}}
+        <view class="label-address">
+          <view class="label" hidden="{{!item.default}}">默认</view>
+          <view class="address-box">
+            {{item.address}}
+          </view>
         </view>
       </view>
       <view class="right-edit" bindtap="editAddess" data-id="{{item.id}}">

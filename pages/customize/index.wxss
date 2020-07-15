@@ -282,7 +282,7 @@ height: 100rpx;
   align-items: center;
   justify-content: center; 
   position: fixed;
-  bottom: 400rpx;
+  bottom: 22vh;
   border-radius: 40rpx;
   margin-left: -55rpx;
   background-color: rgb(255, 255, 255);
@@ -301,11 +301,10 @@ button::after {
   align-items: center;
   justify-content: center; 
   position: fixed;
-  bottom: 400rpx;
+  bottom: 22vh;
   border-radius: 40rpx;
   margin-left: -40rpx;
   background-color: rgb(0, 0, 0);
-  /* border: 1rpx rgb(255, 255, 255) solid; */
   white-space: nowrap;
   color: #fff;
   padding-left: 0rpx;
@@ -327,7 +326,7 @@ button::after {
   align-items: center;
   justify-content: center; 
   position: fixed;
-  bottom: 310rpx;
+  bottom: 16vh;
   border-radius: 40rpx;
   margin-left: -55rpx;
   background-color: rgb(255, 255, 255);
@@ -346,30 +345,30 @@ button::after {
   align-items: center;
   justify-content: center; 
   position: fixed;
-  bottom: 310rpx;
+  bottom: 16vh;
   border-radius: 40rpx;
   margin-left: -40rpx;
   background-color: rgb(0, 0, 0);
-  /* border: 1rpx rgb(255, 255, 255) solid; */
   white-space: nowrap;
   color: #fff;
   padding-left: 0rpx;
 }
 .commit{
   position: absolute;
-  width: 55vw;
-  height: 6vh;
-  line-height:6vh;
-  margin-top: 100rpx;
+  width: 120rpx;
+  height: 40rpx;
+  bottom: 240rpx;
+  margin-left: 190rpx;
+  font-size: 28rpx;
+  line-height: 40rpx;
   color: #fff;
   background-color: #000;
-  margin-left: 169rpx;
   border-radius: 0%;
 }
 .button-hover{
-  width: 53vw;
-  height:5vh;
-  line-height: 5vh;
-  margin-top: 105rpx;
-  margin-left: 179rpx;
+  width: 116rpx;
+  height: 36rpx;
+  bottom: 242rpx;
+  line-height: 36rpx;
+  margin-left: 192rpx;
 }

@@ -233,34 +233,6 @@ Page({
         ctx.drawImage('/images/scale.png', x + that.data.tempImgWidth - r, y + that.data.tempImgHeight - r, d, d)
         ctx.draw()
       },
-      // 图片->服务器
-      async saveConfig () {
-        if (!this.data.imgUrl) {
-          wx.showToast({
-            title: '请先选择图案',
-            icon: 'none',
-            duration: 2000
-          })
-          return
-        }
-        let url = 'https://api.mic.hn.cn/api/po/123'
-        let body = {
-          id: 0,
-          sid: '123',
-          type: 1,
-          sex: this.data.currentGender === 'm' ? '男' : '女',
-          LorR: this.data.currentPosition === 'left' ? 0 : 1,
-          iscustom: this.data.currentMaterial.styleId === 0,
-          imgindex: this.data.currentMaterial.styleId,
-          orderdate: this.miment().format('YYYY-MM-DD hh:mm:ss')
-        }
-        wx.showLoading({title:'保存中...'})
-        let res = await this.$post(url,body)
-        wx.hideLoading()
-        if(res.info === 'success') {
-          wx.showToast({title:'保存成功!'})
-        }
-      },
       // 图片->本地
       async drawToTemp () {
         if (!this.data.imgUrl) {
