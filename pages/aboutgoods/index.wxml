@@ -1,22 +1,22 @@
 <!--pages/aboutgoods/index.wxml-->
 <view class="composition" hidden="{{type == 'composition' ? false : true}}">
-  <text> 成分和保养
-    面料
+  <view class="text-box"> 
+    <text class="title">成分\n</text>
 
-    主要面料
-    棉纶 100%
+    <text class="title">面料\n</text>
+    <text class="context">棉纶 100%\n</text>
 
-    里料
-    100% 聚酯纤维
+    <text class="title">里料\n</text>
+    <text class="context"> 100% 聚酯纤维\n</text>
 
-    保养
+    <text class="title">保养\n</text>
 
-    30℃ 以下机洗 较短较慢程序脱水
-    不可漂白
-    110℃ 以下熨烫
-    不可干洗
-    不可使用烘干机
-  </text>
+    <text class="covertext"  style=" margin-top: 30rpx;" > 30℃ 以下机洗 较短较慢程序脱水\n</text>
+    <text class="covertext" > 不可漂白\n</text>
+    <text class="covertext" > 110℃ 以下熨烫\n</text>
+    <text class="covertext" > 不可干洗\n</text>
+    <text class="covertext"  style="border:none;"> 不可使用烘干机\n</text>
+  </view>
 </view>
 
 <view class="size" hidden="{{type == 'size' ? false : true}}">
@@ -24,33 +24,40 @@
 </view>
 
 <view class="delivery" hidden="{{type == 'delivery' ? false : true}}">
-  <text> 配送、换货和退货
-    寄送方式
-    在 Yunazure 商店取货 - 免费
-    于 2-7 个工作日内在您所选的商店。
+  <view class="text-box">
+    <text class="bigTitle">配送、换货和退货\n</text>
 
-    送货上门：
-    标准配送 - ￥ 10.00 / 免费 (单笔订单实付金额满 ￥ 199.00免运费)
-    预计送货时间将在 2-7 个工作日内，具体取决于送货地址。
+    <text class="title">寄送方式\n</text>
+    <text class="contextB" style="font-weight:700;margin-top:50rpx">在 Yunazure 商店取货 - 免费\n</text>
+     <text class="contextB" > 于 2-7 个工作日内在您所选的商店。\n</text>
 
-    购买当日 - ￥ 10.00 / 免费 (单笔订单实付金额满 ￥ 199.00免运费)
-    目的地为上海的订单若于 中午12 点之前下单，可于当日送达。
+     <text class="title">送货上门：\n</text>
+     <text class="contextB" style="font-weight:700;margin-top:50rpx;margin-left:50rpx;">标准配送 - ￥ 10.00 / 免费 (单笔订单实付金额满 ￥ 199.00免运费)\n</text>
+     <text class="contextB" style="margin-left:50rpx" > 预计送货时间将在 2-7 个工作日内，具体取决于送货地址。\n</text>
 
-    在进行购物时，我们会显示可以使用的运送方式、费用和订单配送时间。  若您包裹中含有香水或化妆品，送货时间会延长1-2个工作日。
+     <text class="contextB" style="font-weight:700;margin-top:50rpx;margin-left:50rpx;">购买当日 - ￥ 10.00 / 免费 (单笔订单实付金额满 ￥ 199.00免运费)\n</text>
+     <text class="contextB" style="margin-left:50rpx"> 目的地为上海的订单若于 中午12 点之前下单，可于当日送达。\n</text>
 
-    换货和退货
-    自发货之日起 30 天内，您可免费退回您在 Yunazure 购买的商品。
+     <text class="contextB"  style="margin-top:60rpx" >在进行购物时，我们会显示可以使用的运送方式、费用和订单配送时间。  若您包裹中含有香水或化妆品，送货时间会延长1-2个工作日。\n</text>
 
-    换货选项不适用于网上购物。但是，在规定的退货期内您可以免费退货并重新下单。
+     <text class="title">换货和退货\n</text>
+     <text class="contextB" >换货选项不适用于网上购物。但是，在规定的退货期内您可以免费退货并重新下单。\n</text>
+     <text class="title">在 Yunazure 商店\n</text>
+     <text class="contextB" >只要商品购买所在市场的任何一家 Yunazure 商店设有商品所属的专区 — 女士、男士、儿童，就可以办理退货。
+\n</text>
+     <text class="title">上门收货\n</text>
+     <text class="contextB" >您通过<text class="highlight">订单和退货</text>部分，可以申请上门取件服务。\n</text>
 
-    在 Yunazure 商店
-    只要商品购买所在市场的任何一家 Yunazure 商店设有商品所属的专区 — 女士、男士、儿童，就可以办理退货。
+     <text class="contextB" style="margin-top:60rpx" >    我们的一些商品可能有特殊的退货条件。更多信息请参阅<text class="highlight">换货和退货 > 特殊条件。</text>\n您可以在我们的<text class="highlight">购买条款</text>中找到有关退换货政策或撤销权的更多信息。\n</text>
 
-    上门收货
-    您通过订单和退货部分，可以申请上门取件服务。
 
-    我们的一些商品可能有特殊的退货条件。更多信息请参阅 换货和退货 > 特殊条件。
+  </view>
+  <text> 
+    
 
-    您可以在我们的购买条款中找到有关退换货政策或撤销权的更多信息。
+    
+    
+
+
   </text>
 </view>

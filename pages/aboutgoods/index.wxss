@@ -1,1 +1,42 @@
-/* pages/aboutgoods/index.wxss */
+.text-box{
+  display: flex;
+  margin-left: 40rpx;
+  flex-direction: column;
+  margin-right: 20rpx;
+}
+.bigTitle{
+  font-size: 50rpx;
+  font-weight: 800;
+  word-spacing: 2rpx;
+  margin-top: 60rpx;
+}
+.title{
+  font-size: 30rpx;
+  font-weight: 800;
+  word-spacing: 2rpx;
+  margin-top: 60rpx;
+}
+.context{
+  font-size: 28rpx;
+  font-weight: 600;
+  word-spacing: 2rpx;
+  color: #666;
+  margin-top: 15rpx;
+}
+.contextB{
+  font-size: 28rpx;
+  word-spacing: 2rpx;
+  color: rgb(0, 0, 0);
+  margin-top: 10rpx;
+}
+.covertext{
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 28rpx;
+  word-spacing: 2rpx;
+  border-bottom: 3rpx rgb(206, 206, 206) solid;
+
+}
+.highlight{
+color: rgb(9, 255, 235);
+}
