@@ -1,20 +1,9 @@
-.mt3 {
-  margin-top: 3vh;
-}
 .warp {
   height: 100vh;
   width: 100vw;
   top: 0;
   left: 0;
   overflow: hidden;
-}
-.bgImg {
-  width: 100vw;
-  height: 100vh;
-  line-height: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 .content {
   width: 100vw;
@@ -23,61 +12,16 @@
   top: 0;
   left: 0;
 }
-/*顶部按钮栏*/
-.top-wrap {
-  width: 100vw;
-  height: 10vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5vw;
-  box-sizing: border-box;
-}
-.top-gender {
-  width: 25vh;
-  height: 5vh;
-  display: flex;
-}
-.position-wrap {
-  display: flex;
-  width: 30vw;
-  justify-content: center;
-}
-.position-item {
-  padding: 0.3vw 1vw;
-  margin: 0 2vw;
-  font-size: 16px;
-  border-radius: 3px;
-}
-.buttonActivity {
-  border: 1px solid #19a9b5;
-  color: #19a9b5;
-}
-.card-wrap {
-  width: 25vh;
-  height: 5vh;
-  display: flex;
-  justify-content: flex-end;
-}
-.card-button {
-  width: 5vh;
-  height: 5vh;
-  border-radius: 50%;
-  background: #19a9b5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/*中间 canvas*/
 .main-wrap {
   position: relative;
   width: 100vw;
-  height: 50vh;
+  height: 75vh;
 }
-.main-socks-img {
-  width: 90vw;
-  height: 50vh;
-  margin: 0 5vw;
+.main-img {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 75vh;
 }
 .canvas-wrap {
   position: absolute;
@@ -88,20 +32,10 @@
 .mainCanvas {
   overflow: hidden;
   position: absolute;
-  width: 90vw;
-  height: 30vh;
-  margin: 10vh 5vw;
-  left: 0;
-  top: 0;
-  z-index: 99999;
-}
-.tempCanvas {
-  width: 90vw;
+  width: 100vw;
   height: 50vh;
-  overflow: hidden;
-  position: fixed;
-  left: 500vw;
-  top: 0;
+  top: 12vh;
+  z-index: 99;
 }
 .material-wrap {
   position: absolute;

@@ -1,7 +1,7 @@
 <view class="warp">
   <view class="content">
     <view class="main-wrap">
-      <image class="main-socks-img"
+      <image class="main-img"
               mode="aspectFit"
               src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg" hidden="{{complete}}">
       </image>

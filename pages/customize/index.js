@@ -210,9 +210,9 @@ Page({
           return
         }
         const that = this
-        if(this.data.imgUrl){
+        if(this.data.imgUrl) {
           ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
-        }else if(this.data.addText){
+        }else if(this.data.addText) {
           ctx.setFillStyle(this.data.fontColor[0])
           ctx.setFontSize(this.data.fontSize[6])
           ctx.fillText(this.data.textarea, x, 0)
@@ -507,8 +507,8 @@ Page({
         }
       },
       loadSocksInfo () {
-        this.data.canvasWidth = this.data.winWidth *0.9
-        this.data.canvasHeight = this.data.winHeight *0.3
+        this.data.canvasWidth = this.data.winWidth
+        this.data.canvasHeight = this.data.winHeight *0.5
         this.data.X = this.data.tempX = this.data.newX = this.data.canvasWidth / 2
         this.data.Y = this.data.tempY = this.data.newY = this.data.canvasHeight / 2
         this.data.imgWidth = this.data.tempImgWidth = this.data.canvasWidth * 0.5
@@ -521,7 +521,7 @@ Page({
         ctx.translate(0, 0)
         let picPath = 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg'
         let that = this
-        let w = 0.9 * this.data.winWidth
+        let w = this.data.winWidth
         let h = 0.5 * this.data.winHeight
         let x = 0
         let y = 0
