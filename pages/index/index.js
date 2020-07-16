@@ -163,6 +163,7 @@ Page({
           }
         })
         this.addFavDone(options)
+        console.log(options)
       })
     }else{
       wx.switchTab({

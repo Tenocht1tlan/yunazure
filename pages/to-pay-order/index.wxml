@@ -22,6 +22,7 @@
       </view>
     </view>
   </view>
+  <view class="space"></view>
   <view class="peisong-way">
     <view class="row-box" wx:if="{{isNeedLogistics > 0}}">
       <view class="row-label">配送方式</view>

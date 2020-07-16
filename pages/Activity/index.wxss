@@ -1,5 +1,5 @@
 .background{
-  background-color: rgb(230, 187, 124);
+  background-color: rgb(255, 255, 255);
 }
 .uIntre{
   white-space: nowrap;
@@ -9,6 +9,7 @@
   /* border: #e0e0e0 1rpx solid; */
   font-size: 25rpx;
   background-color:#fff;
+  box-shadow: 8rpx 10rpx 10rpx 0rpx rgb(196, 194, 194);
 }
 .scroll-view-imag{
   position: relative;
@@ -40,10 +41,11 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  border: 10rpx  #ddd solid;
-  border-image: -webkit-linear-gradient(#F80, #2ED) 20 20;
+  color: rgb(109, 109, 109);
+  border: 10rpx  rgb(119, 119, 119) solid;
+  /* border-image: -webkit-linear-gradient(#F80, #2ED) 20 20;
   border-image: -moz-linear-gradient(#F80, #2ED) 20 20;
   border-image: -o-linear-gradient(#F80, #2ED) 20 20;
-  border-image: linear-gradient(#F80, #2ED) 20 20;
+  border-image: linear-gradient(#F80, #2ED) 20 20; */
 
 }
