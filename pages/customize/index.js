@@ -1,6 +1,7 @@
 Page({
     data:{
         materialCategory: 0,       // 素材分类
+        materialCategoryIcon:0,    //素材颜色分类
         currentPosition: 'left',   // 当前袜子的位置
         currentColor: 'w',         // 当前袜子的颜色
         currentGender: 'm',        // 当前性别
@@ -421,6 +422,11 @@ Page({
       },
       // 选择素材
       selectMateria: function(e){
+        var index = e.target.dataset.index
+        this.setData({
+          materialCategoryIcon:index
+        })
+        console.log('index'+index)
         let src =  e.currentTarget.dataset.src
         this.getFileInfo(src)
       },
