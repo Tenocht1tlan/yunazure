@@ -3,7 +3,8 @@
       <text>定制成功</text>
    </view>
    <view class="imageView" > 
-      <canvas canvas-id="completeCanvas" class="mainCanvas"></canvas>
+      <!-- <canvas canvas-id="completeCanvas" class="mainCanvas"></canvas> -->
+      <image src="{{src}}" class="mainCanvas" mode="aspectFit"></image>
       <input class="ipt" value="我的定制作品" focus="{{focus}}" bindinput="bindnaInput"></input>
    </view>
    <view class="line"></view>

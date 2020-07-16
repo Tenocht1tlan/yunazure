@@ -2,8 +2,8 @@ Page({
     data:{
         materialCategory: 0,       // 素材分类
         materialCategoryIcon:0,    //素材颜色分类
-        currentPosition: 'left',   // 当前袜子的位置
-        currentColor: 'w',         // 当前袜子的颜色
+        currentPosition: 'left',   // 当前帽子的位置
+        currentColor: 'w',         // 当前帽子的颜色
         currentGender: 'm',        // 当前性别
         currentMaterial: {},       // 当前素材
         isShowHistory: false,      // 是否显示历史记录
@@ -35,10 +35,10 @@ Page({
         picIsChosed:true,
         textIsChosed:false,
         currentChoseItem :0,
-        array:['图形','星座','水果','动物','生肖','城市','标志性建筑'],
+        array:['图形','星座','水果','动物','生肖','城市','标志性建筑','标志性建筑','标志性建筑'],
         text:['文本','字体','大小','颜色'],
         icons:[
-          ['/images/custom/custom6.png'],
+          ['/images/custom/custom6.png','/images/my/kefu.png','/images/my/check.png','/images/my/address.png'],
           ['/images/my/checkNo.png','/images/my/check.png'],
           ['/images/my/address.png'],
           ['/images/my/checkYes.png'],
@@ -271,18 +271,28 @@ Page({
           })
           return
         }
+        wx.showLoading({
+          title: '加载中',
+        })
         this.initCanvas()
         this.setData({
           complete: true
         })
+        const that = this
+        
+        setTimeout(function () {
+          wx.hideLoading({
+            success: (res) => {
+              console.log("url = "+that.data.imgUrl)
+              that.finalComplete()
+            }
+          })
+        }, 500)
       },
-      backDesign(){
-        this.setData({
-          complete: false
-        })
-      },
-      finalComplete(){
-        this.data.ctx.draw(true, ()=> {
+      finalComplete:function(){
+        let ctx = wx.createCanvasContext('completeCanvas')
+
+        ctx.draw(true, ()=> {
           wx.canvasToTempFilePath({
             canvasId: 'completeCanvas',
             success: function (res) {
@@ -369,12 +379,19 @@ Page({
           })
         }
       },
-      choseMode:function(){
-        var chose = !this.data.picIsChosed
+      choseModePic:function(){
         this.setData({
-          picIsChosed:chose,
-          textIsChosed:!chose
-
+          picIsChosed: true,
+          textIsChosed: false,
+          textarea: '',
+          addText: false
+        })
+      },
+      choseModeText:function(){
+        this.setData({
+          picIsChosed: false,
+          textIsChosed: true,
+          imgUrl: ''
         })
       },
       // 删除单条历史记录
@@ -426,7 +443,6 @@ Page({
         this.setData({
           materialCategoryIcon:index
         })
-        console.log('index'+index)
         let src =  e.currentTarget.dataset.src
         this.getFileInfo(src)
       },
@@ -514,7 +530,7 @@ Page({
       },
       loadSocksInfo () {
         this.data.canvasWidth = this.data.winWidth
-        this.data.canvasHeight = this.data.winHeight *0.5
+        this.data.canvasHeight = this.data.winHeight * 0.5
         this.data.X = this.data.tempX = this.data.newX = this.data.canvasWidth / 2
         this.data.Y = this.data.tempY = this.data.newY = this.data.canvasHeight / 2
         this.data.imgWidth = this.data.tempImgWidth = this.data.canvasWidth * 0.5
@@ -532,34 +548,34 @@ Page({
         let x = 0
         let y = 0
         let whRate = w / h
-        
+
         await new Promise((resolve) => {
           wx.getImageInfo({
             src: picPath,
             success: function (res) {
-              if (res.width > res.height * whRate) {
-                if (res.width > w) {
-                  h = res.height * w / res.width
-                  y = (0.5 * that.data.winHeight - h) / 2
-                } else {
-                  w = res.width
-                  h = res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                  y = (0.5 * that.data.winHeight - h) / 2
-                }
-              } else {
-                if (res.height > h) {
-                  w = res.width * h / res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                } else {
-                  w = res.width
-                  h = res.height
-                  x = (0.9 * that.data.winWidth - w) / 2
-                  y = (0.5 * that.data.winHeight - h) / 2
-                }
-              }
+              // if (res.width > res.height * whRate) {
+              //   if (res.width > w) {
+              //     h = res.height * w / res.width
+              //     y = (0.5 * that.data.winHeight - h) / 2
+              //   } else {
+              //     w = res.width
+              //     h = res.height
+              //     x = (that.data.winWidth - w) / 2
+              //     y = (0.5 * that.data.winHeight - h) / 2
+              //   }
+              // } else {
+              //   if (res.height > h) {
+              //     w = res.width * h / res.height
+              //     x = (that.data.winWidth - w) / 2
+              //   } else {
+              //     w = res.width
+              //     h = res.height
+              //     x = (that.data.winWidth - w) / 2
+              //     y = (0.5 * that.data.winHeight - h) / 2
+              //   }
+              // }
               resolve(res)
-              ctx.drawImage(res.path, x, -50, w, h)
+              ctx.drawImage(res.path, x, y, w, h)
             }
           })
         })
@@ -606,5 +622,10 @@ Page({
     onLoad:function() {
       this.getDeviceInfo()
       this.loadSocksInfo()
+    },
+    onShow(){
+      this.setData({
+        complete: false
+      })
     }
 })

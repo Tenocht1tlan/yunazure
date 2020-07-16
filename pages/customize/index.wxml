@@ -12,12 +12,10 @@
                 bindtouchmove="onMove"
                 bindtouchend="onEnd"
                 class="mainCanvas" hidden="{{complete}}" style="border: 1px dashed #19a9b5;"></canvas>
-        <canvas canvas-id="completeCanvas" class="mainCanvas" hidden="{{!complete}}"></canvas>
+        <canvas canvas-id="completeCanvas" class="mainCanvas" hidden="{{!complete}}" style="opacity:0;"></canvas>
       </view>
     </view>
-    <button class="commit" hover-class="button-hover" bindtap="complete" hidden="{{complete}}">完成</button>
-    <button class="commit" hover-class="button-hover" bindtap="backDesign" hidden="{{!complete}}" style="margin-left: 190rpx;width: 180rpx;">继续设计</button>
-    <button class="commit" hover-class="button-hover" bindtap="finalComplete" hidden="{{!complete}}" style="margin-left: 390rpx;width: 180rpx;">完成设计</button>
+    <button class="commit" hover-class="button-hover" bindtap="complete">完成</button>
 
     <!-- <view class="footer">
       <view class="colorAndOperate">
@@ -27,24 +25,24 @@
           </view>
       </view>
     </view> -->
-    <button class="{{picIsChosed?'picBlack':'pic-box'}}" hover-class="none" bindtap="choseMode" >
+    <button class="{{picIsChosed?'picBlack':'pic-box'}}" hover-class="none" bindtap="choseModePic" >
       <image  class="pic" src="{{picIsChosed?'/images/img/picYes.png':'/images/img/picNo.png'}}" ></image>
       <text class="picText" >图片</text>
     </button>
-    <button class="{{picIsChosed?'text-box':'textBlack'}}" hover-class="none" bindtap="choseMode" >
+    <button class="{{picIsChosed?'text-box':'textBlack'}}" hover-class="none" bindtap="choseModeText" >
       <image class="pic" src="{{picIsChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
       <text class="picText">文字</text>
     </button>
-      <view class="custom-title" hidden="{{textIsChosed}}">
-        <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-          <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
-        </scroll-view>
-      </view>
-      <view class="custom-title" hidden="{{picIsChosed}}">
-        <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-          <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
-        </scroll-view>
-      </view>
+    <view class="custom-title" hidden="{{textIsChosed}}">
+      <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
+        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
+      </scroll-view>
+    </view>
+    <view class="custom-title" hidden="{{picIsChosed}}">
+      <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
+        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
+      </scroll-view>
+    </view>
     <view class="material-wrap" hidden="{{textIsChosed}}">
       <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true">
         <image class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" data-index="{{index}}" ></image>

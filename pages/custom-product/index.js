@@ -47,10 +47,13 @@ Page({
 
   },
   async initCanvas(url){
-    let ctx = wx.createCanvasContext('completeCanvas')
-    ctx.translate(0, 0)
-    ctx.drawImage(url, 0, 0, this.data.tempImgWidth, this.data.tempImgHeight)
-    ctx.draw()
+    this.setData({
+      src: url
+    })
+    // let ctx = wx.createCanvasContext('completeCanvas')
+    // ctx.translate(0, 0)
+    // ctx.drawImage(url, 0, 0, this.data.tempImgWidth, this.data.tempImgHeight)
+    // ctx.draw()
   },
   modifyName(){
     this.setData({
