@@ -6,7 +6,7 @@ page,view,image,input,textarea {
 }
 
 .container {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   padding-bottom: 100rpx;
 }
 
@@ -237,4 +237,8 @@ form {
   color: #000;
   text-align: right;
 }
-
+.space{
+  width: 100%;
+  height: 30rpx;
+  background-color: #f2f2f2;
+}

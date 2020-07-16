@@ -112,6 +112,13 @@
 					"id": -1,
 					"name": "pages/customize/index",
 					"pathName": "pages/customize/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/Activity/index",
+					"pathName": "pages/Activity/index",
 					"scene": null
 				}
 			]
