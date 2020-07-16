@@ -35,20 +35,19 @@
       <image class="pic" src="{{picIsChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
       <text class="picText">文字</text>
     </button>
-    
-    <view class="custom-title" hidden="{{textIsChosed}}">
-      <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
-      </scroll-view>
-    </view>
-    <view class="custom-title" hidden="{{picIsChosed}}">
-      <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
-      </scroll-view>
-    </view>
+      <view class="custom-title" hidden="{{textIsChosed}}">
+        <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
+          <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
+        </scroll-view>
+      </view>
+      <view class="custom-title" hidden="{{picIsChosed}}">
+        <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
+          <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
+        </scroll-view>
+      </view>
     <view class="material-wrap" hidden="{{textIsChosed}}">
       <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true">
-        <image class="material-item" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" ></image>
+        <image class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" data-index="{{index}}" ></image>
       </scroll-view>
     </view>
     <view class="material-wrap" hidden="{{picIsChosed}}">
