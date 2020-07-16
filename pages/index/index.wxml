@@ -1,7 +1,7 @@
 <view wx:if="{{hiddenNav}}" class="home-page" >
 		<view class="search">
       <view class="DiyText" catchtap="toDiy">我要定制</view>
-      <image src='/images/search.png'  bindtap="goSearch"></image>
+      <image style="width:30rpx;height:30rpx;" src='/images/search2.png'  bindtap="goSearch"></image>
     <!-- <input type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:white"></input> -->
     <view class="searchText" bindtap="goSearch" >搜索</view>
   </view>
@@ -10,7 +10,7 @@
   <view wx:else class="home-page" style="height:{{navHeight}}rpx" >
 		<view class="search">
       <view class="DiyText" catchtap="toDiy">我要定制</view>
-      <image src='/images/search.png'  bindtap="goSearch"></image>
+      <image src='/images/search2.png'  bindtap="goSearch"></image>
     <!-- <input class="input" type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:gray" ></input> -->
     <!-- <image  class="image" src='/images/search2.png' bindtap="goSearch" ></image> -->
         <view class="searchText" bindtap="goSearch" >搜索</view>

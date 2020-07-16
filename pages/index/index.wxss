@@ -65,7 +65,7 @@
   line-height:66rpx;
   text-align: center;
   position: relative;
-  margin-left: 70rpx; 
+  margin-left: 65rpx; 
   font-size: 24rpx;
 }
 
