@@ -45,12 +45,14 @@
   align-items: center;
   justify-content: center;
   bottom: 0rpx;
-  width: 100vw;
+  width: 80vw;
   height: 10vh;
   background:rgb(255, 255, 255);
   box-sizing: border-box;
   padding: 1vh 2vh;
   margin-top: 5rpx;
+  margin-left: 70rpx;
+  margin-right: 50rpx;
 }
 .custom-title {
   position: absolute;
@@ -112,27 +114,30 @@
   display: inline-block;
 }
 .material-text{
+position: absolute;
 background-color: #fff;
-width: 450rpx;
+width: 250rpx;
 height: 100rpx;
 border: solid;
+left: 40rpx;
 }
 .text-commit{
-  margin-left: 100rpx;
-  width: 250rpx;
-  height: 80rpx;
+  position: absolute;
+  right: 40rpx;
+  width: 180rpx;
+  height: 70rpx;
   text-align: center;
   font-size: 31rpx;
   font-weight: 800;
-  line-height: 80rpx;
+  line-height: 70rpx;
   word-spacing:6rpx;
   background-color: #ccc;
 }
 .tc-hover{
-  background-color: rgb(252, 248, 248);
-  width: 240rpx;
-  height: 75rpx;
-  margin-left: 95rpx;
+  background-color: rgb(255, 255, 255);
+  width: 175rpx;
+  height: 65rpx;
+  right: 40rpx;
 }
 .footer {
   margin-left:650rpx;
@@ -229,24 +234,23 @@ border: solid;
 
 .pic-box{
   width: 200rpx;
-  height: 80rpx;
+  height: 70rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center; 
   position: fixed;
-  bottom: 23vh;
+  bottom:70rpx;
   border-radius: 40rpx;
   margin-left: -55rpx;
   background-color: rgb(255, 255, 255);
-  border: 1rpx #000 solid;
   white-space: nowrap;
   padding-left: 0rpx;
 }
 button::after {
   padding-left: 0rpx;
 }
-.picBlack{
+/* .picBlack{
   width: 200rpx;
   height: 80rpx;
   display: flex;
@@ -261,11 +265,11 @@ button::after {
   white-space: nowrap;
   color: #fff;
   padding-left: 0rpx;
-}
+} */
 .pic{
-  width:40.5rpx;
-  height:40.5rpx;
-  margin-left:50rpx;
+  width:45rpx;
+  height:45rpx;
+  margin-left:20rpx;
 }
 .picText{
   font-size: 28rpx;
@@ -279,18 +283,18 @@ button::after {
   align-items: center;
   justify-content: center; 
   position: fixed;
-  bottom: 17vh;
+  bottom: 10rpx;
   border-radius: 40rpx;
   margin-left: -55rpx;
   background-color: rgb(255, 255, 255);
-  border: 1rpx #000 solid;
   white-space: nowrap;
   padding-left: 0rpx;
 }
 button::after {
   padding-left: 0rpxs;
+  border: none;
 }
-.textBlack{
+/* .textBlack{
   width: 200rpx;
   height: 80rpx;
   display: flex;
@@ -305,23 +309,25 @@ button::after {
   white-space: nowrap;
   color: #fff;
   padding-left: 0rpx;
-}
+} */
 .commit{
-  position: absolute;
-  width: 120rpx;
-  height: 40rpx;
-  bottom: 240rpx;
-  margin-left: 190rpx;
-  font-size: 28rpx;
-  line-height: 40rpx;
-  color: #fff;
-  background-color: #000;
-  border-radius: 0%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60rpx;
+  height: 140rpx;
+  bottom: 0rpx;
+  right: 20rpx;
 }
-.button-hover{
+.commit-image{
+  width: 36rpx;
+  height: 36rpx;
+}
+/* .button-hover{
   width: 116rpx;
   height: 36rpx;
   bottom: 242rpx;
   line-height: 36rpx;
   margin-left: 192rpx;
-}
+} */
