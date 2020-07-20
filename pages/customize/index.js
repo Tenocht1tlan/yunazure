@@ -35,10 +35,10 @@ Page({
         picIsChosed:true,
         textIsChosed:false,
         currentChoseItem :0,
-        array:['图形','星座','水果','动物','生肖','城市','标志性建筑','标志性建筑','标志性建筑'],
+        array:['图形','星座','水果','动物','生肖','城市','标志性建筑'],
         text:['文本','字体','大小','颜色'],
         icons:[
-          ['/images/custom/custom6.png','/images/my/kefu.png','/images/my/check.png','/images/my/address.png'],
+          ['/images/custom/custom6.png','/images/my/kefu.png','/images/my/check.png','/images/my/address.png','/images/my/hotline.png','/images/my/checkNo.png'],
           ['/images/my/checkNo.png','/images/my/check.png'],
           ['/images/my/address.png'],
           ['/images/my/checkYes.png'],
@@ -48,6 +48,7 @@ Page({
         ],
         textarea: "",
         textareaLen: 0,
+        fontStyle: ['SimSun','Microsoft Yahei','KaiTi'],
         fontSize: [16, 17, 18, 20, 22, 24, 28, 32],
         fontColor: ['red', 'yellow', 'white', 'black'],
         addText: false

@@ -86,13 +86,11 @@
   display: inline-block;
 }
 .categoryActivity {
-  /* border: 1px solid #19a9b5; */
   color: #19a9b5;
 }
 .material-item {
   padding: 5rpx;
   flex-shrink: 0;
-  /* border: 1px solid #19a9b5; */
   margin-right: 2vh;
   width: 6vh;
   height: 6vh;
@@ -120,6 +118,7 @@ width: 250rpx;
 height: 100rpx;
 border: solid;
 left: 40rpx;
+font-family: 'Bradley Hand ITC';
 }
 .text-commit{
   position: absolute;

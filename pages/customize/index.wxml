@@ -27,24 +27,12 @@
           </view>
       </view>
     </view> -->
-
-    <!-- <button class="{{picIsChosed?'picBlack':'pic-box'}}" hover-class="none" bindtap="choseModePic" >
-      <image  class="pic" src="{{picIsChosed?'/images/img/picYes.png':'/images/img/picNo.png'}}" ></image>
-      <text class="picText" >图片</text>
-    </button>
-    <button class="{{picIsChosed?'text-box':'textBlack'}}" hover-class="none" bindtap="choseModeText" >
-      <image class="pic" src="{{picIsChosed?'/images/img/textNo.png':'/images/img/textYes.png'}}" ></image>
-      <text class="picText">文字</text>
-    </button> -->
-
-    <!-- picIsChosed -->
     <button class="pic-box" hover-class="none" bindtap="choseModePic" >
       <image  class="pic" src="{{picIsChosed?'/images/img/picNo.png':'/images/img/picYes.png'}}" ></image>
     </button>
     <button class="text-box" hover-class="none" bindtap="choseModeText" >
       <image class="pic" src="{{picIsChosed?'/images/img/textYes.png':'/images/img/textNo.png'}}" ></image>
     </button>
-
     <view class="custom-title" hidden="{{textIsChosed}}">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
         <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
@@ -55,16 +43,14 @@
         <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
       </scroll-view>
     </view>
-
-
     <view class="material-wrap" hidden="{{textIsChosed}}">
       <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true">
         <image class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" data-index="{{index}}" ></image>
       </scroll-view>
     </view>
     <view class="material-wrap" hidden="{{picIsChosed}}">
-      <textarea class="material-text" maxlength="10" placeholder="请输入内容..." adjust-position="true" value="{{textarea}}" bindinput="textInput"></textarea>
-      <view class="text-commit" hover-class="tc-hover" hover-stay-time="100" bindtap="finishBtn">添加文字</view>
+      <textarea class="material-text" maxlength="10" placeholder=" 点这里输入文字内容" placeholder-style="font-size:24rpx;" adjust-position="true" value="{{textarea}}" bindinput="textInput"></textarea>
+      <view class="text-commit" hover-class="tc-hover" hover-stay-time="100" bindtap="finishBtn">添加文本</view>
     </view>
   </view>
 </view> 
