@@ -131,6 +131,35 @@ page{
     margin-bottom: 20rpx;
     margin-top: 20rpx;
 }
+.showAddress-box{
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+    align-items: flex-start;
+    width: 100%;
+    height: 150rpx;
+    line-height: 150rpx;
+}
+.showAddressIcon{
+    width: 80rpx;
+    height: 150rpx;
+    border: solid;
+}
+.showAddressText{
+    margin-left: 50rpx;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content:center;
+    align-items: flex-start;
+    border: solid;
+
+}
+.showAddress{
+    height:50rpx;
+    line-height:50rpx; 
+    border:solid;
+}
 .goods-list .list-title{
     font-size: 28rpx;
     color: #000;

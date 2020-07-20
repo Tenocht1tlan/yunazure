@@ -13,10 +13,10 @@
     <view class="a-gooods" wx:for="{{items}}" wx:key="createTime">
       <view class="a-goods-conts {{item.active? 'active':''}}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.left}}">
       <!-- 购物车 -->
-        <view class="goods-info" bindtap="toDetail" data-id="{{item.good_id}}"  data-name="{{item.name}}">
+        <view class="goods-info"   >
           <checkbox class="checkbox" bindtap="cbChange" value="isChecked" checked="{{checkedVal[index]? 'true':'false'}}" data-index="{{index}}"></checkbox>
           <view class="img-box">
-            <image mode="aspectFill" src="{{item.pic}}" class="img" />
+            <image mode="aspectFill" bindtap="toDetail" data-id="{{item.good_id}}" data-name="{{item.name}}" src="{{item.pic}}" class="img" />
           </view>
           <view class="text-box">
             <view class="goods-title">{{item.name}}</view>
