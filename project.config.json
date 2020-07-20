@@ -119,6 +119,13 @@
 					"id": -1,
 					"name": "pages/Activity/index",
 					"pathName": "pages/Activity/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "物流",
+					"pathName": "pages/order-details/index",
 					"scene": null
 				}
 			]

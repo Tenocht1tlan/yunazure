@@ -6,7 +6,14 @@ const db = wx.cloud.database()
 Page({
     data:{
       orderId:0,
-      goodsList:[]
+      goodsList:[],
+      orderDetail:[],
+      linkMan:'',
+      mobile:'',
+      provinceId:'',
+      districtId:'',
+      address:''
+
     },
     onLoad:function(e){
       const accountInfo = wx.getAccountInfoSync()
@@ -24,8 +31,14 @@ Page({
         var goodsList = JSON.parse(res.data[0].postData.goodsJsonStr)
         that.setData({
           orderDetail: res.data[0].postData,
-          goodsList: goodsList
+          goodsList: goodsList,
+          linkMan:res.data[0].postData.linkMan,
+          mobile:res.data[0].postData.mobile,
+          provinceId:res.data[0].postData.provinceId,
+          districtId:res.data[0].postData.districtId,
+          address:res.data[0].postData.address
         })
+        console.log(this.data.linkMan)
       })
         // 绘制核销码
         // if (res.data.orderInfo.hxNumber && res.data.orderInfo.status > 0) {
