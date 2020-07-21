@@ -1,7 +1,10 @@
 Page({
     data:{
-        materialCategory: 0,       // 素材分类
+        materialCategory: 0,       // 素材分类1
         materialCategoryIcon:0,    //素材颜色分类
+        fontCategory: 0,           // 素材分类2
+        isText: true,
+        isTextColor: false,
         currentPosition: 'left',   // 当前帽子的位置
         currentColor: 'w',         // 当前帽子的颜色
         currentGender: 'm',        // 当前性别
@@ -48,8 +51,13 @@ Page({
         ],
         textarea: "",
         textareaLen: 0,
-        fontStyle: ['SimSun','Microsoft Yahei','KaiTi'],
-        fontSize: [16, 17, 18, 20, 22, 24, 28, 32],
+        font:[
+          [],
+          ['SimSun','Microsoft Yahei','KaiTi'], 
+          ['/images/custom/sml.png','/images/custom/mid.png','/images/custom/lar.png'],
+          ['background:red;', 'background:yellow;', 'background:white;', 'background:black;']
+        ],
+        fontSize: [16,17, 18, 20, 22, 24, 28, 32],
         fontColor: ['red', 'yellow', 'white', 'black'],
         addText: false
     },
@@ -442,6 +450,7 @@ Page({
       selectMateria: function(e){
         var index = e.target.dataset.index
         this.setData({
+          key: "ma"+index,
           materialCategoryIcon:index
         })
         let src =  e.currentTarget.dataset.src
@@ -607,11 +616,29 @@ Page({
         this.data.ctx.clearRect(0, 0, this.data.canvasWidth, this.data.canvasHeight)
         this.data.ctx.draw()
       },
-      // 设置素材分类
       setMaterialCategory: function(e) {
         this.setData({
-          materialCategory:e.target.dataset.index
+          materialCategory: e.target.dataset.index
         })
+      },
+      setFontCategory: function(e) {
+        if(e.target.dataset.index == 0){
+          this.setData({
+            isText: true,
+            fontCategory: e.target.dataset.index
+          })
+        }else if(e.target.dataset.index == 3){
+          this.setData({
+            isText: false,
+            isTextColor: true,
+            fontCategory: e.target.dataset.index
+          })
+        }else{
+          this.setData({
+            isText: false,
+            fontCategory: e.target.dataset.index
+          })
+        }
       },
       openRecommend () {
         this.data.showRecommend = true

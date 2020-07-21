@@ -117,6 +117,7 @@ background-color: #fff;
 width: 250rpx;
 height: 100rpx;
 border: solid;
+border-width: 3rpx;
 left: 40rpx;
 font-family: 'Bradley Hand ITC';
 }

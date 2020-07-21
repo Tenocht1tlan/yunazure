@@ -40,17 +40,21 @@
     </view>
     <view class="custom-title" hidden="{{picIsChosed}}">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
+        <view class="{{index===fontCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setFontCategory" data-index="{{index}}">{{item}}</view>
       </scroll-view>
     </view>
     <view class="material-wrap" hidden="{{textIsChosed}}">
-      <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true">
-        <image class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" data-index="{{index}}" ></image>
+      <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true" scroll-into-view="{{key}}" scroll-with-animation="true">
+        <image class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" id="ma{{index}}" wx:for="{{icons[materialCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" data-index="{{index}}" ></image>
       </scroll-view>
     </view>
     <view class="material-wrap" hidden="{{picIsChosed}}">
-      <textarea class="material-text" maxlength="10" placeholder=" 点这里输入文字内容" placeholder-style="font-size:24rpx;" adjust-position="true" value="{{textarea}}" bindinput="textInput"></textarea>
-      <view class="text-commit" hover-class="tc-hover" hover-stay-time="100" bindtap="finishBtn">添加文本</view>
+      <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true" hidden="{{isText}}">
+        <image hidden="{{isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{font[fontCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" data-index="{{index}}" ></image>
+        <view hidden="{{!isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{font[fontCategory]}}" style="{{item}}" wx:key="id" bindtap="selectMateria" data-index="{{index}}" ></view>
+      </scroll-view>
+      <textarea hidden="{{!isText}}" class="material-text" maxlength="10" placeholder=" 点这里输入文字内容" placeholder-style="font-size:24rpx;" adjust-position="true" value="{{textarea}}" bindinput="textInput"></textarea>
+      <view hidden="{{!isText}}" class="text-commit" hover-class="tc-hover" hover-stay-time="100" bindtap="finishBtn">添加文本</view>
     </view>
   </view>
 </view> 
