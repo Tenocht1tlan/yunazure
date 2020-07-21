@@ -58,7 +58,7 @@
 
   <view class="showAddress-box" >
   <view class="showAddressIcon">
-      图片占用
+      <image  class="addressIcon" src="/images/order-details/icon-address.png"></image>
   </view>
     <view class="showAddressText">
       <view class="showAddress" >{{linkMan}}    {{mobile}}</view> 

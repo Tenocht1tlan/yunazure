@@ -141,24 +141,33 @@ page{
     line-height: 150rpx;
 }
 .showAddressIcon{
+    display: flex;
+    justify-content: center;
     width: 80rpx;
     height: 150rpx;
-    border: solid;
+}
+.addressIcon{
+    align-self: center;
+    background-color: rgb(250, 174, 74);
+    width: 36rpx;
+    height: 36rpx;
+    border-radius: 50rpx;
+    padding: 10rpx;
 }
 .showAddressText{
-    margin-left: 50rpx;
+    margin-left: 20rpx;
     display: flex;
     height: 100%;
     flex-direction: column;
     justify-content:center;
     align-items: flex-start;
-    border: solid;
-
+    font-weight: 800;
+    word-spacing: 3rpx;
+    color: #666;
 }
 .showAddress{
     height:50rpx;
     line-height:50rpx; 
-    border:solid;
 }
 .goods-list .list-title{
     font-size: 28rpx;
