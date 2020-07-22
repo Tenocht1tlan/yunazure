@@ -1,1 +1,42 @@
-/* pages/precustomize/index.wxss */
+.uIntre{
+  white-space: nowrap;
+  display: inline-block;
+  width: 350rpx;
+  margin: 20rpx 0rpx 0rpx 16rpx;
+  /* border: #e0e0e0 1rpx solid; */
+  font-size: 25rpx;
+  box-shadow: rgb(189, 189, 189) 5rpx 5rpx 5rpx 5rpx;
+}
+.scroll-view-imag{
+  position: relative;
+  z-index: 0;
+  width: 350rpx;
+  height: 450rpx;
+}
+.star{
+  width: 35rpx;
+  height: 35rpx;
+  position: absolute;
+  margin-top: 10rpx;
+  margin-left: -45rpx;
+  z-index: 2;
+  border-radius: 50rpx 50rpx;
+  background-color: #fff;
+}
+.packge{
+  height: max-content;
+  /* z-index: 999; */
+}
+.detail-box{
+  height: 70rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.customize{
+  width: 100rpx;
+  background-color: khaki;
+  border-radius: 30rpx;
+  text-align: center;
+}
