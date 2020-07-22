@@ -327,7 +327,7 @@ Page({
       postData.calculate = "true";
     }
     if (!e) {
-      let yunPrice = 5
+      let yunPrice = 0.01
       that.setData({
         isNeedLogistics: that.data.isNeedLogistics,
         allGoodsAndYunPrice: that.data.allGoodsPrice + yunPrice,

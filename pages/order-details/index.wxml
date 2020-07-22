@@ -60,18 +60,18 @@
   <view class="showAddressIcon">
       <image  class="addressIcon" src="/images/order-details/icon-address.png"></image>
   </view>
-    <view class="showAddressText">
+    <view class="showAddressText" bindtap="queryOrder">
       <view class="showAddress" >{{linkMan}}    {{mobile}}</view> 
       <view class="showAddress">{{provinceId}} {{districtId}} {{address}}</view>
     </view>
   </view>
   <view class="goods-list">
     <view class="list-title">商品信息</view>
-    <button bindtap="queryOrder">查询物流信息</button>
+    <!-- <button bindtap="queryOrder">查询物流信息</button> -->
     <!-- <button bindtap="cancelOrder">取消订单</button>
     <button bindtap="queryOrderPath">订单跟踪</button>
     <button bindtap="queryOrder">打印</button> -->
-    <form bindsubmit="submitReputatio                                                                                                                            n" report-submit="true">
+    <form bindsubmit="submitReputation" report-submit="true">
       <block wx:for="{{goodsList}}" wx:key="index">
         <navigator url="/pages/goods-details/index?id={{item.goodsId}}">
           <view class="a-goods">

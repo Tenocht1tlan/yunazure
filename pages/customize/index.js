@@ -467,7 +467,7 @@ Page({
           that.setData({
             animaltion:'animated fadeOutLeftBig',
           })
-        }, 2000)
+        }, 1500)
 
       },
 
