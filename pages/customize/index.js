@@ -40,6 +40,9 @@ Page({
         currentChoseItem :0,
         array:['图形','星座','水果','动物','生肖','城市','标志性建筑'],
         text:['文本','字体','大小','颜色'],
+        animaltion:'',  //顶部动画效果Class
+        picName:'草莓', //顶部动画内容
+        hiddenAnimal:true,
         icons:[
           ['/images/custom/custom6.png','/images/my/kefu.png','/images/my/check.png','/images/my/address.png','/images/my/hotline.png','/images/my/checkNo.png'],
           ['/images/my/checkNo.png','/images/my/check.png'],
@@ -448,14 +451,26 @@ Page({
       },
       // 选择素材
       selectMateria: function(e){
+        var that = this
         var index = e.target.dataset.index
-        this.setData({
+        var imageName = this.data.array[index]
+        that.setData({
           key: "ma"+index,
-          materialCategoryIcon:index
+          materialCategoryIcon:index,
+          animaltion:'animated fadeInRightBig',
+          picName:imageName,
+          hiddenAnimal:false
         })
         let src =  e.currentTarget.dataset.src
-        this.getFileInfo(src)
+        that.getFileInfo(src)
+        setTimeout(function () {
+          that.setData({
+            animaltion:'animated fadeOutLeftBig',
+          })
+        }, 2000)
+
       },
+
       // 获取图片信息,并把宽高设置给 canvas
       async getFileInfo (src) {
         if ((src.match('http://') || src.match('https://'))) {

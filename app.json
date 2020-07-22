@@ -1,108 +1,109 @@
-{
-  "pages": [
-    "pages/index/index",
-    "pages/notice/index",
-    "pages/notice/show",
-    "pages/category/category",
-    "pages/goods/list",
-    "pages/goods/fav",
-    "pages/goods-details/index",
-    "pages/shop-cart/index",
-    "pages/to-pay-order/index",
-    "pages/select-address/index",
-    "pages/reservation/reservation",
-    "pages/address-add/index",
-    "pages/order-list/index",
-    "pages/order-details/index",
-    "pages/order-details/scan-result",
-    "pages/order/refundApply",
-    "pages/wuliu/index",
-    "pages/my/index",
-    "pages/withdraw/index",
-    "pages/score-excharge/index",
-    "pages/score-excharge/growth",
-    "pages/asset/index",
-    "pages/score/index",
-    "pages/score/growth",
-    "pages/sign/index",
-    "pages/maidan/index",
-    "pages/fx/apply",
-    "pages/fx/apply-status",
-    "pages/fx/members",
-    "pages/fx/commisionLog",
-    "pages/coupons/index",
-    "pages/invoice/list",
-    "pages/invoice/apply",
-    "pages/deposit/pay",
-    "pages/register/index",
-    "pages/star/star",
-    "pages/Ad/index",
-    "pages/Special/index",
-    "pages/Activity/index",
-    "pages/New/index",
-    "pages/Comp/index",
-    "pages/history/index",
-    "pages/opinion/index",
-    "pages/customize/index",
-    "pages/canvas/index",
-    "pages/custom-product/index",
-    "pages/aboutgoods/index"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Yunazure",
-    "navigationBarTextStyle": "black",
-    "onReachBottomDistance": 50
-  },
-  "tabBar": {
-    "color": "#6e6d6b",
-    "selectedColor": "#6e6d6b",
-    "borderStyle": "white",
-    "backgroundColor": "#fff",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "iconPath": "images/nav/homeNo.png",
-        "selectedIconPath": "images/nav/homeYes.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/category/category",
-        "iconPath": "images/nav/classNo.png",
-        "selectedIconPath": "images/nav/classYes.png",
-        "text": "分类"
-      },
-      {
-        "pagePath": "pages/reservation/reservation",
-        "iconPath": "images/nav/reNo.png",
-        "selectedIconPath": "images/nav/reYes.png",
-        "text": "预约"
-      },
-      {
-        "pagePath": "pages/shop-cart/index",
-        "iconPath": "images/nav/chartNo.png",
-        "selectedIconPath": "images/nav/chartYes.png",
-        "text": "购物袋"
-      },
-      {
-        "pagePath": "pages/my/index",
-        "iconPath": "images/nav/myNo.png",
-        "selectedIconPath": "images/nav/myYes.png",
-        "text": "我的"
-      }
-    ]
-  },
-  "permission": {
-    "scope.userLocation": {
-      "desc": "获取离你最近的门店"
-    }
-  },
-  "navigateToMiniProgramAppIdList": [
-    "wx755bdf146462d272"
-  ],
-  "usingComponents": {
-    "float-menu": "/components/float-menu/index"
-  },
-  "sitemapLocation": "sitemap.json"
+{ 
+  "pages": [ 
+    "pages/index/index", 
+    "pages/notice/index", 
+    "pages/notice/show", 
+    "pages/category/category", 
+    "pages/goods/list", 
+    "pages/goods/fav", 
+    "pages/goods-details/index", 
+    "pages/shop-cart/index", 
+    "pages/to-pay-order/index", 
+    "pages/select-address/index", 
+    "pages/reservation/reservation", 
+    "pages/address-add/index", 
+    "pages/order-list/index", 
+    "pages/order-details/index", 
+    "pages/order-details/scan-result", 
+    "pages/order/refundApply", 
+    "pages/wuliu/index", 
+    "pages/my/index", 
+    "pages/withdraw/index", 
+    "pages/score-excharge/index", 
+    "pages/score-excharge/growth", 
+    "pages/asset/index", 
+    "pages/score/index", 
+    "pages/score/growth", 
+    "pages/sign/index", 
+    "pages/maidan/index", 
+    "pages/fx/apply", 
+    "pages/fx/apply-status", 
+    "pages/fx/members", 
+    "pages/fx/commisionLog", 
+    "pages/coupons/index", 
+    "pages/invoice/list", 
+    "pages/invoice/apply", 
+    "pages/deposit/pay", 
+    "pages/register/index", 
+    "pages/star/star", 
+    "pages/Ad/index", 
+    "pages/Special/index", 
+    "pages/Activity/index", 
+    "pages/New/index", 
+    "pages/Comp/index", 
+    "pages/history/index", 
+    "pages/opinion/index", 
+    "pages/customize/index", 
+    "pages/canvas/index", 
+    "pages/custom-product/index", 
+    "pages/aboutgoods/index" ,
+    "pages/precustomize/index"
+  ], 
+  "window": { 
+    "backgroundTextStyle": "light", 
+    "navigationBarBackgroundColor": "#fff", 
+    "navigationBarTitleText": "Yunazure", 
+    "navigationBarTextStyle": "black", 
+    "onReachBottomDistance": 50 
+  }, 
+  "tabBar": { 
+    "color": "#6e6d6b", 
+    "selectedColor": "#6e6d6b", 
+    "borderStyle": "white", 
+    "backgroundColor": "#fff", 
+    "list": [ 
+      { 
+        "pagePath": "pages/index/index", 
+        "iconPath": "images/nav/homeNo.png", 
+        "selectedIconPath": "images/nav/homeYes.png", 
+        "text": "首页" 
+      }, 
+      { 
+        "pagePath": "pages/category/category", 
+        "iconPath": "images/nav/classNo.png", 
+        "selectedIconPath": "images/nav/classYes.png", 
+        "text": "分类" 
+      }, 
+      { 
+        "pagePath": "pages/reservation/reservation", 
+        "iconPath": "images/nav/reNo.png", 
+        "selectedIconPath": "images/nav/reYes.png", 
+        "text": "预约" 
+      }, 
+      { 
+        "pagePath": "pages/shop-cart/index", 
+        "iconPath": "images/nav/chartNo.png", 
+        "selectedIconPath": "images/nav/chartYes.png", 
+        "text": "购物袋" 
+      }, 
+      { 
+        "pagePath": "pages/my/index", 
+        "iconPath": "images/nav/myNo.png", 
+        "selectedIconPath": "images/nav/myYes.png", 
+        "text": "我的" 
+      } 
+    ] 
+  }, 
+  "permission": { 
+    "scope.userLocation": { 
+      "desc": "获取离你最近的门店" 
+    } 
+  }, 
+  "navigateToMiniProgramAppIdList": [ 
+    "wx755bdf146462d272" 
+  ], 
+  "usingComponents": { 
+    "float-menu": "/components/float-menu/index" 
+  }, 
+  "sitemapLocation": "sitemap.json" 
 }
