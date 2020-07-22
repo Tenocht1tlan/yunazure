@@ -58,4 +58,6 @@
     </view>
   </view>
 </view> 
-<view class="{{animaltion}}" style=" position: fixed;top: 50rpx;left: 50vw;color:#666;font-weight: 700;font-size: 30rpx;word-spacing: 3rpx;" hidden="{{hiddenAnimal}}">{{picName}}</view>
+<view class="animaltion-box">
+<view class="{{animaltion}}" style="color:#666;font-weight: 700;font-size: 30rpx;word-spacing: 3rpx;" hidden="{{hiddenAnimal}}">{{picName}}</view>
+</view>

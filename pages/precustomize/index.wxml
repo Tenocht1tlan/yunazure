@@ -1,1 +1,22 @@
-<view ></view>
+<!--pages/New/index.wxml-->
+ <view style='display: inline-block;flex-wrap:wrap;'>
+    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}" >
+      <view class="imag-box" style="height: 450rpx;">
+        <image class="scroll-view-imag" src="{{item.pic}}" mode="scaleToFill" lazy-load="true" ></image>
+        <!-- <image class="star" catchtap="addFav" src="{{item.fav?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" data-id="{{item.good_id}}"></image> -->
+      </view>
+      <!-- <view style="margin:10rpx 25rpx;width:250rpx">
+        <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:0rpx 0rpx 0rpx 220rpx "  catchtap="showUp" data-index="{{index}}"></image>
+      </view> -->
+      <view class="detail-box">
+        <view style="color:gray ; width:250rpx;margin-left:10rpx ">{{item.name}}</view>
+        <view class="customize">
+          定制
+        </view>
+      </view>
+      <!-- <view style="color:gray;margin:0rpx 45rpx 5rpx 25rpx;display:flex;flex-direction:row;">
+        <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:fit-content;margin-right:20rpx;'>¥ {{item.originalPrice}}</view>
+        ￥{{item.minPrice}}
+      </view> -->
+    </view>
+  </view>
