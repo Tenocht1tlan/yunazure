@@ -1,17 +1,19 @@
 .uIntre{
   white-space: nowrap;
   display: inline-block;
-  width: 350rpx;
-  margin: 20rpx 0rpx 0rpx 16rpx;
+  width: 650rpx;
+  height: 500rpx;
   /* border: #e0e0e0 1rpx solid; */
   font-size: 25rpx;
   box-shadow: rgb(189, 189, 189) 5rpx 5rpx 5rpx 5rpx;
+  border-radius: 20rpx;
+  margin-top: 50rpx;
 }
 .scroll-view-imag{
   position: relative;
   z-index: 0;
-  width: 350rpx;
-  height: 450rpx;
+  width: 100%;
+  height: 400rpx;
 }
 .star{
   width: 35rpx;
@@ -39,4 +41,31 @@
   background-color: khaki;
   border-radius: 30rpx;
   text-align: center;
+}
+
+/* popup */
+.popup-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  z-index: 999;
+}
+.popup-mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+.popup-contents{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width:100%;
+  background-color: #fff;
+  z-index: 6;
 }
