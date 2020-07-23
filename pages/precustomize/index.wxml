@@ -1,7 +1,7 @@
 <!--pages/New/index.wxml-->
- <view style='display: inline-block;flex-wrap:wrap;'>
-    <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}" >
-      <view class="imag-box" style="height: 450rpx;">
+ <view style='display: flex;justify-content: center;align-items: center;flex-direction: column;'>
+    <view class="uIntre" wx:for="{{goods}}" wx:key="id" data-id="{{item.good_id}}" >
+      <view class="imag-box" style="height: 400rpx;width:650rpx">
         <image class="scroll-view-imag" src="{{item.pic}}" mode="scaleToFill" lazy-load="true" ></image>
         <!-- <image class="star" catchtap="addFav" src="{{item.fav?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" data-id="{{item.good_id}}"></image> -->
       </view>
@@ -10,7 +10,7 @@
       </view> -->
       <view class="detail-box">
         <view style="color:gray ; width:250rpx;margin-left:10rpx ">{{item.name}}</view>
-        <view class="customize">
+        <view class="customize" bindtap="upview"  data-id="{{item.good_id}}">
           定制
         </view>
       </view>
@@ -20,3 +20,11 @@
       </view> -->
     </view>
   </view>
+<!-- popup-up -->
+<view class="popup-box" hidden="{{hideShopPopup}}" catchtouchmove="true">
+   <view class="popup-mask" bindtap="closePopupTap">
+    <view class="popup-contents">
+      
+    </view>
+   </view>
+</view>

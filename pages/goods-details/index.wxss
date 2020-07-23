@@ -248,6 +248,8 @@ swiper-item image {
   font-size: 30rpx;
   flex: 1;
 }
+
+
 .show-popup{
   position: fixed;
   top: 0;

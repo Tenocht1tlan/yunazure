@@ -133,6 +133,13 @@
 					"id": -1,
 					"name": "pages/precustomize/index",
 					"pathName": "pages/precustomize/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/precustomize/index",
+					"pathName": "pages/precustomize/index",
 					"scene": null
 				}
 			]
