@@ -19,12 +19,13 @@ Page({
     goods: [],
     loadingMoreHidden: true,
     hideShopPopup: true,
+    goodsColor:['白色','黑色','红色']
   },
-  // toDetailsTap: function(e) {
-  //   wx.navigateTo({
-  //     url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
-  //   })
-  // },
+  toCostpmize: function(e) {
+    wx.navigateTo({
+      url: "/pages/goods-details/index?i" 
+    })
+  },
   
   // proup
   closePopupTap: function() {
@@ -39,6 +40,7 @@ Page({
       hideShopPopup:false
     })
     console.log(this.data.hideShopPopup)
+    console.log(this.data.goods)
   },
 
 
@@ -104,12 +106,10 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  // onShow: function(e){
+  onShow: function(e){
   
-  //   // 获取购物车数据，显示TabBarBadge
-  //   TOOLS.showTabBarBadge()
 
-  // },
+  },
 
  
 

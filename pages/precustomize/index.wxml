@@ -24,7 +24,26 @@
 <view class="popup-box" hidden="{{hideShopPopup}}" catchtouchmove="true">
    <view class="popup-mask" bindtap="closePopupTap">
     <view class="popup-contents">
-      
+      <view class="goodInfo">
+        <image class="goodImage" src="/images/my/checkNo.png"></image>
+        <view class="goodName">帽子</view>
+      </view>
+      <view class="choseFabric">
+        <view class="title">面料</view>
+        <text class="inner">针织</text>
+      </view>
+      <view class="choseFabric">
+        <view class="title">尺寸</view>
+        <text class="inner">ONE SIZE</text>
+      </view>
+      <view class="choseFabric">
+        <view class="title">颜色</view>
+        <text class="inner" wx:for="{{goodsColor}}" wx:key="*this" >{{item}}</text>
+      </view>
+      <view class="spaceLine"></view>
+      <view class="toCustomize" bindtap="toCostpmize">
+        <text>前往定制</text>
+      </view>
     </view>
    </view>
 </view>
