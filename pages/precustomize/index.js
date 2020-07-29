@@ -17,32 +17,78 @@ Page({
   data: {
     categories: [],
     goods: [],
+    selectGoodId:'',
     loadingMoreHidden: true,
     hideShopPopup: true,
-    goodsColor:['白色','黑色','红色']
+    goodsColor:['卡其色','灰色','米白色'],
+    canSubmit: false,
+    goodsDetail:{}
+  },
+  async labelItemTap(e){
+    const propertyindex = e.currentTarget.dataset.propertyindex
+    const propertychildindex = e.currentTarget.dataset.propertychildindex
+
+    const sku = this.data.goodsDetail.sku[propertyindex]
+    const child = sku.childsCurGoods[propertychildindex]
+    // 取消该分类下的子栏目所有的选中状态
+    sku.childsCurGoods.forEach(child => {
+      child.active = false
+    })
+    // 设置当前选中状态
+    sku.optionValueId = child.id
+    child.active = true
+    // 获取所有的选中规格尺寸数据
+    const needSelectNum = this.data.goodsDetail.sku.length
+    let curSelectNum = 0;
+    let propertyChildIds = "";
+    let propertyChildNames = "";
+    let properties = []
+    this.data.goodsDetail.sku.forEach(p => {
+      p.childsCurGoods.forEach(c => {
+        if (c.active) {
+          curSelectNum++;
+          propertyChildIds = propertyChildIds + p.id + ":" + c.id + ",";
+          propertyChildNames = propertyChildNames + p.name + ":" + c.value + "  ";
+          properties.push(c.value)
+        }
+      })
+    })
+    console.log('properties = '+ properties)
+    let canSubmit = false;
+    if (needSelectNum == curSelectNum) {
+      canSubmit = true;
+    }
+    this.setData({
+      canSubmit: canSubmit
+    })
   },
   toCostpmize: function(e) {
     wx.navigateTo({
       url: "/pages/goods-details/index?i" 
     })
   },
-  
-  // proup
   closePopupTap: function() {
     this.setData({
       hideShopPopup: true
     })
   },
- 
-
   upview:function(e){
-    this.setData({
-      hideShopPopup:false
+    const that = this
+    db.collection('goods').where({
+      good_id: e.currentTarget.dataset.id
+    }).get({
+      success: function(res) {
+        that.setData({
+          goodsDetail: res.data[0]
+        })
+      },
+      fail: console.error
     })
-    console.log(this.data.hideShopPopup)
-    console.log(this.data.goods)
+    this.setData({
+      hideShopPopup: false,
+      selectGoodId: e.currentTarget.dataset.id
+    })
   },
-
   toCostpmize: function () {
     wx.navigateTo({
       url: "/pages/customize/index"
@@ -66,12 +112,10 @@ Page({
       title:"定制"
     })
     this.categories()
- 
   },
 
   async categories(){
     let categories = [];
-
     this.getGoodsList(0);
   },
   async getGoodsList(categoryId, append) {
@@ -111,10 +155,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function(e){
-  
 
   },
-
- 
-
 })

@@ -119,3 +119,31 @@
   color: #fff;
   background-color: #666;
 }
+.size-label-box .label{
+  font-size:26rpx;
+  color:#000;
+  padding-left: 30rpx;
+  padding: 30rpx 0 20rpx 30rpx;
+}
+.size-label-box .label-item-box{
+  display: flex;
+  margin-left: 30rpx;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+.size-label-box .label-item{
+  font-size:26rpx;
+  color:#000;
+  padding: 14rpx 20rpx;
+  border: 1px solid #ddd;
+  border-radius: 6rpx;
+  margin: 0 20rpx 20rpx 0;
+}
+.active{
+  font-size:26rpx;
+  color: #e64340;
+  padding: 14rpx 20rpx;
+  border: 1px solid #e64340;
+  border-radius: 6rpx;
+  margin: 0 20rpx 20rpx 0;
+}
