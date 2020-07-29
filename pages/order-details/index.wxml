@@ -2,14 +2,15 @@
   <view class="sec-wrap">
     <view class="order-status">
       <view class="icon-box">
-        <image wx:if="{{orderDetail.orderInfo.status==-1}}" class="icon" src="/images/order-details/icon-ddgb.png"></image>
-        <image wx:elif="{{orderDetail.orderInfo.status==0}}" class="icon" src="/images/order-details/icon-ddfk.png"></image>
-        <image wx:elif="{{orderDetail.orderInfo.status==1}}" class="icon" src="/images/order-details/icon-ddfh.png"></image>
-        <image wx:elif="{{orderDetail.orderInfo.status==2}}" class="icon" src="/images/order-details/icon-ddsh.png"></image>
-        <image wx:elif="{{orderDetail.orderInfo.status==3 || orderDetail.orderInfo.status==4}}" class="icon" src="/images/order-details/icon-jycg.png"></image>
+        <image wx:if="{{status==-1}}" class="icon" src="/images/order-details/icon-ddgb.png"></image>
+        <image wx:elif="{{status==0}}" class="icon" src="/images/order-details/icon-ddfk.png"></image>
+        <image wx:elif="{{status==1}}" class="icon" src="/images/order-details/icon-ddfh.png"></image>
+        <image wx:elif="{{status==2}}" class="icon" src="/images/order-details/icon-ddsh.png"></image>
+        <image wx:elif="{{status==3 || status==4}}" class="icon" src="/images/order-details/icon-jycg.png"></image>
       </view>
       <view class="right-text">
-        <view class="status red">{{orderDetail.orderInfo.statusStr}}</view>
+        <!-- <view class="status red">{{orderDetail.orderInfo.statusStr}}</view> -->
+        <view class="status red">快递信息代替字符</view>
         <view class="des" hidden="true">请于11时59分59秒内付款，超时订单将自动关闭</view>
       </view>
     </view>
@@ -57,9 +58,7 @@
   </view>
 
   <view class="showAddress-box" >
-  <view class="showAddressIcon">
       <image  class="addressIcon" src="/images/order-details/icon-address.png"></image>
-  </view>
     <view class="showAddressText" bindtap="queryOrder">
       <view class="showAddress" >{{linkMan}}    {{mobile}}</view> 
       <view class="showAddress">{{provinceId}} {{districtId}} {{address}}</view>
@@ -151,6 +150,10 @@
     <view class="row-box">
       <view class="row-label">应付总额</view>
       <view class="right-text">¥ {{orderDetail.totalAmount}}</view>
+    </view>
+    <view class="row-box">
+      <view class="row-label">订单编号</view>
+      <text class="right-text" selectable='true'>{{orderDetail.orderid}}</text>
     </view>
   </view>
 </view>

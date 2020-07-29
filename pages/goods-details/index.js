@@ -201,6 +201,7 @@ Page({
           // }
           that.setData(_data)
           console.log(that.data.color)
+          console.log(that.data.goodsDetail)
         }
         that.addHistory()
       }
