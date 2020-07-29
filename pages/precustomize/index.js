@@ -59,12 +59,8 @@ Page({
       canSubmit = true;
     }
     this.setData({
+      goodsDetail:this.data.goodsDetail,
       canSubmit: canSubmit
-    })
-  },
-  toCostpmize: function(e) {
-    wx.navigateTo({
-      url: "/pages/goods-details/index?i" 
     })
   },
   closePopupTap: function() {
@@ -90,9 +86,17 @@ Page({
     })
   },
   toCostpmize: function () {
-    wx.navigateTo({
-      url: "/pages/customize/index"
-    })
+    if(this.data.canSubmit){
+      wx.navigateTo({
+        url: "/pages/customize/index"
+      })
+    }else{
+      wx.showToast({
+        title: '请选择规格',
+        icon: 'none'
+      })
+    }
+    
   },
   /**
    * 生命周期函数--监听页面加载
