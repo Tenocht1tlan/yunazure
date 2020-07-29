@@ -9,7 +9,7 @@ page{
 }
 .sec-wrap{
     background-color: #fff;
-    margin-top: 20rpx;
+    /* margin-top: 20rpx; */
 }
 .bottom-fiexd{
   position: fixed;
@@ -17,22 +17,25 @@ page{
   left: 0;
 }
 .sec-wrap .order-status{
-    width: 720rpx;
-    margin-left: 30rpx;
+    width: 750rpx;
     border-bottom: 1rpx solid #eee;
+    border-top: 1rpx solid #eee;
     height: 140rpx;
     display: flex;
+    position: relative;
     align-items: center;
 }
 .order-status .icon-box{
-    width: 80rpx;
-    height: 80rpx;
+    width: 81rpx;
+    height: 81rpx;
     overflow: hidden;
+    margin-left: 45rpx;
     margin-right: 30rpx;
 }
 .order-status .icon-box .icon{
     width: 80rpx;
     height: 80rpx;
+    border-radius: 50rpx;
 }
 .order-status .right-text{
     width: 580rpx;
@@ -140,19 +143,16 @@ page{
     height: 150rpx;
     line-height: 150rpx;
 }
-.showAddressIcon{
-    display: flex;
-    justify-content: center;
-    width: 80rpx;
-    height: 150rpx;
-}
+
 .addressIcon{
     align-self: center;
-    background-color: rgb(250, 174, 74);
+    background-color: rgb(168, 168, 168);
     width: 36rpx;
     height: 36rpx;
     border-radius: 50rpx;
-    padding: 10rpx;
+    padding: 20rpx;
+    margin-left: 45rpx;
+
 }
 .showAddressText{
     margin-left: 20rpx;

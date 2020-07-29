@@ -12,7 +12,8 @@ Page({
       mobile:'',
       provinceId:'',
       districtId:'',
-      address:''
+      address:'',
+      status:0
 
     },
     onLoad:function(e){
@@ -36,8 +37,11 @@ Page({
           mobile:res.data[0].postData.mobile,
           provinceId:res.data[0].postData.provinceId,
           districtId:res.data[0].postData.districtId,
-          address:res.data[0].postData.address
+          address:res.data[0].postData.address,
+          status:res.data[0].postData.status,
+
         })
+        console.log(this.data.orderDetail)
         console.log(this.data.linkMan)
       })
         // 绘制核销码
