@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="commit" hover-class="button-hover" bindtap="complete">
-      <image  class="commit-image" src="/images/my/ok3.png" ></image>
+      <image class="commit-image" src="/images/my/ok3.png" ></image>
     </view>
 
     <!-- <view class="footer">
