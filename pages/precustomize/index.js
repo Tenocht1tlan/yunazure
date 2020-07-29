@@ -43,7 +43,11 @@ Page({
     console.log(this.data.goods)
   },
 
-
+  toCostpmize: function () {
+    wx.navigateTo({
+      url: "/pages/customize/index"
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

@@ -1,7 +1,7 @@
 <!--pages/New/index.wxml-->
  <view style='display: flex;justify-content: center;align-items: center;flex-direction: column;'>
     <view class="uIntre" wx:for="{{goods}}" wx:key="id" data-id="{{item.good_id}}" >
-      <view class="imag-box" style="height: 400rpx;width:650rpx">
+      <view class="imag-box" style="height: 650rpx;width:650rpx">
         <image class="scroll-view-imag" src="{{item.pic}}" mode="scaleToFill" lazy-load="true" ></image>
         <!-- <image class="star" catchtap="addFav" src="{{item.fav?'/images/staryes.png':'/images/starno.png'}}" data-index="{{index}}" data-id="{{item.good_id}}"></image> -->
       </view>

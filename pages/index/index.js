@@ -458,7 +458,7 @@ Page({
   },
   toDiy: function () {
     wx.navigateTo({
-      url: "/pages/customize/index"
+      url: "/pages/precustomize/index"
     })
   },
   toAd: function () {
