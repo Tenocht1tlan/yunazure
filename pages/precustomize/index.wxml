@@ -10,7 +10,7 @@
         </view>
       </view>
     </view>
-</view>
+</view> 
 
 <view class="popup-box" hidden="{{hideShopPopup}}" catchtouchmove="true">
   <view class="popup-mask" bindtap="closePopupTap"></view>
