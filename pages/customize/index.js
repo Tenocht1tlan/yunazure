@@ -38,19 +38,30 @@ Page({
         picIsChosed:true,
         textIsChosed:false,
         currentChoseItem :0,
-        array:['图形','星座','水果','动物','生肖','城市','标志性建筑'],
+        array:['卡通','图标','水果','动物','爱心','中国风','花','其他'],
         text:['文本','字体','大小','颜色'],
         animaltion:'',  //顶部动画效果Class
-        picName:'草莓', //顶部动画内容
+        picNameArray:[
+          ['星球','飞碟','彩虹','花盆','星星象'],
+          ['99%','1%','winner','囍'],
+          ['梨子','葡萄','草莓','橙子','桃子'],
+          ['小熊','小刺猬','猫头鹰','小狐狸'],
+          ['爱心1','爱心2','爱心3','爱心4','爱心5','爱心6','爱心7','爱心8','爱心9',],
+          ['中国风1','中国风2','中国风3','中国风4','中国风5','中国风6',],
+          ['花1','花2','花3',],
+          ['云1','云2','金鱼1','金鱼2'],
+         ], //顶部动画内容
+        picName:'星球',
         hiddenAnimal:true,
         icons:[
-          ['/images/custom/custom6.png','/images/my/kefu.png','/images/my/check.png','/images/my/address.png','/images/my/hotline.png','/images/my/checkNo.png'],
-          ['/images/my/checkNo.png','/images/my/check.png'],
-          ['/images/my/address.png'],
-          ['/images/my/checkYes.png'],
-          ['/images/my/hotline.png'],
-          ['/images/my/in.png'],
-          ['/images/my/kefu.png']
+          ['/images/custom/carton/1.png','/images/custom/carton/2.png','/images/custom/carton/3.png','/images/custom/carton/4.png','/images/custom/carton/5.png'],
+          ['/images/custom/icon/1.png','/images/custom/icon/2.png','/images/custom/icon/3.png','/images/custom/icon/4.png',],
+          ['/images/custom/fruit/1.png','/images/custom/fruit/2.png','/images/custom/fruit/3.png','/images/custom/fruit/4.png','/images/custom/fruit/5.png',],
+          ['/images/custom/animal/1.png','/images/custom/animal/2.png','/images/custom/animal/3.png','/images/custom/animal/4.png',],
+          ['/images/custom/heart/1.png','/images/custom/heart/2.png','/images/custom/heart/3.png','/images/custom/heart/4.png','/images/custom/heart/5.png','/images/custom/heart/6.png','/images/custom/heart/7.png','/images/custom/heart/8.png','/images/custom/heart/9.png',],
+          ['/images/custom/china/1.png','/images/custom/china/2.png','/images/custom/china/3.png','/images/custom/china/4.png','/images/custom/china/5.png','/images/custom/china/6.png',],
+          ['/images/custom/flower/1.png','/images/custom/flower/2.png','/images/custom/flower/3.png',],
+          ['/images/custom/other/1.png','/images/custom/other/2.png','/images/custom/other/3.png','/images/custom/other/4.png',]
         ],
         textarea: "",
         textareaLen: 0,
@@ -453,7 +464,10 @@ Page({
       selectMateria: function(e){
         var that = this
         var index = e.target.dataset.index
-        var imageName = this.data.array[index]
+        // console.log('index'+index)
+        // console.log('materialCategory'+this.data.materialCategory)
+        var mc = that.data.materialCategory
+        var imageName = that.data.picNameArray[mc][index]
         that.setData({
           key: "ma"+index,
           materialCategoryIcon:index,
