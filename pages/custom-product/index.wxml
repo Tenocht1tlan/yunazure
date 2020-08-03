@@ -4,24 +4,24 @@
    </view>
    <view class="imageView" > 
       <!-- <canvas canvas-id="completeCanvas" class="mainCanvas"></canvas> -->
-      <image src="{{src}}" class="mainCanvas" mode="aspectFit"></image>
+      <image src="{{url}}" class="mainCanvas" mode="aspectFit"></image>
       <input class="ipt" value="我的定制作品" focus="{{focus}}" bindinput="bindnaInput"></input>
    </view>
    <view class="line"></view>
   <view class="Operation" >
     <image class="opIcon" src="/images/opration.png"></image>
-    <text style="margin-left:30rpx">对商品名称不满意 </text>
+    <text style="margin-left:30rpx">对作品名称不满意 </text>
     <button class="opBtn" bindtap="modifyName" hover-class="hover">修改</button>
   </view>
   <view class="Operation" style="margin-top:10rpx" >
     <image class="opIcon" src="/images/buy.png" ></image>
-    <text style="margin-left:30rpx">可直接购买您的商品 </text>
+    <text style="margin-left:30rpx">可直接购买您的作品 </text>
     <button class="opBtn" bindtap="toBuy" hover-class="hover">购买</button>
   </view>
   <view class="Operation" style="margin-top:10rpx" >
     <image class="opIcon" src="/images/share/shareDIY.png"></image>
-    <text style="margin-left:30rpx">分享作品得五个赞后可获优惠券 </text>
+    <text style="margin-left:30rpx">分享作品 </text>
     <button open-type='share' class="opBtn" hover-class="hover">分享</button>
   </view>
-    <button class="backBtn" bindtap="onClickBack" hover-class="hover" >返回</button>
-</view>
+    <button class="backBtn" bindtap="onClickBack" hover-class="hover" >返回主页</button>
+  </view>

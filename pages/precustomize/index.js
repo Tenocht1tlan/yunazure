@@ -53,7 +53,6 @@ Page({
         }
       })
     })
-    console.log('properties = '+ properties)
     let canSubmit = false;
     if (needSelectNum == curSelectNum) {
       canSubmit = true;
@@ -88,7 +87,7 @@ Page({
   toCostpmize: function () {
     if(this.data.canSubmit){
       wx.navigateTo({
-        url: "/pages/customize/index"
+        url: "/pages/customize/index?url=" + this.data.goodsDetail.pic
       })
     }else{
       wx.showToast({

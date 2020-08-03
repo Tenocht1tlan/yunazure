@@ -1,3 +1,4 @@
+const db =  wx.cloud.database();
 Page({
 
   /**
@@ -5,6 +6,7 @@ Page({
    */
   data: {
     url:'',
+    key:'',
     goodName:'我的定制作品',
     focus: false
   },
@@ -13,10 +15,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      url: options.url
+    if(options.goodName){
+      this.setData({
+        goodName: options.goodName
+      })
+    }
+    var list = ''
+    const that = this
+    wx.showLoading({
+      title: '加载中',
     })
-    this.initCanvas(options.url)
+    db.collection('myCustom').get().then(res=>{
+      if(res.data){
+        res.data.forEach(v=>{
+          list = v.fileID
+          if(list.indexOf(options.url) >= 0){
+            that.setData({
+              url: list,
+              key: options.url
+            })
+            return
+          }
+        })
+      }
+      wx.hideLoading()
+    })
   },
 
   /**
@@ -45,15 +68,6 @@ Page({
    */
   onUnload: function () {
 
-  },
-  async initCanvas(url){
-    this.setData({
-      src: url
-    })
-    // let ctx = wx.createCanvasContext('completeCanvas')
-    // ctx.translate(0, 0)
-    // ctx.drawImage(url, 0, 0, this.data.tempImgWidth, this.data.tempImgHeight)
-    // ctx.draw()
   },
   modifyName(){
     this.setData({
@@ -116,19 +130,28 @@ Page({
     return buyNowInfo
   },
   onClickBack(){
-    wx.navigateBack({
-      delta: 2,
+    wx.switchTab({
+      url: "/pages/index/index"
     })
+    // wx.navigateBack({
+    //   delta: 3,
+    // })
   },
   onShareAppMessage() {
-    // let _data = {
-    //   title: this.data.goodName,
-    //   path: '/pages/custom-product/index',
-    //   success: function(res) {
-    //   },
-    //   fail: function(res) {
-    //   }
-    // }
-    // return _data
+    let _data = {
+      title: this.data.goodName,
+      path: '/pages/custom-product/index?url=' + this.data.key + '&goodName=' + this.data.goodName,
+      success: function(res){
+        if(res.errMsg == 'shareAppMessage:ok'){
+
+        }
+      },
+      fail: function(){
+        if(res.errMsg == 'shareAppMessage:fail cancel'){
+        }else if(res.errMsg == 'shareAppMessage:fail'){
+        }
+      }
+    }
+    return _data
   },
 })

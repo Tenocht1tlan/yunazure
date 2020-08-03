@@ -593,9 +593,14 @@ Page({
     let _data = {
       title: this.data.goodsDetail.name,
       path: '/pages/goods-details/index?id=' + this.data.goodsDetail.good_id + '&inviter_id=' + wx.getStorageSync('uid'),
-      success: function(res) {
+      success: function(res){
+        if(res.errMsg == 'shareAppMessage:ok'){
+        }
       },
-      fail: function(res) {
+      fail: function(){
+        if(res.errMsg == 'shareAppMessage:fail cancel'){
+        }else if(res.errMsg == 'shareAppMessage:fail'){
+        }
       }
     }
     // if (this.data.kjJoinUid) {

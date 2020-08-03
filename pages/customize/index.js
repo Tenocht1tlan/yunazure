@@ -1,3 +1,4 @@
+const db = wx.cloud.database()
 Page({
     data:{
         materialCategory: 0,       // 素材分类1
@@ -33,6 +34,7 @@ Page({
         rotateTemp: 0,             // 缓存 旋转角度
         iconSize: 81,              // 操作图标的大小
         operate: 'draw',           // 操作类型
+        customURL: '',
         ctx: wx.createCanvasContext('mainCanvas'),
         complete: false,
         picIsChosed:true,
@@ -306,22 +308,33 @@ Page({
         setTimeout(function () {
           wx.hideLoading({
             success: (res) => {
-              console.log("url = "+that.data.imgUrl)
               that.finalComplete()
             }
           })
-        }, 500)
+        }, 1000)
       },
       finalComplete:function(){
         let ctx = wx.createCanvasContext('completeCanvas')
-
         ctx.draw(true, ()=> {
           wx.canvasToTempFilePath({
             canvasId: 'completeCanvas',
             success: function (res) {
-              wx.navigateTo({
-                url: "/pages/custom-product/index?url=" + res.tempFilePath
+              const cloudPath = new Date().getTime() +'.png'
+              wx.cloud.uploadFile({
+                cloudPath: cloudPath,
+                filePath: res.tempFilePath,
+              }).then(res => {
+                db.collection('myCustom').add({
+                  data:{
+                    fileID:res.fileID
+                  }
+                }).then(res=>{
+                  wx.navigateTo({
+                    url: "/pages/custom-product/index?url=" + cloudPath
+                  })
+                })
               })
+              
             }
           })
         })
@@ -580,7 +593,6 @@ Page({
       async initCanvas(){
         let ctx = wx.createCanvasContext('completeCanvas')
         ctx.translate(0, 0)
-        let picPath = 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg'
         let that = this
         let w = this.data.winWidth
         let h = 0.5 * this.data.winHeight
@@ -590,7 +602,7 @@ Page({
 
         await new Promise((resolve) => {
           wx.getImageInfo({
-            src: picPath,
+            src: this.data.customURL,
             success: function (res) {
               // if (res.width > res.height * whRate) {
               //   if (res.width > w) {
@@ -676,7 +688,10 @@ Page({
         this.data.showRecommend = false
         this.draw()
       },
-    onLoad:function() {
+    onLoad:function(e) {
+      this.setData({
+        customURL: e.url
+      })
       this.getDeviceInfo()
       this.loadSocksInfo()
     },

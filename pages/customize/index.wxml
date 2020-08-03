@@ -3,7 +3,7 @@
     <view class="main-wrap">
       <image class="main-img"
               mode="aspectFit"
-              src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/caramel.jpg" hidden="{{complete}}">
+              src="{{customURL}}" hidden="{{complete}}">
       </image>
       <view class="canvas-wrap">
         <canvas canvas-id="mainCanvas"
