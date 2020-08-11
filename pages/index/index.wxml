@@ -2,7 +2,6 @@
 		<view class="search">
       <view class="DiyText" catchtap="toDiy">我要定制</view>
       <image style="width:30rpx;height:30rpx;" src='/images/search2.png'  bindtap="goSearch"></image>
-    <!-- <input type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:white"></input> -->
     <view class="searchText" bindtap="goSearch" >搜索</view>
   </view>
 </view>
@@ -11,28 +10,16 @@
 		<view class="search">
       <view class="DiyText" catchtap="toDiy">我要定制</view>
       <image src='/images/search2.png'  bindtap="goSearch"></image>
-    <!-- <input class="input" type="text" placeholder="搜索" value="{{name}}" bindinput="bindinput" bindconfirm="bindconfirm" placeholder-style="color:gray" ></input> -->
-    <!-- <image  class="image" src='/images/search2.png' bindtap="goSearch" ></image> -->
         <view class="searchText" bindtap="goSearch" >搜索</view>
-    <!-- <image class="logo" src="/images/my/logo.jpg"   style="height:{{navHeight}}rpx" mode="aspectFit"></image> -->
     <view class="logo">Yunazure</view>
    </view>
 	</view>
-<!-- <navigator url="/pages/shop/select">
-  <view wx:if="{{shopInfo}}" class="shops-container">
-    <view class="l">
-      <image src="/images/order-details/icon-address.png"></image>
-      <text>{{shopInfo.name}}</text>
-    </view>
-  </view>
-</navigator> -->
 <view class="swiper-container" style="height:{{swiperHeight}}rpx">
     <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular style="height:{{swiperHeight}}rpx;" bindchange="swiperChange" 
     bindanimationfinish="animationFinish">
     <swiper-item class="swiper2" wx:for="{{banners}}" wx:key="id" >
-      <image bindtap="tapBanner" data-url="{{item.fileID}}" src="{{item.fileID}}" style="height:{{swiperHeight}}rpx;"/>
+      <image bindtap="tapBanner" data-url="{{item}}" src="{{item}}" style="height:{{swiperHeight}}rpx;"/>
       <view class="swiper-ani" style="{{originLeft}}" bindtap="toNew">
-        <!-- <text class="{{animationType}}" >探索系列</text> -->
         <text class="{{animationType}}" style="color:{{textColor}};">{{animationText}}</text>
       </view>
       <view class="swiper-morebtn" style="{{originLeft}};">
@@ -62,9 +49,7 @@
   </block>
 
 </view>
-<!-- 选择操作 -->
 
-<!-- 热卖商品 -->
 <!-- <view class="selling-goods">
     <view class="remai">热卖商品</view>
     <scroll-view class="selling-goods-chose" scroll-x="true">
@@ -139,40 +124,35 @@
   </navigator>
 </view> -->
 
-<!-- 6.1 -->
 <!-- 定制 -->
     <view class="spe-box" style=" margin-top: 10rpx;">
-      <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/pic0.png" bindtap="toNew" ></image>
+      <image  class="spetical" src="{{toNew}}" bindtap="toNew" ></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100" >了解更多</view>
     </view>
-
     <view class="spe-two">
       <view class="two" >
-        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/pic1.png" bindtap="toDiy" ></image>
+        <image  class="spetical-two" src="{{toDiy}}" bindtap="toDiy" ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>
       <view class="two" >
-        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/pic2.png" bindtap="toSpecial" ></image>
+        <image  class="spetical-two" src="{{toSpecial}}" bindtap="toSpecial" ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>
     </view>
     <view class="spe-box">
-      <image  class="spetical" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/pic0.png" bindtap="toComp" ></image>
+      <image  class="spetical" src="{{toComp}}" bindtap="toComp" ></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100">了解更多</view>
     </view>
     <view class="spe-two" >
       <view class="two" >
-        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toAd" ></image>
+        <image  class="spetical-two" src="{{toAd}}" bindtap="toAd" ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>      
       <view class="two" >
-        <image  class="spetical-two" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/diy.png" bindtap="toActivity" ></image>
+        <image  class="spetical-two" src="{{toActivity}}" bindtap="toActivity" ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>
-
     </view>
-
-
 
 <!-- 广告 -->           
 <view>

@@ -212,7 +212,7 @@
   width: 240rpx;
   text-align: center;
   line-height: 80rpx;
-  background-color: #000000;
+  background-color: #666;
   font-size: 30rpx;
   color: #fff;
 }

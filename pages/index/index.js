@@ -12,13 +12,23 @@ APP.configLoadOK = () => {
 
 Page({
   data: {
+    banners:['cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/1.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/2.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/3.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/4.jpg'],
+    toNew:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/story.jpg',
+    toDiy:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/color.png',
+    toSpecial:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/home.jpg',
+    toComp:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/story.jpg',
+    toAd:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/materil.jpg',
+    toActivity:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/produce.jpg',
     isIos:APP.globalData.isIos,
     navHeight:APP.globalData.navHeight,
-    inputVal: "", // 搜索框内容
-    goodsRecommend: [], // 推荐商品
-    kanjiaList: [], //砍价商品列表
-    pingtuanList: [], //拼团商品列表
-    loadingHidden: false, // loading
+    inputVal: "",               // 搜索框内容
+    goodsRecommend: [],         // 推荐商品
+    kanjiaList: [],             //砍价商品列表
+    pingtuanList: [],           //拼团商品列表
+    loadingHidden: false,       // loading
     selectCurrent: 0,
     categories: [],
     activeCategoryId: 0,
@@ -545,7 +555,7 @@ Page({
     wx.setNavigationBarTitle({
       title: "Yunazure"
     })
-    this.initBanners()
+    // this.initBanners()
     this.categories()
     // WXAPI.goods({
     //   recommendStatus: 1
