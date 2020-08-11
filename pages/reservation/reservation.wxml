@@ -5,13 +5,13 @@
     <view class="reservationInput" style= "margin-top: 50rpx;">
       <view class="reservationInputtext" >姓名</view>
       <input class="reinput" placeholder="请输入姓名" value="{{name}}" bindinput="bindnaInput"/>
-      <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getUserInfo" bindgetuserinfo="reservationInfo">一键获取预约信息</button>
+      <!-- <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getUserInfo" bindgetuserinfo="reservationInfo">一键获取预约信息</button> -->
     </view>
     <view class="space"></view>
     <view class="reservationInput">
       <view class="reservationInputtext" >电话</view>
       <input class="reinput" placeholder="请输入电话" type="number" value="{{phone}}" bindinput="bindphInput" />
-      <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
+      <!-- <button class="reservationInputClick" style="margin-right:10rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button> -->
     </view>
     <view class="space"></view>
     <view class="reservationInput">
@@ -37,7 +37,7 @@
     </view>
     <view class="space"></view>
     <view class="Confirm">
-      <button class="Confirmbutton" style=" background-color: #000000;  color: rgb(255, 255, 255);" type="default" plain="true" bindtap="onClick" >我要预约</button>
+      <button class="Confirmbutton" style=" background-color: #666;  color: rgb(255, 255, 255);" type="default" plain="true" bindtap="onClick" >我要预约</button>
     </view>
   </view>
 </view>

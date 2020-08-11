@@ -15,7 +15,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    categories: [],
     goods: [],
     selectGoodId:'',
     loadingMoreHidden: true,
@@ -70,7 +69,7 @@ Page({
   },
   upview:function(e){
     const that = this
-    db.collection('goods').where({
+    db.collection('customGoods').where({
       good_id: e.currentTarget.dataset.id
     }).get({
       success: function(res) {
@@ -105,31 +104,13 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })    
-    const that = this
-    if (e && e.scene) {
-      const scene = decodeURIComponent(e.scene)
-      if (scene) {        
-        wx.setStorageSync('referrer', scene.substring(11))
-      }
-    }
     wx.setNavigationBarTitle({
       title:"定制"
     })
-    this.categories()
+    this.getGoodsList()
   },
-
-  async categories(){
-    let categories = [];
-    this.getGoodsList(0);
-  },
-  async getGoodsList(categoryId, append) {
-    if (categoryId == 0) {
-      categoryId = "";
-    }
-    wx.showLoading({
-      "mask": true
-    })
-    db.collection('goods').get().then(res=>{
+  getGoodsList() {
+    db.collection('customGoods').get().then(res=>{
       if(res.data){
         this.setData({
           goods:res.data
@@ -142,18 +123,8 @@ Page({
         })
       }
     }).catch(err=>{ 
+
     })
-    wx.hideLoading()
-    if(true){
-      let newData = {
-        loadingMoreHidden: false
-      }
-      if (!append) {
-        newData.goods = []
-      }
-      this.setData(newData)
-      return
-    }
   },
   /**
    * 生命周期函数--监听页面显示

@@ -311,7 +311,7 @@ Page({
               that.finalComplete()
             }
           })
-        }, 1000)
+        }, 500)
       },
       finalComplete:function(){
         let ctx = wx.createCanvasContext('completeCanvas')
@@ -334,8 +334,7 @@ Page({
                   })
                 })
               })
-              
-            }
+            },
           })
         })
       },
