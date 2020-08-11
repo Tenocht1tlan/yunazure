@@ -125,6 +125,7 @@
 </view> -->
 
 <!-- 定制 -->
+
     <view class="spe-box" style=" margin-top: 10rpx;">
       <image  class="spetical" src="{{toNew}}" bindtap="toNew" ></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100" >了解更多</view>
