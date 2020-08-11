@@ -1,3 +1,12 @@
+ 
+<view class="ad">
+  <image class="adImag" src="https://7975-yunazure-sygca-1302289079.tcb.qcloud.la/custom/others/ad.jpg?sign=0ef0ef79a25511352aea28c7a6586ef2&t=1597149701" mode="aspectFit"></image>
+  <view class="step">
+    <image  class="stepImag"  wx:for="{{step}}" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/custom/others/{{item}}.png"></image>
+  </view>
+
+</view>
+
  <view style='display: flex;justify-content: center;align-items: center;flex-direction: column;'>
     <view class="uIntre" wx:for="{{goods}}" wx:key="id" data-id="{{item.good_id}}">
       <view class="imag-box" style="height: 650rpx;width:650rpx">

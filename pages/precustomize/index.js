@@ -22,7 +22,8 @@ Page({
     hideShopPopup: true,
     goodsColor:['卡其色','灰色','米白色'],
     canSubmit: false,
-    goodsDetail:{}
+    goodsDetail:{},
+    step:[2,3,4,6]
   },
   async labelItemTap(e){
     const propertyindex = e.currentTarget.dataset.propertyindex
