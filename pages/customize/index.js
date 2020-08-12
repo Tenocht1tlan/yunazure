@@ -4,6 +4,7 @@ Page({
         materialCategory: 0,       // 素材分类1
         materialCategoryIcon:0,    //素材颜色分类
         fontCategory: 0,           // 素材分类2
+        fontColorCategory:0,       //定制文字颜色分类
         isText: true,
         isTextColor: false,
         currentPosition: 'left',   // 当前帽子的位置
@@ -42,6 +43,12 @@ Page({
         currentChoseItem :0,
         array:['卡通','图标','水果','动物','爱心','中国风','花','其他'],
         text:['文本','字体'],
+        colorChose:['red','black','gray','white','yellow','wheat','#32CD32','#87CEFA','gold'],
+        FontSize:['小','中','大'],
+        choseNum:0,
+        choseSize:'小',
+        downHidden:true,//控制选择文字大小图片的隐藏
+        upHidden:false,
         animaltion:'',  //顶部动画效果Class
         picNameArray:[
           ['星球','飞碟','彩虹','花盆','星星象'],
@@ -701,6 +708,36 @@ Page({
     onShow(){
       this.setData({
         complete: false
+      })
+    },
+    // 选择文本字体大小事件
+    down:function(){
+      let num = this.data.choseNum
+      if(num>0){
+        num -= 1
+        this.setData({
+          downHidden:false,
+          choseNum:num,
+          choseSize:this.data.FontSize[num]
+        })
+      }
+    },
+    up:function(){
+      let num = this.data.choseNum
+      if(num<2){
+        num += 1
+        this.setData({
+          upHidden:false,
+          choseNum:num,
+          choseSize:this.data.FontSize[num]
+        })
+      }
+    },
+    // 选择颜色
+    selectColor:function(e){
+      var index = e.target.dataset.index
+      this.setData({
+        fontColorCategory:index
       })
     }
 })
