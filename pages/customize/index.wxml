@@ -53,11 +53,11 @@
         <image hidden="{{isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{font[fontCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectMateria" src='{{item}}' data-src="{{item}}" data-index="{{index}}" ></image>
         <view hidden="{{!isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{font[fontCategory]}}" style="{{item}}" wx:key="id" bindtap="selectMateria" data-index="{{index}}" ></view>
       </scroll-view>
-      <textarea hidden="{{!isText}}" class="material-text" maxlength="10" placeholder=" 点这里输入文字内容" placeholder-style="font-size:24rpx;" adjust-position="true" value="{{textarea}}" bindinput="textInput"></textarea>
+      <textarea hidden="{{!isText}}" class="material-text" maxlength="10" placeholder=" 点这里输入文字内容" placeholder-style="font-size:28rpx;" adjust-position="true" value="{{textarea}}" bindinput="textInput"></textarea>
       <view hidden="{{!isText}}" class="text-commit" hover-class="tc-hover" hover-stay-time="100" bindtap="finishBtn">添加文本</view>
     </view>
   </view>
 </view> 
 <view class="animaltion-box">
-<view class="{{animaltion}}"  style="color:#666;font-weight: 700;font-size: 30rpx;word-spacing: 3rpx;" hidden="{{hiddenAnimal}}">{{picName}}</view>
+<view class="{{animaltion}}"  style="color:#666;font-weight: 700;font-size: 40rpx;word-spacing: 3rpx;" hidden="{{hiddenAnimal}}">{{picName}}</view>
 </view>

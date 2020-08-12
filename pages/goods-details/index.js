@@ -160,7 +160,7 @@ Page({
           // }
           that.data.goodsDetail = goodsDetailRes
           let tmpPics = []
-          tmpPics.push(goodsDetailRes.pic)
+          // tmpPics.push(goodsDetailRes.pic)
           goodsDetailRes.subPics.forEach(e=>{
             tmpPics.push(e.pic)
           })
