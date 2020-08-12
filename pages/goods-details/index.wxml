@@ -6,7 +6,7 @@
         <video src="{{videoMp4Src}}" autoplay="true" loop="true" style='width:100%;height:100%;'></video>
       </swiper-item>
       <swiper-item wx:for="{{pics}}" wx:key="id">
-        <image src="{{item}}" class="slide-image" mode="scaleToFill" lazy-load="true" bindtap="previewImage" data-url="{{item}}" data-urls="{{pics}}"/>
+        <image src="{{item}}" class="slide-image" mode="aspectFit" lazy-load="true" bindtap="previewImage" data-url="{{item}}" data-urls="{{pics}}"/>
       </swiper-item>      
     </swiper>
   </view>

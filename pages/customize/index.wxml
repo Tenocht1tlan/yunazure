@@ -35,12 +35,12 @@
     </button>
     <view class="custom-title" hidden="{{textIsChosed}}">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
+        <view class="{{index===materialCategory?'categoryChosed':'category'}}"  wx:for="{{array}}"  wx:key="*this" bindtap="setMaterialCategory" data-index="{{index}}">{{item}}</view>
       </scroll-view>
     </view>
     <view class="custom-title" hidden="{{picIsChosed}}">
       <scroll-view class="category-list" style="white-space: nowrap;" scroll-x="true">
-        <view class="{{index===fontCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" bindtap="setFontCategory" data-index="{{index}}">{{item}}</view>
+        <view class="{{index===fontCategory?'categoryChosed':'category'}}"  wx:for="{{text}}" wx:key="*this" bindtap="setFontCategory" data-index="{{index}}">{{item}}</view>
       </scroll-view>
     </view>
     <view class="material-wrap" hidden="{{textIsChosed}}">
