@@ -203,6 +203,7 @@ Page({
           return
         }
         const ctx = wx.createCanvasContext('mainCanvas')
+
         if (this.data.operate === 'scale') {
           let scaleX = (this.data.X - this.data.newX) / (this.data.X - this.data.tempX)
           let scaleY = (this.data.Y - this.data.newY) / (this.data.Y - this.data.tempY)

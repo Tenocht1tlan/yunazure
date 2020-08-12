@@ -126,31 +126,31 @@
 
 <!-- 定制 -->
 
-    <view class="spe-box" style=" margin-top: 10rpx;">
-      <image  class="spetical" src="{{toNew}}" bindtap="toNew" ></image>
+    <view class="spe-box" style=" margin-top: 10rpx;" bindtap="toNew">
+      <image  class="spetical" src="{{toNew}}"  ></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100" >了解更多</view>
     </view>
     <view class="spe-two">
-      <view class="two" >
-        <image  class="spetical-two" src="{{toDiy}}" bindtap="toDiy" ></image>
+      <view class="two" bindtap="toDiy" >
+        <image  class="spetical-two" src="{{toDiy}}" ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>
-      <view class="two" >
-        <image  class="spetical-two" src="{{toSpecial}}" bindtap="toSpecial" ></image>
+      <view class="two" bindtap="toSpecial">
+        <image  class="spetical-two" src="{{toSpecial}}"  ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>
     </view>
-    <view class="spe-box">
-      <image  class="spetical" src="{{toComp}}" bindtap="toComp" ></image>
+    <view class="spe-box" bindtap="toComp">
+      <image  class="spetical" src="{{toComp}}"  ></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100">了解更多</view>
     </view>
     <view class="spe-two" >
-      <view class="two" >
-        <image  class="spetical-two" src="{{toAd}}" bindtap="toAd" ></image>
+      <view class="two" bindtap="toAd">
+        <image  class="spetical-two" src="{{toAd}}"  ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>      
-      <view class="two" >
-        <image  class="spetical-two" src="{{toActivity}}" bindtap="toActivity" ></image>
+      <view class="two" bindtap="toActivity">
+        <image  class="spetical-two" src="{{toActivity}}"  ></image>
         <view class="spe-two-text" >了解更多</view>
       </view>
     </view>
