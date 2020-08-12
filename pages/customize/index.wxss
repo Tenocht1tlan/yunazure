@@ -179,7 +179,6 @@ border: solid;
 border-width: 3rpx;
 left: 40rpx;
 top: 5rpx;
-font-family: 'Bradley Hand ITC';
 }
 .text-commit{
   position: absolute;

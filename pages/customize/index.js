@@ -75,10 +75,14 @@ Page({
         textarea: "",
         font:[
           [],
-          ['SimSun','Microsoft Yahei','KaiTi']
+          ['/images/custom/carton/1.png','/images/custom/carton/2.png','/images/custom/carton/3.png']
         ],
-        fontSize: [16,17, 18, 20, 22, 24, 28, 32],
+        fontSize: [20, 28, 36, 44],
+        currFontSize: 28,
         fontColor: ['red', 'yellow', 'white', 'black'],
+        currFontColor: 'yellow',
+        fontFamily: ['Bradley Hand ITC','Microsoft Yahei','KaiTi'],
+        currFontFamily:'Microsoft Yahei',
         addText: false
     },
       onStart (e) {
@@ -248,8 +252,9 @@ Page({
         if(this.data.imgUrl) {
           ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
         }else if(this.data.addText) {
-          ctx.setFillStyle(this.data.fontColor[0])
-          ctx.setFontSize(this.data.fontSize[3])
+          ctx.font = "44px monospace"
+          ctx.setFillStyle(this.data.currFontColor)
+          // ctx.setFontSize(this.data.fontSize[3])
           ctx.fillText(this.data.textarea, x + 10, 0)
         }
         // 旋转回来,保证除了图片以外的其他元素不被旋转
@@ -264,8 +269,8 @@ Page({
           ctx.drawImage('/images/rotate.png', x + that.data.tempImgWidth - r, y - r, d, d)
           ctx.drawImage('/images/scale.png', x + that.data.tempImgWidth - r, y + that.data.tempImgHeight - r, d, d)
         }else if(this.data.addText) {
-          ctx.drawImage('/images/delete.png', x - r, y - r, d, d)
-          ctx.drawImage('/images/rotate.png', x + that.data.tempImgWidth - r, y - r, d, d)
+          ctx.drawImage('/images/delete.png', x - r, y - r, r, r)
+          ctx.drawImage('/images/rotate.png', x + that.data.tempImgWidth, y - r, r, r)
         }
         ctx.draw()
       },
@@ -462,11 +467,6 @@ Page({
           addText:true
         })
         this.getTextPicInfo()
-        // const ctx = wx.createCanvasContext('mainCanvas')
-        // ctx.setFontSize(20)
-        // ctx.setFillStyle('yellow')
-        // ctx.fillText(this.data.textarea, this.data.canvasWidth / 2, this.data.canvasHeight / 2)
-        // ctx.draw()
       },
       textInput:function(e){
         this.setData({
@@ -487,8 +487,6 @@ Page({
       selectMateria: function(e){
         var that = this
         var index = e.target.dataset.index
-        // console.log('index'+index)
-        // console.log('materialCategory'+this.data.materialCategory)
         var mc = that.data.materialCategory
         var imageName = that.data.picNameArray[mc][index]
         that.setData({
@@ -505,9 +503,14 @@ Page({
             animaltion:'animated fadeOutLeftBig',
           })
         }, 1500)
-
       },
-
+      selectFont: function(e){
+        var index = e.target.dataset.index
+        this.setData({
+          materialCategoryIcon: index,
+          currFontFamily: this.data.fontFamily[index]
+        })
+      },
       // 获取图片信息,并把宽高设置给 canvas
       async getFileInfo (src) {
         if ((src.match('http://') || src.match('https://'))) {
@@ -649,8 +652,8 @@ Page({
         ctx.rotate(this.data.rotateTemp * Math.PI / 180)
         ctx.rotate(this.data.rotateAngle * Math.PI / 180)
         if(this.data.addText){
-          ctx.setFillStyle(this.data.fontColor[0])
-          ctx.setFontSize(this.data.fontSize[6])
+          ctx.setFillStyle(this.data.currFontColor)
+          ctx.setFontSize(this.data.fontSize[3])
           ctx.fillText(this.data.textarea, xx, 0)
         }else if(this.data.imgUrl){
           ctx.drawImage(this.data.imgUrl, xx, yy, this.data.tempImgWidth, this.data.tempImgHeight)
