@@ -114,11 +114,12 @@
 .material-text{
 position: absolute;
 background-color: #fff;
-width: 250rpx;
-height: 100rpx;
+width: 300rpx;
+height: 60rpx;
 border: solid;
 border-width: 3rpx;
 left: 40rpx;
+top: 5rpx;
 font-family: 'Bradley Hand ITC';
 }
 .text-commit{

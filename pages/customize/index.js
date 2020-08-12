@@ -41,7 +41,7 @@ Page({
         textIsChosed:false,
         currentChoseItem :0,
         array:['卡通','图标','水果','动物','爱心','中国风','花','其他'],
-        text:['文本','字体','大小','颜色'],
+        text:['文本','字体'],
         animaltion:'',  //顶部动画效果Class
         picNameArray:[
           ['星球','飞碟','彩虹','花盆','星星象'],
@@ -66,12 +66,9 @@ Page({
           ['/images/custom/other/1.png','/images/custom/other/2.png','/images/custom/other/3.png','/images/custom/other/4.png',]
         ],
         textarea: "",
-        textareaLen: 0,
         font:[
           [],
-          ['SimSun','Microsoft Yahei','KaiTi'], 
-          ['/images/custom/sml.png','/images/custom/mid.png','/images/custom/lar.png'],
-          ['background:red;', 'background:yellow;', 'background:white;', 'background:black;']
+          ['SimSun','Microsoft Yahei','KaiTi']
         ],
         fontSize: [16,17, 18, 20, 22, 24, 28, 32],
         fontColor: ['red', 'yellow', 'white', 'black'],
@@ -207,18 +204,22 @@ Page({
           let scaleX = (this.data.X - this.data.newX) / (this.data.X - this.data.tempX)
           let scaleY = (this.data.Y - this.data.newY) / (this.data.Y - this.data.tempY)
           let scale = scaleX < scaleY ? scaleX : scaleY
-          
-          this.data.tempImgWidth = this.data.imgWidth * scale
-          this.data.tempImgHeight = this.data.imgHeight * scale
-          if (this.data.tempImgWidth > 150){
-            this.data.tempImgWidth = 150
-          }else if(this.data.tempImgWidth < 50){
-            this.data.tempImgWidth = 50
-          }
-          if (this.data.tempImgHeight > 150){
-            this.data.tempImgHeight = 150
-          }else if(this.data.tempImgHeight < 50){
-            this.data.tempImgHeight = 50
+
+          if(this.data.imgUrl) {
+            this.data.tempImgWidth = this.data.imgWidth * scale
+            this.data.tempImgHeight = this.data.imgHeight * scale
+            if (this.data.tempImgWidth > 150){
+              this.data.tempImgWidth = 150
+            }else if(this.data.tempImgWidth < 50){
+              this.data.tempImgWidth = 50
+            }
+            if (this.data.tempImgHeight > 150){
+              this.data.tempImgHeight = 150
+            }else if(this.data.tempImgHeight < 50){
+              this.data.tempImgHeight = 50
+            }
+          }else if(this.data.addText) {
+            
           }
         }
         if (this.data.operate === 'rotate') {
@@ -240,23 +241,24 @@ Page({
           ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
         }else if(this.data.addText) {
           ctx.setFillStyle(this.data.fontColor[0])
-          ctx.setFontSize(this.data.fontSize[6])
-          ctx.fillText(this.data.textarea, x, 0)
+          ctx.setFontSize(this.data.fontSize[3])
+          ctx.fillText(this.data.textarea, x + 10, 0)
         }
         // 旋转回来,保证除了图片以外的其他元素不被旋转
         ctx.rotate((360 - that.data.rotateTemp) * Math.PI / 180)
         ctx.rotate((360 - that.data.rotateAngle) * Math.PI / 180)
         // 画边框
-        ctx.setStrokeStyle('#fd749c')
-        ctx.setLineDash([5, 5], 10);
-        // let len = Math.sqrt(Math.pow(that.data.tempImgWidth / 2, 2) + Math.pow(that.data.tempImgHeight / 2, 2)) * 2
-        ctx.strokeRect(x, y, that.data.tempImgWidth, that.data.tempImgHeight)
-        // 画 删除 按钮
-        ctx.drawImage('/images/delete.png', x - r, y - r, d, d)
-        // 画 旋转 按钮
-        ctx.drawImage('/images/rotate.png', x + that.data.tempImgWidth - r, y - r, d, d)
-        // 画 缩放 按钮
-        ctx.drawImage('/images/scale.png', x + that.data.tempImgWidth - r, y + that.data.tempImgHeight - r, d, d)
+        if(this.data.imgUrl) {
+          ctx.setStrokeStyle('#fd749c')
+          ctx.setLineDash([5, 5], 10)
+          ctx.strokeRect(x, y, that.data.tempImgWidth, that.data.tempImgHeight)
+          ctx.drawImage('/images/delete.png', x - r, y - r, d, d)
+          ctx.drawImage('/images/rotate.png', x + that.data.tempImgWidth - r, y - r, d, d)
+          ctx.drawImage('/images/scale.png', x + that.data.tempImgWidth - r, y + that.data.tempImgHeight - r, d, d)
+        }else if(this.data.addText) {
+          ctx.drawImage('/images/delete.png', x - r, y - r, d, d)
+          ctx.drawImage('/images/rotate.png', x + that.data.tempImgWidth - r, y - r, d, d)
+        }
         ctx.draw()
       },
       // 图片->本地
@@ -460,13 +462,14 @@ Page({
       },
       textInput:function(e){
         this.setData({
-          textarea: e.detail.value,
-          textareaLen: e.detail.value.length
+          textarea: e.detail.value
         })
       },
       getTextPicInfo(){
-        this.data.imgWidth = this.data.textareaLen * 26
-        this.data.imgHeight = this.data.canvasHeight * 0.2
+        this.data.ctx.setFontSize(this.data.fontSize[3])
+        const metrics = this.data.ctx.measureText(this.data.textarea)
+        this.data.imgWidth = metrics.width + 20
+        this.data.imgHeight = 40
         this.data.tempImgWidth = this.data.imgWidth
         this.data.tempImgHeight = this.data.imgHeight
         this.data.operate = 'draw'
