@@ -61,7 +61,7 @@
         <view class="color-items" style="background-color:{{item}};" data-index="{{index}}" bindtap="selectColor" ></view>
       </view>
     </view>
-    <view class="choseFont" hidden="{{picIsChosed}}" >
+    <view class="choseFont" hidden="{{fontSizeChose}}" >
       <image class="upOrDown" src="/images/left.png" bindtap="down" ></image>
       <view class="drtFont">{{choseSize}}</view>
       <image class="upOrDown" src="/images/right.png" bindtap="up" ></image>

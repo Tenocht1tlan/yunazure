@@ -39,6 +39,7 @@ Page({
         ctx: wx.createCanvasContext('mainCanvas'),
         complete: false,
         picIsChosed:true,
+        fontSizeChose:true,
         textIsChosed:false,
         currentChoseItem :0,
         array:['卡通','图标','水果','动物','爱心','中国风','花','其他'],
@@ -433,6 +434,7 @@ Page({
         this.setData({
           picIsChosed: true,
           textIsChosed: false,
+          fontSizeChose:true,
           textarea: '',
           addText: false
         })
@@ -441,6 +443,7 @@ Page({
         this.setData({
           picIsChosed: false,
           textIsChosed: true,
+          fontSizeChose:false,
           imgUrl: ''
         })
       },
@@ -679,17 +682,20 @@ Page({
         if(e.target.dataset.index == 0){
           this.setData({
             isText: true,
+            fontSizeChose:false,
             fontCategory: e.target.dataset.index
           })
         }else if(e.target.dataset.index == 3){
           this.setData({
             isText: false,
+            fontSizeChose:true,
             isTextColor: true,
             fontCategory: e.target.dataset.index
           })
         }else{
           this.setData({
             isText: false,
+            fontSizeChose:true,
             fontCategory: e.target.dataset.index
           })
         }
