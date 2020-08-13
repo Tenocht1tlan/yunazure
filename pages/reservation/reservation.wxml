@@ -1,4 +1,4 @@
-<image class="background" src="{{image}}" lazy-load="true" mode="scaleToFill" webp="true" bindtap="uploadFile"></image>
+<image class="background" src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/custom/others/ad.jpg" lazy-load="true" mode="scaleToFill" webp="true"></image>
 
 <view class="x-backGard">
   <view class="backGard" >
@@ -32,7 +32,7 @@
     <view class="space"></view>
     <view class="protocol">
       <image class="icon" src="/images/my/check.png" mode="aspectFit"></image>
-      <view class="protext">预约即默认同意</view>
+      <view class="protext"> 预约即默认同意</view>
       <button class="probutton" bindtap="probook">协议</button>
     </view>
     <view class="space"></view>

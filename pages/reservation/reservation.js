@@ -1,10 +1,6 @@
-// pages/reservation/reservation.js
 const db = wx.cloud.database()
 const app = getApp()
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     name:'',
     phone:'',
@@ -143,24 +139,16 @@ Page({
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success (res) {
-        // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
         wx.cloud.uploadFile({
           cloudPath: new Date().getTime() +'.png',
-          filePath: tempFilePaths[0], // 文件路径
+          filePath: tempFilePaths[0], 
         }).then(res => {
-          // get resource ID
           db.collection('image').add({
             data:{
               fileID:res.fileID
             }
-          }).then(res1=>{
-            console.log(res1)
-          }).catch(err=>{
-            console.log(err)
           })
-        }).catch(error => {
-          // handle error
         })
       }
     })

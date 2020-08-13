@@ -78,7 +78,7 @@ Page({
           [],
           ['/images/custom/carton/1.png','/images/custom/carton/2.png','/images/custom/carton/3.png']
         ],
-        fontSize: [20, 28, 36, 44],
+        fontSize: [28, 36, 44],
         currFontSize: 28,
         fontColor: ['red', 'yellow', 'white', 'black'],
         currFontColor: 'yellow',
@@ -253,9 +253,9 @@ Page({
         if(this.data.imgUrl) {
           ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
         }else if(this.data.addText) {
-          ctx.font = "44px monospace"
+          // ctx.font = "44px monospace"
           ctx.setFillStyle(this.data.currFontColor)
-          // ctx.setFontSize(this.data.fontSize[3])
+          ctx.setFontSize(this.data.currFontSize)
           ctx.fillText(this.data.textarea, x + 10, 0)
         }
         // 旋转回来,保证除了图片以外的其他元素不被旋转
@@ -313,46 +313,44 @@ Page({
           return
         }
         wx.showLoading({
-          title: '加载中',
+          title: '作品生成中...',
         })
         this.initCanvas()
         this.setData({
           complete: true
         })
-        const that = this
-        
-        setTimeout(function () {
-          wx.hideLoading({
-            success: (res) => {
-              that.finalComplete()
-            }
-          })
-        }, 500)
+        this.finalComplete()
       },
       finalComplete:function(){
         let ctx = wx.createCanvasContext('completeCanvas')
-        ctx.draw(true, ()=> {
-          wx.canvasToTempFilePath({
-            canvasId: 'completeCanvas',
-            success: function (res) {
-              const cloudPath = new Date().getTime() +'.png'
-              wx.cloud.uploadFile({
-                cloudPath: cloudPath,
-                filePath: res.tempFilePath,
-              }).then(res => {
-                db.collection('myCustom').add({
-                  data:{
-                    fileID:res.fileID
-                  }
-                }).then(res=>{
-                  wx.navigateTo({
-                    url: "/pages/custom-product/index?url=" + cloudPath
+        const that = this
+        ctx.draw(true,setTimeout(()=> {
+              wx.canvasToTempFilePath({
+                canvasId: 'completeCanvas',
+                success: function (res) {
+                  const cloudPath = new Date().getTime() +'.png'
+                  wx.cloud.uploadFile({
+                    cloudPath: cloudPath,
+                    filePath: res.tempFilePath,
+                  }).then(res => {
+                    db.collection('myCustom').add({
+                      data:{
+                        fileID:res.fileID
+                      },
+                      success: function(res) {
+                        wx.navigateTo({
+                          url: "/pages/custom-product/index?url=" + cloudPath
+                        })
+                      }
+                    })
+                    setTimeout(()=> {
+                      wx.hideLoading()
+                    },500)
                   })
-                })
-              })
-            },
-          })
-        })
+                }
+              },that)
+        }, 500)
+        )
       },
       // 判断是否在 某个矩形范围内
       isInRange (x1, y1, x2, y2, px, py) {
@@ -477,7 +475,7 @@ Page({
         })
       },
       getTextPicInfo(){
-        this.data.ctx.setFontSize(this.data.fontSize[3])
+        this.data.ctx.setFontSize(this.data.currFontSize)
         const metrics = this.data.ctx.measureText(this.data.textarea)
         this.data.imgWidth = metrics.width + 20
         this.data.imgHeight = 40
@@ -656,7 +654,7 @@ Page({
         ctx.rotate(this.data.rotateAngle * Math.PI / 180)
         if(this.data.addText){
           ctx.setFillStyle(this.data.currFontColor)
-          ctx.setFontSize(this.data.fontSize[3])
+          ctx.setFontSize(this.data.currFontSize)
           ctx.fillText(this.data.textarea, xx, 0)
         }else if(this.data.imgUrl){
           ctx.drawImage(this.data.imgUrl, xx, yy, this.data.tempImgWidth, this.data.tempImgHeight)
@@ -727,8 +725,10 @@ Page({
         this.setData({
           downHidden:false,
           choseNum:num,
-          choseSize:this.data.FontSize[num]
+          choseSize:this.data.FontSize[num],
+          currFontSize:this.data.fontSize[num]
         })
+        this.getTextPicInfo()
       }
     },
     up:function(){
@@ -738,15 +738,19 @@ Page({
         this.setData({
           upHidden:false,
           choseNum:num,
-          choseSize:this.data.FontSize[num]
+          choseSize:this.data.FontSize[num],
+          currFontSize:this.data.fontSize[num]
         })
+        this.getTextPicInfo()
       }
     },
     // 选择颜色
     selectColor:function(e){
       var index = e.target.dataset.index
       this.setData({
-        fontColorCategory:index
+        fontColorCategory:index,
+        currFontColor: this.data.colorChose[index]
       })
+      this.draw()
     }
 })
