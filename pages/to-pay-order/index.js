@@ -98,8 +98,8 @@ Page({
         country: '中国',
         province: '浙江省',
         city: '杭州市',
-        area: '滨江区',
-        address: '',
+        area: '桐庐县',
+        address: '方埠工业园区Yunazure仓库',
         postCode: ''
       },receiver: {
         name: e.linkMan,
@@ -114,28 +114,28 @@ Page({
         postCode: e.code
       },shop: {
         wxaPath: '/order-details/index?from=waybill&id=' + e.orderId,
-        imgUrl: 'https://7975-yunazure-sygca-1302289079.tcb.qcloud.la/goods/woolblendcap.jpg?sign=bbfec6989b1d6c0f4a3861c64f937702&t=1592715477',
+        imgUrl: orderInfoDetail[0].pic,
         goodsName: orderInfoDetail[0].name,
         goodsCount: this.data.goodsNum
       },cargo: {
         count: this.data.goodsNum,
-        weight: 0.5,
-        spaceX: 35,
-        spaceY: 35,
-        spaceZ: 3,
+        weight: 0.3,
+        spaceX: 30,
+        spaceY: 30,
+        spaceZ: 10,
         detailList: list
       },insured: {
-        useInsured: 1,
-        insuredValue: 10000
+        useInsured: 0,
+        insuredValue: 0
       },service: {
-        serviceType: 1,//0,
-        serviceName: 'test_service_name'//'标准快递'
+        serviceType: 0,// SF:0（标准快递）
+        serviceName: '标准快递'//'标准快递'
       },
       addSource: 0,
       orderId: e.orderid,
-      deliveryId: 'TEST', //'SF',
-      bizId: 'test_biz_id',//'SF_CASH',
-      customRemark: '衣帽包包'
+      deliveryId: 'SF', //'SF',DB
+      bizId: 'SF_CASH',//'SF_CASH',DB_CASH
+      customRemark: this.data.remark
     }
     wx.cloud.callFunction({
       name:'addOrder',
@@ -153,13 +153,31 @@ Page({
         customRemark: orderInfo.customRemark
       }
     }).then(res=>{
-      wx.showToast({
-        title: '成功通知物流',
-        icon: 'success'
+      console.log("waybillId = " + res.result.waybillId)
+      wx.showModal({
+        title: "提示",
+        content: res.result,
+        showCancel: false,
+        success(){
+          db.collection('orderlist').where({
+            'postData.orderid': e.orderid
+          }).update({
+            data: {
+              'postData.waybillId': res.result.waybillId
+            }
+          })
+        }
       })
-      console.log("下单成功：" + res)
+      // wx.showToast({
+      //   title: '成功通知物流',
+      //   icon: 'success'
+      // })
     }).catch(err=>{
-      console.log("下单失败："+ err)
+      wx.showModal({
+        title: "提示",
+        content: err,
+        showCancel: false
+      })
     })
   },
   // queryOrder:function(){
@@ -343,6 +361,7 @@ Page({
       postData.totalAmount = that.data.allGoodsAndYunPrice
       postData.amount = that.data.allGoodsPrice
       postData.goodsNum = that.data.goodsNum
+      postData.waybillId = ""
       db.collection('orderlist').add({
         data:{
           postData: postData

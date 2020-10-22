@@ -13,8 +13,9 @@ Page({
       provinceId:'',
       districtId:'',
       address:'',
-      status:0
-
+      status:0,
+      waybillId:"",
+      time:""
     },
     onLoad:function(e){
       const accountInfo = wx.getAccountInfoSync()
@@ -26,6 +27,14 @@ Page({
     },
     onShow : function () {
       var that = this
+      let len = this.data.orderId.toString().length
+      let tim = parseInt(this.data.orderId.toString().substring(9,len))
+      let time = this.formatTimeTwo(tim,'Y-M-D h:m:s')
+      console.log("len :"+parseInt(this.data.orderId.toString().substring(9,len)))
+      console.log("time :"+time)
+      this.setData({
+        time:time
+      });
       db.collection("orderlist").where({
         "postData.orderid": that.data.orderId
       }).get().then(res=>{
@@ -39,15 +48,34 @@ Page({
           districtId:res.data[0].postData.districtId,
           address:res.data[0].postData.address,
           status:res.data[0].postData.status,
-
+          waybillId:res.data[0].postData.waybillId
         })
         console.log(this.data.orderDetail)
-        console.log(this.data.linkMan)
       })
-        // 绘制核销码
-        // if (res.data.orderInfo.hxNumber && res.data.orderInfo.status > 0) {
-        //   wxbarcode.qrcode('qrcode', res.data.orderInfo.hxNumber, 650, 650)
-        // }
+    },
+    /** 
+     * 时间戳转化为年 月 日 时 分 秒 
+     * number: 传入时间戳 
+     * format：返回格式，支持自定义，但参数必须与formateArr里保持一致 
+    */
+    formatTimeTwo(number, format) {
+      var formateArr = ['Y', 'M', 'D', 'h', 'm', 's'];
+      var returnArr = [];
+      var date = new Date(number);
+      returnArr.push(date.getFullYear());
+      returnArr.push(this.formatNumber(date.getMonth() + 1));
+      returnArr.push(this.formatNumber(date.getDate()));
+      returnArr.push(this.formatNumber(date.getHours()));
+      returnArr.push(this.formatNumber(date.getMinutes()));
+      returnArr.push(this.formatNumber(date.getSeconds()));
+      for (var i in returnArr) {
+          format = format.replace(formateArr[i], returnArr[i]);
+      }
+      return format;
+    },
+    formatNumber(n) {
+      n = n.toString()
+      return n[1] ? n : '0' + n
     },
     wuliuDetailsTap:function(e){
       var orderId = e.currentTarget.dataset.id
@@ -106,12 +134,12 @@ Page({
         name:'queryOrderInfo',
         data: {
           orderId: this.data.orderId,
-          deliveryId: 'TEST',
+          deliveryId: 'SF',
           waybillId: ''
         }
       }).then(res=>{
         wx.showModal({
-          content: 'orderId:' + res.result.orderId + ' -key ' + res.result.waybillData[0].key +' -value ' + res.result.waybillData[0].value,
+          content: 'waybillId:' + res.result.waybillId,
           showCancel: true,
           title: 'result'
         })
@@ -125,12 +153,12 @@ Page({
         name:'getOrderPath',
         data: {
           orderId: this.data.orderId,
-          deliveryId: 'TEST',
-          waybillId: 'Yunazure-1592918244451_1592918252_waybill_id'
+          deliveryId: 'SF',
+          waybillId: this.data.waybillId
         }
       }).then(res=>{
         wx.showModal({
-          content: 'orderId:' + res.result.orderId + ' -waybillId ' + res.result.waybillId +' -pathItemNum ' + res.result.pathItemNum + '- pathItemList' + res.result.pathItemList,
+          content: 'orderId:' + res.result.orderId +' -pathItemNum ' + res.result.pathItemNum + '- pathItemList' + res.result.pathItemList,
           showCancel: true,
           title: 'result'
         })
@@ -144,7 +172,7 @@ Page({
         name:'cancelOrder',
         data: {
           orderId: this.data.orderId,
-          deliveryId: 'TEST',
+          deliveryId: 'SF',
           waybillId: 'Yunazure-1592918244451_1592918252_waybill_id'
         }
       }).then(res=>{

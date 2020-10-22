@@ -58,15 +58,15 @@
   </view>
 
   <view class="showAddress-box" >
-      <image  class="addressIcon" src="/images/order-details/icon-address.png"></image>
-    <view class="showAddressText" bindtap="queryOrder">
+    <image class="addressIcon" src="/images/order-details/icon-address.png"></image>
+    <view class="showAddressText" bindtap="queryOrderPath">
       <view class="showAddress" >{{linkMan}}    {{mobile}}</view> 
       <view class="showAddress">{{provinceId}} {{districtId}} {{address}}</view>
     </view>
   </view>
   <view class="goods-list">
     <view class="list-title">商品信息</view>
-    <!-- <button bindtap="queryOrder">查询物流信息</button> -->
+    <button bindtap="queryOrder">查询物流信息</button>
     <!-- <button bindtap="cancelOrder">取消订单</button>
     <button bindtap="queryOrderPath">订单跟踪</button>
     <button bindtap="queryOrder">打印</button> -->
@@ -119,18 +119,9 @@
       </view>
     </form>
   </view>
-  <view class="peisong-way" hidden="true">
-    <view class="row-box">
-      <view class="row-label">配送方式</view>
-      <view class="right-text">顺丰快递</view>
-    </view>
-    <view class="row-box">
-      <view class="row-label">留言</view>
-      <view class="right-text">
-        <input name="remark" type="text" class="liuyan" placeholder="如需留言请输入" />
-      </view>
-    </view>
-  </view>
+  <!-- <view class="peisong-way">
+
+  </view> -->
   <view wx:if="{{orderDetail.goodsCoupons}}" class="goods-info" style="margin-bottom:32rpx;">
     <view wx:for="{{orderDetail.goodsCoupons}}" wx:key="{{item.id}}" class="row-box">
       <view wx:if="{{item.type == 0}}" class="row-label">优惠券</view>
@@ -144,6 +135,10 @@
       <view class="right-text">¥ {{orderDetail.amount}}</view>
     </view>
     <view class="row-box">
+      <view class="row-label">配送方式</view>
+      <view class="right-text">顺丰快递</view>
+    </view>
+    <view class="row-box">
       <view class="row-label">运费</view>
       <view class="right-text">+ ¥ {{orderDetail.amountLogistics}}</view>
     </view>
@@ -154,6 +149,10 @@
     <view class="row-box">
       <view class="row-label">订单编号</view>
       <text class="right-text" selectable='true'>{{orderDetail.orderid}}</text>
+    </view>
+    <view class="row-box">
+      <view class="row-label">订单时间</view>
+      <text class="right-text" selectable='true'>{{time}}</text>
     </view>
   </view>
 </view>

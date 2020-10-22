@@ -147,6 +147,7 @@ Page({
             })
           }
         })
+        that.order(orderid)
       },
       fail(res) {
         wx.showToast({
@@ -158,6 +159,111 @@ Page({
       complete(res) {
         console.log("支付完成：", res)
       }
+    })
+  },
+  order:function(e){
+    let receiverInfo
+    this.data.orderList.forEach(val=>{
+      if(val.postData.orderid == e){
+        receiverInfo = val.postData
+        return
+      }
+    })
+    let orderInfoDetail = JSON.parse(receiverInfo.postData.goodsJsonStr)
+    console.log("orderInfoDetail = "+ orderInfoDetail)
+    let list = []
+    orderInfoDetail.forEach(e=>{
+      list.push({
+          name: e.name,
+          count: e.count
+      })
+    })
+    console.log("detail = "+ list)
+    var orderInfo = {
+      sender: {
+        name: '周晓赟',
+        tel: '',
+        mobile: '13575726661',
+        company: '杭州知语服饰有限公司',
+        country: '中国',
+        province: '浙江省',
+        city: '杭州市',
+        area: '桐庐县',
+        address: '方埠工业园区Yunazure仓库',
+        postCode: ''
+      },receiver: {
+        name: receiverInfo.postData.linkMan,
+        tel: '',
+        mobile: receiverInfo.postData.mobile,
+        company: '',
+        country: '中国',
+        province: receiverInfo.postData.provinceId,
+        city: receiverInfo.postData.cityId,
+        area: receiverInfo.postData.districtId,
+        address: receiverInfo.postData.address,
+        postCode: receiverInfo.postData.code
+      },shop: {
+        wxaPath: '/order-details/index?from=waybill&id=' + e,
+        imgUrl: orderInfoDetail[0].pic,
+        goodsName: orderInfoDetail[0].name,
+        goodsCount: receiverInfo.postData.goodsNum
+      },cargo: {
+        count: receiverInfo.postData.goodsNum,
+        weight: 0.5,
+        spaceX: 40,
+        spaceY: 40,
+        spaceZ: 3,
+        detailList: list
+      },insured: {
+        useInsured: 0,
+        insuredValue: 0
+      },service: {
+        serviceType: 0,// SF:0（标准快递）
+        serviceName: '标准快递'//'标准快递'
+      },
+      addSource: 0,
+      orderId: e,
+      deliveryId: 'SF', //'SF',DB
+      bizId: 'SF_CASH',//'SF_CASH',DB_CASH
+      customRemark: receiverInfo.postData.remark
+    }
+    wx.cloud.callFunction({
+      name:'addOrder',
+      data: {
+        sender: orderInfo.sender,
+        receiver: orderInfo.receiver,
+        shop: orderInfo.shop,
+        cargo: orderInfo.cargo,
+        insured: orderInfo.insured,
+        service: orderInfo.service,
+        addSource: orderInfo.addSource,
+        orderId: orderInfo.orderId,
+        deliveryId: orderInfo.deliveryId,
+        bizId: orderInfo.bizId,
+        customRemark: orderInfo.customRemark
+      }
+    }).then(res=>{
+      console.log("waybillId = " + res.result.waybillId)
+      wx.showModal({
+        title: '提示',
+        content: res.result,
+        showCancel: false,
+        success(){
+          db.collection('orderlist').where({
+            'postData.orderid': e
+          }).update({
+            data: {
+              'postData.waybillId': res.result.waybillId
+            }
+          })
+        }
+      })
+    }).catch(err=>{
+      wx.showModal({
+        title: "提示",
+        content: err,
+        showCancel: false
+      })
     })
   },
   onLoad: function(options) {
