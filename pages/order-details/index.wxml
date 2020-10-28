@@ -8,11 +8,7 @@
         <image wx:elif="{{status==2}}" class="icon" src="/images/order-details/icon-ddsh.png"></image>
         <image wx:elif="{{status==3 || status==4}}" class="icon" src="/images/order-details/icon-jycg.png"></image>
       </view>
-      <view class="right-text">
-        <!-- <view class="status red">{{orderDetail.orderInfo.statusStr}}</view> -->
-        <view class="status red">快递信息代替字符</view>
-        <view class="des" hidden="true">请于11时59分59秒内付款，超时订单将自动关闭</view>
-      </view>
+      <view class="right-text" bindtap="queryOrderPath">查看物流</view>
     </view>
     <block wx:if="{{orderDetail.logistics}}">
       <view wx:if="{{orderDetail.logisticsTraces}}" class="wuliu-box">
@@ -25,9 +21,6 @@
             <view class="wuliu-text">{{orderDetail.logisticsTraces[orderDetail.logisticsTraces.length-1].AcceptStation}}</view>
             <view class="wuliu-date">{{orderDetail.logisticsTraces[orderDetail.logisticsTraces.length-1].AcceptTime}}</view>
           </block>
-        </view>
-        <view class="arrow-right">
-          <image class="arrow" src="/images/arrow-right.png"></image>
         </view>
       </view>
       <view wx:else class="wuliu-box">
@@ -52,22 +45,19 @@
       </view>
     </block>
   </view>
-  <view wx:if="{{orderDetail.orderInfo.hxNumber && orderDetail.orderInfo.status > 0}}" class="goods-list">
-    <view class="list-title hx-title">核销码</view>
-    <canvas class="hx-canvas" canvas-id="qrcode" />
-  </view>
 
   <view class="showAddress-box" >
     <image class="addressIcon" src="/images/order-details/icon-address.png"></image>
-    <view class="showAddressText" bindtap="queryOrderPath">
-      <view class="showAddress" >{{linkMan}}    {{mobile}}</view> 
-      <view class="showAddress">{{provinceId}} {{districtId}} {{address}}</view>
+    <view class="showAddressText">
+      <view class="showAddressone">{{linkMan}}    {{mobile}}</view> 
+      <view class="showAddresstwo">{{provinceId}} {{districtId}} {{address}}</view>
     </view>
+    <!-- <image class="addressIcon" src="/images/arrow-right.png"></image> -->
   </view>
   <view class="goods-list">
     <view class="list-title">商品信息</view>
-    <button bindtap="queryOrder">查询物流信息</button>
-    <!-- <button bindtap="cancelOrder">取消订单</button>
+    <!--<button bindtap="queryOrder">查询物流信息</button>
+    <button bindtap="cancelOrder">取消订单</button>
     <button bindtap="queryOrderPath">订单跟踪</button>
     <button bindtap="queryOrder">打印</button> -->
     <form bindsubmit="submitReputation" report-submit="true">
@@ -120,7 +110,6 @@
     </form>
   </view>
   <!-- <view class="peisong-way">
-
   </view> -->
   <view wx:if="{{orderDetail.goodsCoupons}}" class="goods-info" style="margin-bottom:32rpx;">
     <view wx:for="{{orderDetail.goodsCoupons}}" wx:key="{{item.id}}" class="row-box">
@@ -145,6 +134,10 @@
     <view class="row-box">
       <view class="row-label">应付总额</view>
       <view class="right-text">¥ {{orderDetail.totalAmount}}</view>
+    </view>
+    <view class="row-box">
+      <view class="row-label">运单号</view>
+      <text class="right-text" selectable='true'>{{waybillId}}</text>
     </view>
     <view class="row-box">
       <view class="row-label">订单编号</view>

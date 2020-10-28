@@ -153,10 +153,10 @@ Page({
         customRemark: orderInfo.customRemark
       }
     }).then(res=>{
-      console.log("waybillId = " + res.result.waybillId)
+      console.log("waybillId = " + res.result.waybillId + "waybillData = " + res.result.waybillData + "errMsg = " + res.result.errMsg)
       wx.showModal({
-        title: "提示",
-        content: res.result,
+        title: "下单成功！",
+        content: res.result.waybillId,
         showCancel: false,
         success(){
           db.collection('orderlist').where({
@@ -168,13 +168,9 @@ Page({
           })
         }
       })
-      // wx.showToast({
-      //   title: '成功通知物流',
-      //   icon: 'success'
-      // })
     }).catch(err=>{
       wx.showModal({
-        title: "提示",
+        title: "下单失败！",
         content: err,
         showCancel: false
       })

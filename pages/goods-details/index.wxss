@@ -19,8 +19,9 @@ page,view,image,input,textarea {
   height:748rpx;
 }
 .de{
-  width: 750rpx;
-  margin-left: 120rpx;
+  width: 630rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
   display:flex;
   flex-direction: column;
   justify-content: flex-start;

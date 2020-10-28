@@ -35,8 +35,16 @@
   font-size: 28rpx;
   word-spacing: 2rpx;
   border-bottom: 3rpx rgb(206, 206, 206) solid;
-
 }
 .highlight{
 color: rgb(9, 255, 235);
+}
+.xieyi{
+  margin-top: 10rpx;
+  margin-left: 25rpx;
+  width: 700rpx;
+}
+.pics{
+  width: 700rpx;
+  height: 1420rpx;
 }

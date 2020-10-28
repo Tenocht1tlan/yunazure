@@ -143,7 +143,6 @@ page{
     height: 150rpx;
     line-height: 150rpx;
 }
-
 .addressIcon{
     align-self: center;
     background-color: rgb(168, 168, 168);
@@ -152,7 +151,6 @@ page{
     border-radius: 50rpx;
     padding: 20rpx;
     margin-left: 45rpx;
-
 }
 .showAddressText{
     margin-left: 20rpx;
@@ -165,9 +163,14 @@ page{
     word-spacing: 3rpx;
     color: #666;
 }
-.showAddress{
+.showAddressone{
     height:50rpx;
     line-height:50rpx; 
+}
+.showAddresstwo{
+    height:50rpx;
+    line-height:50rpx; 
+    font-size: 20rpx;
 }
 .goods-list .list-title{
     font-size: 28rpx;

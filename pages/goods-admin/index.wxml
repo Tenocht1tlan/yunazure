@@ -1,0 +1,185 @@
+<view class="page-body" hidden="{{type == 'add'? false:true}}">
+  <view class="page-section">
+    <view class="weui-cells__title">商品ID:（推荐以下ID。若修改，则‘-’后的数字需更大）</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="16" bindinput="goodIdInput" value="{{goodid}}" placeholder="请输入商品ID"/>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">商品名:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="48" bindinput="nameInput" value="{{name}}" placeholder="请输入商品名"/>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">价格:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="digit" maxlength="16" bindinput="priceInput" value="{{price}}" placeholder="请输入价格"/>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">尺码1:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="20" bindinput="size1Input" value="{{size1}}" placeholder="请输入尺码1"/>
+      </view>
+    </view>
+    <view class="weui-cells__title" hidden="{{size1 == ''? true:false}}">尺码2:（选填）</view>
+    <view class="weui-cells weui-cells_after-title" hidden="{{size1 == ''? true:false}}">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="20" bindinput="size2Input" value="{{size2}}" placeholder="请输入尺码2"/>
+      </view>
+    </view>
+    <view class="weui-cells__title" hidden="{{size2 == ''? true:false}}">尺码3:（选填，继续增加请联系开发者）</view>
+    <view class="weui-cells weui-cells_after-title" hidden="{{size2 == ''? true:false}}">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="20" bindinput="size3Input" value="{{size3}}" placeholder="请输入尺码3"/>
+      </view>
+    </view>
+    <view class="weui-cells__title">颜色1:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="20" bindinput="color1Input" value="{{color1}}" placeholder="请输入颜色1"/>
+      </view>
+    </view>
+    <view class="weui-cells__title" hidden="{{color1 == ''? true:false}}">颜色2:（选填）</view>
+    <view class="weui-cells weui-cells_after-title" hidden="{{color1 == ''? true:false}}">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="20" bindinput="color2Input" value="{{color2}}" placeholder="请输入颜色2"/>
+      </view>
+    </view>
+    <view class="weui-cells__title" hidden="{{color2 == ''? true:false}}">颜色3:（选填，继续增加请联系开发者）</view>
+    <view class="weui-cells weui-cells_after-title" hidden="{{color2 == ''? true:false}}">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="20" bindinput="color3Input" value="{{color3}}" placeholder="请输入颜色3"/>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">主要成分:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="48" bindinput="compositionInput" value="{{composition}}" placeholder="请输入主要成分"/>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">库存:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="number" maxlength="10" bindinput="stockNumInput" value="{{stockNum}}" placeholder="请输入库存"/>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">类型:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__bd">
+          <picker bindchange="reasonChange" value="{{typesIndex}}" range="{{types}}">
+            <view class="weui-select">{{types[typesIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">商品描述:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="64" bindinput="descriptionInput" value="{{description}}" placeholder="请输入描述"/>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">上传图片</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <view class="weui-uploader">
+          <view class="weui-uploader__hd">
+            <view class="weui-uploader__title">图片上传（默认第一张为首页展示的图片）</view>
+            <view class="weui-uploader__info">{{files.length}} 张</view>
+          </view>
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <block wx:for="{{files}}" wx:key="*this">
+                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                </view>
+              </block>
+            </view>
+            <view class="weui-uploader__input-box">
+              <view class="weui-uploader__input" bindtap="chooseImage"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="addNewGood">确认发布</button>
+  </view>
+</view>
+
+<view class="page-body" hidden="{{type == 'delete'? false:true}}">
+  <view class="page-section">
+    <view class="weui-cells__title">商品名:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="16" bindinput="deleteByNameInput" value="{{name}}" placeholder="请输入商品名"/>
+      </view>
+    </view>
+    <view class="weui-cells__title">你想搜的商品是否为:</view>
+    <block wx:for="{{deleteName}}" wx:key="item">
+      <view class="weui-cells__title" style="background-color: rgba(250, 118, 118, 0.5);margin-left: 5%;width: 60%;" bindtap="conformDeleteName" data-val="{{item}}">{{item}}</view>
+    </block>
+  </view>
+  <view class="weui-btn-area">
+    <button class="weui-btn" type="warn" bindtap="deleteGood">确认下架</button>
+  </view>
+</view>
+
+<view class="page-body" hidden="{{type == 'modify'? false:true}}">
+  <view class="page-section">
+    <view class="weui-cells__title">商品ID:</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input"  type="text" maxlength="16" bindinput="goodIdInput" value="{{goodid}}" placeholder="请输入商品ID"/>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">上传图片</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <view class="weui-uploader">
+          <view class="weui-uploader__hd">
+            <view class="weui-uploader__title">图片上传</view>
+            <view class="weui-uploader__info">{{files.length}} 张</view>
+          </view>
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <block wx:for="{{files}}" wx:key="*this">
+                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                </view>
+              </block>
+            </view>
+            <view class="weui-uploader__input-box">
+              <view class="weui-uploader__input" bindtap="chooseImage"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="modifyGood">确认修改</button>
+  </view>
+</view>

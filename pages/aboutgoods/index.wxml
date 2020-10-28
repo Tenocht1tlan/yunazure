@@ -11,7 +11,7 @@
 
     <text class="title">保养\n</text>
 
-    <text class="covertext"  style=" margin-top: 30rpx;" > 30℃ 以下机洗 较短较慢程序脱水\n</text>
+    <text class="covertext" style=" margin-top: 30rpx;" > 30℃ 以下机洗 较短较慢程序脱水\n</text>
     <text class="covertext" > 不可漂白\n</text>
     <text class="covertext" > 110℃ 以下熨烫\n</text>
     <text class="covertext" > 不可干洗\n</text>
@@ -43,21 +43,19 @@
      <text class="title">换货和退货\n</text>
      <text class="contextB" >换货选项不适用于网上购物。但是，在规定的退货期内您可以免费退货并重新下单。\n</text>
      <text class="title">在 Yunazure 商店\n</text>
-     <text class="contextB" >只要商品购买所在市场的任何一家 Yunazure 商店设有商品所属的专区 — 女士、男士、儿童，就可以办理退货。
-\n</text>
+     <text class="contextB" >只要商品购买所在市场的任何一家 Yunazure 商店设有商品所属的专区 — 女士、男士、儿童，就可以办理退货。\n</text>
      <text class="title">上门收货\n</text>
      <text class="contextB" >您通过<text class="highlight">订单和退货</text>部分，可以申请上门取件服务。\n</text>
 
      <text class="contextB" style="margin-top:60rpx" >    我们的一些商品可能有特殊的退货条件。更多信息请参阅<text class="highlight">换货和退货 > 特殊条件。</text>\n您可以在我们的<text class="highlight">购买条款</text>中找到有关退换货政策或撤销权的更多信息。\n</text>
 
-
   </view>
-  <text> 
-    
+</view>
 
-    
-    
-
-
-  </text>
+<view class="reservation" style="flex-direction: column; justify-content: center;" hidden="{{type == 'reservation' ? false : true}}">
+  <block wx:for="{{xieyi}}" wx:key="item">
+    <view class="xieyi">
+      <image class="pics" src="{{item}}" mode="aspectFill"></image>
+    </view>
+  </block>
 </view>

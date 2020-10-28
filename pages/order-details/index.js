@@ -30,8 +30,6 @@ Page({
       let len = this.data.orderId.toString().length
       let tim = parseInt(this.data.orderId.toString().substring(9,len))
       let time = this.formatTimeTwo(tim,'Y-M-D h:m:s')
-      console.log("len :"+parseInt(this.data.orderId.toString().substring(9,len)))
-      console.log("time :"+time)
       this.setData({
         time:time
       });
@@ -50,7 +48,6 @@ Page({
           status:res.data[0].postData.status,
           waybillId:res.data[0].postData.waybillId
         })
-        console.log(this.data.orderDetail)
       })
     },
     /** 
@@ -111,12 +108,10 @@ Page({
         let orderGoodsId = e.detail.value["orderGoodsId" + i];
         let goodReputation = e.detail.value["goodReputation" + i];
         let goodReputationRemark = e.detail.value["goodReputationRemark" + i];
-
         let reputations_json = {};
         reputations_json.id = orderGoodsId;
         reputations_json.reputation = goodReputation;
         reputations_json.remark = goodReputationRemark;
-
         reputations.push(reputations_json);
         i++;
       }
@@ -158,9 +153,9 @@ Page({
         }
       }).then(res=>{
         wx.showModal({
-          content: 'orderId:' + res.result.orderId +' -pathItemNum ' + res.result.pathItemNum + '- pathItemList' + res.result.pathItemList,
+          content: '物流信息：' + res.result.pathItemList,
           showCancel: true,
-          title: 'result'
+          title: '提示'
         })
         console.log(res)
       }).catch(err=>{
@@ -173,7 +168,7 @@ Page({
         data: {
           orderId: this.data.orderId,
           deliveryId: 'SF',
-          waybillId: 'Yunazure-1592918244451_1592918252_waybill_id'
+          waybillId: this.data.waybillId
         }
       }).then(res=>{
         wx.showModal({

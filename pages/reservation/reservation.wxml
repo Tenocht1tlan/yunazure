@@ -33,7 +33,7 @@
     <view class="protocol">
       <image class="icon" src="/images/my/check.png" mode="aspectFit"></image>
       <view class="protext"> 预约即默认同意</view>
-      <button class="probutton" bindtap="probook">协议</button>
+      <button class="probutton" bindtap="aboutGoods">协议</button>
     </view>
     <view class="space"></view>
     <view class="Confirm">
@@ -51,7 +51,7 @@
   <view class="hotext">热线电话：</view>
   <button class="hotbutton" bindtap="probook">17805805661</button>
 </view> -->
-<view class="textfirst" bindtap="showImage"> 预约完成后，客服将在24小时内联系您</view>
+<view class="textfirst" bindtap="showImage">预约完成后，客服将在24小时内联系您</view>
 <view class="space" ></view>
 <view class="container">
   <view class="dotted"></view>
@@ -72,6 +72,10 @@
 <cover-view class="kefu" >
   <button class="kefubutton" open-type="contact" bindcontact="handleContact">联系客服</button>
 </cover-view>
-
-<image src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/main.jpg" mode="aspectFit" style="width:750rpx;"> 
-</image>
+<view class="yuyuelist" hidden="{{!isAdmin}}">预约列表(共{{count}}条信息，管理员可见):
+  <block wx:for="{{infolist}}" wx:key="item">
+    <view class="yuyueItem">{{item.name}} - {{item.phone}} - {{item.region}}，{{item.address}} - 预约时间</view>
+    <view class="yyitem" style="margin-left: 5rpx;background: rgb(175, 182, 180);width: 720rpx;height: 3rpx;"></view>
+  </block>
+</view>
+<!-- <image src="cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/goods/woolblendcap/main.jpg" mode="aspectFit" style="width:750rpx;"></image> -->

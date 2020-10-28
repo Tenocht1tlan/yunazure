@@ -46,23 +46,23 @@ Page({
   },
   onShow(){
     const _this = this
-    WXAPI.refundApplyDetail(wx.getStorageSync('token'), _this.data.orderId).then(res => {
-      if (res.code == 0) {
-        _this.setData({
-          refundApplyDetail: res.data[0]  // baseInfo, pics
-        })
-      }
-    })
+    // WXAPI.refundApplyDetail(wx.getStorageSync('token'), _this.data.orderId).then(res => {
+    //   if (res.code == 0) {
+    //     _this.setData({
+    //       refundApplyDetail: res.data[0]  // baseInfo, pics
+    //     })
+    //   }
+    // })
   },
   refundApplyCancel(){
     const _this = this
-    WXAPI.refundApplyCancel(wx.getStorageSync('token'), _this.data.orderId).then(res => {
-      if (res.code == 0) {
-        wx.navigateTo({
-          url: "/pages/order-list/index"
-        })
-      }
-    })
+    // WXAPI.refundApplyCancel(wx.getStorageSync('token'), _this.data.orderId).then(res => {
+    //   if (res.code == 0) {
+    //     wx.navigateTo({
+    //       url: "/pages/order-list/index"
+    //     })
+    //   }
+    // })
   },
   typeItemsChange: function (e) {
     const typeItems = this.data.typeItems;
@@ -112,10 +112,10 @@ Page({
   async uploadPics(){
     const _this = this;
     for (let i = 0; i< _this.data.files.length; i++) {
-      const res = await WXAPI.uploadFile(wx.getStorageSync('token'), _this.data.files[i])
-      if (res.code == 0) {
-        _this.data.pics.push(res.data.url)
-      }
+      // const res = await WXAPI.uploadFile(wx.getStorageSync('token'), _this.data.files[i])
+      // if (res.code == 0) {
+      //   _this.data.pics.push(res.data.url)
+      // }
     }
   },
   async bindSave (e) {
@@ -136,41 +136,41 @@ Page({
     // 上传图片
     await _this.uploadPics()
     // _this.data.pics
-    WXAPI.refundApply({
-      token: wx.getStorageSync('token'),
-      orderId: _this.data.orderId,
-      type: _this.data.type,
-      logisticsStatus: _this.data.logisticsStatus,
-      reason: _this.data.reasons[_this.data.reasonIndex],
-      amount,
-      remark,
-      pic: _this.data.pics.join()
-    }).then(res => {
-      if (res.code == 0) {
-        wx.showModal({
-          title: '成功',
-          content: '提交成功，请耐心等待我们处理！',
-          showCancel: false,
-          confirmText: '我知道了',
-          success(res) {
-            wx.navigateTo({
-              url: "/pages/order-list/index"
-            })
-          }
-        })
-      } else {
-        wx.showModal({
-          title: '失败',
-          content: res.msg,
-          showCancel: false,
-          confirmText: '我知道了',
-          success(res) {
-            wx.navigateTo({
-              url: "/pages/order-list/index"
-            })
-          }
-        })
-      }
-    })
+    // WXAPI.refundApply({
+    //   token: wx.getStorageSync('token'),
+    //   orderId: _this.data.orderId,
+    //   type: _this.data.type,
+    //   logisticsStatus: _this.data.logisticsStatus,
+    //   reason: _this.data.reasons[_this.data.reasonIndex],
+    //   amount,
+    //   remark,
+    //   pic: _this.data.pics.join()
+    // }).then(res => {
+    //   if (res.code == 0) {
+    //     wx.showModal({
+    //       title: '成功',
+    //       content: '提交成功，请耐心等待我们处理！',
+    //       showCancel: false,
+    //       confirmText: '我知道了',
+    //       success(res) {
+    //         wx.navigateTo({
+    //           url: "/pages/order-list/index"
+    //         })
+    //       }
+    //     })
+    //   } else {
+    //     wx.showModal({
+    //       title: '失败',
+    //       content: res.msg,
+    //       showCancel: false,
+    //       confirmText: '我知道了',
+    //       success(res) {
+    //         wx.navigateTo({
+    //           url: "/pages/order-list/index"
+    //         })
+    //       }
+    //     })
+    //   }
+    // })
   }
 });

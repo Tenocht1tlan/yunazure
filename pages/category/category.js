@@ -40,7 +40,7 @@ Page({
       TOOLS.showTabBarBadge() // 获取购物车数据，显示TabBarBadge
     }
 
-    this.data.categorySelected.id = 'hat'
+    // this.data.categorySelected.id = 'hat' //默认选中hat
     this.categories()
   },
   async categories() {

@@ -84,9 +84,8 @@ Page({
     ],
     upImage:'',
     currentChoseItem :0,
-    // 弹出界面
     optionList:[],
-    hideFlag: true,//true-隐藏  false-显示
+    hideFlag: true,
     animationData: {},//
     Boutique:[{
         'src':'/images/woman.png'
@@ -109,11 +108,40 @@ Page({
     animationType:"animated bounceInRight",
     animationButton:"animated bounceIn",
     originLeft:'',
-    animationText:'探索系列',
-    textArray:['探索系列','男士新品','女士新品','儿童新品','百搭款式','热门商品'],
+    animationText:'Yunazure',
+    textArray:['Yunazure','帽子系列','家居毯系列','羊绒系列'],
     textColor:'#000',
-    textColorArray:['#000','#fff','#000','#fff','#000','#000']
+    textColorArray:['#000','#fff','#000','#fff','#000','#000'],
+    isAdmin:false
 },
+  initOpenId(){
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      let tmp = res.result.openid == 'og4T_4yv81CqaRRjLaXqePYnzkm0'? true:false
+      this.setData({
+        isAdmin:tmp
+      })
+    })
+  },
+  toAddPro: function(e) {
+    let type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: "/pages/goods-admin/index?type=" + type
+    })
+  },
+  toDeletePro: function(e) {
+    let type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: "/pages/goods-admin/index?type=" + type
+    })
+  },
+  toModifyPro: function(e) {
+    let type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: "/pages/goods-admin/index?type=" + type
+    })
+  },
   activeItem:function(e){
     this.setData({
       imageChose:this.data.array[e.target.dataset.index].imageChose,
@@ -254,7 +282,6 @@ Page({
 
   },
   async delFavDone(key){
-
     var openid = ''
     var list = []
     const that = this
@@ -496,7 +523,7 @@ Page({
       url: "/pages/Comp/index"
     })
   },
-  // ----------------------------------------------------------------.....
+  
   toDetailsTap: function(e) {
     wx.navigateTo({
       url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name
@@ -557,6 +584,7 @@ Page({
     })
     // this.initBanners()
     this.categories()
+    this.initOpenId()
     // WXAPI.goods({
     //   recommendStatus: 1
     // }).then(res => {

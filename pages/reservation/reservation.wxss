@@ -12,6 +12,23 @@
   height: 80rpx; 
   justify-content: center;
 }
+.yuyuelist{
+  margin-top: 20rpx;
+  margin-left: 10rpx;
+  color:  #666;
+  font-size: 32rpx;
+  height: 80rpx; 
+  justify-content: center;
+}
+.yuyueItem{
+  margin-top: 20rpx;
+  margin-left: 5rpx;
+  color: rgb(0, 0, 0);
+  font-size: 22rpx;  
+  width: 720rpx;
+  justify-content: center;
+  flex-direction: column;
+}
 .x-backGard{
   display: flex;
   margin-top: 50rpx;
@@ -171,7 +188,7 @@ button[class="hotbutton"]::after{
   word-spacing: 2px;
   color: rgb(0, 0, 0);
   border-radius: 30rpx;
-  background-color:rgba(203, 218, 3,0.6);
+  background-color:rgba(169, 173, 172, 0.6);
 
 }
 button::after{

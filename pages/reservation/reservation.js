@@ -14,9 +14,32 @@ Page({
     jiangshu:'江苏省南京市',
     fujian:'福建省福州市',
     content:'',
-    image:''
+    image:'',
+    isAdmin:false,
+    infolist:[],
+    count:0
   },
 
+  initOpenId(){
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{
+      let tmp = res.result.openid == 'og4T_43cgLw2wBv3c06cfeR-EVLQ'? true:false
+      this.setData({
+        isAdmin:tmp
+      })
+    })
+    db.collection('reservation').get().then(res=>{
+      let list = []
+      res.data.forEach(v=>{
+        list.push(v)
+      })
+      this.setData({
+        infolist:list,
+        count:list.length
+      })
+    })
+  },
   storeShowClick:function(e){
     var index = e.currentTarget.dataset.index
     if (index == 1) {
@@ -109,11 +132,6 @@ Page({
                       title: '预约成功！',
                       icon: 'success',
                     })
-                    // wx.showModal({
-                    //   title:'已预约!',
-                    //   content:'恭喜您成为我们的第 '+ _this.data.number.toString() +' 位预约用户！',
-                    //   showCancel:false
-                    // })
                     _this.setData({
                       name:'',
                       phone:'',
@@ -196,7 +214,12 @@ Page({
   },
   probook:function(){
     wx.makePhoneCall({
-      phoneNumber: '17805805661' //仅为示例，并非真实的电话号码
+      phoneNumber: '17805805661'
+    })
+  },
+  aboutGoods(){
+    wx.navigateTo({
+      url: '/pages/aboutgoods/index?type=reservation'
     })
   },
   /**
@@ -204,6 +227,7 @@ Page({
    */
   onLoad: function (options) {
     this.showImage()
+    this.initOpenId()
   },
 
   /**

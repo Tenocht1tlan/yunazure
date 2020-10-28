@@ -5,7 +5,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+      xieyi:['cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy1.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy2.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy3.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy4.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy5.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy6.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy7.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy8.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy9.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy10.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy11.jpg',
+      'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/others/xy12.jpg'
+    ]
   },
 
   /**
@@ -28,6 +40,10 @@ Page({
     }else if(type == 'delivery'){
       wx.setNavigationBarTitle({
         title: '配送与退货',
+      })
+    }else if(type == 'reservation'){
+      wx.setNavigationBarTitle({
+        title: '条款与协议',
       })
     }
   },

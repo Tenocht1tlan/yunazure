@@ -22,7 +22,7 @@
       <view class="swiper-ani" style="{{originLeft}}" bindtap="toNew">
         <text class="{{animationType}}" style="color:{{textColor}};">{{animationText}}</text>
       </view>
-      <view class="swiper-morebtn" style="{{originLeft}};">
+      <view class="swiper-morebtn" style="{{originLeft}};" bindtap="toNew">
         <text class="{{animationButton}}" style="width:220rpx; height:80rpx;border: 5rpx solid;text-align:center;line-height:80rpx;color:{{textColor}};" >查看更多</text>
       </view>
     </swiper-item>
@@ -93,7 +93,6 @@
   </view>
 </view>
 
-<!-- 6.1 -->
 <!-- <view style="margin-left:50rpx;margin-top:25rpx;">精品</view>
 <view class="upBoutiques">
     <view class="Boutiques" wx:for="{{Boutique}}" data-index="{{index}}" bindtap="Boutiques" wx:key="index">
@@ -124,10 +123,7 @@
   </navigator>
 </view> -->
 
-<!-- 定制 -->
-
     <view class="spe-box" style=" margin-top: 10rpx;" bindtap="toNew">
-
       <image  class="spetical" src="{{toNew}}"></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100" >了解更多</view>
     </view>
@@ -156,10 +152,17 @@
       </view>
     </view>
 
-<!-- 广告 -->           
 <view>
   <view class="weui-loadmore weui-loadmore_line">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">猜你喜欢</view>
+  </view>
+  <view class="admin" hidden="{{!isAdmin}}">
+    <text style="text-align: center;display: flex;justify-content: center;">仅管理员可见</text>
+    <view class="weui-btn-area" style="display: flex;justify-content: center;margin-top: 20rpx;">
+      <button class="mini-btn" type="primary" size="mini" bindtap="toAddPro" data-type="add">增加商品</button>
+      <button class="mini-btn" type="primary" size="mini" bindtap="toDeletePro" data-type="delete">下架商品</button>
+      <button class="mini-btn" type="primary" size="mini" bindtap="toModifyPro" data-type="modify">修改商品</button>
+  </view>
   </view>
   <view style='display: inline-block;flex-wrap:wrap;'>
     <view class="uIntre" wx:for="{{goods}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.good_id}}"  data-name="{{item.name}}" >
@@ -172,7 +175,7 @@
         <image class="packge" src="/images/packge.png" style="width:32rpx;height:32rpx;margin:10rpx 10rpx 0rpx 50rpx " catchtap="showUp" data-index="{{index}}" data-id="{{item.good_id}}"></image>
       </view>
       <view style="color:gray;margin:0rpx 45rpx 5rpx 25rpx;display:flex;flex-direction:row;">
-        <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:fit-content;margin-right:20rpx;'>¥ {{item.originalPrice}}</view>
+        <!-- <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" style='color:#aaa;text-decoration:line-through;width:fit-content;margin-right:20rpx;'>¥ {{item.originalPrice}}</view> -->
         ￥{{item.minPrice}}
       </view>
     </view>

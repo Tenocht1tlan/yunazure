@@ -46,8 +46,9 @@
     "pages/customize/index", 
     "pages/canvas/index", 
     "pages/custom-product/index", 
-    "pages/aboutgoods/index" ,
-    "pages/precustomize/index"
+    "pages/aboutgoods/index",
+    "pages/precustomize/index",
+    "pages/goods-admin/index"
   ], 
   "window": { 
     "backgroundTextStyle": "light", 
