@@ -1,9 +1,10 @@
-<view class="page-body" hidden="{{type == 'add'? false:true}}">
+<view class="page-body" hidden="{{type == 'delete'? true:false}}">
   <view class="page-section">
-    <view class="weui-cells__title">商品ID:（推荐以下ID。若修改，则‘-’后的数字需更大）</view>
+    <view class="weui-cells__title" hidden="{{type == 'add'? false:true}}">推荐新的商品ID:</view>
+    <view class="weui-cells__title" hidden="{{type == 'modify'? false:true}}">请先输入需要修改的商品ID: </view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <input class="weui-input"  type="text" maxlength="16" bindinput="goodIdInput" value="{{goodid}}" placeholder="请输入商品ID"/>
+        <input class="weui-input"  type="text" maxlength="16" disabled="{{canModify}}" bindinput="goodIdInput" bindconfirm="searchIDForModify" confirm-type="search" value="{{goodid}}" placeholder="请输入商品ID"/>
       </view>
     </view>
   </view>
@@ -123,7 +124,8 @@
     </view>
   </view>
   <view class="weui-btn-area">
-    <button class="weui-btn" type="primary" bindtap="addNewGood">确认发布</button>
+    <button class="weui-btn" type="primary" bindtap="addNewGood" hidden="{{type == 'add'? false:true}}">确认发布</button>
+    <button class="weui-btn" type="primary" bindtap="addNewGood" hidden="{{type == 'modify'? false:true}}">确认修改</button>
   </view>
 </view>
 
@@ -142,44 +144,5 @@
   </view>
   <view class="weui-btn-area">
     <button class="weui-btn" type="warn" bindtap="deleteGood">确认下架</button>
-  </view>
-</view>
-
-<view class="page-body" hidden="{{type == 'modify'? false:true}}">
-  <view class="page-section">
-    <view class="weui-cells__title">商品ID:</view>
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        <input class="weui-input"  type="text" maxlength="16" bindinput="goodIdInput" value="{{goodid}}" placeholder="请输入商品ID"/>
-      </view>
-    </view>
-  </view>
-  <view class="weui-cells__title">上传图片</view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell">
-      <view class="weui-cell__bd">
-        <view class="weui-uploader">
-          <view class="weui-uploader__hd">
-            <view class="weui-uploader__title">图片上传</view>
-            <view class="weui-uploader__info">{{files.length}} 张</view>
-          </view>
-          <view class="weui-uploader__bd">
-            <view class="weui-uploader__files" id="uploaderFiles">
-              <block wx:for="{{files}}" wx:key="*this">
-                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                </view>
-              </block>
-            </view>
-            <view class="weui-uploader__input-box">
-              <view class="weui-uploader__input" bindtap="chooseImage"></view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-  <view class="weui-btn-area">
-    <button class="weui-btn" type="primary" bindtap="modifyGood">确认修改</button>
   </view>
 </view>

@@ -50,7 +50,9 @@ Page({
       {name:'设计师发布', id:'design'}
     ],
     typesIndex: 0,
-    deleteName:[]
+    deleteName:[],
+    canModify:false,
+    goodInfo:{}
   },
 
   /**
@@ -99,7 +101,8 @@ Page({
         tmp += 1
         this.setData({
           maxID:tmp,
-          goodid:newGoodid
+          goodid:newGoodid,
+          canModify:true
         })
       }else{
         wx.showModal({
@@ -335,35 +338,42 @@ Page({
     })
   },
   bindconfirm() {
-    wx.showLoading({
-      title: '加载中',
-    })
-    db.collection('goods').where({
-      name: db.RegExp({
-        regexp: this.data.name,
-        options: 'i'
+    if(this.data.name){
+      wx.showLoading({
+        title: '加载中',
       })
-    }).get().then(res=>{
-      if(res.data.length > 0){
-        let tmp = []
-        res.data.forEach(v=>{
-          tmp.push(v.name)
+      var index = 0
+      db.collection('goods').where({
+        name: db.RegExp({
+          regexp: this.data.name,
+          options: 'i'
         })
-        this.setData({
-          deleteName: tmp
-        })
-      }else{
-        this.setData({
-          deleteName: []
-        })
-        wx.showToast({
-          title: '小Yun实在找不到该商品~',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-      wx.hideLoading()
-    })
+      }).get().then(res=>{
+        if(res.data.length > 0){
+          let tmp = []
+          res.data.forEach(v=>{
+            if(index == 5){
+              return
+            }
+            index += 1
+            tmp.push(v.name)
+          })
+          this.setData({
+            deleteName: tmp
+          })
+        }else{
+          this.setData({
+            deleteName: []
+          })
+          wx.showToast({
+            title: '小Yun实在找不到该商品~',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+        wx.hideLoading()
+      })
+    }
   },
   deleteGood(){
     var that = this
@@ -389,6 +399,46 @@ Page({
         }
       }
     })
+  },
+  searchIDForModify: function (e){
+    this.setData({
+      goodid: e.detail.value
+    })
+    if(this.data.type == 'modify'){
+      wx.showLoading({
+        title: '加载中',
+      })
+      db.collection('goods').where({
+        good_id: this.data.goodid
+      }).get().then(res=>{
+        if(res.data){
+          this.setData({
+            name:res.data[0].name,
+            price:res.data[0].minPrice,
+            files:[res.data[0].pic],
+            stockNum:res.data[0].stockNum,
+            description:res.data[0].description,
+            composition:res.data[0].composition,
+            canModify:true
+          })
+          wx.hideLoading()
+        }else{
+          wx.hideLoading()
+          wx.showModal({
+            title: '提示',
+            content: '商品ID不正确，未找到该商品信息',
+            showCancel: false
+          })
+        }
+      }).catch(err=>{
+        wx.hideLoading()
+        wx.showModal({
+          title: '提示',
+          content: '商品ID不正确，未找到该商品信息',
+          showCancel: false
+        })
+      })
+    }
   },
   modifyGood: function (e) {
 

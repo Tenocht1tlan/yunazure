@@ -104,7 +104,7 @@ Page({
         command: "pay",
         out_trade_no: orderId,
         body: 'yunazure-scarf-DIY',
-        total_fee: parseInt(money) * 100
+        total_fee: parseInt(money * 100) 
       },
       success(res) {
         console.log("云函数payment提交成功：", res.result)
@@ -170,7 +170,6 @@ Page({
       }
     })
     let orderInfoDetail = JSON.parse(receiverInfo.postData.goodsJsonStr)
-    console.log("orderInfoDetail = "+ orderInfoDetail)
     let list = []
     orderInfoDetail.forEach(e=>{
       list.push({
@@ -178,7 +177,8 @@ Page({
           count: e.count
       })
     })
-    console.log("detail = "+ list)
+    var timestamp = Date.parse(new Date());
+    console.log("timestamp: " + timestamp)
     var orderInfo = {
       sender: {
         name: '周晓赟',
@@ -221,12 +221,14 @@ Page({
         serviceType: 0,// SF:0（标准快递）
         serviceName: '标准快递'//'标准快递'
       },
+      expectTime: timestamp / 1000,
       addSource: 0,
       orderId: e,
       deliveryId: 'SF', //'SF',DB
       bizId: 'SF_CASH',//'SF_CASH',DB_CASH
       customRemark: receiverInfo.postData.remark
     }
+    console.log(orderInfo)
     wx.cloud.callFunction({
       name:'addOrder',
       data: {
@@ -236,6 +238,7 @@ Page({
         cargo: orderInfo.cargo,
         insured: orderInfo.insured,
         service: orderInfo.service,
+        expectTime: orderInfo.expectTime,
         addSource: orderInfo.addSource,
         orderId: orderInfo.orderId,
         deliveryId: orderInfo.deliveryId,
@@ -243,10 +246,10 @@ Page({
         customRemark: orderInfo.customRemark
       }
     }).then(res=>{
-      console.log("waybillId = " + res.result.waybillId + "waybillData = " + res.result.waybillData + "errMsg = " + res.result.errMsg)
+      console.log("deliveryResultmsg = " + res.result.deliveryResultmsg + " -- deliveryResultcode = " + res.result.deliveryResultcode + " -- errMsg = " + res.result.errMsg + " -- errMsg = " +res.result.errCode)
       wx.showModal({
         title: '提示',
-        content: res.result.waybillId,
+        content: res.result.errCode + '-' + res.result.errMsg,
         showCancel: false,
         success(){
           db.collection('orderlist').where({

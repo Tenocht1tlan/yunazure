@@ -15,6 +15,7 @@ exports.main = async (event, context) => {
         cargo: event.cargo,
         insured: event.insured,
         service: event.service,
+        expectTime: event.expectTime,
         addSource: event.addSource,
         orderId: event.orderId,
         deliveryId: event.deliveryId,
