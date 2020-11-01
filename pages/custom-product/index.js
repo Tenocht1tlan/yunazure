@@ -25,21 +25,21 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    db.collection('myCustom').get().then(res=>{
-      if(res.data){
-        res.data.forEach(v=>{
-          list = v.fileID
-          if(list.indexOf(options.url) >= 0){
-            that.setData({
-              url: list,
-              key: options.url
-            })
-            return
-          }
-        })
-      }
-      wx.hideLoading()
-    })
+    wx.cloud.callFunction({
+      name:'getCustomImg'
+    }).then(res=>{
+      res.result.data.forEach(v=>{
+        list = v.fileID
+        if(list.indexOf(options.url) >= 0){
+          that.setData({
+            url: list,
+            key: options.url
+          })
+          return
+        }
+        wx.hideLoading()
+      })
+    }).catch(console.error)
   },
 
   /**

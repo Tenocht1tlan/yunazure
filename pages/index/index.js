@@ -523,7 +523,6 @@ Page({
       url: "/pages/Comp/index"
     })
   },
-  
   toDetailsTap: function(e) {
     wx.navigateTo({
       url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name
@@ -600,33 +599,6 @@ Page({
     // that.pingtuanGoods()
     // this.wxaMpLiveRooms()    
   },
-  // async miaoshaGoods(){
-  //   const res = await WXAPI.goods({
-  //     miaosha: true
-  //   })
-  //   if (res.code == 0) {
-  //     res.data.forEach(ele => {
-  //       const _now = new Date().getTime()
-  //       if (ele.dateStart) {
-  //         ele.dateStartInt = new Date(ele.dateStart).getTime() - _now
-  //       }
-  //       if (ele.dateEnd) {
-  //         ele.dateEndInt = new Date(ele.dateEnd).getTime() -_now
-  //       }
-  //     })
-  //     this.setData({
-  //       miaoshaGoods: res.data
-  //     })
-  //   }
-  // },
-  // async wxaMpLiveRooms(){
-  //   const res = await WXAPI.wxaMpLiveRooms()
-  //   if (res.code == 0 && res.data.length > 0) {
-  //     this.setData({
-  //       aliveRooms: res.data
-  //     })
-  //   }
-  // },
   async initBanners(){
     const _data = {}
     // 读取头部轮播图
@@ -678,17 +650,7 @@ Page({
 
     // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge()
-    // this.goodsDynamic()
-    // this.miaoshaGoods()
   },
-  // async goodsDynamic(){
-  //   const res = await WXAPI.goodsDynamic(0)
-  //   if (res.code == 0) {
-  //     this.setData({
-  //       goodsDynamic: res.data
-  //     })
-  //   }
-  // },
   async categories(){
     // const res = await WXAPI.goodsCategory()
     let categories = [];
@@ -703,7 +665,7 @@ Page({
     //   activeCategoryId: 0,
     //   curPage: 1
     // });
-    this.getGoodsList(0);
+    this.getGoodsList(0)
   },
   onPageScroll(e) {
     let scrollTop = this.data.scrollTop
@@ -745,22 +707,21 @@ Page({
     //     })
     //   })
     // })
-
-    db.collection('goods').get().then(res=>{
-      if(res.data){
+    wx.cloud.callFunction({
+      name:'getIndexGoods'
+    }).then(res=>{
+      if(res.result.data){
         this.setData({
-          goods:res.data
+          goods:res.result.data
         })
       }else{
         wx.showModal({
           title: '提示',
-          content: 'fail',
+          content: '网络异常',
           showCancel: false
         })
       }
-    }).catch(err=>{
-      
-    })
+    }).catch(console.error)
     wx.hideLoading()
     if(true){
       let newData = {
@@ -773,13 +734,6 @@ Page({
       return
     }
     
-    // let goods = []
-    // if (append) {
-    //   goods = this.data.goods
-    // }
-    // for (var i = 0; i < this.data.goods.length; i++) {
-    //   goods.push(this.data.goods[i]);
-    // }
     this.setData({
       loadingMoreHidden: true,
       goods: goods,

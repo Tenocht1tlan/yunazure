@@ -79,11 +79,13 @@ Page({
     }
   },
   getGoods(){
-    db.collection('goods').get().then(res=>{
-      if(res.data){
+    wx.cloud.callFunction({
+      name:'getIndexGoods'
+    }).then(res=>{
+      if(res.result.data){
         var tmp = this.data.maxID
         var tmpGoodid = ''
-        res.data.forEach(v=>{
+        res.result.data.forEach(v=>{
           if(v.id > tmp){
             tmp = v.id
             tmpGoodid = v.good_id
@@ -92,11 +94,12 @@ Page({
         
         let len = tmpGoodid.length
         let substr = parseInt(tmpGoodid.substring(9,len))
-        var timestamp = Date.parse(new Date());
-        var date = new Date(timestamp);
-        var Y = date.getFullYear();
-        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
+        var timestamp = Date.parse(new Date())
+        var date = new Date(timestamp)
+
+        var Y = date.getFullYear()
+        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+        var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
         let newGoodid = Y.toString() + M.toString() + D.toString() + '-' + (substr+1).toString()
         tmp += 1
         this.setData({
@@ -111,9 +114,7 @@ Page({
           showCancel: false
         })
       }
-    }).catch(err=>{
-      
-    })
+    }).catch(console.error)
   },
   goodIdInput: function (e) {
     this.setData({
@@ -383,19 +384,20 @@ Page({
       success (res) {
         if (res.confirm) {
           db.collection('goods').where({
-            name: this.data.name
+            name: that.data.name
           }).remove()
           that.setData({
             name: '',
             deleteName:[]
           })
+          db.collection('history').where({
+            name: that.data.name
+          }).remove()
           wx.showToast({
             title: '已下架',
             icon: 'none',
             duration: 2000
           })
-        } else if (res.cancel) {
-
         }
       }
     })

@@ -52,7 +52,6 @@ Page({
       })
       this.initShippingAddress()
     }
-    
   },
   onLoad(e) {
     let _data = {
@@ -155,21 +154,29 @@ Page({
         customRemark: orderInfo.customRemark
       }
     }).then(res=>{
-      console.log("deliveryResultmsg = " + res.result.deliveryResultmsg + " -- deliveryResultcode = " + res.result.deliveryResultcode + " -- errMsg = " + res.result.errMsg + " -- errMsg = " +res.result.errCode)
-      wx.showModal({
-        title: "提示",
-        content: res.result.errCode + '-' + res.result.errMsg,
-        showCancel: false,
-        success(){
-          db.collection('orderlist').where({
-            'postData.orderid': e.orderid
-          }).update({
-            data: {
-              'postData.waybillId': res.result.waybillId
-            }
-          })
-        }
-      })
+      console.log("errMsg = " + res.result.errMsg + " -- errCode = " +res.result.errCode)
+      if(res.result.errCode == 0){
+        wx.showModal({
+          title: "提示",
+          content: res.result.waybillId,
+          showCancel: false,
+          success(){
+            db.collection('orderlist').where({
+              'postData.orderid': e.orderid
+            }).update({
+              data: {
+                'postData.waybillId': res.result.waybillId
+              }
+            })
+          }
+        })
+      }else{
+        wx.showModal({
+          title: "下单失败！",
+          content: '错误码：' + res.result.errCode + ',请联系客服',
+          showCancel: false
+        })
+      }
     }).catch(err=>{
       wx.showModal({
         title: "下单失败！",
@@ -205,7 +212,7 @@ Page({
       data: {
         command: "pay",
         out_trade_no: orderid,
-        body: 'yunazure-scarf-DIY',
+        body: 'Yunazure-shopping',
         total_fee: orderInfo.totalAmount * 100
       },
       success(res) {
@@ -219,7 +226,6 @@ Page({
         })
       },
       complete(){
-
       }
     })
   },
@@ -234,7 +240,7 @@ Page({
       paySign: payData.paySign, //签名
       success(res) {
         console.log("支付成功：", res)
-        wx.cloud.callFunction({  //巧妙利用小程序支付成功后的回调，再次调用云函数，通知其支付成功，以便进行订单状态变更
+        wx.cloud.callFunction({
           name: "payment",
           data: {
             command: "payOK",
@@ -299,7 +305,6 @@ Page({
   },
   createOrder: function (e) {
     var that = this
-    var openid = wx.getStorageSync('openid')
     var remark = this.data.remark // 备注信息
     
     let postData = {
@@ -311,10 +316,14 @@ Page({
     if (that.data.kjId) {
       postData.kjid = that.data.kjId
     }
-    // if (that.data.pingtuanOpenId) {
-    //   postData.pingtuanOpenId = that.data.pingtuanOpenId
-    // }
-    
+    if (!e) {
+      that.setData({
+        isNeedLogistics: that.data.isNeedLogistics,
+        allGoodsAndYunPrice: that.data.allGoodsPrice,
+        allGoodsPrice: that.data.allGoodsPrice,
+        yunPrice: 0
+      })
+    }
     if (that.data.isNeedLogistics > 0 && postData.peisongType == 'kd') {
       if (!that.data.hasAddressData) {
         wx.hideLoading()
@@ -339,20 +348,7 @@ Page({
     if (that.data.curCoupon) {
       postData.couponId = that.data.curCoupon.id;
     }
-    if (!e) {
-      postData.calculate = "true";
-    }
-    if (!e) {
-      let yunPrice = 0.01
-      that.setData({
-        isNeedLogistics: that.data.isNeedLogistics,
-        allGoodsAndYunPrice: that.data.allGoodsPrice + yunPrice,
-        allGoodsPrice: that.data.allGoodsPrice.toFixed(2),
-        yunPrice: yunPrice.toFixed(2)
-      })
-      // that.getMyCoupons() //优惠券
-      return
-    }
+    
     if(e){
       postData.status = 0
       postData.amountLogistics = that.data.yunPrice
@@ -427,20 +423,13 @@ Page({
       return
     }
     var goodsJsonStr = "["
-    // var isNeedLogistics = 0
-    var allGoodsPrice = 0
+    var goodsPrice = 0
     var goodsNum = 0
-    // let inviter_id = 0;
-    // let inviter_id_storge = wx.getStorageSync('referrer');
-    // if (inviter_id_storge) {
-      // inviter_id = inviter_id_storge;
-    // }
+    
     for (let i = 0; i < goodsList.length; i++) {
       let carShopBean = goodsList[i]
-      // if (carShopBean.logistics || carShopBean.logisticsId) {
-      //   isNeedLogistics = 1;
-      // }
-      allGoodsPrice += parseInt(carShopBean.price) * carShopBean.number;
+      goodsPrice += carShopBean.price * carShopBean.number
+      console.log('allGoodsPrice = '+ parseFloat(goodsPrice.toFixed(2)))
       goodsNum += carShopBean.number
       var goodsJsonStrTmp = '';
       if (i > 0) {
@@ -452,7 +441,7 @@ Page({
           propertyChildIds = propertyChildIds + ',' + option.optionId + ':' + option.optionValueId
         })
         carShopBean.propertyChildIds = propertyChildIds
-      }//
+      }
       goodsJsonStrTmp += '{"goodsId":"' + carShopBean.good_id + '","price":"' + carShopBean.price + '","pic":"' + carShopBean.pic + '","name":"' + carShopBean.name + '","number":"' + carShopBean.number + '","size":"' + carShopBean.size + '"}'
       goodsJsonStr += goodsJsonStrTmp;
     }
@@ -460,9 +449,10 @@ Page({
     this.setData({
       isNeedLogistics: 1,
       goodsJsonStr: goodsJsonStr,
-      allGoodsPrice: allGoodsPrice,
+      allGoodsPrice: parseFloat(goodsPrice.toFixed(2)),
       goodsNum: goodsNum
-    });
+    })
+    console.log("1= " + this.data.allGoodsPrice)
     this.createOrder(false)
   },
   addAddress: function () {

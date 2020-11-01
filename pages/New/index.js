@@ -61,20 +61,21 @@ Page({
     wx.showLoading({
       "mask": true
     })
-    db.collection('goods').get().then(res=>{
-      if(res.data){
+    wx.cloud.callFunction({
+      name:'getIndexGoods'
+    }).then(res=>{
+      if(res.result.data){
         this.setData({
-          goods:res.data
+          goods:res.result.data
         })
       }else{
         wx.showModal({
           title: '提示',
-          content: 'fail',
+          content: '网络异常',
           showCancel: false
         })
       }
-    }).catch(err=>{ 
-    })
+    }).catch(console.error)
     wx.hideLoading()
     if(true){
       let newData = {
