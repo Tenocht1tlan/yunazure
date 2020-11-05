@@ -5,7 +5,7 @@ const db = wx.cloud.database()
 
 Page({
     data:{
-      orderId:0,
+      orderId: '',
       goodsList:[],
       orderDetail:[],
       linkMan:'',
@@ -75,9 +75,8 @@ Page({
       return n[1] ? n : '0' + n
     },
     wuliuDetailsTap:function(e){
-      var orderId = e.currentTarget.dataset.id
       wx.navigateTo({
-        url: "/pages/wuliu/index?id=" + orderId
+        url: "/pages/wuliu/index?data=" + this.data.orderDetail
       })
     },
     confirmBtnTap:function(e){

@@ -1,3 +1,4 @@
+const TOOLS = require('../../utils/tools.js')
 const db = wx.cloud.database()
 const app = getApp()
 Page({
@@ -24,7 +25,10 @@ Page({
     wx.cloud.callFunction({
       name:'login'
     }).then(res=>{
-      let tmp = res.result.openid == 'og4T_43cgLw2wBv3c06cfeR-EVLQ'? true:false
+      let tmp = res.result.openid == 'og4T_43cgLw2wBv3c06cfeR-EVLQ' || res.result.openid == 'og4T_4yv81CqaRRjLaXqePYnzkm0'? true:false
+      if(tmp){
+        TOOLS.resTabBarBadge()
+      }
       this.setData({
         isAdmin:tmp
       })
@@ -112,7 +116,7 @@ Page({
             }).count().then(res => {
               _this.setData({
                 number:res.total + 1,
-                orderNumber: date.getFullYear().toString() + date.getMonth().toString() + '-' + (res.total + 1).toString() 
+                orderNumber: date.getFullYear().toString() +'-'+ (date.getMonth() + 1).toString() +'-'+ date.getDate().toString() +' '+date.getHours() +':'+ date.getMinutes() +':'+ date.getSeconds() 
               })
             })
             setTimeout(function () {

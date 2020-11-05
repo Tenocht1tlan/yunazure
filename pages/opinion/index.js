@@ -1,85 +1,94 @@
-// pages/opinion/index.js
+const TOOLS = require('../../utils/tools.js')
+const db = wx.cloud.database()
+const app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    max:400,
-    min:2,
-    minWord:'',
     problem:'',
-    phoMail:''
+    phoneNumber:'',
+    isAdmin:false
   },
-
   getValueLength:function(e){
     let value = e.detail.value
-    let len = parseInt(value.length)
-
-    if(len <= this.data.min){
-      this.setData({
-        minWord:"最少填写两个字哦"
-      })
-    }else{
-      this.setData({
-        minWord:""
-      })
-    }
-    if(len>400) return;
     this.setData({
-      currentWordNumber:len,
       problem:value
     })
   },
   commit:function(){
-    if(this.data.problem==''){
-      console.log('yxhyxh')
+    if(this.data.problem == ''){
       wx.showToast({
-        title: '请输入内容',
+        title:'请输入内容',
         duration:2000,
         icon:'none'
       })
-    }else{
-      if(this.data.phoMail==''){
-        wx.showToast({
-          title: '请输入手机号或邮箱号',
-          duration:2000,
-          icon:'none'
-        })
-      }else if(!((/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(this.data.phoMail))||(/^1[34578]\d{9}$/.test(this.data.phoMail)))){
-        wx.showToast({
-          title: '请输入正确的手机号或邮箱号',
-          duration:2000,
-          icon:'none'
-        })
-      }else{
-        wx.showToast({
-          title: '提交成功',
-          duration:2000,
-          icon:'none'
-        })
-      }
+      return
     }
-    console.log(this.data.problem)
-    console.log(this.data.phoMail)
-  },
-  getPhoMail:function(e){
-    let value =  e.detail.value
-    this.setData({
-      phoMail:value
+    if(this.data.phoneNumber == ''){
+      wx.showToast({
+        title:'请输入手机号',
+        duration:2000,
+        icon:'none'
+      })
+      return
+    } 
+    if(!((/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(this.data.phoneNumber))||(/^1[34578]\d{9}$/.test(this.data.phoneNumber)))){
+      wx.showToast({
+        title:'请输入正确的手机号',
+        duration:2000,
+        icon:'none'
+      })
+      return
+    }
+    var date = new Date()
+    var dateTime = date.getFullYear().toString() +'-'+ (date.getMonth() + 1).toString() +'-'+ date.getDate().toString() +' '+date.getHours() +':'+ date.getMinutes() +':'+ date.getSeconds()
+    db.collection('OpinionList').add({
+      data: {
+        description: this.data.problem,
+        date: dateTime,
+        tag: 'opinion',
+        phone: this.data.phoneNumber
+      }
+    }).then(res=>{
+      wx.showModal({
+        title: '提交成功',
+        content: 'Yunazure已经收到您的意见或反馈！',
+        showCancel: false,
+        success (res) {
+          if (res.confirm) {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        }
+      })
     })
   },
-  // getPhoMail:function(e){
-  //   let value =  e.detail.value
-  //   this.setData({
-  //     phoMail:value
-  //   })
-  // },
+  getPhoMail:function(e){
+    let value = e.detail.value
+    this.setData({
+      phoneNumber:value
+    })
+  },
+  initOpenId(){
+    wx.cloud.callFunction({
+      name:'login'
+    }).then(res=>{// yun: og4T_43cgLw2wBv3c06cfeR-EVLQ  zy: og4T_4yv81CqaRRjLaXqePYnzkm0
+      let tmp = res.result.openid == 'og4T_43cgLw2wBv3c06cfeR-EVLQ' || res.result.openid == 'og4T_4yv81CqaRRjLaXqePYnzkm0'? true:false
+      // if(tmp){
+      //   TOOLS.resTabBarBadge()
+      // }
+      this.setData({
+        isAdmin:tmp
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.initOpenId()
   },
 
   /**

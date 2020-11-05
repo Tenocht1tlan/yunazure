@@ -7,6 +7,7 @@ Page({
    */
   data: {
     type:'',
+    doc:'',
     goodid:'',
     maxID:0,
     name:'',
@@ -255,10 +256,10 @@ Page({
       return
     }
     let subPics = []
-    for(let i=1;i<this.data.files.length;i++){
+    for(let i=1;i<this.data.files.length + 1;i++){
       let item = {
         optionValueId:i.toString(),
-        pic:this.data.files[i]
+        pic:this.data.files[i-1]
       }
       subPics.push(item)
     }
@@ -337,12 +338,20 @@ Page({
     this.setData({
       name: e.currentTarget.dataset.val
     })
+    var tmp = []
+    db.collection('goods').where({
+      name: e.currentTarget.dataset.val
+    }).get().then(res=>{
+      res.data[0].subPics.forEach(v=>{
+        tmp.push(v.pic)
+      })
+      this.setData({
+        files: tmp
+      })
+    })
   },
   bindconfirm() {
     if(this.data.name){
-      wx.showLoading({
-        title: '加载中',
-      })
       var index = 0
       db.collection('goods').where({
         name: db.RegExp({
@@ -372,7 +381,6 @@ Page({
             duration: 2000
           })
         }
-        wx.hideLoading()
       })
     }
   },
@@ -389,6 +397,11 @@ Page({
           that.setData({
             name: '',
             deleteName:[]
+          })
+          wx.cloud.deleteFile({
+            fileList: that.data.files
+          }).then(res => {
+          }).catch(error => {
           })
           db.collection('history').where({
             name: that.data.name
@@ -414,14 +427,25 @@ Page({
         good_id: this.data.goodid
       }).get().then(res=>{
         if(res.data){
+          var tmp = []
+          res.data[0].subPics.forEach(v=>{
+            tmp.push(v.pic)
+          })
           this.setData({
             name:res.data[0].name,
             price:res.data[0].minPrice,
-            files:[res.data[0].pic],
+            files:tmp,
+            size1:res.data[0].sku[0].childsCurGoods[0].value,
+            size2:res.data[0].sku[0].childsCurGoods[1].value,
+            size3:res.data[0].sku[0].childsCurGoods[2].value,
+            color1:res.data[0].sku[1].childsCurGoods[0].value,
+            color2:res.data[0].sku[1].childsCurGoods[1].value,
+            color3:res.data[0].sku[1].childsCurGoods[2].value,
             stockNum:res.data[0].stockNum,
             description:res.data[0].description,
             composition:res.data[0].composition,
-            canModify:true
+            canModify:true,
+            doc:res.data[0]._id
           })
           wx.hideLoading()
         }else{
@@ -443,22 +467,173 @@ Page({
     }
   },
   modifyGood: function (e) {
-
+    if(this.data.name == ''){
+      wx.showModal({
+        title: '提示',
+        content: '商品名不能为空',
+        showCancel: false
+      })
+      return
+    }
+    if(this.data.price == 0){
+      wx.showModal({
+        title: '提示',
+        content: '商品价格不能为空',
+        showCancel: false
+      })
+      return
+    }
+    if(this.data.size1 == ''){
+      wx.showModal({
+        title: '提示',
+        content: '至少输入一个尺码',
+        showCancel: false
+      })
+      return
+    }
+    if(this.data.color1 == ''){
+      wx.showModal({
+        title: '提示',
+        content: '至少输入一个颜色',
+        showCancel: false
+      })
+      return
+    }
+    if(this.data.composition == ''){
+      wx.showModal({
+        title: '提示',
+        content: '主要成分不能为空',
+        showCancel: false
+      })
+      return
+    }
+    if(this.data.stockNum == 0){
+      wx.showModal({
+        title: '提示',
+        content: '库存不能为空',
+        showCancel: false
+      })
+      return
+    }
+    if(this.data.description == ''){
+      wx.showModal({
+        title: '提示',
+        content: '商品描述不能为空',
+        showCancel: false
+      })
+      return
+    }
+    if(!this.data.files || this.data.files.length == 0){
+      wx.showModal({
+        title: '提示',
+        content: '至少选择一张图片',
+        showCancel: false
+      })
+      return
+    }
+    let subPics = []
+    for(let i=1;i<this.data.files.length + 1;i++){
+      let item = {
+        optionValueId:i.toString(),
+        pic:this.data.files[i-1]
+      }
+      subPics.push(item)
+    }
+    let sku = [
+      {
+        id:'size',
+        name:'尺码',
+        childsCurGoods:[]
+      },
+      {
+        id:'color',
+        name:'颜色',
+        childsCurGoods:[]
+      },
+    ]
+    // 尺码 sku
+    let childsSize = []
+    if(this.data.size2 == ''){
+      childsSize = [{id:'1', value:this.data.size1, active:false}]
+    }else if(this.data.size2 && this.data.size3 == ''){
+      childsSize = [{id:'1', value:this.data.size1, active:false}, {id:'2', value:this.data.size2, active:false}]
+    }else if(this.data.size3){
+      childsSize = [{id:'1', value:this.data.size1, active:false}, {id:'2', value:this.data.size2, active:false}, {id:'3', value:this.data.size3, active:false}]
+    }
+    // 颜色 sku
+    let childsColor = []
+    if(this.data.color2 == ''){
+      childsColor = [{id:'1', value:this.data.color1, active:false}]
+    }else if(this.data.color2 && this.data.color3 == ''){
+      childsColor = [{id:'1', value:this.data.color1, active:false}, {id:'2', value:this.data.color2, active:false}]
+    }else if(this.data.color3){
+      childsColor = [{id:'1', value:this.data.color1, active:false}, {id:'2', value:this.data.color2, active:false}, {id:'3', value:this.data.color3, active:false}]
+    }
+    sku[0].childsCurGoods = childsSize
+    sku[1].childsCurGoods = childsColor
+    db.collection('goods').doc(this.data.doc).update({
+      data:{
+        addedtime: new Date().getTime(),
+        good_id:this.data.goodid,
+        name:this.data.name,
+        id:this.data.maxID,
+        minPrice:this.data.price,
+        originalPrice:this.data.price,
+        pic:this.data.files[0],
+        sku:sku,
+        subPics: subPics,
+        stockNum:this.data.stockNum,
+        description: this.data.description,
+        composition:this.data.composition,
+        type:this.data.typesID[this.data.typesIndex].id
+      }
+    }).then(res=>{
+      wx.showModal({
+        title: '提示',
+        content: '修改成功！',
+        showCancel: false,
+        success (res) {
+          if (res.confirm) {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        }
+      })
+    })
+    .catch(console.error)
   },
   chooseImage: function (e) {
-    const that = this;
+    const that = this
+    var tmp = []
     wx.chooseImage({
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: function (res) {
-        that.setData({
-          files: that.data.files.concat(res.tempFilePaths)
-        });
+        res.tempFilePaths.forEach(e=>{
+          let str = 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/'
+          const cloudPath = 'goods/admin/' + new Date().getTime() +'.png'
+          let file = str + cloudPath
+          tmp.push(file)
+          wx.cloud.uploadFile({
+            cloudPath: cloudPath,
+            filePath: e,
+          }).then(res => {
+            if(that.data.files.length > 0){
+              that.setData({
+                files: that.data.files.concat(file)
+              })
+            }else{
+              that.setData({
+                files: tmp
+              })
+            }
+          })
+        })
       }
     })
   },
   previewImage: function (e) {
-    console.log("urls : " + this.data.files)
     const that = this;
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接

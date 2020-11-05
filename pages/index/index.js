@@ -3,7 +3,6 @@ const TOOLS = require('../../utils/tools.js')
 const AUTH = require('../../utils/auth')
 const db = wx.cloud.database();
 const APP = getApp()
-// fixed首次打开不显示标题的bug
 APP.configLoadOK = () => {
   wx.setNavigationBarTitle({
     title: "Yunazure"
@@ -16,12 +15,12 @@ Page({
     , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/2.jpg'
     , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/3.jpg'
     , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/4.jpg'],
-    toNew:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/story.jpg',
-    toDiy:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/color.png',
-    toSpecial:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/home.jpg',
-    toComp:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/story.jpg',
-    toAd:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/materil.jpg',
-    toActivity:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/produce.jpg',
+    DiyURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/story.jpg',
+    NewURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/color.png',
+    SpecialURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/home.jpg',
+    CompURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/story.jpg',
+    AdURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/materil.jpg',
+    ActivityURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/produce.jpg',
     isIos:APP.globalData.isIos,
     navHeight:APP.globalData.navHeight,
     inputVal: "",               // 搜索框内容
@@ -113,12 +112,15 @@ Page({
     textColor:'#000',
     textColorArray:['#000','#fff','#000','#fff','#000','#000'],
     isAdmin:false
-},
+  },
   initOpenId(){
     wx.cloud.callFunction({
       name:'login'
-    }).then(res=>{
-      let tmp = res.result.openid == 'og4T_4yv81CqaRRjLaXqePYnzkm0'? true:false
+    }).then(res=>{// yun: og4T_43cgLw2wBv3c06cfeR-EVLQ  zy: og4T_4yv81CqaRRjLaXqePYnzkm0
+      let tmp = res.result.openid == 'og4T_43cgLw2wBv3c06cfeR-EVLQ' || res.result.openid == 'og4T_4yv81CqaRRjLaXqePYnzkm0'? true:false
+      if(tmp){
+        TOOLS.resTabBarBadge()
+      }
       this.setData({
         isAdmin:tmp
       })
@@ -150,7 +152,6 @@ Page({
     })
   },
   Boutiques:function(e){
-    // let temp = 'textHidden[' + e.currentTarget.dataset.index +']';
     var temp = []
     if(e.currentTarget.dataset.index == 0){
       temp = [true,false,false,false]

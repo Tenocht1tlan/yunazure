@@ -50,8 +50,8 @@
     </view>
     <view class="material-wrap" hidden="{{picIsChosed}}">
       <scroll-view class="material-items" style="white-space: nowrap;" scroll-x="true" hidden="{{isText}}">
-        <image hidden="{{isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{font[fontCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectFont" src='{{item}}' data-index="{{index}}" ></image>
-        <!-- <view hidden="{{!isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{font[fontCategory]}}" style="{{item}}" wx:key="id" bindtap="selectMateria" data-index="{{index}}" ></view> -->
+        <!-- <image hidden="{{isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{fontFamilyImgs[fontCategory]}}" wx:key="id" lazy-load="true" mode="aspectFill" bindtap="selectFont" src='{{item}}' data-index="{{index}}" ></image> -->
+        <view hidden="{{isTextColor}}" class="{{index===materialCategoryIcon?'materialChosed':'material-item'}}" wx:for="{{fontFamilyImgs[fontCategory]}}" wx:key="id" bindtap="selectFont" style="justify-content: center;{{item}}" data-index="{{index}}">字体</view>
       </scroll-view>
       <textarea hidden="{{!isText}}" class="material-text" maxlength="10" placeholder=" 点这里输入文字内容" placeholder-style="font-size:28rpx;" adjust-position="true" value="{{textarea}}" bindinput="textInput"></textarea>
       <view hidden="{{!isText}}" class="text-commit" hover-class="tc-hover" hover-stay-time="100" bindtap="finishBtn">添加文本</view>

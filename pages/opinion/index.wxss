@@ -35,7 +35,7 @@
   line-height:6vh;
   margin-top: 100rpx;
   color: #fff;
-  background-color: #000;
+  background-color: #666;
   margin-left: 169rpx;
   border-radius: 0%;
 }

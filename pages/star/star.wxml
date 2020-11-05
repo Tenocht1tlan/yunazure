@@ -1,22 +1,18 @@
-<!--pages/star/star.wxml-->
-
-  <view class="edit" bindtap="edit">{{Edit}} </view>
-  <view class="all">
-    <view class="star-box" wx:for="{{favGoods}}" wx:key="good_id" ><!--心愿单的上商品的框架-->
-      <image class="starImag" src="{{item.pic}}" mode="aspectFill"  bindtap="check"  data-index="{{index}}" data-id="{{item.good_id}}" data-name="{{item.name}}">
-        <image class="check"  src="{{item.select?'/images/my/checkYes.png':'/images/my/checkNo.png'}}"  hidden="{{checkHidden}}"></image>
-      </image><!--心愿商品的图片-->
-      <view class="goodName">{{item.name}}<!--商品的名称，颜色，编号-->
-      </view>
-      <view class="goodDetial">{{item.color}} {{item.good_id}}
-      </view>
+<view class="edit" bindtap="editFav">{{Edit}} </view>
+<view class="all">
+  <view class="star-box" wx:for="{{favGoods}}" wx:key="good_id" >
+    <image class="starImag" src="{{item.pic}}" mode="aspectFill"  bindtap="check"  data-index="{{index}}" data-id="{{item.good_id}}" data-name="{{item.name}}">
+      <image class="check"  src="{{item.select?'/images/my/checkYes.png':'/images/my/checkNo.png'}}"  hidden="{{checkHidden}}"></image>
+    </image>
+    <view class="goodName">{{item.name}}
+    </view>
+    <view class="goodDetial">{{item.color}} {{item.good_id}}
     </view>
   </view>
- 
-  <!-- 底部删除框-->
-  <!-- <view class="movebutton" hidden="{{hideFlag}}" >
-    <button class="delBtn" plain="true"  animation="{{animationData}}">删除</button>
-  </view> -->
+</view>
+<!-- <view class="movebutton" hidden="{{hideFlag}}" >
+  <button class="delBtn" plain="true"  animation="{{animationData}}">删除</button>
+</view> -->
 <view class="pop" wx:if="{{showPop}}">
     <button class="popup" bindtap="delFav" animation="{{animationData}}">删除</button>
 </view>

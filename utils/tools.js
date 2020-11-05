@@ -36,7 +36,26 @@ function showTabBarBadge(){
       })
     })
 }
+function showReservationTabBarBadge(){
+  const token = wx.getStorageSync('isloged')
+  if (!token) {
+    return
+  }
+  db.collection('reservation').count().then(res=>{
+    if(res.total == 0){
+      wx.removeTabBarBadge({
+        index: 2
+      })
+    }else{
+      wx.setTabBarBadge({
+        index: 2,
+        text: res.total.toString()
+      })
+    }
+  })
+}
 
 module.exports = {
-  showTabBarBadge: showTabBarBadge
+  showTabBarBadge: showTabBarBadge,
+  resTabBarBadge: showReservationTabBarBadge
 }

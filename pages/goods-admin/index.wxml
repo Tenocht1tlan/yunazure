@@ -125,7 +125,7 @@
   </view>
   <view class="weui-btn-area">
     <button class="weui-btn" type="primary" bindtap="addNewGood" hidden="{{type == 'add'? false:true}}">确认发布</button>
-    <button class="weui-btn" type="primary" bindtap="addNewGood" hidden="{{type == 'modify'? false:true}}">确认修改</button>
+    <button class="weui-btn" type="primary" bindtap="modifyGood" hidden="{{type == 'modify'? false:true}}">确认修改</button>
   </view>
 </view>
 

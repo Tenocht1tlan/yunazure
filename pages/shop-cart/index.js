@@ -16,7 +16,7 @@ Page({
     checkedVal:[],
     loading:true,
     startX:'',
-    delBtnWidth: 120, //删除按钮宽度单位（rpx）
+    delBtnWidth: 120,
     shippingCarInfo:{
       items:[]
     }
@@ -27,7 +27,6 @@ Page({
       data: this.data.checkedVal
     })
   },
-  //获取元素自适应后的实际宽度
   getEleWidth: function(w) {
     var real = 0;
     try {

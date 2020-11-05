@@ -8,7 +8,7 @@
         <image wx:elif="{{status==2}}" class="icon" src="/images/order-details/icon-ddsh.png"></image>
         <image wx:elif="{{status==3 || status==4}}" class="icon" src="/images/order-details/icon-jycg.png"></image>
       </view>
-      <view class="right-text" bindtap="queryOrderPath">查看物流</view>
+      <view class="right-text" bindtap="wuliuDetailsTap">查看物流</view>
     </view>
     <block wx:if="{{orderDetail.logistics}}">
       <view wx:if="{{orderDetail.logisticsTraces}}" class="wuliu-box">
@@ -109,8 +109,6 @@
       </view>
     </form>
   </view>
-  <!-- <view class="peisong-way">
-  </view> -->
   <view wx:if="{{orderDetail.goodsCoupons}}" class="goods-info" style="margin-bottom:32rpx;">
     <view wx:for="{{orderDetail.goodsCoupons}}" wx:key="{{item.id}}" class="row-box">
       <view wx:if="{{item.type == 0}}" class="row-label">优惠券</view>
@@ -136,7 +134,7 @@
       <view class="right-text">¥ {{orderDetail.totalAmount}}</view>
     </view>
     <view class="row-box">
-      <view class="row-label">运单号</view>
+      <view class="row-label">快递单号</view>
       <text class="right-text" selectable='true'>{{waybillId}}</text>
     </view>
     <view class="row-box">

@@ -24,15 +24,17 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.11.1",
+  "libVersion": "2.13.2",
   "appid": "wx755bdf146462d272",
   "projectname": "Yunazure",
   "scripts": {},
@@ -41,12 +43,6 @@
   "simulatorPluginLibVersion": {},
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
@@ -81,20 +77,6 @@
         },
         {
           "id": -1,
-          "name": "分类",
-          "pathName": "pages/category/category",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/address-add/index",
-          "pathName": "pages/address-add/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
           "name": "pages/goods-details/index",
           "pathName": "pages/goods-details/index",
           "query": "",
@@ -104,27 +86,6 @@
           "id": -1,
           "name": "pages/customize/index",
           "pathName": "pages/customize/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/customize/index",
-          "pathName": "pages/customize/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/Activity/index",
-          "pathName": "pages/Activity/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "物流",
-          "pathName": "pages/order-details/index",
           "query": "",
           "scene": null
         },
@@ -146,6 +107,7 @@
           "id": -1,
           "name": "订单详情",
           "pathName": "pages/order-details/index",
+          "query": "",
           "scene": null
         }
       ]

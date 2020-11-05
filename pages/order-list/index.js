@@ -161,6 +161,7 @@ Page({
       }
     })
   },
+  // mark: create order
   order:function(e){
     let receiverInfo
     this.data.orderList.forEach(val=>{
@@ -177,8 +178,25 @@ Page({
           count: e.count
       })
     })
-    var timestamp = Date.parse(new Date());
-    console.log("timestamp: " + timestamp)
+    var timestamp = Date.parse(new Date())
+    var date = new Date(timestamp)
+    let currentY = date.getFullYear()
+    let currentM = date.getMonth() + 1
+    let currentD = date.getDate()
+    let currentH = date.getHours()
+    var newdate = ''
+    if(currentH > 17){
+      if(currentM == 12 && currentD == 31){
+        newdate = (currentY + 1).toString() + '-1-1 9:00:00'
+      }else if(currentM != 12 && currentD == 31){
+        newdate = currentY.toString() + '-' + (currentM + 1).toString() + '-1 9:00:00'
+      }else{
+        newdate = currentY.toString() + '-' + currentM.toString() + '-' + (currentD + 1).toString() + ' 9:00:00'
+      }
+    }else if(currentH < 9){
+      newdate = currentY.toString() + '-' + currentM.toString() + '-' + currentD.toString() + ' 9:00:00'
+    }
+    var expectTime = Date.parse(newdate) / 1000
     var orderInfo = {
       sender: {
         name: '周晓赟',
@@ -221,7 +239,7 @@ Page({
         serviceType: 0,// SF:0（标准快递）
         serviceName: '标准快递'//'标准快递'
       },
-      expectTime: timestamp / 1000,
+      expectTime: expectTime,
       addSource: 0,
       orderId: e,
       deliveryId: 'SF', //'SF',DB

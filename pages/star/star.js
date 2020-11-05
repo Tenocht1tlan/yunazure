@@ -14,32 +14,29 @@ Page({
     animationData: {},
     showPop: false,
   },
-// 还有个问题没解决，第一次showup没有动画效果
-  edit:function(e){
-      var edit = !this.data.isEdit;   
-      var hidden = !this.data.checkHidden;
-      var temp= '';
-      if(edit){
-          temp = '取消';      
-         this.showModal()
-      }else{
-          temp = '编辑';
-          this.hideModal();
-      }
-      this.setData({
-        Edit:temp,
-        isEdit:edit,
-        checkHidden:hidden
-      })
-     },
-
+  editFav:function(e) {
+    var edit = !this.data.isEdit;   
+    var hidden = !this.data.checkHidden;
+    var temp= '';
+    if(edit){
+        temp = '取消';      
+        this.showModal()
+    }else{
+        temp = '编辑';
+        this.hideModal();
+    }
+    this.setData({
+      Edit:temp,
+      isEdit:edit,
+      checkHidden:hidden
+    })
+  },
   check:function(e){
     var index = e.currentTarget.dataset.index
     var id = e.currentTarget.dataset.id
     var select = !this.data.favGoods[index].select
     var temp ='favGoods['+index+'].select'
     var hidden = this.data.isEdit
-    console.log(select)
     if(hidden){
       this.setData({
         [temp]:select
@@ -56,8 +53,6 @@ Page({
           }
         }
       }
-      console.log(this.data.goodId)
-  
     }else{
       wx.navigateTo({
         url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name
@@ -120,10 +115,8 @@ Page({
     this.setData({
         animationData: animation.export(),
     })
-},
-
-// 隐藏遮罩层
-hideModal() {
+  },
+  hideModal() {
     var animation = wx.createAnimation({
         duration: 100,
         timingFunction: 'ease-in-out'
@@ -136,34 +129,32 @@ hideModal() {
     this.setData({
       animationData: animation.export(),
       showPop: false
-  })
-},
+    })
+  },
 
-async onShow() {
-  this.getFavGoodsList()
-},
-async getFavGoodsList(){
-  const isLogined = await AUTH.checkHasLogined()
-  if(isLogined){
-    wx.cloud.callFunction({
-      name:'login'
-    }).then(res=>{
-      db.collection('favorite').where({
-        _openid:res.result.openid
-      }).get().then(res=>{
-        if(res.data[0]){
-          this.setData({
-            favGoods:res.data[0].items
-          })
-        }
+  async onShow() {
+    this.getFavGoodsList()
+  },
+  async getFavGoodsList(){
+    const isLogined = await AUTH.checkHasLogined()
+    if(isLogined){
+      wx.cloud.callFunction({
+        name:'login'
+      }).then(res=>{
+        db.collection('favorite').where({
+          _openid:res.result.openid
+        }).get().then(res=>{
+          if(res.data[0]){
+            this.setData({
+              favGoods:res.data[0].items
+            })
+          }
+        })
       })
-    })
-  }else{
-    wx.switchTab({
-      url: '/pages/my/index',
-    })
+    }else{
+      wx.switchTab({
+        url: '/pages/my/index',
+      })
+    }
   }
-
-}
 })
-

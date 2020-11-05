@@ -2,11 +2,9 @@ const db = wx.cloud.database()
 Page({
     data:{
         materialCategory: 0,       // 素材分类1
-        materialCategoryIcon:0,    //素材颜色分类
+        materialCategoryIcon:0,    // 素材颜色分类
         fontCategory: 0,           // 素材分类2
-        fontColorCategory:0,       //定制文字颜色分类
-        isText: true,
-        isTextColor: false,
+        fontColorCategory:0,       // 定制文字颜色分类  
         currentPosition: 'left',   // 当前帽子的位置
         currentColor: 'w',         // 当前帽子的颜色
         currentGender: 'm',        // 当前性别
@@ -44,6 +42,8 @@ Page({
         currentChoseItem :0,
         array:['卡通','图标','水果','动物','爱心','中国风','花','其他'],
         text:['文本','字体'],
+        isText: true,               //文本选择
+        isTextColor: false,         //字体选择
         colorChose:['red','black','gray','white','yellow','wheat','#32CD32','#87CEFA','gold'],
         FontSize:['小','中','大'],
         choseNum:0,
@@ -74,16 +74,12 @@ Page({
           ['/images/custom/other/1.png','/images/custom/other/2.png','/images/custom/other/3.png','/images/custom/other/4.png',]
         ],
         textarea: "",
-        font:[
-          [],
-          ['/images/custom/carton/1.png','/images/custom/carton/2.png','/images/custom/carton/3.png']
-        ],
-        fontSize: [28, 36, 44],
+        fontSize: [28, 44, 56],
         currFontSize: 28,
-        fontColor: ['red', 'yellow', 'white', 'black'],
         currFontColor: 'yellow',
+        fontFamilyImgs:[[], ['font-family: Bradley Hand ITC;','font-family: Microsoft Yahei;','font-family: KaiTi;']],
         fontFamily: ['Bradley Hand ITC','Microsoft Yahei','KaiTi'],
-        currFontFamily:'Microsoft Yahei',
+        currFontFamily:'Bradley Hand ITC',
         addText: false
     },
       onStart (e) {
@@ -253,9 +249,9 @@ Page({
         if(this.data.imgUrl) {
           ctx.drawImage(that.data.imgUrl, x, y, that.data.tempImgWidth, that.data.tempImgHeight)
         }else if(this.data.addText) {
-          // ctx.font = "44px monospace"
           ctx.setFillStyle(this.data.currFontColor)
           ctx.setFontSize(this.data.currFontSize)
+          ctx.font = this.data.currFontSize.toString() + 'px ' + this.data.currFontFamily.toString()
           ctx.fillText(this.data.textarea, x + 10, 0)
         }
         // 旋转回来,保证除了图片以外的其他元素不被旋转
@@ -428,23 +424,6 @@ Page({
           })
         }
       },
-      choseModePic:function(){
-        this.setData({
-          picIsChosed: true,
-          textIsChosed: false,
-          fontSizeChose:true,
-          textarea: '',
-          addText: false
-        })
-      },
-      choseModeText:function(){
-        this.setData({
-          picIsChosed: false,
-          textIsChosed: true,
-          fontSizeChose:false,
-          imgUrl: ''
-        })
-      },
       // 删除单条历史记录
       deleteHistory (item) {
         let set = new Set(this.data.historyList)
@@ -476,6 +455,7 @@ Page({
       },
       getTextPicInfo(){
         this.data.ctx.setFontSize(this.data.currFontSize)
+        this.data.ctx.font = this.data.currFontSize.toString() + 'px ' + this.data.currFontFamily.toString()
         const metrics = this.data.ctx.measureText(this.data.textarea)
         this.data.imgWidth = metrics.width + 20
         this.data.imgHeight = 40
@@ -504,13 +484,6 @@ Page({
             animaltion:'animated fadeOutLeftBig',
           })
         }, 1500)
-      },
-      selectFont: function(e){
-        var index = e.target.dataset.index
-        this.setData({
-          materialCategoryIcon: index,
-          currFontFamily: this.data.fontFamily[index]
-        })
       },
       // 获取图片信息,并把宽高设置给 canvas
       async getFileInfo (src) {
@@ -676,11 +649,52 @@ Page({
           materialCategory: e.target.dataset.index
         })
       },
+      choseModePic:function(){ //选择图片相关
+        this.setData({
+          picIsChosed: true,
+          textIsChosed: false,
+          fontSizeChose:true,
+          textarea: '',
+          addText: false
+        })
+      },
+      choseModeText:function(){ //选择文本相关
+        this.setData({
+          picIsChosed: false,
+          textIsChosed: true,
+          imgUrl: ''
+        })
+        if(this.data.fontCategory == 1){
+          this.setData({
+            fontSizeChose:true,
+          })
+        }else{
+          this.setData({
+            fontSizeChose:false,
+          })
+        }
+      },
+      selectFont: function(e){
+        var index = e.target.dataset.index
+        this.setData({
+          materialCategoryIcon: index,
+          currFontFamily: this.data.fontFamily[index],
+        })
+        
+        this.getTextPicInfo()
+        console.log('currFontFamily = ' + this.data.currFontFamily)
+      },
       setFontCategory: function(e) {
+        // wx.loadFontFace({
+        //   family: 'Bitstream Vera Serif Bold',
+        //   source: 'url("https://sungd.github.io/Pacifico.ttf")',
+        //   scopes: ['webview', 'native']
+        // })
         if(e.target.dataset.index == 0){
           this.setData({
             isText: true,
             fontSizeChose:false,
+            isTextColor:false,
             fontCategory: e.target.dataset.index
           })
         }else if(e.target.dataset.index == 3){
@@ -694,6 +708,7 @@ Page({
           this.setData({
             isText: false,
             fontSizeChose:true,
+            isTextColor:false,
             fontCategory: e.target.dataset.index
           })
         }

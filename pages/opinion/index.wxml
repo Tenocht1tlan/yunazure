@@ -1,10 +1,6 @@
 <view class="input-box" >
-    <view class="currentWordNumber">{{currentWordNumber|0}}/{{max}}  </view>
-    <textarea class="input" focus="true" placeholder="请详细描述您的问题" type="text"  maxlength="200" bindblur="getText" bindinput="getValueLength" show-confirm-bar="true" value="{{editText}}" bindconfirm="getText" maxlength="{{max}}" minlength="{{min}}" >
+    <textarea class="input" focus="true" placeholder=" 请输入您想对我们说的话" type="text" maxlength="-1" bindblur="getText" bindinput="getValueLength" show-confirm-bar="true" value="{{editText}}" bindconfirm="getText">
     </textarea>
 </view>
-<input class="phoMail" placeholder="手机号/邮箱" bindinput="getPhoMail" value="{{editText}}" ></input>
+<input class="phoMail" type="number" confirm-type="done" placeholder=" 手机号" bindinput="getPhoMail" value="{{editText}}" ></input>
 <button class="commit" hover-class="button-hover" bindtap="commit">提交</button>
-<!-- <button class="commit" hover-class="animated rubberBand"  hover-stay-time="1000" bindtap="commit">
-    <text>提交</text>
-</button> -->

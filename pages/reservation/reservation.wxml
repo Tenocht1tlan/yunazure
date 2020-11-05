@@ -58,7 +58,6 @@
 </view>
 <view class="space"></view>
 
-<!--门店地址，点击后cover view界面的隐藏属性改为false  -->
 <!-- <view class="store">
   <view class="storeAddress" bindtap="storeShowClick" data-index="1" >浙江</view>
   <view class="storeAddress" bindtap="storeShowClick" data-index="2" >江苏</view>
@@ -74,7 +73,7 @@
 </cover-view>
 <view class="yuyuelist" hidden="{{!isAdmin}}">预约列表(共{{count}}条信息，管理员可见):
   <block wx:for="{{infolist}}" wx:key="item">
-    <view class="yuyueItem">{{item.name}} - {{item.phone}} - {{item.region}}，{{item.address}} - 预约时间</view>
+    <view class="yuyueItem">{{item.name}}:{{item.phone}},{{item.region}},{{item.address}} ({{item.orderNumber}})</view>
     <view class="yyitem" style="margin-left: 5rpx;background: rgb(175, 182, 180);width: 720rpx;height: 3rpx;"></view>
   </block>
 </view>
