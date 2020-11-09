@@ -141,7 +141,7 @@
       <image  class="spetical" src="{{CompURL}}"></image>
       <view class="spe-text" hover-class="textHover" hover-stay-time="100">了解更多</view>
     </view> -->
-    <view class="spe-two">
+    <view class="spe-two" hidden="true">
       <view class="two" bindtap="toAd">
         <image  class="spetical-two" src="{{AdURL}}"></image>
         <view class="spe-two-text" >了解更多</view>

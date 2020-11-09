@@ -12,9 +12,10 @@ APP.configLoadOK = () => {
 Page({
   data: {
     banners:['cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/1.jpg'
-    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/2.jpg'
-    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/3.jpg'
-    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/4.jpg'],
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index4.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index3.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index2.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index1.jpg'],
     DiyURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/story.jpg',
     NewURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/color.png',
     SpecialURL:'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/home.jpg',
@@ -108,9 +109,9 @@ Page({
     animationButton:"animated bounceIn",
     originLeft:'',
     animationText:'Yunazure',
-    textArray:['Yunazure','帽子系列','家居毯系列','羊绒系列'],
+    textArray:['Yunazure','帽子系列', '家居毯系列','帽子系列','羊绒系列'],
     textColor:'#000',
-    textColorArray:['#000','#fff','#000','#fff','#000','#000'],
+    textColorArray:['#000','#fff','#000','#000','#fff'],
     isAdmin:false
   },
   initOpenId(){

@@ -1,20 +1,17 @@
 .swiper-container{
   width: 750rpx;
-  /* height: 575rpx; */
   position: relative;  
 }
 .swiper-container .swiper1 {
   width: 750rpx;
-  /* height: 575rpx; */
 }
 .swiper-container .swiper1 image {
   width: 750rpx;
-  /* height: 575rpx; */
 }
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
-  color: transparent;
+  color: transparent; 
 }
 .logout-btn{
   width: 600rpx;

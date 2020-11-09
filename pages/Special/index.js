@@ -1,4 +1,3 @@
-// pages/Special/index.js\cons
 const db =  wx.cloud.database();
 Page({
 
@@ -7,34 +6,22 @@ Page({
    */
   data: {
     swiperHeight:1000,
+    banners:['cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index4.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index3.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index2.jpg'
+    , 'cloud://yunazure-sygca.7975-yunazure-sygca-1302289079/Index/index1.jpg'],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initBanners()
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  async initBanners(){
-    const _data = {}
-    // 读取头部轮播图
-    db.collection('image').get().then(res=>{
-      if(res.data){
-        _data.banners = res.data
-        this.setData(_data)
-      }else{
-        wx.showModal({
-          title: '提示',
-          content: 'error',
-          showCancel: false
-        })
-      }
-    })
-  },
   onReady: function () {
 
   },
